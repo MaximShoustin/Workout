@@ -1,0 +1,37 @@
+<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="metalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e8e8e8;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#c0c0c0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#a0a0a0;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="plateGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#d0d0d0;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#909090;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#707070;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Left weight plates -->
+  <rect x="1" y="8" width="4" height="8" rx="1" fill="url(#plateGrad)" stroke="#606060" stroke-width="0.3"/>
+  <rect x="2" y="9" width="2" height="6" rx="0.5" fill="url(#metalGrad)" stroke="#808080" stroke-width="0.2"/>
+  
+  <!-- Left collar -->
+  <rect x="5" y="10.5" width="1.5" height="3" rx="0.5" fill="url(#metalGrad)" stroke="#808080" stroke-width="0.2"/>
+  
+  <!-- Barbell bar -->
+  <rect x="6.5" y="11.2" width="11" height="1.6" rx="0.8" fill="url(#metalGrad)" stroke="#808080" stroke-width="0.3"/>
+  
+  <!-- Grip marks -->
+  <line x1="8" y1="11.5" x2="8" y2="12.5" stroke="#606060" stroke-width="0.2"/>
+  <line x1="9" y1="11.5" x2="9" y2="12.5" stroke="#606060" stroke-width="0.2"/>
+  <line x1="15" y1="11.5" x2="15" y2="12.5" stroke="#606060" stroke-width="0.2"/>
+  <line x1="16" y1="11.5" x2="16" y2="12.5" stroke="#606060" stroke-width="0.2"/>
+  
+  <!-- Right collar -->
+  <rect x="17.5" y="10.5" width="1.5" height="3" rx="0.5" fill="url(#metalGrad)" stroke="#808080" stroke-width="0.2"/>
+  
+  <!-- Right weight plates -->
+  <rect x="19" y="8" width="4" height="8" rx="1" fill="url(#plateGrad)" stroke="#606060" stroke-width="0.3"/>
+  <rect x="20" y="9" width="2" height="6" rx="0.5" fill="url(#metalGrad)" stroke="#808080" stroke-width="0.2"/>
+</svg>

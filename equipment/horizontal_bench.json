@@ -1,0 +1,106 @@
+{
+    "lifts": {
+      "upper_push": [
+        {
+          "name": "Dumbbell bench press (neutral/pronated)", 
+          "link": "https://www.youtube.com/shorts/7TDjD45d860",
+          "equipment": {
+            "bench": {
+              "count": 1
+            },
+            "dumbbells_5kg": {
+              "count": 2
+            },
+            "dumbbells_10kg": {
+              "count": 2
+            }
+          }
+        },
+        {
+          "name": "Barbell bench press (20 kg technique load)", 
+          "link": "https://www.youtube.com/shorts/_FkbD0FhgVE",
+          "equipment": {
+            "bench": {
+              "count": 1
+            },
+            "barbells": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Close-grip dumbbell press", 
+          "link": "https://www.youtube.com/shorts/EvjftwN-nSY",
+          "equipment": {
+            "bench": {
+              "count": 1
+            },
+            "dumbbells_5kg": {
+              "count": 2
+            },
+            "dumbbells_10kg": {
+              "count": 2
+            }
+          }
+        },
+        {
+          "name": "Dumbbell pullover", 
+          "link": "https://www.youtube.com/shorts/Datv2L6t3-4",
+          "equipment": {
+            "bench": {
+              "count": 1
+            },
+            "dumbbells_5kg": {
+              "count": 1
+            },
+            "dumbbells_10kg": {
+              "count": 1
+            },
+            "dumbbells_15kg": {
+              "count": 1
+            }
+          }
+        }
+      ],
+      "lower_core": [
+        {
+          "name": "Hip thrust / glute bridge (shoulders on bench)", 
+          "link": "https://www.youtube.com/shorts/zx4KGEACh4o",
+          "equipment": {
+            "bench": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Bulgarian split-squat (rear foot on bench)", 
+          "link": "https://www.youtube.com/shorts/J1PEjNVe7po",
+          "equipment": {
+            "bench": {
+              "count": 1
+            }
+          }
+        }
+      ],
+      "accessory": [
+        {
+          "name": "Bench dips", 
+          "link": "https://www.youtube.com/shorts/4ua3MzaU0QU",
+          "equipment": {
+            "bench": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Feet-elevated push-ups", 
+          "link": "https://www.youtube.com/shorts/MjnJWRwbSYE",
+          "equipment": {
+            "bench": {
+              "count": 1
+            }
+          }
+        }
+      ]
+    }
+  }

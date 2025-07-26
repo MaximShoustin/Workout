@@ -1,0 +1,80 @@
+{
+    "lifts": {
+      "power": [
+        {
+          "name": "Overhead slam", 
+          "link": "https://www.youtube.com/watch?v=QxYhFwMd1Ks",
+          "equipment": {
+            "slam_balls_5kg": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Rotational slam", 
+          "link": "https://www.youtube.com/shorts/8ReGsLOc-lo",
+          "equipment": {
+            "slam_balls_5kg": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Half-kneel rainbow slam", 
+          "link": "https://www.youtube.com/shorts/MsZz_IIr8tA",
+          "equipment": {
+            "slam_balls_5kg": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Slam-ball burpee", 
+          "link": "https://www.youtube.com/shorts/tfeKK4r0qbc",
+          "equipment": {
+            "slam_balls_5kg": {
+              "count": 1
+            }
+          }
+        }
+      ],
+      "core_accessory": [
+        {
+          "name": "Russian twist", 
+          "link": "https://www.youtube.com/shorts/KmKmztLiqAY",
+          "equipment": {
+            "slam_balls_5kg": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Bear-crawl drag", 
+          "link": "https://www.youtube.com/shorts/hawiuyUYpRg",
+          "equipment": {
+            "slam_balls_5kg": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Front-loaded squat", 
+          "link": "https://www.youtube.com/shorts/UMftsovbumY",
+          "equipment": {
+            "slam_balls_5kg": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Slam-ball thruster", 
+          "link": "https://www.youtube.com/shorts/6gFhwWhQJ5s",
+          "equipment": {
+            "slam_balls_5kg": {
+              "count": 1
+            }
+          }
+        }
+      ]
+    }
+  }

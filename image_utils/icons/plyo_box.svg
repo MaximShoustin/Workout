@@ -1,0 +1,58 @@
+<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="boxTopGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#D2B48C;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#CD853F;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#A0522D;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="boxSideGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#A0522D;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#8B4513;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#654321;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="boxRightGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8B4513;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#654321;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4A2C17;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Box front face -->
+  <polygon points="3,10 3,20 15,20 15,10" 
+           fill="url(#boxSideGrad)" 
+           stroke="#3A1F0B" 
+           stroke-width="0.3"/>
+  
+  <!-- Box top face -->
+  <polygon points="3,10 6,7 18,7 15,10" 
+           fill="url(#boxTopGrad)" 
+           stroke="#8B4513" 
+           stroke-width="0.3"/>
+  
+  <!-- Box right face -->
+  <polygon points="15,10 18,7 18,17 15,20" 
+           fill="url(#boxRightGrad)" 
+           stroke="#3A1F0B" 
+           stroke-width="0.3"/>
+  
+  <!-- Wood grain lines on front -->
+  <g opacity="0.3" stroke="#4A2C17" stroke-width="0.2">
+    <line x1="4" y1="12" x2="14" y2="12"/>
+    <line x1="4" y1="15" x2="14" y2="15"/>
+    <line x1="4" y1="18" x2="14" y2="18"/>
+  </g>
+  
+  <!-- Wood grain lines on top -->
+  <g opacity="0.3" stroke="#8B4513" stroke-width="0.2">
+    <line x1="5" y1="8.5" x2="16" y2="8.5"/>
+  </g>
+  
+  <!-- Corner details -->
+  <circle cx="3" cy="10" r="0.3" fill="#654321"/>
+  <circle cx="15" cy="10" r="0.3" fill="#654321"/>
+  <circle cx="3" cy="20" r="0.3" fill="#4A2C17"/>
+  <circle cx="15" cy="20" r="0.3" fill="#4A2C17"/>
+  
+  <!-- Height marking -->
+  <text x="9" y="16" text-anchor="middle" font-family="Arial" font-size="4" fill="#654321" font-weight="bold">BOX</text>
+</svg>

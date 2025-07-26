@@ -1,0 +1,57 @@
+{
+    "lifts": {
+      "posterior_chain": [
+        {
+          "name": "Romanian deadlift", 
+          "link": "https://www.youtube.com/shorts/up0sPrYCTkI",
+          "equipment": {
+            "barbells": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Good-morning", 
+          "link": "https://www.youtube.com/shorts/tCoZ6tZBnbE",
+          "equipment": {
+            "barbells": {
+              "count": 1
+            }
+          }
+        }
+      ],
+      "upper_pull": [
+        {
+          "name": "Bent-over row", 
+          "link": "https://www.youtube.com/shorts/HROup6N-olM",
+          "equipment": {
+            "barbells": {
+              "count": 1
+            }
+          }
+        }
+      ],
+      "upper_push": [
+        {
+          "name": "Strict overhead press", 
+          "link": "https://www.youtube.com/shorts/1M6JMpgAtS0",
+          "equipment": {
+            "barbells": {
+              "count": 1
+            }
+          }
+        }
+      ],
+      "complex": [
+        {
+          "name": "Barbell complex: DL → row → clean-pull → front squat → press → lunge", 
+          "link": "https://www.youtube.com/watch?v=DO3jxj5KQc4",
+          "equipment": {
+            "barbells": {
+              "count": 1
+            }
+          }
+        }
+      ]
+    }
+  }

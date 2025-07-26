@@ -1,0 +1,81 @@
+{
+    "active_rest": "true",
+    "active_rest_count": 4,
+    "steps_per_station": 2,
+    "stations": 5,               
+    "people": 10,
+    "rounds": 2,                 
+    "timing": {                  
+      "work": 40,
+      "rest": 20
+    },
+    "balance_order": [           
+      "upper",                   
+      "lower",
+      "core"
+    ],
+    "must_use": [
+      "plyo_box",
+      "barbells", 
+      "slam_balls_5kg",
+      "bench"
+    ],
+    "equipment": {
+      "bench": {
+        "count": 1
+      },
+      "plyo_box": {
+        "count": 1
+      },
+      "kettlebells_2kg": {
+        "count": 10
+      },
+      "kettlebells_4kg": {
+        "count": 9
+      },
+      "kettlebells_6kg": {
+        "count": 7
+      },
+      "kettlebells_16kg": {
+        "count": 2
+      },
+      "kettlebells_24kg": {
+        "count": 2
+      },
+      "kettlebells_32kg": {
+        "count": 2
+      },
+      "barbells": {
+        "count": 2
+      },
+      "slam_balls_5kg": {
+        "count": 14
+      },
+      "dumbbells_6kg": {
+        "count": 1
+      },
+      "dumbbells_7kg": {
+        "count": 1
+      },
+      "dumbbells_3kg": {
+        "count": 7
+      },
+      "dumbbells_5kg": {
+        "count": 4
+      },
+      "dumbbells_10kg": {
+        "count": 2
+      },
+      "dumbbells_22kg": {
+        "count": 2
+      },
+      "dumbbells_15kg": {
+        "count": 1
+      },
+      "dip_parallel_bars": {
+        "count": 2
+      }
+    },
+    "title": "Strength Block – Week 1",
+    "notes": "Dont' crash the first week"
+  }

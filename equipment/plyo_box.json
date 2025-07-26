@@ -1,0 +1,71 @@
+{
+    "lifts": {
+      "power_leg": [
+        {
+          "name": "Box jump", 
+          "link": "https://www.youtube.com/shorts/hDiQD4xhVDw",
+          "equipment": {
+            "plyo_box": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Step-up + knee-drive", 
+          "link": "https://www.youtube.com/shorts/f-dL7VgbanE",
+          "equipment": {
+            "plyo_box": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Lateral step-over", 
+          "link": "https://www.youtube.com/shorts/XS_MGKL9zjU",
+          "equipment": {
+            "plyo_box": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Depth drop → jump", 
+          "link": "https://www.youtube.com/shorts/gpXV2dzZ-oA",
+          "equipment": {
+            "plyo_box": {
+              "count": 1
+            }
+          }
+        }
+      ],
+      "upper_core": [
+        {
+          "name": "Hands-elevated push-up", 
+          "link": "https://www.youtube.com/shorts/Yr3reUvsmvY",
+          "equipment": {
+            "plyo_box": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Box dip", 
+          "link": "https://www.youtube.com/shorts/qi7ZkE2vOyk",
+          "equipment": {
+            "plyo_box": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Incline plank shoulder-tap", 
+          "link": "https://www.youtube.com/shorts/SmvOGV0Z7wc",
+          "equipment": {
+            "plyo_box": {
+              "count": 1
+            }
+          }
+        }
+      ]
+    }
+  }

@@ -1,0 +1,613 @@
+{
+    "lifts": {
+      "hinge_power": [
+        {
+          "name": "Two-hand Russian swing", 
+          "link": "https://www.youtube.com/shorts/n1df4ASFeZU",
+          "equipment": {
+            "kettlebells_16kg": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Single-arm swing", 
+          "link": "https://www.youtube.com/shorts/jidchvotn6s",
+          "equipment": {
+            "kettlebells_16kg": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Kettlebell clean", 
+          "link": "https://www.youtube.com/shorts/xQb9Tc3iQpI",
+          "equipment": {
+            "kettlebells_6kg": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Clean + jerk", 
+          "link": "https://www.youtube.com/shorts/oyz20GR9KEg",
+          "equipment": {
+            "kettlebells_6kg": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Snatch", 
+          "link": "https://www.youtube.com/shorts/9IptF07Ugh4",
+          "equipment": {
+            "kettlebells_6kg": {
+              "count": 1
+            },
+            "kettlebells_16kg": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "High pull", 
+          "link": "https://www.youtube.com/shorts/JYwkgnohFyQ",
+          "equipment": {
+            "kettlebells_6kg": {
+              "count": 1
+            },
+            "kettlebells_16kg": {
+              "count": 1
+            }
+          }
+        }
+      ],
+      "squat_lunge": [
+        {
+          "name": "Goblet squat", 
+          "link": "https://www.youtube.com/shorts/PP4XRTIIyRI",
+          "equipment": {
+            "kettlebells_6kg": {
+              "count": 1
+            },
+            "kettlebells_16kg": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Double-KB front squat", 
+          "link": "https://www.youtube.com/shorts/8Wc7Y179inM",
+          "equipment": {
+            "kettlebells_4kg": {
+              "count": 2
+            },
+            "kettlebells_6kg": {
+              "count": 2
+            }
+          }
+        },
+        {
+          "name": "Split squat (rack)", 
+          "link": "https://www.youtube.com/shorts/uGbwrBd9LL4",
+          "equipment": {
+            "kettlebells_4kg": {
+              "count": 2
+            },
+            "kettlebells_6kg": {
+              "count": 2
+            }
+          }
+        },
+        {
+          "name": "Reverse lunge (suitcase or rack)", 
+          "link": "https://www.youtube.com/shorts/I0Ie12QVlKU",
+          "equipment": {
+            "kettlebells_6kg": {
+              "count": 1
+            },
+            "kettlebells_16kg": {
+              "count": 1
+            }
+          }
+        }
+      ],
+      "upper_body": [
+        {
+          "name": "Strict press", 
+          "link": "https://www.youtube.com/shorts/6SDJvE7uHAo",
+          "equipment": {
+            "kettlebells_6kg": {
+              "count": 1
+            },
+            "kettlebells_16kg": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Push-press", 
+          "link": "https://www.youtube.com/shorts/iO6JMIW1lYQ",
+          "equipment": {
+            "kettlebells_6kg": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Single-arm floor press", 
+          "link": "https://www.youtube.com/shorts/rYVPIP9KMLQ",
+          "equipment": {
+            "kettlebells_6kg": {
+              "count": 1
+            },
+            "kettlebells_16kg": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Bent-over row", 
+          "link": "https://www.youtube.com/shorts/PzvvvZmNdq0",
+          "equipment": {
+            "kettlebells_6kg": {
+              "count": 1
+            },
+            "kettlebells_16kg": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Renegade row", 
+          "link": "https://www.youtube.com/shorts/cbQFdA0GG4g",
+          "equipment": {
+            "kettlebells_6kg": {
+              "count": 2
+            }
+          }
+        }
+      ],
+      "core_carry": [
+        {
+          "name": "Turkish get-up", 
+          "link": "https://www.youtube.com/shorts/TcxzzyBziYA",
+          "equipment": {
+            "kettlebells_4kg": {
+              "count": 1
+            },
+            "kettlebells_6kg": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Windmill", 
+          "link": "https://www.youtube.com/shorts/EZWHnzAjctU",
+          "equipment": {
+            "kettlebells_6kg": {
+              "count": 1
+            },
+            "kettlebells_16kg": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Halo", 
+          "link": "https://www.youtube.com/shorts/k-YcemjRASg",
+          "equipment": {
+            "kettlebells_4kg": {
+              "count": 1
+            },
+            "kettlebells_6kg": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "reverse flies k", 
+          "link": "https://www.youtube.com/shorts/55aZ3C8xYtI",
+          "equipment": {
+            "kettlebells_4kg": {
+              "count": 1
+            },
+            "kettlebells_6kg": {
+              "count": 1
+            }
+          }
+        }
+      ],
+      "shoulders": [
+        
+        
+        {
+          "name": "Half-Kneeling Press", 
+          "link": "https://www.youtube.com/shorts/4nmVaAZ3bPU",
+          "equipment": {
+            "kettlebells_4kg": {
+              "count": 1
+            },
+            "kettlebells_6kg": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Z-Press (seated on floor)", 
+          "link": "https://www.youtube.com/shorts/DzYK2-lUFus",
+          "equipment": {
+            "kettlebells_4kg": {
+              "count": 1
+            },
+            "kettlebells_6kg": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Double See-Saw Press", 
+          "link": "https://www.youtube.com/shorts/4l_orKPjj8Q",
+          "equipment": {
+            "kettlebells_4kg": {
+              "count": 1
+            },
+            "kettlebells_6kg": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Bottoms-Up Press", 
+          "link": "https://www.youtube.com/shorts/PDVTbKBXAl4",
+          "equipment": {
+            "kettlebells_4kg": {
+              "count": 1
+            },
+            "kettlebells_6kg": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Arnold Press (rotation for front delts)", 
+          "link": "https://www.youtube.com/shorts/Y_09W4XKDgY",
+          "equipment": {
+            "kettlebells_4kg": {
+              "count": 1
+            },
+            "kettlebells_6kg": {
+              "count": 1
+            }
+          }
+        },
+
+        {
+          "name": "Upright Row", 
+          "link": "https://www.youtube.com/shorts/_E2wnqjBciE",
+          "equipment": {
+            "kettlebells_6kg": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Figure-8 to Overhead Press", 
+          "link": "https://www.youtube.com/shorts/I7T_P5HnUr0",
+          "equipment": {
+            "kettlebells_6kg": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Bottoms-Up Waiter Walk (isometric)", 
+          "link": "https://www.youtube.com/shorts/-yuOeCWs5Cg",
+          "equipment": {
+            "kettlebells_4kg": {
+              "count": 1
+            },
+            "kettlebells_6kg": {
+              "count": 1
+            }
+          }
+        },
+        
+        {
+          "name": "Around-the-World waist", 
+          "link": "https://www.youtube.com/shorts/SDqeQ9b67AM",
+          "equipment": {
+            "kettlebells_6kg": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Around-the-World overhead", 
+          "link": "https://www.youtube.com/shorts/k3elhfyMI4k",
+          "equipment": {
+            "kettlebells_6kg": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Sotts Press (overhead squat press)", 
+          "link": "https://www.youtube.com/shorts/MHNe9FcMYtA",
+          "equipment": {
+            "kettlebells_4kg": {
+              "count": 1
+            },
+            "kettlebells_6kg": {
+              "count": 1
+            }
+          }
+        }
+      ],
+      "triceps": [
+        {
+          "name": "Overhead Triceps Extension (standing or kneeling)", 
+          "link": "https://www.youtube.com/shorts/2g6IrtUqXRg",
+          "equipment": {
+            "kettlebells_4kg": {
+              "count": 1
+            },
+            "kettlebells_6kg": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Lying Skull Crusher (floor or bench)", 
+          "link": "https://www.youtube.com/shorts/y9aTIJVfuDM",
+          "equipment": {
+            "kettlebells_4kg": {
+              "count": 1
+            },
+            "kettlebells_6kg": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Close-Grip Floor Press", 
+          "link": "https://www.youtube.com/shorts/kzH-UO2ppO0",
+          "equipment": {
+            "kettlebells_4kg": {
+              "count": 1
+            },
+            "kettlebells_6kg": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Tate Press", 
+          "link": "https://www.youtube.com/shorts/IoHMhgn8jDI",
+          "equipment": {
+            "kettlebells_4kg": {
+              "count": 1
+            },
+            "kettlebells_6kg": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Kickback standing", 
+          "link": "https://www.youtube.com/watch?v=UR1_7Es1qUk",
+          "equipment": {
+            "kettlebells_4kg": {
+              "count": 1
+            },
+            "kettlebells_6kg": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Crush-Grip Push-Up", 
+          "link": "https://www.youtube.com/shorts/mNfBfVhNvRc",
+          "equipment": {
+            "kettlebells_6kg": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Standing \"French\" Press (vertical, two-hand)", 
+          "link": "",
+          "equipment": {
+            "kettlebells_4kg": {
+              "count": 1
+            },
+            "kettlebells_6kg": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Tall-Kneeling Overhead Extension", 
+          "link": "",
+          "equipment": {
+            "kettlebells_4kg": {
+              "count": 1
+            },
+            "kettlebells_6kg": {
+              "count": 1
+            }
+          }
+        }
+      ],
+      "biceps": [
+        {
+          "name": "Hammer Curl (neutral grip)", 
+          "link": "",
+          "equipment": {
+            "kettlebells_4kg": {
+              "count": 1
+            },
+            "kettlebells_6kg": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Standard Supinated Curl", 
+          "link": "",
+          "equipment": {
+            "kettlebells_4kg": {
+              "count": 1
+            },
+            "kettlebells_6kg": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Alternating Curl", 
+          "link": "",
+          "equipment": {
+            "kettlebells_4kg": {
+              "count": 1
+            },
+            "kettlebells_6kg": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Zottman Curl (supinate up, pronate down)", 
+          "link": "",
+          "equipment": {
+            "kettlebells_4kg": {
+              "count": 1
+            },
+            "kettlebells_6kg": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Reverse Curl", 
+          "link": "",
+          "equipment": {
+            "kettlebells_4kg": {
+              "count": 1
+            },
+            "kettlebells_6kg": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Bottoms-Up Curl (huge grip challenge)", 
+          "link": "",
+          "equipment": {
+            "kettlebells_4kg": {
+              "count": 1
+            },
+            "kettlebells_6kg": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Concentration Curl", 
+          "link": "",
+          "equipment": {
+            "kettlebells_4kg": {
+              "count": 1
+            },
+            "kettlebells_6kg": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Preacher Curl (arm braced on bench)", 
+          "link": "",
+          "equipment": {
+            "kettlebells_4kg": {
+              "count": 1
+            },
+            "kettlebells_6kg": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Drag Curl (elbows drift back)", 
+          "link": "",
+          "equipment": {
+            "kettlebells_4kg": {
+              "count": 1
+            },
+            "kettlebells_6kg": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Curl-to-Press (flow move)", 
+          "link": "",
+          "equipment": {
+            "kettlebells_4kg": {
+              "count": 1
+            },
+            "kettlebells_6kg": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Spider Curl (incline bench, chest down)", 
+          "link": "",
+          "equipment": {
+            "kettlebells_4kg": {
+              "count": 1
+            },
+            "kettlebells_6kg": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Incline Curl (leaned-back bench)", 
+          "link": "",
+          "equipment": {
+            "kettlebells_4kg": {
+              "count": 1
+            },
+            "kettlebells_6kg": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Cross-Body Curl (diagonal)", 
+          "link": "",
+          "equipment": {
+            "kettlebells_4kg": {
+              "count": 1
+            },
+            "kettlebells_6kg": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Waiter Curl (bell held upside-down like a tray)", 
+          "link": "https://www.youtube.com/shorts/c_fczYLIt2U",
+          "equipment": {
+            "kettlebells_4kg": {
+              "count": 1
+            },
+            "kettlebells_6kg": {
+              "count": 1
+            }
+          }
+        }
+      ]
+    }
+  }

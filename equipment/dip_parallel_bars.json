@@ -1,0 +1,84 @@
+{
+    "lifts": {
+      "upper_push": [
+        {
+          "name": "Standard body-weight dip", 
+          "link": "https://www.youtube.com/shorts/cbW_T2cbS9E",
+          "equipment": {
+            "dip_parallel_bars": {
+              "count": 2
+            }
+          }
+        }
+        ],
+      "static_support_core": [
+        {
+          "name": "Top-of-dip support hold", 
+          "link": "https://www.youtube.com/shorts/lYo8KZ0WcgQ",
+          "equipment": {
+            "dip_parallel_bars": {
+              "count": 2
+            }
+          }
+        },
+        {
+          "name": "L-sit hold", 
+          "link": "https://www.youtube.com/shorts/Jb5_jIiEl8E",
+          "equipment": {
+            "dip_parallel_bars": {
+              "count": 2
+            }
+          }
+        },
+        {
+          "name": "Tuck hold", 
+          "link": "https://www.youtube.com/shorts/y1_graezMbo",
+          "equipment": {
+            "dip_parallel_bars": {
+              "count": 2
+            }
+          }
+        },
+        {
+          "name": "Knee-raise support hold", 
+          "link": "https://www.youtube.com/shorts/-a86XbaEL08",
+          "equipment": {
+            "dip_parallel_bars": {
+              "count": 2
+            }
+          }
+        }
+      ],
+      "dynamic_core": [
+        {
+          "name": "Hanging leg raise (elbows locked)", 
+          "link": "https://www.youtube.com/shorts/sTDKouREFh4",
+          "equipment": {
+            "dip_parallel_bars": {
+              "count": 2
+            }
+          }
+        }
+      ],
+      "accessory_mobility": [
+        {
+          "name": "Scapular depression shrug", 
+          "link": "https://www.youtube.com/shorts/NArein7d6zs",
+          "equipment": {
+            "dip_parallel_bars": {
+              "count": 2
+            }
+          }
+        },
+        {
+          "name": "Assisted dip eccentric (slow lower)", 
+          "link": "https://www.youtube.com/shorts/36Yu_T35DUc",
+          "equipment": {
+            "dip_parallel_bars": {
+              "count": 2
+            }
+          }
+        }
+      ]
+    }
+  }

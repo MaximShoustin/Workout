@@ -1,0 +1,33 @@
+<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="kettlebellGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#606060;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#404040;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#202020;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="handleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#909090;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#707070;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#505050;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Handle arc -->
+  <path d="M 8 8 Q 12 4 16 8" stroke="url(#handleGrad)" stroke-width="2" fill="none" stroke-linecap="round"/>
+  
+  <!-- Handle connection points -->
+  <circle cx="8" cy="8" r="1.5" fill="url(#handleGrad)" stroke="#404040" stroke-width="0.3"/>
+  <circle cx="16" cy="8" r="1.5" fill="url(#handleGrad)" stroke="#404040" stroke-width="0.3"/>
+  
+  <!-- Main bell body -->
+  <ellipse cx="12" cy="16" rx="6" ry="5" fill="url(#kettlebellGrad)" stroke="#303030" stroke-width="0.5"/>
+  
+  <!-- Top connection -->
+  <rect x="10.5" y="9" width="3" height="7" rx="1" fill="url(#kettlebellGrad)" stroke="#303030" stroke-width="0.3"/>
+  
+  <!-- Bottom highlight -->
+  <ellipse cx="12" cy="18" rx="3" ry="1.5" fill="#505050" opacity="0.6"/>
+  
+  <!-- Weight indicator -->
+  <text x="12" y="17" text-anchor="middle" font-family="Arial" font-size="6" fill="#a0a0a0" font-weight="bold">KB</text>
+</svg>

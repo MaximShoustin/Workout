@@ -1,0 +1,160 @@
+{
+    "lifts": {
+      "upper_body": [
+        {
+          "name": "Floor press", 
+          "link": "https://www.youtube.com/shorts/TvPviMnKg6s",
+          "equipment": {
+            "dumbbells_3kg": {
+              "count": 2
+            },
+            "dumbbells_5kg": {
+              "count": 2
+            },
+            "dumbbells_10kg": {
+              "count": 2
+            }
+          }
+        },
+        {
+          "name": "reverse flies d", 
+          "link": "https://www.youtube.com/shorts/apcNuGp97sY",
+          "equipment": {
+            "dumbbells_3kg": {
+              "count": 2
+            }
+          }
+        },
+        {
+          "name": "Alternating curl / hammer curl", 
+          "link": "https://www.youtube.com/shorts/vm0zV_WQerE",
+          "equipment": {
+            "dumbbells_5kg": {
+              "count": 2
+            },
+            "dumbbells_10kg": {
+              "count": 2
+            }
+          }
+        },
+        {
+          "name": "Overhead press", 
+          "link": "https://www.youtube.com/shorts/b132W5N8Jrg",
+          "equipment": {
+            "dumbbells_3kg": {
+              "count": 2
+            },
+            "dumbbells_5kg": {
+              "count": 2
+            },
+            "dumbbells_10kg": {
+              "count": 2
+            }
+          }
+        },
+        {
+          "name": "Lateral / front raise", 
+          "link": "https://www.youtube.com/shorts/mejtlcieNvc",
+          "equipment": {
+            "dumbbells_3kg": {
+              "count": 2
+            },
+            "dumbbells_5kg": {
+              "count": 2
+            },
+            "dumbbells_10kg": {
+              "count": 2
+            }
+          }
+        },
+        {
+          "name": "Rear-delt fly", 
+          "link": "https://www.youtube.com/shorts/apcNuGp97sY",
+          "equipment": {
+           "dumbbells_5kg": {
+              "count": 2
+            }
+          }
+        }
+      ],
+      "lower_body": [
+        {
+          "name": "Goblet squat", 
+          "link": "https://www.youtube.com/shorts/lRYBbchqxtI",
+          "equipment": {
+            "dumbbells_15kg": {
+              "count": 1
+            }
+          }
+        },
+        {
+          "name": "Reverse or walking lunge", 
+          "link": "https://www.youtube.com/shorts/mJilHWIBWO8",
+          "equipment": {
+            "dumbbells_3kg": {
+              "count": 2
+            },
+            "dumbbells_5kg": {
+              "count": 2
+            },
+            "dumbbells_10kg": {
+              "count": 2
+            }
+          }
+        },
+        {
+          "name": "Single-leg RDL", 
+          "link": "https://www.youtube.com/shorts/eHHsDJQN7z0",
+          "equipment": {
+            "dumbbells_3kg": {
+              "count": 1
+            },
+            "dumbbells_5kg": {
+              "count": 1
+            },
+            "dumbbells_10kg": {
+              "count": 1
+            },
+            "dumbbells_15kg": {
+              "count": 1
+            }
+          }
+        }
+      ],
+      "full_core": [
+        {
+          "name": "Renegade row", 
+          "link": "https://www.youtube.com/shorts/rTVRpI5WVnw",
+          "equipment": {
+            "dumbbells_3kg": {
+              "count": 2
+            }
+          }
+        },
+        {
+          "name": "DB thruster", 
+          "link": "https://www.youtube.com/shorts/UipBcISeiGU",
+          "equipment": {
+            "dumbbells_3kg": {
+              "count": 2
+            },
+            "dumbbells_5kg": {
+              "count": 2
+            },
+            "dumbbells_10kg": {
+              "count": 2
+            }
+          }
+        },
+        {
+          "name": "Devil's press", 
+          "link": "https://www.youtube.com/shorts/oH3uUqTRaGI",
+          "equipment": {
+            "dumbbells_5kg": {
+              "count": 2
+            }
+          }
+        }
+      ]
+    }
+  }
