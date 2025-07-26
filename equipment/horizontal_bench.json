@@ -4,6 +4,8 @@
         {
           "name": "Dumbbell bench press (neutral/pronated)", 
           "link": "https://www.youtube.com/shorts/7TDjD45d860",
+          "area": "upper",
+          "muscles": "chest, triceps, shoulders",
           "equipment": {
             "bench": {
               "count": 1
@@ -19,6 +21,8 @@
         {
           "name": "Barbell bench press (20 kg technique load)", 
           "link": "https://www.youtube.com/shorts/_FkbD0FhgVE",
+          "area": "upper",
+          "muscles": "chest, triceps, shoulders",
           "equipment": {
             "bench": {
               "count": 1
@@ -31,6 +35,8 @@
         {
           "name": "Close-grip dumbbell press", 
           "link": "https://www.youtube.com/shorts/EvjftwN-nSY",
+          "area": "upper",
+          "muscles": "triceps, chest, shoulders",
           "equipment": {
             "bench": {
               "count": 1
@@ -46,6 +52,8 @@
         {
           "name": "Dumbbell pullover", 
           "link": "https://www.youtube.com/shorts/Datv2L6t3-4",
+          "area": "upper",
+          "muscles": "latissimus dorsi, chest, serratus",
           "equipment": {
             "bench": {
               "count": 1
@@ -66,6 +74,8 @@
         {
           "name": "Hip thrust / glute bridge (shoulders on bench)", 
           "link": "https://www.youtube.com/shorts/zx4KGEACh4o",
+          "area": "lower",
+          "muscles": "glutes, hamstrings, core",
           "equipment": {
             "bench": {
               "count": 1
@@ -75,6 +85,8 @@
         {
           "name": "Bulgarian split-squat (rear foot on bench)", 
           "link": "https://www.youtube.com/shorts/J1PEjNVe7po",
+          "area": "lower",
+          "muscles": "quadriceps, glutes, hamstrings",
           "equipment": {
             "bench": {
               "count": 1
@@ -86,6 +98,8 @@
         {
           "name": "Bench dips", 
           "link": "https://www.youtube.com/shorts/4ua3MzaU0QU",
+          "area": "upper",
+          "muscles": "triceps, shoulders, chest",
           "equipment": {
             "bench": {
               "count": 1
@@ -95,6 +109,8 @@
         {
           "name": "Feet-elevated push-ups", 
           "link": "https://www.youtube.com/shorts/MjnJWRwbSYE",
+          "area": "upper",
+          "muscles": "chest, triceps, shoulders",
           "equipment": {
             "bench": {
               "count": 1

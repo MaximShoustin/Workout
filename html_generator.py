@@ -113,51 +113,108 @@ def format_equipment_tags(equipment_data: Dict) -> str:
     return tags_html
 
 
-def analyze_workout_distribution(stations: List[Dict]) -> Dict[str, int]:
-    """Analyze the movement type distribution in the current workout."""
+def format_muscle_tags(muscles_str: str) -> str:
+    """Format muscle groups as colored tags."""
+    if not muscles_str or not muscles_str.strip():
+        return ""
+    
+    tags_html = '<div class="muscle-tags">'
+    
+    # Split muscles by comma and clean up
+    muscles = [muscle.strip().lower() for muscle in muscles_str.split(",") if muscle.strip()]
+    
+    for muscle in muscles:
+        # Determine tag color class based on muscle group
+        if muscle in ["chest", "pecs", "pectorals"]:
+            tag_class = "muscle-chest"
+        elif muscle in ["back", "lats", "rhomboids", "traps"]:
+            tag_class = "muscle-back"
+        elif muscle in ["shoulders", "delts", "deltoids"]:
+            tag_class = "muscle-shoulders"
+        elif muscle in ["biceps", "bicep"]:
+            tag_class = "muscle-biceps"
+        elif muscle in ["triceps", "tricep"]:
+            tag_class = "muscle-triceps"
+        elif muscle in ["legs", "quads", "quadriceps", "hamstrings", "calves", "glutes"]:
+            tag_class = "muscle-legs"
+        elif muscle in ["core", "abs", "abdominals", "obliques"]:
+            tag_class = "muscle-core"
+        else:
+            tag_class = "muscle-other"
+        
+        tags_html += f'<span class="muscle-tag {tag_class}">{muscle.title()}</span>'
+    
+    tags_html += '</div>'
+    return tags_html
+
+
+def analyze_workout_distribution(stations: List[Dict]) -> Dict[str, any]:
+    """Analyze the movement type and muscle distribution in the current workout using precise area and muscle data."""
     from collections import defaultdict
     
-    type_counts = defaultdict(int)
+    # Initialize counters
+    area_counts = defaultdict(int)
+    muscle_counts = defaultdict(int)
+    station_areas = defaultdict(int)
     
-    # Define classification keywords
-    classifications = {
-        "Upper Body": ["upper", "push", "pull", "press", "row", "curl", "raise", "fly"],
-        "Lower Body": ["lower", "squat", "lunge", "leg", "step", "posterior", "deadlift", "bridge", "jump"],
-        "Core": ["core", "carry", "twist", "plank", "rotation", "hold", "support"],
-        "Power/Explosive": ["power", "jump", "slam", "swing", "clean", "jerk", "snatch", "complex", "explosive"]
-    }
+    total_exercises = 0
     
-    # Analyze each exercise in the workout
+    # Analyze each exercise in the workout using precise data
     for station in stations:
+        station_area = station.get('area', 'unknown')
+        station_areas[station_area] += 1
+        
         # Check all step exercises (dynamically determine number of steps)
         step_num = 1
         while f'step{step_num}' in station:
             step_key = f'step{step_num}'
-            exercise_name = station[step_key]
-            exercise_lower = exercise_name.lower()
+            step_muscles_key = f'step{step_num}_muscles'
             
-            # Classify based on exercise name
-            classified = False
-            for movement_type, keywords in classifications.items():
-                if any(keyword in exercise_lower for keyword in keywords):
-                    type_counts[movement_type] += 1
-                    classified = True
-                    break
-            
-            # If not classified by name, try to infer from context
-            if not classified:
-                # Check equipment type for additional clues
-                equipment = station.get('equipment', '').lower()
-                if any(keyword in equipment for keyword in ['dip', 'bench', 'barbell']):
-                    type_counts["Upper Body"] += 1
-                elif any(keyword in equipment for keyword in ['plyo', 'box']):
-                    type_counts["Power/Explosive"] += 1
-                else:
-                    type_counts["Core"] += 1  # Default fallback
+            if step_key in station:
+                # Get area from station (since all exercises in a station target the same area)
+                area = station_area
+                area_counts[area] += 1
+                total_exercises += 1
+                
+                # Get muscle data
+                muscles_str = station.get(step_muscles_key, '')
+                if muscles_str:
+                    # Parse individual muscles
+                    muscles = [muscle.strip().lower() for muscle in muscles_str.split(",") if muscle.strip()]
+                    for muscle in muscles:
+                        muscle_counts[muscle] += 1
             
             step_num += 1
     
-    return dict(type_counts)
+    # Categorize muscles into groups for better visualization
+    muscle_groups = {
+        "Chest": ["chest", "pecs", "pectorals"],
+        "Back": ["back", "lats", "rhomboids", "traps"],
+        "Shoulders": ["shoulders", "delts", "deltoids"],
+        "Arms": ["biceps", "triceps", "forearms"],
+        "Legs": ["legs", "quads", "quadriceps", "hamstrings", "calves", "glutes"],
+        "Core": ["core", "abs", "abdominals", "obliques"]
+    }
+    
+    # Group muscle counts
+    grouped_muscles = defaultdict(int)
+    for muscle, count in muscle_counts.items():
+        grouped = False
+        for group_name, group_muscles in muscle_groups.items():
+            if muscle in group_muscles:
+                grouped_muscles[group_name] += count
+                grouped = True
+                break
+        if not grouped:
+            grouped_muscles["Other"] += count
+    
+    return {
+        "area_distribution": dict(area_counts),
+        "muscle_distribution": dict(muscle_counts),
+        "grouped_muscles": dict(grouped_muscles),
+        "station_areas": dict(station_areas),
+        "total_exercises": total_exercises
+    }
 
 
 def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requirements: Optional[Dict] = None, validation_summary: Optional[Dict] = None, global_active_rest_schedule: Optional[List[Dict]] = None, selected_active_rest_exercises: Optional[List[Dict]] = None) -> str:
@@ -446,6 +503,83 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
         .lower-heavy { color: #3498db; }
         .core-heavy { color: #9b59b6; }
         .power-heavy { color: #e74c3c; }
+        .balance-icon {
+            margin-right: 8px;
+            font-size: 1.2em;
+        }
+        .balance-text {
+            font-weight: 600;
+        }
+        
+        /* Advanced Analysis Styles */
+        .analysis-section {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .section-title {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #ecf0f1;
+        }
+        .distribution-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .stat-item {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            font-weight: 500;
+        }
+        
+        /* Muscle Distribution Styles */
+        .muscle-distribution-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .muscle-item {
+            border-radius: 8px;
+            padding: 12px;
+            border: 1px solid #ecf0f1;
+            position: relative;
+            overflow: hidden;
+        }
+        .muscle-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+        .muscle-name {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        .muscle-stats {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            font-weight: 500;
+        }
+        .muscle-bar {
+            height: 4px;
+            background: #ecf0f1;
+            border-radius: 2px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+        .muscle-fill {
+            height: 100%;
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
         .validation-section {
             margin-top: 40px;
             background: #f8f9fa;
@@ -590,6 +724,32 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
         .tag-slam { background: #34495e; }
         .tag-dip { background: #16a085; }
         .tag-default { background: #95a5a6; }
+        
+        /* Muscle Tags Styles */
+        .muscle-tags {
+            margin-top: 3px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3px;
+            justify-content: center;
+        }
+        .muscle-tag {
+            display: inline-block;
+            padding: 1px 4px;
+            border-radius: 8px;
+            font-size: 0.65em;
+            font-weight: 400;
+            color: white;
+            text-transform: capitalize;
+        }
+        .muscle-chest { background: #e91e63; }
+        .muscle-back { background: #2196f3; } 
+        .muscle-shoulders { background: #ff9800; }
+        .muscle-biceps { background: #4caf50; }
+        .muscle-triceps { background: #9c27b0; }
+        .muscle-legs { background: #795548; }
+        .muscle-core { background: #f44336; }
+        .muscle-other { background: #607d8b; }
         
         /* Active Rest Section Styles */
         .active-rest-section {
@@ -907,11 +1067,13 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
             step_key = f'step{step_num}'
             step_link_key = f'step{step_num}_link'
             step_equipment_key = f'step{step_num}_equipment'
+            step_muscles_key = f'step{step_num}_muscles'
             
             html += f"""
                      <td data-label="Step {step_num}" class="exercise">
                          <span class="mobile-step-label">Step {step_num}:</span>
                          {format_exercise_link(st.get(step_key, ''), st.get(step_link_key, ''))}
+                         {format_muscle_tags(st.get(step_muscles_key, ''))}
                          {format_equipment_tags(st.get(step_equipment_key, {}))}
                      </td>"""
         
@@ -993,56 +1155,114 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
         </div>"""
     
     # Add workout distribution analysis
-    workout_distribution = analyze_workout_distribution(stations)
-    if workout_distribution:
-        total_exercises = sum(workout_distribution.values())
+    workout_analysis = analyze_workout_distribution(stations)
+    if workout_analysis and workout_analysis.get("total_exercises", 0) > 0:
+        area_distribution = workout_analysis["area_distribution"]
+        grouped_muscles = workout_analysis["grouped_muscles"]
+        station_areas = workout_analysis["station_areas"]
+        total_exercises = workout_analysis["total_exercises"]
         
         html += f"""
         <div class="workout-analysis">
-            <div class="analysis-title">💪 Workout Movement Analysis</div>
-            <div class="distribution-grid">"""
+            <div class="analysis-title">💪 Advanced Workout Analysis</div>
+            
+            <!-- Station Area Distribution -->
+            <div class="analysis-section">
+                <h3 class="section-title">🎯 Station Area Targeting</h3>
+                <div class="distribution-grid">"""
         
-        # Define order and colors for movement types
-        movement_order = ["Upper Body", "Lower Body", "Core", "Power/Explosive"]
+        # Area distribution with icons
+        area_icons = {"upper": "💪", "lower": "🦵", "core": "🔥"}
+        area_colors = {"upper": "#3498db", "lower": "#27ae60", "core": "#e74c3c"}
         
-        for movement_type in movement_order:
-            count = workout_distribution.get(movement_type, 0)
-            if count > 0:
-                percentage = (count / total_exercises * 100) if total_exercises > 0 else 0
-                html += f"""
-                <div class="distribution-item">
-                    <div class="distribution-type">{movement_type}</div>
-                    <div class="distribution-count">{count}</div>
-                    <div class="distribution-percentage">{percentage:.1f}% of workout</div>
+        for area, station_count in station_areas.items():
+            exercise_count = area_distribution.get(area, 0)
+            station_percentage = (station_count / len(stations) * 100) if len(stations) > 0 else 0
+            exercise_percentage = (exercise_count / total_exercises * 100) if total_exercises > 0 else 0
+            icon = area_icons.get(area, "🏋️")
+            color = area_colors.get(area, "#95a5a6")
+            
+            html += f"""
+                <div class="distribution-item" style="border-left: 4px solid {color}">
+                    <div class="distribution-type">{icon} {area.title()}</div>
+                    <div class="distribution-stats">
+                        <span class="stat-item">{station_count} stations ({station_percentage:.0f}%)</span>
+                        <span class="stat-item">{exercise_count} exercises ({exercise_percentage:.0f}%)</span>
+                    </div>
                 </div>"""
+        
+        html += f"""
+                </div>
+            </div>
+            
+            <!-- Muscle Group Analysis -->
+            <div class="analysis-section">
+                <h3 class="section-title">🎯 Muscle Group Distribution</h3>
+                <div class="muscle-distribution-grid">"""
+        
+        # Muscle group distribution with colors
+        muscle_icons = {
+            "Chest": "🔥", "Back": "💪", "Shoulders": "🌟", 
+            "Arms": "💥", "Legs": "🦵", "Core": "⚡", "Other": "🏋️"
+        }
+        muscle_colors = {
+            "Chest": "#e91e63", "Back": "#2196f3", "Shoulders": "#ff9800",
+            "Arms": "#4caf50", "Legs": "#795548", "Core": "#f44336", "Other": "#607d8b"
+        }
+        
+        # Sort muscle groups by count (highest first)
+        sorted_muscles = sorted(grouped_muscles.items(), key=lambda x: x[1], reverse=True)
+        
+        for muscle_group, count in sorted_muscles:
+            if count > 0:
+                percentage = (count / sum(grouped_muscles.values()) * 100) if sum(grouped_muscles.values()) > 0 else 0
+                icon = muscle_icons.get(muscle_group, "🏋️")
+                color = muscle_colors.get(muscle_group, "#95a5a6")
+                
+                html += f"""
+                    <div class="muscle-item" style="background: linear-gradient(90deg, {color}22 0%, {color}44 {percentage}%, transparent {percentage}%)">
+                        <div class="muscle-info">
+                            <span class="muscle-name">{icon} {muscle_group}</span>
+                            <span class="muscle-stats">{count} exercises • {percentage:.1f}%</span>
+                        </div>
+                        <div class="muscle-bar">
+                            <div class="muscle-fill" style="width: {percentage}%; background: {color}"></div>
+                        </div>
+                    </div>"""
         
         # Add workout balance assessment
         balance_class = "balanced"
         balance_text = "Well-balanced workout"
+        balance_icon = "⚖️"
         
-        if total_exercises > 0:
-            max_type = max(workout_distribution.items(), key=lambda x: x[1])
-            max_percentage = (max_type[1] / total_exercises * 100)
+        if area_distribution:
+            max_area = max(area_distribution.items(), key=lambda x: x[1])
+            max_percentage = (max_area[1] / total_exercises * 100)
             
             if max_percentage > 50:
-                if max_type[0] == "Upper Body":
+                if max_area[0] == "upper":
                     balance_class = "upper-heavy"
-                    balance_text = "Upper body focused"
-                elif max_type[0] == "Lower Body":
+                    balance_text = "Upper body focused workout"
+                    balance_icon = "💪"
+                elif max_area[0] == "lower":
                     balance_class = "lower-heavy"
-                    balance_text = "Lower body focused"
-                elif max_type[0] == "Core":
+                    balance_text = "Lower body focused workout"
+                    balance_icon = "🦵"
+                elif max_area[0] == "core":
                     balance_class = "core-heavy"
-                    balance_text = "Core focused"
-                elif max_type[0] == "Power/Explosive":
-                    balance_class = "power-heavy"
-                    balance_text = "Power/explosive focused"
+                    balance_text = "Core focused workout"
+                    balance_icon = "🔥"
         
         html += f"""
-            </div>
-            <div class="workout-balance">
-                <div>Total Exercises: <strong>{total_exercises}</strong></div>
-                <div class="balance-indicator {balance_class}">{balance_text}</div>
+                </div>
+                
+                <div class="workout-balance">
+                    <div>Total Exercises: <strong>{total_exercises}</strong></div>
+                    <div class="balance-indicator {balance_class}">
+                        <span class="balance-icon">{balance_icon}</span>
+                        <span class="balance-text">{balance_text}</span>
+                    </div>
+                </div>
             </div>
         </div>"""
     

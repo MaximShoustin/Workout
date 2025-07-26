@@ -299,7 +299,7 @@ def filter_exercises_by_remaining_equipment(station_pool: List[Tuple[str, str, s
     filtered_pool = []
     
     for exercise_tuple in station_pool:
-        area, equip_name, exercise_name, exercise_link, equipment_data = exercise_tuple
+        area, equip_name, exercise_name, exercise_link, equipment_data, muscles = exercise_tuple
         
         # Select best equipment option for this exercise
         selected_equipment = select_best_equipment_option(equipment_data, available_inventory)
@@ -393,7 +393,7 @@ def find_exercise_using_equipment(station_pool: List[Tuple[str, str, str, str, d
     # Filter to unused exercises that use the target equipment
     candidates = []
     for exercise_tuple in station_pool:
-        area, equip_name, exercise_name, exercise_link, equipment_data = exercise_tuple
+        area, equip_name, exercise_name, exercise_link, equipment_data, muscles = exercise_tuple
         if exercise_name not in used_names and equipment_type in equipment_data:
             candidates.append(exercise_tuple)
     
@@ -450,16 +450,16 @@ def find_compatible_exercises_for_station(station_pool: List[Tuple[str, str, str
     def uses_must_use_equipment(exercise_tuple):
         if not must_use_equipment:
             return False
-        _, _, _, _, equipment = exercise_tuple
+        _, _, _, _, equipment, _ = exercise_tuple
         return any(eq_type in equipment for eq_type in must_use_equipment)
     
-    # Try to find N compatible exercises
+    # Try to find N compatible exercises, prioritizing target area
     def try_combination(exercises_to_try, selected_exercises, remaining_steps):
         if remaining_steps == 0:
             # Check if all selected exercises can work together
             step_equipments = []
             for exercise in selected_exercises:
-                _, _, _, _, equipment = exercise
+                _, _, _, _, equipment, _ = exercise
                 selected_equipment = select_best_equipment_option(equipment, available_inventory)
                 step_equipments.append(selected_equipment)
             
@@ -467,15 +467,23 @@ def find_compatible_exercises_for_station(station_pool: List[Tuple[str, str, str
                 return selected_exercises[:]
             return []
         
-        # Try each remaining exercise
-        for i, exercise in enumerate(exercises_to_try):
-            area, equip, name, link, equipment = exercise
+        # Prioritize exercises from target area first
+        target_area_exercises = [ex for ex in exercises_to_try if ex[0] == area_target]
+        other_area_exercises = [ex for ex in exercises_to_try if ex[0] != area_target]
+        
+        # Try target area exercises first, then others as fallback
+        ordered_exercises = target_area_exercises + other_area_exercises
+        
+        # Try each exercise in priority order
+        for i, exercise in enumerate(ordered_exercises):
+            area, equip, name, link, equipment, muscles = exercise
             
             # Avoid duplicates within the station
             if name not in [ex[2] for ex in selected_exercises]:
                 # Try this exercise
                 new_selected = selected_exercises + [exercise]
-                remaining_exercises = exercises_to_try[i+1:]  # Only try exercises after this one
+                # For remaining exercises, maintain the same priority order but exclude this one
+                remaining_exercises = [ex for ex in ordered_exercises[i+1:] if ex != exercise]
                 
                 result = try_combination(remaining_exercises, new_selected, remaining_steps - 1)
                 if result:
@@ -483,13 +491,23 @@ def find_compatible_exercises_for_station(station_pool: List[Tuple[str, str, str
         
         return []
     
-    # Strategy 0: PRIORITIZE must-use equipment first
+    # Strategy 0: PRIORITIZE must-use equipment first, preferring target area
     if must_use_equipment:
         must_use_exercises = [ex for ex in available_exercises if uses_must_use_equipment(ex)]
         if must_use_exercises:
             print(f"   🎯 Found {len(must_use_exercises)} exercises using must-use equipment")
             
-            # Try combinations that include must-use exercises
+            # First, try must-use exercises from the target area
+            target_area_must_use = [ex for ex in must_use_exercises if ex[0] == area_target]
+            if target_area_must_use:
+                for must_use_ex in target_area_must_use:
+                    remaining_exercises = [ex for ex in available_exercises if ex != must_use_ex]
+                    result = try_combination(remaining_exercises, [must_use_ex], steps_per_station - 1)
+                    if result:
+                        print(f"   ✅ Successfully prioritized must-use equipment in: {must_use_ex[2]}")
+                        return result
+            
+            # If no target area must-use exercises work, try any area
             for must_use_ex in must_use_exercises:
                 # Start with a must-use exercise and try to build a complete station
                 remaining_exercises = [ex for ex in available_exercises if ex != must_use_ex]
@@ -749,15 +767,17 @@ def build_plan(plan: dict, station_pool: List[Tuple[str, str, str, str, dict]], 
         step_names = []
         step_links = []
         step_equipments = []
+        step_muscles = []
         
         for exercise in station_exercises:
-            area, equip, name, link, equipment = exercise
+            area, equip, name, link, equipment, muscles = exercise
             used_names.add(name)
             selected_equipment = select_best_equipment_option(equipment, available_inventory)
             
             step_names.append(name)
             step_links.append(link)
             step_equipments.append(selected_equipment)
+            step_muscles.append(muscles)
             
             # Remove exercise from pool
             for idx, ex_tuple in enumerate(station_pool):
@@ -771,6 +791,7 @@ def build_plan(plan: dict, station_pool: List[Tuple[str, str, str, str, dict]], 
             step_names.append(step_names[-1])
             step_links.append(step_links[-1])
             step_equipments.append(step_equipments[-1])
+            step_muscles.append(step_muscles[-1])
         
         # Add this station's equipment requirements to cumulative usage
         station_requirements = get_station_equipment_requirements(step_equipments, plan["people_per_station"])
@@ -795,6 +816,7 @@ def build_plan(plan: dict, station_pool: List[Tuple[str, str, str, str, dict]], 
             station_data[f"step{step_num}"] = step_names[step_idx]
             station_data[f"step{step_num}_link"] = step_links[step_idx]
             station_data[f"step{step_num}_equipment"] = step_equipments[step_idx]
+            station_data[f"step{step_num}_muscles"] = step_muscles[step_idx]
             station_data[f"rest_step{step_num}"] = global_active_rest_schedule[step_idx]["name"]
             station_data[f"rest_step{step_num}_link"] = global_active_rest_schedule[step_idx]["link"]
         

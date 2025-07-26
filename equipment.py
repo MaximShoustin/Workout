@@ -63,7 +63,7 @@ def filter_feasible_exercises(pool: List[Tuple[str, str, str, str, dict]], avail
     Filter exercise pool to only include exercises that can be performed with available equipment.
     
     Args:
-        pool: List of (area, equip_name, exercise_name, exercise_link, equipment_data)
+        pool: List of (area, equip_name, exercise_name, exercise_link, equipment_data, muscles)
         available_inventory: Available equipment from plan.json
         
     Returns:
@@ -73,7 +73,7 @@ def filter_feasible_exercises(pool: List[Tuple[str, str, str, str, dict]], avail
     excluded_exercises = []
     
     for exercise_tuple in pool:
-        area, equip_name, exercise_name, exercise_link, equipment_data = exercise_tuple
+        area, equip_name, exercise_name, exercise_link, equipment_data, muscles = exercise_tuple
         
         if can_exercise_be_performed(equipment_data, available_inventory):
             feasible_pool.append(exercise_tuple)
@@ -105,23 +105,28 @@ def parse_equipment() -> Dict[str, dict]:
     return gear
 
 
-def build_station_pool(gear: Dict[str, dict], available_inventory: Optional[dict] = None) -> List[Tuple[str, str, str, str, dict]]:
-    """Return list of (area, equip_name, exercise_name, exercise_link, equipment_data)"""
+def build_station_pool(gear: Dict[str, dict], available_inventory: Optional[dict] = None) -> List[Tuple[str, str, str, str, dict, str]]:
+    """Return list of (area, equip_name, exercise_name, exercise_link, equipment_data, muscles)"""
     pool = []
     for equip_name, data in gear.items():
         for cat, lst in data["lifts"].items():
-            area = classify_area(cat)
             for ex in lst:
                 # Handle both old string format and new object format
                 if isinstance(ex, dict):
                     exercise_name = ex["name"]
                     exercise_link = ex.get("link", "")
                     equipment_data = ex.get("equipment", {})
+                    # Use the area field directly from the exercise data
+                    area = ex.get("area", "core")  # Default to "core" if area field is missing
+                    muscles = ex.get("muscles", "")  # Get muscles data
                 else:
+                    # Fallback for old string format (shouldn't happen anymore)
                     exercise_name = ex
                     exercise_link = ""
                     equipment_data = {}
-                pool.append((area, equip_name, exercise_name, exercise_link, equipment_data))
+                    area = classify_area(cat)  # Use old method as fallback
+                    muscles = ""  # No muscles data for old format
+                pool.append((area, equip_name, exercise_name, exercise_link, equipment_data, muscles))
     if not pool:
         die("Equipment JSONs contained no lifts!")
     

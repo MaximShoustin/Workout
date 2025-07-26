@@ -4,6 +4,8 @@
         {
           "name": "Floor press", 
           "link": "https://www.youtube.com/shorts/TvPviMnKg6s",
+          "area": "upper",
+          "muscles": "chest, triceps, shoulders",
           "equipment": {
             "dumbbells_3kg": {
               "count": 2
@@ -19,6 +21,8 @@
         {
           "name": "reverse flies d", 
           "link": "https://www.youtube.com/shorts/apcNuGp97sY",
+          "area": "upper",
+          "muscles": "rear deltoids, rhomboids",
           "equipment": {
             "dumbbells_3kg": {
               "count": 2
@@ -28,6 +32,8 @@
         {
           "name": "Alternating curl / hammer curl", 
           "link": "https://www.youtube.com/shorts/vm0zV_WQerE",
+          "area": "upper",
+          "muscles": "biceps, forearms",
           "equipment": {
             "dumbbells_5kg": {
               "count": 2
@@ -40,6 +46,8 @@
         {
           "name": "Overhead press", 
           "link": "https://www.youtube.com/shorts/b132W5N8Jrg",
+          "area": "upper",
+          "muscles": "shoulders, triceps, core",
           "equipment": {
             "dumbbells_3kg": {
               "count": 2
@@ -55,6 +63,8 @@
         {
           "name": "Lateral / front raise", 
           "link": "https://www.youtube.com/shorts/mejtlcieNvc",
+          "area": "upper",
+          "muscles": "deltoids, shoulders",
           "equipment": {
             "dumbbells_3kg": {
               "count": 2
@@ -70,6 +80,8 @@
         {
           "name": "Rear-delt fly", 
           "link": "https://www.youtube.com/shorts/apcNuGp97sY",
+          "area": "upper",
+          "muscles": "rear deltoids, rhomboids",
           "equipment": {
            "dumbbells_5kg": {
               "count": 2
@@ -81,6 +93,8 @@
         {
           "name": "Goblet squat", 
           "link": "https://www.youtube.com/shorts/lRYBbchqxtI",
+          "area": "lower",
+          "muscles": "quadriceps, glutes, core",
           "equipment": {
             "dumbbells_15kg": {
               "count": 1
@@ -90,6 +104,8 @@
         {
           "name": "Reverse or walking lunge", 
           "link": "https://www.youtube.com/shorts/mJilHWIBWO8",
+          "area": "lower",
+          "muscles": "quadriceps, glutes, hamstrings",
           "equipment": {
             "dumbbells_3kg": {
               "count": 2
@@ -105,6 +121,8 @@
         {
           "name": "Single-leg RDL", 
           "link": "https://www.youtube.com/shorts/eHHsDJQN7z0",
+          "area": "lower",
+          "muscles": "hamstrings, glutes, core",
           "equipment": {
             "dumbbells_3kg": {
               "count": 1
@@ -125,6 +143,8 @@
         {
           "name": "Renegade row", 
           "link": "https://www.youtube.com/shorts/rTVRpI5WVnw",
+          "area": "core",
+          "muscles": "core, latissimus dorsi, shoulders",
           "equipment": {
             "dumbbells_3kg": {
               "count": 2
@@ -134,6 +154,8 @@
         {
           "name": "DB thruster", 
           "link": "https://www.youtube.com/shorts/UipBcISeiGU",
+          "area": "core",
+          "muscles": "shoulders, quadriceps, glutes, core",
           "equipment": {
             "dumbbells_3kg": {
               "count": 2
@@ -149,6 +171,8 @@
         {
           "name": "Devil's press", 
           "link": "https://www.youtube.com/shorts/oH3uUqTRaGI",
+          "area": "core",
+          "muscles": "shoulders, chest, quadriceps, glutes, core",
           "equipment": {
             "dumbbells_5kg": {
               "count": 2
