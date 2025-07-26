@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strength Block – Week 1</title>
+    
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            line-height: 1.6; 
+            color: #333; 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        h1 { 
+            color: #2c3e50; 
+            text-align: center; 
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            font-weight: 300;
+        }
+        .subtitle { 
+            text-align: center; 
+            color: #7f8c8d; 
+            font-style: italic; 
+            margin-bottom: 30px;
+        }
+        .notes {
+            background: #ecf0f1;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            margin-bottom: 25px;
+            border-radius: 5px;
+        }
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        th { 
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white; 
+            padding: 15px; 
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        td { 
+            padding: 15px; 
+            border-bottom: 1px solid #ecf0f1;
+            vertical-align: top;
+        }
+        tr:nth-child(even) { 
+            background: #f8f9fa; 
+        }
+        tr:hover {
+            background: #e3f2fd;
+            transition: all 0.3s ease;
+        }
+        .station-letter { 
+            font-weight: bold; 
+            font-size: 1.2em;
+            color: #2980b9;
+            display: block;
+            text-align: center;
+        }
+        .area-badge {
+            display: block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: white;
+            text-align: center;
+            margin: 0 auto;
+            width: fit-content;
+        }
+        .upper { background: #e74c3c; }
+        .lower { background: #27ae60; }
+        .core { background: #f39c12; }
+        .exercise {
+            font-weight: 500;
+            margin-bottom: 3px;
+            position: relative;
+        }
+        .exercise-with-video {
+            position: relative;
+            display: inline-block;
+        }
+        .exercise-name {
+            color: #2980b9;
+            cursor: pointer;
+            text-decoration: none;
+            border-bottom: 1px dotted #2980b9;
+            transition: all 0.3s ease;
+        }
+        .exercise-name:hover {
+            color: #e74c3c;
+            border-bottom: 1px solid #e74c3c;
+            background: rgba(231, 76, 60, 0.1);
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        .video-popup {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 100%;
+            margin-left: 20px;
+            width: 240px;
+            height: 360px;
+            background: white;
+            border: 2px solid #2980b9;
+            border-radius: 8px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            z-index: 1000;
+            overflow: hidden;
+        }
+        .video-popup iframe {
+            width: 100%;
+            height: calc(100% - 35px);
+            border: none;
+        }
+        .close-video {
+            position: absolute;
+            bottom: 5px;
+            right: 10px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            line-height: 1;
+            z-index: 1001;
+        }
+        .close-video:hover {
+            background: #c0392b;
+        }
+        .rest-activity {
+            font-style: italic;
+            color: #7f8c8d;
+            position: relative;
+        }
+        .rest-activity .exercise-name {
+            color: #8e44ad;
+            border-bottom: 1px dotted #8e44ad;
+        }
+        .rest-activity .exercise-name:hover {
+            color: #27ae60;
+            border-bottom: 1px solid #27ae60;
+            background: rgba(39, 174, 96, 0.1);
+        }
+        .timestamp {
+            text-align: center;
+            color: #95a5a6;
+            margin-top: 30px;
+            font-size: 0.9em;
+        }
+        .equipment-section {
+            margin-top: 40px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+        }
+        .equipment-title {
+            font-size: 1.4em;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .equipment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        .equipment-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .equipment-name {
+            font-weight: 500;
+            color: #2c3e50;
+            text-transform: capitalize;
+        }
+        .equipment-count {
+            background: #3498db;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+        .workout-analysis {
+            margin-top: 40px;
+            background: #f1f8ff;
+            border-radius: 10px;
+            padding: 25px;
+        }
+        .analysis-title {
+            font-size: 1.4em;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 2px solid #e74c3c;
+            padding-bottom: 10px;
+        }
+        .distribution-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .distribution-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #e74c3c;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .distribution-type {
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+        }
+        .distribution-count {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 5px;
+        }
+        .distribution-percentage {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            font-style: italic;
+        }
+        .workout-balance {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e1e8ed;
+            text-align: center;
+        }
+        .balance-indicator {
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        .balanced { color: #27ae60; }
+        .upper-heavy { color: #f39c12; }
+        .lower-heavy { color: #3498db; }
+        .core-heavy { color: #9b59b6; }
+        .power-heavy { color: #e74c3c; }
+        .validation-section {
+            margin-top: 40px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+        }
+        .validation-title {
+            font-size: 1.4em;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+            padding-bottom: 10px;
+        }
+        .validation-valid {
+            border-bottom: 2px solid #27ae60;
+        }
+        .validation-warning {
+            border-bottom: 2px solid #f39c12;
+        }
+        .validation-error {
+            border-bottom: 2px solid #e74c3c;
+        }
+        .validation-status {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+            font-weight: 500;
+        }
+        .status-icon {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+        .validation-issues {
+            background: #fff;
+            border-left: 4px solid #e74c3c;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        .validation-issues h4 {
+            color: #e74c3c;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        .validation-issues ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .validation-issues li {
+            margin-bottom: 5px;
+            color: #666;
+        }
+        .utilization-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .utilization-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .utilization-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .utilization-name {
+            font-weight: 600;
+            color: #2c3e50;
+            text-transform: capitalize;
+        }
+        .utilization-sufficient {
+            color: #27ae60;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .utilization-insufficient {
+            color: #e74c3c;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .utilization-unused {
+            color: #95a5a6;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .utilization-bar {
+            height: 8px;
+            background: #ecf0f1;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+        .utilization-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        .utilization-full {
+            background: #27ae60;
+        }
+        .utilization-partial {
+            background: #3498db;
+        }
+        .utilization-zero {
+            background: #bdc3c7;
+        }
+        .utilization-details {
+            font-size: 0.9em;
+            color: #666;
+            display: flex;
+            justify-content: space-between;
+        }
+        .equipment-tags {
+            margin-top: 5px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            justify-content: center;
+        }
+        .equipment-tag {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            font-weight: 500;
+            color: white;
+            text-transform: lowercase;
+        }
+        .tag-kettlebells { background: #e74c3c; }
+        .tag-dumbbells { background: #3498db; }
+        .tag-barbells { background: #9b59b6; }
+        .tag-bench { background: #27ae60; }
+        .tag-plyo { background: #f39c12; }
+        .tag-slam { background: #34495e; }
+        .tag-dip { background: #16a085; }
+        .tag-default { background: #95a5a6; }
+        
+        /* Active Rest Section Styles */
+        .active-rest-section {
+            margin-top: 40px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 2px solid #28a745;
+        }
+        .active-rest-title {
+            font-size: 1.8em;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            text-align: center;
+            border-bottom: 3px solid #28a745;
+            padding-bottom: 15px;
+            background: linear-gradient(135deg, #28a745, #20c997);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .active-rest-description {
+            text-align: center;
+            color: #6c757d;
+            font-style: italic;
+            margin-bottom: 25px;
+            font-size: 1.1em;
+        }
+        .active-rest-table {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        .active-rest-table th {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1em;
+        }
+        .active-rest-table td {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid #dee2e6;
+            font-size: 1.1em;
+        }
+        .active-rest-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        .active-rest-table tr:hover {
+            background: #e8f5e8;
+            transition: all 0.3s ease;
+        }
+        .rest-period-label {
+            font-weight: 600;
+            color: #495057;
+            background: rgba(40, 167, 69, 0.1);
+            border-radius: 8px;
+        }
+        .active-rest-activity {
+            font-weight: 500;
+        }
+        .active-rest-activity .exercise-name {
+            color: #28a745;
+            border-bottom: 1px dotted #28a745;
+            font-weight: 600;
+        }
+        .active-rest-activity .exercise-name:hover {
+            color: #dc3545;
+            border-bottom: 1px solid #dc3545;
+            background: rgba(220, 53, 69, 0.1);
+        }
+        .active-rest-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        .selected-exercises {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border: 1px solid #e9ecef;
+        }
+        .exercises-title {
+            color: #2c3e50;
+            font-size: 1.3em;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 2px solid #28a745;
+            padding-bottom: 10px;
+        }
+        .exercises-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .exercise-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border: 2px solid #28a745;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .exercise-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+        }
+        .exercise-number {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            background: #28a745;
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            font-size: 0.9em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .exercise-content {
+            margin-top: 5px;
+            font-weight: 500;
+        }
+        .exercise-content .exercise-name {
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        .schedule-table {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border: 1px solid #e9ecef;
+        }
+        .schedule-title {
+            color: #2c3e50;
+            font-size: 1.3em;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 2px solid #17a2b8;
+            padding-bottom: 10px;
+        }
+        @media (max-width: 768px) {
+            .active-rest-content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .exercises-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Mobile step labels - hidden on desktop */
+        .mobile-step-label,
+        .mobile-rest-label {
+            display: none;
+        }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .container { padding: 20px; }
+            h1 { font-size: 2em; }
+            table { 
+                width: 100% !important; 
+                margin: 10px 0;
+                box-sizing: border-box;
+            }
+            table, tr, td { display: block; }
+            th, thead { display: none !important; }
+            thead tr { display: none !important; }
+            tr {
+                width: 100%;
+                margin-bottom: 25px;
+                border: 2px solid #3498db;
+                border-radius: 12px;
+                background: linear-gradient(145deg, #ffffff, #f8f9fa);
+                padding: 20px;
+                box-sizing: border-box;
+                box-shadow: 0 8px 20px rgba(52, 152, 219, 0.15);
+                position: relative;
+            }
+            tr:before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 4px;
+                background: linear-gradient(90deg, #3498db, #2980b9);
+                border-radius: 12px 12px 0 0;
+            }
+            td { 
+                border: none;
+                position: relative;
+                padding: 15px;
+                width: 100%;
+                box-sizing: border-box;
+                margin-bottom: 8px;
+                border-radius: 6px;
+                min-height: 60px;
+                display: block;
+                overflow: visible;
+                text-align: center;
+            }
+            td.exercise {
+                background: rgba(52, 152, 219, 0.05);
+                border-left: 4px solid #3498db;
+            }
+            td.rest-activity {
+                background: rgba(46, 204, 113, 0.05);
+                border-left: 4px solid #2ecc71;
+                margin-bottom: 15px;
+            }
+
+            td .exercise-with-video,
+            td .exercise-name {
+                display: block !important;
+                margin: 8px auto !important;
+                line-height: 1.4;
+                text-align: center !important;
+            }
+            td .equipment-tags {
+                display: block !important;
+                margin: 8px auto !important;
+                line-height: 1.2;
+                text-align: center !important;
+                justify-content: center !important;
+            }
+            
+            /* Show mobile step labels */
+            .mobile-step-label {
+                display: block !important;
+                background: rgba(52, 152, 219, 0.15) !important;
+                color: #2980b9 !important;
+                font-weight: 700 !important;
+                font-size: 0.8em !important;
+                padding: 6px 12px !important;
+                border-radius: 15px !important;
+                margin: 0 auto 10px auto !important;
+                border: 1px solid #3498db !important;
+                width: fit-content !important;
+                text-align: center !important;
+            }
+            
+            .mobile-rest-label {
+                display: block !important;
+                background: rgba(46, 204, 113, 0.15) !important;
+                color: #27ae60 !important;
+                font-weight: 700 !important;
+                font-size: 0.8em !important;
+                padding: 6px 12px !important;
+                border-radius: 15px !important;
+                margin: 0 auto 10px auto !important;
+                border: 1px solid #2ecc71 !important;
+                width: fit-content !important;
+                text-align: center !important;
+            }
+            .video-popup {
+                position: fixed !important;
+                top: 50% !important;
+                left: 50% !important;
+                transform: translate(-50%, -50%) !important;
+                margin: 0 !important;
+                width: 90vw !important;
+                max-width: 280px !important;
+                height: 60vh !important;
+                max-height: 400px !important;
+                z-index: 9999 !important;
+            }
+            .exercise-with-video {
+                position: static !important;
+            }
+            .exercise {
+                position: static !important;
+            }
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="container">
+        <h1>Strength Block – Week 1</h1>
+        <div class="subtitle">Generated on 2025-07-26 17:23:36</div>
+        
+        <div class="notes">Dont' crash the first week</div>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Station</th>
+                    <th>40s Step 1</th>
+                    <th>40s Step 2</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td data-label="Station">
+                        <span class="station-letter">A</span><br>
+                        <span class="area-badge upper">upper</span>
+                    </td>
+                     <td data-label="Step 1" class="exercise">
+                         <span class="mobile-step-label">Step 1:</span>
+                         <span class="exercise-with-video">
+            <span class="exercise-name" onclick="toggleVideo('incline_plank_shoulder_tap')">Incline plank shoulder-tap</span>
+            <div id="video_incline_plank_shoulder_tap" class="video-popup">
+                <iframe src="https://www.youtube.com/embed/SmvOGV0Z7wc?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
+                <button class="close-video" onclick="toggleVideo('incline_plank_shoulder_tap')">&times;</button>
+            </div>
+        </span>
+                         <div class="equipment-tags"><span class="equipment-tag tag-plyo">plyo box</span></div>
+                     </td>
+                     <td data-label="Step 2" class="exercise">
+                         <span class="mobile-step-label">Step 2:</span>
+                         <span class="exercise-with-video">
+            <span class="exercise-name" onclick="toggleVideo('halo')">Halo</span>
+            <div id="video_halo" class="video-popup">
+                <iframe src="https://www.youtube.com/embed/k-YcemjRASg?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
+                <button class="close-video" onclick="toggleVideo('halo')">&times;</button>
+            </div>
+        </span>
+                         <div class="equipment-tags"><span class="equipment-tag tag-kettlebells">kettlebell 4 kg</span></div>
+                     </td>
+                </tr>
+                <tr>
+                    <td data-label="Station">
+                        <span class="station-letter">B</span><br>
+                        <span class="area-badge lower">lower</span>
+                    </td>
+                     <td data-label="Step 1" class="exercise">
+                         <span class="mobile-step-label">Step 1:</span>
+                         <span class="exercise-with-video">
+            <span class="exercise-name" onclick="toggleVideo('dumbbell_bench_press_(neutral/pronated)')">Dumbbell bench press (neutral/pronated)</span>
+            <div id="video_dumbbell_bench_press_(neutral/pronated)" class="video-popup">
+                <iframe src="https://www.youtube.com/embed/7TDjD45d860?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
+                <button class="close-video" onclick="toggleVideo('dumbbell_bench_press_(neutral/pronated)')">&times;</button>
+            </div>
+        </span>
+                         <div class="equipment-tags"><span class="equipment-tag tag-bench">bench</span><span class="equipment-tag tag-dumbbells">dumbbell 5 kg x2</span></div>
+                     </td>
+                     <td data-label="Step 2" class="exercise">
+                         <span class="mobile-step-label">Step 2:</span>
+                         <span class="exercise-with-video">
+            <span class="exercise-name" onclick="toggleVideo('half_kneeling_press')">Half-Kneeling Press</span>
+            <div id="video_half_kneeling_press" class="video-popup">
+                <iframe src="https://www.youtube.com/embed/4nmVaAZ3bPU?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
+                <button class="close-video" onclick="toggleVideo('half_kneeling_press')">&times;</button>
+            </div>
+        </span>
+                         <div class="equipment-tags"><span class="equipment-tag tag-kettlebells">kettlebell 4 kg</span></div>
+                     </td>
+                </tr>
+                <tr>
+                    <td data-label="Station">
+                        <span class="station-letter">C</span><br>
+                        <span class="area-badge core">core</span>
+                    </td>
+                     <td data-label="Step 1" class="exercise">
+                         <span class="mobile-step-label">Step 1:</span>
+                         <span class="exercise-with-video">
+            <span class="exercise-name" onclick="toggleVideo('bent_over_row')">Bent-over row</span>
+            <div id="video_bent_over_row" class="video-popup">
+                <iframe src="https://www.youtube.com/embed/HROup6N-olM?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
+                <button class="close-video" onclick="toggleVideo('bent_over_row')">&times;</button>
+            </div>
+        </span>
+                         <div class="equipment-tags"><span class="equipment-tag tag-barbells">barbells</span></div>
+                     </td>
+                     <td data-label="Step 2" class="exercise">
+                         <span class="mobile-step-label">Step 2:</span>
+                         <span class="exercise-with-video">
+            <span class="exercise-name" onclick="toggleVideo('z_press_(seated_on_floor)')">Z-Press (seated on floor)</span>
+            <div id="video_z_press_(seated_on_floor)" class="video-popup">
+                <iframe src="https://www.youtube.com/embed/DzYK2-lUFus?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
+                <button class="close-video" onclick="toggleVideo('z_press_(seated_on_floor)')">&times;</button>
+            </div>
+        </span>
+                         <div class="equipment-tags"><span class="equipment-tag tag-kettlebells">kettlebell 4 kg</span></div>
+                     </td>
+                </tr>
+                <tr>
+                    <td data-label="Station">
+                        <span class="station-letter">D</span><br>
+                        <span class="area-badge upper">upper</span>
+                    </td>
+                     <td data-label="Step 1" class="exercise">
+                         <span class="mobile-step-label">Step 1:</span>
+                         <span class="exercise-with-video">
+            <span class="exercise-name" onclick="toggleVideo('good_morning')">Good-morning</span>
+            <div id="video_good_morning" class="video-popup">
+                <iframe src="https://www.youtube.com/embed/tCoZ6tZBnbE?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
+                <button class="close-video" onclick="toggleVideo('good_morning')">&times;</button>
+            </div>
+        </span>
+                         <div class="equipment-tags"><span class="equipment-tag tag-barbells">barbells</span></div>
+                     </td>
+                     <td data-label="Step 2" class="exercise">
+                         <span class="mobile-step-label">Step 2:</span>
+                         <span class="exercise-with-video">
+            <span class="exercise-name" onclick="toggleVideo('reverse_flies_d')">reverse flies d</span>
+            <div id="video_reverse_flies_d" class="video-popup">
+                <iframe src="https://www.youtube.com/embed/apcNuGp97sY?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
+                <button class="close-video" onclick="toggleVideo('reverse_flies_d')">&times;</button>
+            </div>
+        </span>
+                         <div class="equipment-tags"><span class="equipment-tag tag-dumbbells">dumbbell 3 kg x2</span></div>
+                     </td>
+                </tr>
+                <tr>
+                    <td data-label="Station">
+                        <span class="station-letter">E</span><br>
+                        <span class="area-badge lower">lower</span>
+                    </td>
+                     <td data-label="Step 1" class="exercise">
+                         <span class="mobile-step-label">Step 1:</span>
+                         <span class="exercise-with-video">
+            <span class="exercise-name" onclick="toggleVideo('overhead_slam')">Overhead slam</span>
+            <div id="video_overhead_slam" class="video-popup">
+                <iframe src="https://www.youtube.com/embed/QxYhFwMd1Ks?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
+                <button class="close-video" onclick="toggleVideo('overhead_slam')">&times;</button>
+            </div>
+        </span>
+                         <div class="equipment-tags"><span class="equipment-tag tag-slam">slam ball 5 kg</span></div>
+                     </td>
+                     <td data-label="Step 2" class="exercise">
+                         <span class="mobile-step-label">Step 2:</span>
+                         Preacher Curl (arm braced on bench)
+                         <div class="equipment-tags"><span class="equipment-tag tag-kettlebells">kettlebell 4 kg</span></div>
+                     </td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="active-rest-section">
+            <h2 class="active-rest-title">🏃‍♂️ Global Active Rest Program</h2>
+            <p class="active-rest-description">Everyone does these exercises together during rest periods</p>
+            
+            <div class="active-rest-content">
+                <div class="selected-exercises">
+                    <h3 class="exercises-title">📋 Selected Active Rest Exercises (4)</h3>
+                    <div class="exercises-grid">
+                        <div class="exercise-card">
+                            <div class="exercise-number">1</div>
+                            <div class="exercise-content">
+                                <span class="exercise-with-video">
+            <span class="exercise-name" onclick="toggleVideo('isometric_lunge_hold')">Isometric Lunge Hold</span>
+            <div id="video_isometric_lunge_hold" class="video-popup">
+                <iframe src="https://www.youtube.com/embed/RnfU357uYn0?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
+                <button class="close-video" onclick="toggleVideo('isometric_lunge_hold')">&times;</button>
+            </div>
+        </span>
+                            </div>
+                        </div>
+                        <div class="exercise-card">
+                            <div class="exercise-number">2</div>
+                            <div class="exercise-content">
+                                <span class="exercise-with-video">
+            <span class="exercise-name" onclick="toggleVideo('skater_hops')">Skater hops</span>
+            <div id="video_skater_hops" class="video-popup">
+                <iframe src="https://www.youtube.com/embed/PSVySCGbGp0?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
+                <button class="close-video" onclick="toggleVideo('skater_hops')">&times;</button>
+            </div>
+        </span>
+                            </div>
+                        </div>
+                        <div class="exercise-card">
+                            <div class="exercise-number">3</div>
+                            <div class="exercise-content">
+                                <span class="exercise-with-video">
+            <span class="exercise-name" onclick="toggleVideo('cossack_shift')">Cossack Shift</span>
+            <div id="video_cossack_shift" class="video-popup">
+                <iframe src="https://www.youtube.com/embed/DkeFVmqy0ys?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
+                <button class="close-video" onclick="toggleVideo('cossack_shift')">&times;</button>
+            </div>
+        </span>
+                            </div>
+                        </div>
+                        <div class="exercise-card">
+                            <div class="exercise-number">4</div>
+                            <div class="exercise-content">
+                                <span class="exercise-with-video">
+            <span class="exercise-name" onclick="toggleVideo('jumping_jacks')">Jumping jacks</span>
+            <div id="video_jumping_jacks" class="video-popup">
+                <iframe src="https://www.youtube.com/embed/lWMw6uppiFc?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
+                <button class="close-video" onclick="toggleVideo('jumping_jacks')">&times;</button>
+            </div>
+        </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="schedule-table">
+                    <h3 class="schedule-title">⏱️ Workout Schedule</h3>
+                    <table class="active-rest-table">
+                        <thead>
+                            <tr>
+                                <th>Rest Period</th>
+                                <th>20s Activity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td class="rest-period-label">After Step 1</td>
+                            <td class="active-rest-activity">
+                                <span class="exercise-with-video">
+            <span class="exercise-name" onclick="toggleVideo('isometric_lunge_hold')">Isometric Lunge Hold</span>
+            <div id="video_isometric_lunge_hold" class="video-popup">
+                <iframe src="https://www.youtube.com/embed/RnfU357uYn0?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
+                <button class="close-video" onclick="toggleVideo('isometric_lunge_hold')">&times;</button>
+            </div>
+        </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="rest-period-label">After Step 2</td>
+                            <td class="active-rest-activity">
+                                <span class="exercise-with-video">
+            <span class="exercise-name" onclick="toggleVideo('skater_hops')">Skater hops</span>
+            <div id="video_skater_hops" class="video-popup">
+                <iframe src="https://www.youtube.com/embed/PSVySCGbGp0?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
+                <button class="close-video" onclick="toggleVideo('skater_hops')">&times;</button>
+            </div>
+        </span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="equipment-section">
+            <div class="equipment-title">📋 Equipment Required for This Workout</div>
+            <div class="equipment-grid">
+                <div class="equipment-item">
+                    <span class="equipment-name">Barbells</span>
+                    <span class="equipment-count">2x</span>
+                </div>
+                <div class="equipment-item">
+                    <span class="equipment-name">Bench</span>
+                    <span class="equipment-count">1x</span>
+                </div>
+                <div class="equipment-item">
+                    <span class="equipment-name">Dumbbell 3 Kg</span>
+                    <span class="equipment-count">2x</span>
+                </div>
+                <div class="equipment-item">
+                    <span class="equipment-name">Dumbbell 5 Kg</span>
+                    <span class="equipment-count">2x</span>
+                </div>
+                <div class="equipment-item">
+                    <span class="equipment-name">Kettlebell 4 Kg</span>
+                    <span class="equipment-count">4x</span>
+                </div>
+                <div class="equipment-item">
+                    <span class="equipment-name">Plyo Box</span>
+                    <span class="equipment-count">1x</span>
+                </div>
+                <div class="equipment-item">
+                    <span class="equipment-name">Slam Ball 5 Kg</span>
+                    <span class="equipment-count">1x</span>
+                </div>
+            </div>
+        </div>
+        <div class="workout-analysis">
+            <div class="analysis-title">💪 Workout Movement Analysis</div>
+            <div class="distribution-grid">
+                <div class="distribution-item">
+                    <div class="distribution-type">Upper Body</div>
+                    <div class="distribution-count">5</div>
+                    <div class="distribution-percentage">50.0% of workout</div>
+                </div>
+                <div class="distribution-item">
+                    <div class="distribution-type">Core</div>
+                    <div class="distribution-count">4</div>
+                    <div class="distribution-percentage">40.0% of workout</div>
+                </div>
+                <div class="distribution-item">
+                    <div class="distribution-type">Power/Explosive</div>
+                    <div class="distribution-count">1</div>
+                    <div class="distribution-percentage">10.0% of workout</div>
+                </div>
+            </div>
+            <div class="workout-balance">
+                <div>Total Exercises: <strong>10</strong></div>
+                <div class="balance-indicator balanced">Well-balanced workout</div>
+            </div>
+        </div>
+        <div class="validation-section">
+            <div class="validation-title validation-valid">⚙️ Equipment Validation</div>
+            <div class="validation-status" style="color: #27ae60;">
+                <span class="status-icon">✅</span>
+                <span>Equipment validation passed</span>
+            </div>
+            <div class="utilization-grid">
+                <div class="utilization-item">
+                    <div class="utilization-header">
+                        <span class="utilization-name">Barbells</span>
+                        <span class="utilization-sufficient">✓ Available</span>
+                    </div>
+                    <div class="utilization-bar">
+                        <div class="utilization-fill utilization-full" style="width: 100.0%;"></div>
+                    </div>
+                    <div class="utilization-details">
+                        <span>Need: 2x</span>
+                        <span>Have: 2x</span>
+                        <span>100.0% utilization</span>
+                    </div>
+                </div>
+                <div class="utilization-item">
+                    <div class="utilization-header">
+                        <span class="utilization-name">Bench</span>
+                        <span class="utilization-sufficient">✓ Available</span>
+                    </div>
+                    <div class="utilization-bar">
+                        <div class="utilization-fill utilization-full" style="width: 100.0%;"></div>
+                    </div>
+                    <div class="utilization-details">
+                        <span>Need: 1x</span>
+                        <span>Have: 1x</span>
+                        <span>100.0% utilization</span>
+                    </div>
+                </div>
+                <div class="utilization-item">
+                    <div class="utilization-header">
+                        <span class="utilization-name">Dip Parallel Bars</span>
+                        <span class="utilization-unused">○ Unused</span>
+                    </div>
+                    <div class="utilization-bar">
+                        <div class="utilization-fill utilization-zero" style="width: 0.0%;"></div>
+                    </div>
+                    <div class="utilization-details">
+                        <span>Need: 0x</span>
+                        <span>Have: 2x</span>
+                        <span>0.0% utilization</span>
+                    </div>
+                </div>
+                <div class="utilization-item">
+                    <div class="utilization-header">
+                        <span class="utilization-name">Dumbbell 10 Kg</span>
+                        <span class="utilization-unused">○ Unused</span>
+                    </div>
+                    <div class="utilization-bar">
+                        <div class="utilization-fill utilization-zero" style="width: 0.0%;"></div>
+                    </div>
+                    <div class="utilization-details">
+                        <span>Need: 0x</span>
+                        <span>Have: 2x</span>
+                        <span>0.0% utilization</span>
+                    </div>
+                </div>
+                <div class="utilization-item">
+                    <div class="utilization-header">
+                        <span class="utilization-name">Dumbbell 15 Kg</span>
+                        <span class="utilization-unused">○ Unused</span>
+                    </div>
+                    <div class="utilization-bar">
+                        <div class="utilization-fill utilization-zero" style="width: 0.0%;"></div>
+                    </div>
+                    <div class="utilization-details">
+                        <span>Need: 0x</span>
+                        <span>Have: 1x</span>
+                        <span>0.0% utilization</span>
+                    </div>
+                </div>
+                <div class="utilization-item">
+                    <div class="utilization-header">
+                        <span class="utilization-name">Dumbbell 22 Kg</span>
+                        <span class="utilization-unused">○ Unused</span>
+                    </div>
+                    <div class="utilization-bar">
+                        <div class="utilization-fill utilization-zero" style="width: 0.0%;"></div>
+                    </div>
+                    <div class="utilization-details">
+                        <span>Need: 0x</span>
+                        <span>Have: 2x</span>
+                        <span>0.0% utilization</span>
+                    </div>
+                </div>
+                <div class="utilization-item">
+                    <div class="utilization-header">
+                        <span class="utilization-name">Dumbbell 3 Kg</span>
+                        <span class="utilization-sufficient">✓ Available</span>
+                    </div>
+                    <div class="utilization-bar">
+                        <div class="utilization-fill utilization-partial" style="width: 28.57142857142857%;"></div>
+                    </div>
+                    <div class="utilization-details">
+                        <span>Need: 2x</span>
+                        <span>Have: 7x</span>
+                        <span>28.6% utilization</span>
+                    </div>
+                </div>
+                <div class="utilization-item">
+                    <div class="utilization-header">
+                        <span class="utilization-name">Dumbbell 5 Kg</span>
+                        <span class="utilization-sufficient">✓ Available</span>
+                    </div>
+                    <div class="utilization-bar">
+                        <div class="utilization-fill utilization-partial" style="width: 50.0%;"></div>
+                    </div>
+                    <div class="utilization-details">
+                        <span>Need: 2x</span>
+                        <span>Have: 4x</span>
+                        <span>50.0% utilization</span>
+                    </div>
+                </div>
+                <div class="utilization-item">
+                    <div class="utilization-header">
+                        <span class="utilization-name">Dumbbell 6 Kg</span>
+                        <span class="utilization-unused">○ Unused</span>
+                    </div>
+                    <div class="utilization-bar">
+                        <div class="utilization-fill utilization-zero" style="width: 0.0%;"></div>
+                    </div>
+                    <div class="utilization-details">
+                        <span>Need: 0x</span>
+                        <span>Have: 1x</span>
+                        <span>0.0% utilization</span>
+                    </div>
+                </div>
+                <div class="utilization-item">
+                    <div class="utilization-header">
+                        <span class="utilization-name">Dumbbell 7 Kg</span>
+                        <span class="utilization-unused">○ Unused</span>
+                    </div>
+                    <div class="utilization-bar">
+                        <div class="utilization-fill utilization-zero" style="width: 0.0%;"></div>
+                    </div>
+                    <div class="utilization-details">
+                        <span>Need: 0x</span>
+                        <span>Have: 1x</span>
+                        <span>0.0% utilization</span>
+                    </div>
+                </div>
+                <div class="utilization-item">
+                    <div class="utilization-header">
+                        <span class="utilization-name">Kettlebell 16 Kg</span>
+                        <span class="utilization-unused">○ Unused</span>
+                    </div>
+                    <div class="utilization-bar">
+                        <div class="utilization-fill utilization-zero" style="width: 0.0%;"></div>
+                    </div>
+                    <div class="utilization-details">
+                        <span>Need: 0x</span>
+                        <span>Have: 2x</span>
+                        <span>0.0% utilization</span>
+                    </div>
+                </div>
+                <div class="utilization-item">
+                    <div class="utilization-header">
+                        <span class="utilization-name">Kettlebell 24 Kg</span>
+                        <span class="utilization-unused">○ Unused</span>
+                    </div>
+                    <div class="utilization-bar">
+                        <div class="utilization-fill utilization-zero" style="width: 0.0%;"></div>
+                    </div>
+                    <div class="utilization-details">
+                        <span>Need: 0x</span>
+                        <span>Have: 2x</span>
+                        <span>0.0% utilization</span>
+                    </div>
+                </div>
+                <div class="utilization-item">
+                    <div class="utilization-header">
+                        <span class="utilization-name">Kettlebell 2 Kg</span>
+                        <span class="utilization-unused">○ Unused</span>
+                    </div>
+                    <div class="utilization-bar">
+                        <div class="utilization-fill utilization-zero" style="width: 0.0%;"></div>
+                    </div>
+                    <div class="utilization-details">
+                        <span>Need: 0x</span>
+                        <span>Have: 10x</span>
+                        <span>0.0% utilization</span>
+                    </div>
+                </div>
+                <div class="utilization-item">
+                    <div class="utilization-header">
+                        <span class="utilization-name">Kettlebell 32 Kg</span>
+                        <span class="utilization-unused">○ Unused</span>
+                    </div>
+                    <div class="utilization-bar">
+                        <div class="utilization-fill utilization-zero" style="width: 0.0%;"></div>
+                    </div>
+                    <div class="utilization-details">
+                        <span>Need: 0x</span>
+                        <span>Have: 2x</span>
+                        <span>0.0% utilization</span>
+                    </div>
+                </div>
+                <div class="utilization-item">
+                    <div class="utilization-header">
+                        <span class="utilization-name">Kettlebell 4 Kg</span>
+                        <span class="utilization-sufficient">✓ Available</span>
+                    </div>
+                    <div class="utilization-bar">
+                        <div class="utilization-fill utilization-partial" style="width: 44.44444444444444%;"></div>
+                    </div>
+                    <div class="utilization-details">
+                        <span>Need: 4x</span>
+                        <span>Have: 9x</span>
+                        <span>44.4% utilization</span>
+                    </div>
+                </div>
+                <div class="utilization-item">
+                    <div class="utilization-header">
+                        <span class="utilization-name">Kettlebell 6 Kg</span>
+                        <span class="utilization-unused">○ Unused</span>
+                    </div>
+                    <div class="utilization-bar">
+                        <div class="utilization-fill utilization-zero" style="width: 0.0%;"></div>
+                    </div>
+                    <div class="utilization-details">
+                        <span>Need: 0x</span>
+                        <span>Have: 7x</span>
+                        <span>0.0% utilization</span>
+                    </div>
+                </div>
+                <div class="utilization-item">
+                    <div class="utilization-header">
+                        <span class="utilization-name">Plyo Box</span>
+                        <span class="utilization-sufficient">✓ Available</span>
+                    </div>
+                    <div class="utilization-bar">
+                        <div class="utilization-fill utilization-full" style="width: 100.0%;"></div>
+                    </div>
+                    <div class="utilization-details">
+                        <span>Need: 1x</span>
+                        <span>Have: 1x</span>
+                        <span>100.0% utilization</span>
+                    </div>
+                </div>
+                <div class="utilization-item">
+                    <div class="utilization-header">
+                        <span class="utilization-name">Slam Ball 5 Kg</span>
+                        <span class="utilization-sufficient">✓ Available</span>
+                    </div>
+                    <div class="utilization-bar">
+                        <div class="utilization-fill utilization-partial" style="width: 7.142857142857142%;"></div>
+                    </div>
+                    <div class="utilization-details">
+                        <span>Need: 1x</span>
+                        <span>Have: 14x</span>
+                        <span>7.1% utilization</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="timestamp">
+            Workout generated with Workout Station Generator based on Annya's plan
+        </div>
+    </div>
+    
+    <script>
+        function toggleVideo(exerciseId) {
+            const video = document.getElementById('video_' + exerciseId);
+            const iframe = video.querySelector('iframe');
+            const allVideos = document.querySelectorAll('.video-popup');
+            
+            // Stop and hide all other videos first
+            allVideos.forEach(v => {
+                if (v.id !== 'video_' + exerciseId) {
+                    stopVideo(v);
+                }
+            });
+            
+            // Toggle the selected video
+            if (video.style.display === 'none' || video.style.display === '') {
+                video.style.display = 'block';
+                
+                // Smart positioning to avoid cutoff
+                positionVideoSmart(video);
+                
+                // Reload the iframe to start fresh
+                const originalSrc = iframe.getAttribute('data-src') || iframe.src;
+                iframe.setAttribute('data-src', originalSrc);
+                iframe.src = originalSrc;
+            } else {
+                stopVideo(video);
+            }
+        }
+        
+        function positionVideoSmart(videoElement) {
+            const viewportHeight = window.innerHeight;
+            const viewportWidth = window.innerWidth;
+            const videoHeight = 360;
+            const videoWidth = 240;
+            
+            // Get the exercise element (parent of video popup)
+            const exerciseElement = videoElement.parentElement;
+            const exerciseRect = exerciseElement.getBoundingClientRect();
+            
+            // Calculate available space on all sides
+            const spaceRight = viewportWidth - exerciseRect.right - 20;
+            const spaceLeft = exerciseRect.left - 20;
+            const spaceBelow = viewportHeight - exerciseRect.top - 20;
+            
+            // Reset all positioning styles first
+            videoElement.style.position = 'absolute';
+            videoElement.style.top = '0';
+            videoElement.style.bottom = 'auto';
+            videoElement.style.left = '100%';
+            videoElement.style.right = 'auto';
+            videoElement.style.marginLeft = '20px';
+            videoElement.style.marginRight = '0';
+            videoElement.style.marginTop = '0';
+            videoElement.style.zIndex = '1000';
+            
+            // Check if we're in a right column (less than video width + margin space)
+            if (spaceRight < videoWidth + 20) {
+                if (spaceLeft >= videoWidth + 20) {
+                    // Position to the left
+                    videoElement.style.left = 'auto';
+                    videoElement.style.right = '100%';
+                    videoElement.style.marginLeft = '0';
+                    videoElement.style.marginRight = '20px';
+                } else {
+                    // Not enough space on either side - use fixed centering
+                    videoElement.style.position = 'fixed';
+                    videoElement.style.left = '50%';
+                    videoElement.style.right = 'auto';
+                    videoElement.style.marginLeft = '-120px'; // Half of video width
+                    videoElement.style.marginRight = '0';
+                    videoElement.style.zIndex = '10000';
+                    
+                    // Center vertically too
+                    videoElement.style.top = '50%';
+                    videoElement.style.marginTop = '-180px'; // Half of video height
+                    return; // Skip vertical positioning logic below
+                }
+            }
+            
+            // Handle vertical positioning for non-fixed elements
+            if (spaceBelow < videoHeight) {
+                // Position above the exercise
+                videoElement.style.top = 'auto';
+                videoElement.style.bottom = '0';
+            }
+        }
+        
+        function stopVideo(videoElement) {
+            const iframe = videoElement.querySelector('iframe');
+            // Stop video by clearing and restoring src
+            const originalSrc = iframe.getAttribute('data-src') || iframe.src;
+            iframe.setAttribute('data-src', originalSrc);
+            iframe.src = '';
+            videoElement.style.display = 'none';
+        }
+        
+        // Close video when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.exercise-with-video') && !e.target.closest('.video-popup')) {
+                document.querySelectorAll('.video-popup').forEach(video => {
+                    stopVideo(video);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
