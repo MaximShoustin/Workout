@@ -178,6 +178,17 @@
               "count": 2
             }
           }
+        },
+        {
+          "name": "Zottman Curl (supinate up, pronate down)", 
+          "link": "https://www.youtube.com/shorts/oIn50xSx_8s",
+          "area": "upper",
+          "muscles": "biceps, forearms",
+          "equipment": {
+            "dumbbells_5kg": {
+              "count": 2
+            }
+          }
         }
       ]
     }

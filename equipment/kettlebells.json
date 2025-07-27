@@ -487,22 +487,8 @@
           }
         },
         {
-          "name": "Standing French Press (vertical, two-hand)", 
-          "link": "https://www.youtube.com/shorts/3s_dRicgY5U",
-          "area": "upper",
-          "muscles": "triceps, shoulders, core",
-          "equipment": {
-            "kettlebells_4kg": {
-              "count": 1
-            },
-            "kettlebells_6kg": {
-              "count": 1
-            }
-          }
-        },
-        {
           "name": "Tall-Kneeling Overhead Extension", 
-          "link": "",
+          "link": "https://www.youtube.com/shorts/3s_dRicgY5U",
           "area": "upper",
           "muscles": "triceps, shoulders, core",
           "equipment": {
@@ -516,23 +502,10 @@
         }
       ],
       "biceps": [
-        {
-          "name": "Hammer Curl (neutral grip)", 
-          "link": "",
-          "area": "upper",
-          "muscles": "biceps, forearms",
-          "equipment": {
-            "kettlebells_4kg": {
-              "count": 1
-            },
-            "kettlebells_6kg": {
-              "count": 1
-            }
-          }
-        },
+        
         {
           "name": "Standard Supinated Curl", 
-          "link": "",
+          "link": "https://www.youtube.com/shorts/1naOMuRpNqA",
           "area": "upper",
           "muscles": "biceps, forearms",
           "equipment": {
@@ -546,21 +519,7 @@
         },
         {
           "name": "Alternating Curl", 
-          "link": "",
-          "area": "upper",
-          "muscles": "biceps, forearms",
-          "equipment": {
-            "kettlebells_4kg": {
-              "count": 1
-            },
-            "kettlebells_6kg": {
-              "count": 1
-            }
-          }
-        },
-        {
-          "name": "Zottman Curl (supinate up, pronate down)", 
-          "link": "",
+          "link": "https://www.youtube.com/shorts/ugWGpcbcaeQ",
           "area": "upper",
           "muscles": "biceps, forearms",
           "equipment": {
@@ -574,7 +533,7 @@
         },
         {
           "name": "Reverse Curl", 
-          "link": "",
+          "link": "https://www.youtube.com/shorts/1naOMuRpNqA",
           "area": "upper",
           "muscles": "biceps, forearms",
           "equipment": {
