@@ -985,6 +985,7 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
                 border: 1px solid #3498db !important;
                 width: fit-content !important;
                 text-align: center !important;
+                white-space: nowrap !important;
             }
             
             .mobile-rest-label {
@@ -999,6 +1000,7 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
                 border: 1px solid #2ecc71 !important;
                 width: fit-content !important;
                 text-align: center !important;
+                white-space: nowrap !important;
             }
             .video-popup {
                 position: fixed !important;
