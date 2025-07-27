@@ -282,6 +282,7 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
             font-size: 0.9em;
             text-transform: uppercase;
             letter-spacing: 1px;
+            white-space: nowrap;
         }
         td { 
             padding: 15px; 
