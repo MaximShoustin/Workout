@@ -108,11 +108,18 @@ def parse_equipment() -> Dict[str, dict]:
 def build_station_pool(gear: Dict[str, dict], available_inventory: Optional[dict] = None) -> List[Tuple[str, str, str, str, dict, str]]:
     """Return list of (area, equip_name, exercise_name, exercise_link, equipment_data, muscles)"""
     pool = []
+    skipped_exercises = []
+    
     for equip_name, data in gear.items():
         for cat, lst in data["lifts"].items():
             for ex in lst:
                 # Handle both old string format and new object format
                 if isinstance(ex, dict):
+                    # Check if exercise should be skipped
+                    if ex.get("skip", False):
+                        skipped_exercises.append(ex["name"])
+                        continue  # Skip this exercise
+                    
                     exercise_name = ex["name"]
                     exercise_link = ex.get("link", "")
                     equipment_data = ex.get("equipment", {})
@@ -127,6 +134,16 @@ def build_station_pool(gear: Dict[str, dict], available_inventory: Optional[dict
                     area = classify_area(cat)  # Use old method as fallback
                     muscles = ""  # No muscles data for old format
                 pool.append((area, equip_name, exercise_name, exercise_link, equipment_data, muscles))
+    
+    # Report skipped exercises if any
+    if skipped_exercises:
+        print(f"⏭️  Skipped {len(skipped_exercises)} exercises marked with skip=true:")
+        for ex in skipped_exercises[:5]:  # Show first 5
+            print(f"   • {ex}")
+        if len(skipped_exercises) > 5:
+            print(f"   ... and {len(skipped_exercises) - 5} more")
+        print()
+    
     if not pool:
         die("Equipment JSONs contained no lifts!")
     

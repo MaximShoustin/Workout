@@ -35,11 +35,26 @@ def setup_active_rest(plan: dict) -> tuple:
         rest_data = load_json(ACTIVE_REST_FILE)["rest"]
         # Handle both old string format and new object format for active rest
         rest_pool = []
+        skipped_rest_exercises = []
+        
         for activity in rest_data:
             if isinstance(activity, dict):
+                # Check if exercise should be skipped
+                if activity.get("skip", False):
+                    skipped_rest_exercises.append(activity["name"])
+                    continue  # Skip this exercise
+                
                 rest_pool.append({"name": activity["name"], "link": activity.get("link", "")})
             else:
                 rest_pool.append({"name": activity, "link": ""})
+        
+        # Report skipped active rest exercises if any
+        if skipped_rest_exercises:
+            print(f"⏭️  Skipped {len(skipped_rest_exercises)} active rest exercises marked with skip=true:")
+            for ex in skipped_rest_exercises:
+                print(f"   • {ex}")
+            print()
+        
         # Shuffle the rest pool for variety
         random.shuffle(rest_pool)
     else:

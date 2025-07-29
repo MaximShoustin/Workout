@@ -1,96 +1,104 @@
 {
-    "lifts": {
-      "power": [
-        {
-          "name": "Overhead slam", 
-          "link": "https://www.youtube.com/watch?v=QxYhFwMd1Ks",
-          "area": "core",
-          "muscles": "core, shoulders, latissimus dorsi",
-          "equipment": {
-            "slam_balls_5kg": {
-              "count": 1
-            }
+  "lifts": {
+    "power": [
+      {
+        "name": "Overhead slam",
+        "link": "https://www.youtube.com/watch?v=QxYhFwMd1Ks",
+        "area": "core",
+        "muscles": "core, shoulders, latissimus dorsi",
+        "equipment": {
+          "slam_balls_5kg": {
+            "count": 1
           }
         },
-        {
-          "name": "Rotational slam", 
-          "link": "https://www.youtube.com/shorts/8ReGsLOc-lo",
-          "area": "core",
-          "muscles": "core, obliques, shoulders",
-          "equipment": {
-            "slam_balls_5kg": {
-              "count": 1
-            }
+        "skip": false
+      },
+      {
+        "name": "Rotational slam",
+        "link": "https://www.youtube.com/shorts/8ReGsLOc-lo",
+        "area": "core",
+        "muscles": "core, obliques, shoulders",
+        "equipment": {
+          "slam_balls_5kg": {
+            "count": 1
           }
         },
-        {
-          "name": "Half-kneel rainbow slam", 
-          "link": "https://www.youtube.com/shorts/MsZz_IIr8tA",
-          "area": "core",
-          "muscles": "core, obliques, shoulders",
-          "equipment": {
-            "slam_balls_5kg": {
-              "count": 1
-            }
+        "skip": false
+      },
+      {
+        "name": "Half-kneel rainbow slam",
+        "link": "https://www.youtube.com/shorts/MsZz_IIr8tA",
+        "area": "core",
+        "muscles": "core, obliques, shoulders",
+        "equipment": {
+          "slam_balls_5kg": {
+            "count": 1
           }
         },
-        {
-          "name": "Slam-ball burpee", 
-          "link": "https://www.youtube.com/shorts/tfeKK4r0qbc",
-          "area": "core",
-          "muscles": "full body, core, legs, shoulders",
-          "equipment": {
-            "slam_balls_5kg": {
-              "count": 1
-            }
-          }
-        }
-      ],
-      "core_accessory": [
-        {
-          "name": "Russian twist", 
-          "link": "https://www.youtube.com/shorts/KmKmztLiqAY",
-          "area": "core",
-          "muscles": "obliques, core, stabilizers",
-          "equipment": {
-            "slam_balls_5kg": {
-              "count": 1
-            }
+        "skip": false
+      },
+      {
+        "name": "Slam-ball burpee",
+        "link": "https://www.youtube.com/shorts/tfeKK4r0qbc",
+        "area": "core",
+        "muscles": "full body, core, legs, shoulders",
+        "equipment": {
+          "slam_balls_5kg": {
+            "count": 1
           }
         },
-        {
-          "name": "Bear-crawl drag", 
-          "link": "https://www.youtube.com/shorts/hawiuyUYpRg",
-          "area": "core",
-          "muscles": "core, shoulders, quadriceps",
-          "equipment": {
-            "slam_balls_5kg": {
-              "count": 1
-            }
+        "skip": false
+      }
+    ],
+    "core_accessory": [
+      {
+        "name": "Russian twist",
+        "link": "https://www.youtube.com/shorts/KmKmztLiqAY",
+        "area": "core",
+        "muscles": "obliques, core, stabilizers",
+        "equipment": {
+          "slam_balls_5kg": {
+            "count": 1
           }
         },
-        {
-          "name": "Front-loaded squat", 
-          "link": "https://www.youtube.com/shorts/6JisOxv6Gts",
-          "area": "lower",
-          "muscles": "quadriceps, glutes, core",
-          "equipment": {
-            "slam_balls_5kg": {
-              "count": 1
-            }
+        "skip": false
+      },
+      {
+        "name": "Bear-crawl drag",
+        "link": "https://www.youtube.com/shorts/hawiuyUYpRg",
+        "area": "core",
+        "muscles": "core, shoulders, quadriceps",
+        "equipment": {
+          "slam_balls_5kg": {
+            "count": 1
           }
         },
-        {
-          "name": "Slam-ball thruster", 
-          "link": "https://www.youtube.com/shorts/6gFhwWhQJ5s",
-          "area": "core",
-          "muscles": "shoulders, quadriceps, glutes, core",
-          "equipment": {
-            "slam_balls_5kg": {
-              "count": 1
-            }
+        "skip": false
+      },
+      {
+        "name": "Front-loaded squat",
+        "link": "https://www.youtube.com/shorts/6JisOxv6Gts",
+        "area": "lower",
+        "muscles": "quadriceps, glutes, core",
+        "equipment": {
+          "slam_balls_5kg": {
+            "count": 1
           }
-        }
-      ]
-    }
+        },
+        "skip": false
+      },
+      {
+        "name": "Slam-ball thruster",
+        "link": "https://www.youtube.com/shorts/6gFhwWhQJ5s",
+        "area": "core",
+        "muscles": "shoulders, quadriceps, glutes, core",
+        "equipment": {
+          "slam_balls_5kg": {
+            "count": 1
+          }
+        },
+        "skip": false
+      }
+    ]
   }
+}

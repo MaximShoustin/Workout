@@ -1,16 +1,64 @@
 {
-    "rest": [
-      {"name": "Jumping jacks", "link": "https://www.youtube.com/shorts/lWMw6uppiFc"},
-      {"name": "High-knee march", "link": "https://www.youtube.com/shorts/FbuMcgv-0I8"},
-      {"name": "Fast air-squats", "link": "https://www.youtube.com/shorts/lHd1XY89n0M"},
-      {"name": "Mountain climbers", "link": "https://www.youtube.com/shorts/3ans8fNL1Z8"},
-      {"name": "Skater hops", "link": "https://www.youtube.com/shorts/PSVySCGbGp0"},
-      {"name": "Butt-kicks", "link": "https://www.youtube.com/shorts/H-8EiUccyGg"},
-      {"name": "Seal jacks", "link": "https://www.youtube.com/shorts/d-_XmP4gZ8k"},
-      {"name": "Ankle Hops", "link": "https://www.youtube.com/shorts/r5Go15SV5QI"},
-      {"name": "Mini Band Side Steps", "link": "https://www.youtube.com/shorts/N28Hpdezg7Q"},
-      {"name": "Calf Raises", "link": "https://www.youtube.com/shorts/ADITZCcUyVo"},
-      {"name": "Isometric Lunge Hold", "link": "https://www.youtube.com/shorts/RnfU357uYn0"},
-      {"name": "Cossack Shift", "link": "https://www.youtube.com/shorts/DkeFVmqy0ys"}
-    ]
-  }
+  "rest": [
+    {
+      "name": "Jumping jacks",
+      "link": "https://www.youtube.com/shorts/lWMw6uppiFc",
+      "skip": false
+    },
+    {
+      "name": "High-knee march",
+      "link": "https://www.youtube.com/shorts/FbuMcgv-0I8",
+      "skip": false
+    },
+    {
+      "name": "Fast air-squats",
+      "link": "https://www.youtube.com/shorts/lHd1XY89n0M",
+      "skip": false
+    },
+    {
+      "name": "Mountain climbers",
+      "link": "https://www.youtube.com/shorts/3ans8fNL1Z8",
+      "skip": false
+    },
+    {
+      "name": "Skater hops",
+      "link": "https://www.youtube.com/shorts/PSVySCGbGp0",
+      "skip": false
+    },
+    {
+      "name": "Butt-kicks",
+      "link": "https://www.youtube.com/shorts/H-8EiUccyGg",
+      "skip": false
+    },
+    {
+      "name": "Seal jacks",
+      "link": "https://www.youtube.com/shorts/d-_XmP4gZ8k",
+      "skip": false
+    },
+    {
+      "name": "Ankle Hops",
+      "link": "https://www.youtube.com/shorts/r5Go15SV5QI",
+      "skip": false
+    },
+    {
+      "name": "Mini Band Side Steps",
+      "link": "https://www.youtube.com/shorts/N28Hpdezg7Q",
+      "skip": false
+    },
+    {
+      "name": "Calf Raises",
+      "link": "https://www.youtube.com/shorts/ADITZCcUyVo",
+      "skip": false
+    },
+    {
+      "name": "Isometric Lunge Hold",
+      "link": "https://www.youtube.com/shorts/RnfU357uYn0",
+      "skip": false
+    },
+    {
+      "name": "Cossack Shift",
+      "link": "https://www.youtube.com/shorts/DkeFVmqy0ys",
+      "skip": false
+    }
+  ]
+}

@@ -1,100 +1,108 @@
 {
-    "lifts": {
-      "upper_push": [
-        {
-          "name": "Standard body-weight dip", 
-          "link": "https://www.youtube.com/shorts/cbW_T2cbS9E",
-          "area": "upper",
-          "muscles": "triceps, chest, shoulders",
-          "equipment": {
-            "dip_parallel_bars": {
-              "count": 2
-            }
-          }
-        }
-        ],
-      "static_support_core": [
-        {
-          "name": "Top-of-dip support hold", 
-          "link": "https://www.youtube.com/shorts/lYo8KZ0WcgQ",
-          "area": "core",
-          "muscles": "triceps, shoulders, core",
-          "equipment": {
-            "dip_parallel_bars": {
-              "count": 2
-            }
+  "lifts": {
+    "upper_push": [
+      {
+        "name": "Standard body-weight dip",
+        "link": "https://www.youtube.com/shorts/cbW_T2cbS9E",
+        "area": "upper",
+        "muscles": "triceps, chest, shoulders",
+        "equipment": {
+          "dip_parallel_bars": {
+            "count": 2
           }
         },
-        {
-          "name": "L-sit hold", 
-          "link": "https://www.youtube.com/shorts/Jb5_jIiEl8E",
-          "area": "core",
-          "muscles": "core, hip flexors, shoulders",
-          "equipment": {
-            "dip_parallel_bars": {
-              "count": 2
-            }
+        "skip": false
+      }
+    ],
+    "static_support_core": [
+      {
+        "name": "Top-of-dip support hold",
+        "link": "https://www.youtube.com/shorts/lYo8KZ0WcgQ",
+        "area": "core",
+        "muscles": "triceps, shoulders, core",
+        "equipment": {
+          "dip_parallel_bars": {
+            "count": 2
           }
         },
-        {
-          "name": "Tuck hold", 
-          "link": "https://www.youtube.com/shorts/y1_graezMbo",
-          "area": "core",
-          "muscles": "core, shoulders, stabilizers",
-          "equipment": {
-            "dip_parallel_bars": {
-              "count": 2
-            }
+        "skip": false
+      },
+      {
+        "name": "L-sit hold",
+        "link": "https://www.youtube.com/shorts/Jb5_jIiEl8E",
+        "area": "core",
+        "muscles": "core, hip flexors, shoulders",
+        "equipment": {
+          "dip_parallel_bars": {
+            "count": 2
           }
         },
-        {
-          "name": "Knee-raise support hold", 
-          "link": "https://www.youtube.com/shorts/-a86XbaEL08",
-          "area": "core",
-          "muscles": "core, shoulders, hip flexors",
-          "equipment": {
-            "dip_parallel_bars": {
-              "count": 2
-            }
-          }
-        }
-      ],
-      "dynamic_core": [
-        {
-          "name": "Hanging leg raise (elbows locked)", 
-          "link": "https://www.youtube.com/shorts/sTDKouREFh4",
-          "area": "core",
-          "muscles": "core, hip flexors, forearms",
-          "equipment": {
-            "dip_parallel_bars": {
-              "count": 2
-            }
-          }
-        }
-      ],
-      "accessory_mobility": [
-        {
-          "name": "Scapular depression shrug", 
-          "link": "https://www.youtube.com/shorts/NArein7d6zs",
-          "area": "upper",
-          "muscles": "shoulders, latissimus dorsi, serratus",
-          "equipment": {
-            "dip_parallel_bars": {
-              "count": 2
-            }
+        "skip": false
+      },
+      {
+        "name": "Tuck hold",
+        "link": "https://www.youtube.com/shorts/y1_graezMbo",
+        "area": "core",
+        "muscles": "core, shoulders, stabilizers",
+        "equipment": {
+          "dip_parallel_bars": {
+            "count": 2
           }
         },
-        {
-          "name": "Assisted dip eccentric (slow lower)", 
-          "link": "https://www.youtube.com/shorts/36Yu_T35DUc",
-          "area": "upper",
-          "muscles": "triceps, chest, shoulders",
-          "equipment": {
-            "dip_parallel_bars": {
-              "count": 2
-            }
+        "skip": false
+      },
+      {
+        "name": "Knee-raise support hold",
+        "link": "https://www.youtube.com/shorts/-a86XbaEL08",
+        "area": "core",
+        "muscles": "core, shoulders, hip flexors",
+        "equipment": {
+          "dip_parallel_bars": {
+            "count": 2
           }
-        }
-      ]
-    }
+        },
+        "skip": false
+      }
+    ],
+    "dynamic_core": [
+      {
+        "name": "Hanging leg raise (elbows locked)",
+        "link": "https://www.youtube.com/shorts/sTDKouREFh4",
+        "area": "core",
+        "muscles": "core, hip flexors, forearms",
+        "equipment": {
+          "dip_parallel_bars": {
+            "count": 2
+          }
+        },
+        "skip": false
+      }
+    ],
+    "accessory_mobility": [
+      {
+        "name": "Scapular depression shrug",
+        "link": "https://www.youtube.com/shorts/NArein7d6zs",
+        "area": "upper",
+        "muscles": "shoulders, latissimus dorsi, serratus",
+        "equipment": {
+          "dip_parallel_bars": {
+            "count": 2
+          }
+        },
+        "skip": false
+      },
+      {
+        "name": "Assisted dip eccentric (slow lower)",
+        "link": "https://www.youtube.com/shorts/36Yu_T35DUc",
+        "area": "upper",
+        "muscles": "triceps, chest, shoulders",
+        "equipment": {
+          "dip_parallel_bars": {
+            "count": 2
+          }
+        },
+        "skip": false
+      }
+    ]
   }
+}

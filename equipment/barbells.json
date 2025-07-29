@@ -1,67 +1,72 @@
 {
-    "lifts": {
-      "posterior_chain": [
-        {
-          "name": "Romanian deadlift", 
-          "link": "https://www.youtube.com/shorts/up0sPrYCTkI",
-          "area": "lower",
-          "muscles": "hamstrings, glutes, erector spinae",
-          "equipment": {
-            "barbells": {
-              "count": 1
-            }
+  "lifts": {
+    "posterior_chain": [
+      {
+        "name": "Romanian deadlift",
+        "link": "https://www.youtube.com/shorts/up0sPrYCTkI",
+        "area": "lower",
+        "muscles": "hamstrings, glutes, erector spinae",
+        "equipment": {
+          "barbells": {
+            "count": 1
           }
         },
-        {
-          "name": "Good-morning", 
-          "link": "https://www.youtube.com/shorts/tCoZ6tZBnbE",
-          "area": "lower",
-          "muscles": "hamstrings, glutes, erector spinae",
-          "equipment": {
-            "barbells": {
-              "count": 1
-            }
+        "skip": false
+      },
+      {
+        "name": "Good-morning",
+        "link": "https://www.youtube.com/shorts/tCoZ6tZBnbE",
+        "area": "lower",
+        "muscles": "hamstrings, glutes, erector spinae",
+        "equipment": {
+          "barbells": {
+            "count": 1
           }
-        }
-      ],
-      "upper_pull": [
-        {
-          "name": "Bent-over row", 
-          "link": "https://www.youtube.com/shorts/HROup6N-olM",
-          "area": "upper",
-          "muscles": "latissimus dorsi, rhomboids, biceps",
-          "equipment": {
-            "barbells": {
-              "count": 1
-            }
+        },
+        "skip": false
+      }
+    ],
+    "upper_pull": [
+      {
+        "name": "Bent-over row",
+        "link": "https://www.youtube.com/shorts/HROup6N-olM",
+        "area": "upper",
+        "muscles": "latissimus dorsi, rhomboids, biceps",
+        "equipment": {
+          "barbells": {
+            "count": 1
           }
-        }
-      ],
-      "upper_push": [
-        {
-          "name": "Strict overhead press", 
-          "link": "https://www.youtube.com/shorts/1M6JMpgAtS0",
-          "area": "upper",
-          "muscles": "shoulders, triceps, core",
-          "equipment": {
-            "barbells": {
-              "count": 1
-            }
+        },
+        "skip": false
+      }
+    ],
+    "upper_push": [
+      {
+        "name": "Strict overhead press",
+        "link": "https://www.youtube.com/shorts/1M6JMpgAtS0",
+        "area": "upper",
+        "muscles": "shoulders, triceps, core",
+        "equipment": {
+          "barbells": {
+            "count": 1
           }
-        }
-      ],
-      "complex": [
-        {
-          "name": "Barbell complex: DL → row → clean-pull → front squat → press → lunge", 
-          "link": "https://www.youtube.com/watch?v=DO3jxj5KQc4",
-          "area": "core",
-          "muscles": "full body, core, legs, shoulders",
-          "equipment": {
-            "barbells": {
-              "count": 1
-            }
+        },
+        "skip": false
+      }
+    ],
+    "complex": [
+      {
+        "name": "Barbell complex: DL \u2192 row \u2192 clean-pull \u2192 front squat \u2192 press \u2192 lunge",
+        "link": "https://www.youtube.com/watch?v=DO3jxj5KQc4",
+        "area": "core",
+        "muscles": "full body, core, legs, shoulders",
+        "equipment": {
+          "barbells": {
+            "count": 1
           }
-        }
-      ]
-    }
+        },
+        "skip": false
+      }
+    ]
   }
+}

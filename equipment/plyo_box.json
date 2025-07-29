@@ -1,85 +1,92 @@
 {
-    "lifts": {
-      "power_leg": [
-        {
-          "name": "Box jump", 
-          "link": "https://www.youtube.com/shorts/hDiQD4xhVDw",
-          "area": "lower",
-          "muscles": "quadriceps, glutes, calves",
-          "equipment": {
-            "plyo_box": {
-              "count": 1
-            }
+  "lifts": {
+    "power_leg": [
+      {
+        "name": "Box jump",
+        "link": "https://www.youtube.com/shorts/hDiQD4xhVDw",
+        "area": "lower",
+        "muscles": "quadriceps, glutes, calves",
+        "equipment": {
+          "plyo_box": {
+            "count": 1
           }
         },
-        {
-          "name": "Step-up + knee-drive", 
-          "link": "https://www.youtube.com/shorts/f-dL7VgbanE",
-          "area": "lower",
-          "muscles": "quadriceps, glutes, hip flexors",
-          "equipment": {
-            "plyo_box": {
-              "count": 1
-            }
+        "skip": false
+      },
+      {
+        "name": "Step-up + knee-drive",
+        "link": "https://www.youtube.com/shorts/f-dL7VgbanE",
+        "area": "lower",
+        "muscles": "quadriceps, glutes, hip flexors",
+        "equipment": {
+          "plyo_box": {
+            "count": 1
           }
         },
-        {
-          "name": "Lateral step-over", 
-          "link": "https://www.youtube.com/shorts/XS_MGKL9zjU",
-          "area": "lower",
-          "muscles": "glutes, quadriceps, adductors",
-          "equipment": {
-            "plyo_box": {
-              "count": 1
-            }
+        "skip": false
+      },
+      {
+        "name": "Lateral step-over",
+        "link": "https://www.youtube.com/shorts/XS_MGKL9zjU",
+        "area": "lower",
+        "muscles": "glutes, quadriceps, adductors",
+        "equipment": {
+          "plyo_box": {
+            "count": 1
           }
         },
-        {
-          "name": "Depth drop → jump", 
-          "link": "https://www.youtube.com/shorts/gpXV2dzZ-oA",
-          "area": "lower",
-          "muscles": "quadriceps, glutes, calves",
-          "equipment": {
-            "plyo_box": {
-              "count": 1
-            }
-          }
-        }
-      ],
-      "upper_core": [
-        {
-          "name": "Hands-elevated push-up", 
-          "link": "https://www.youtube.com/shorts/Yr3reUvsmvY",
-          "area": "upper",
-          "muscles": "chest, triceps, shoulders",
-          "equipment": {
-            "plyo_box": {
-              "count": 1
-            }
+        "skip": false
+      },
+      {
+        "name": "Depth drop \u2192 jump",
+        "link": "https://www.youtube.com/shorts/gpXV2dzZ-oA",
+        "area": "lower",
+        "muscles": "quadriceps, glutes, calves",
+        "equipment": {
+          "plyo_box": {
+            "count": 1
           }
         },
-        {
-          "name": "Box dip", 
-          "link": "https://www.youtube.com/shorts/qi7ZkE2vOyk",
-          "area": "upper",
-          "muscles": "triceps, chest, shoulders",
-          "equipment": {
-            "plyo_box": {
-              "count": 1
-            }
+        "skip": false
+      }
+    ],
+    "upper_core": [
+      {
+        "name": "Hands-elevated push-up",
+        "link": "https://www.youtube.com/shorts/Yr3reUvsmvY",
+        "area": "upper",
+        "muscles": "chest, triceps, shoulders",
+        "equipment": {
+          "plyo_box": {
+            "count": 1
           }
         },
-        {
-          "name": "Incline plank shoulder-tap", 
-          "link": "https://www.youtube.com/shorts/SmvOGV0Z7wc",
-          "area": "core",
-          "muscles": "core, shoulders, stabilizers",
-          "equipment": {
-            "plyo_box": {
-              "count": 1
-            }
+        "skip": false
+      },
+      {
+        "name": "Box dip",
+        "link": "https://www.youtube.com/shorts/qi7ZkE2vOyk",
+        "area": "upper",
+        "muscles": "triceps, chest, shoulders",
+        "equipment": {
+          "plyo_box": {
+            "count": 1
           }
-        }
-      ]
-    }
+        },
+        "skip": false
+      },
+      {
+        "name": "Incline plank shoulder-tap",
+        "link": "https://www.youtube.com/shorts/SmvOGV0Z7wc",
+        "area": "core",
+        "muscles": "core, shoulders, stabilizers",
+        "equipment": {
+          "plyo_box": {
+            "count": 1
+          }
+        },
+        "skip": false
+      }
+    ]
   }
+}

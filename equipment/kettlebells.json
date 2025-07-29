@@ -1,674 +1,718 @@
 {
-    "lifts": {
-      "hinge_power": [
-        {
-          "name": "Two-hand Russian swing", 
-          "link": "https://www.youtube.com/shorts/n1df4ASFeZU",
-          "area": "lower",
-          "muscles": "glutes, hamstrings, shoulders",
-          "equipment": {
-            "kettlebells_16kg": {
-              "count": 1
-            }
+  "lifts": {
+    "hinge_power": [
+      {
+        "name": "Two-hand Russian swing",
+        "link": "https://www.youtube.com/shorts/n1df4ASFeZU",
+        "area": "lower",
+        "muscles": "glutes, hamstrings, shoulders",
+        "equipment": {
+          "kettlebells_16kg": {
+            "count": 1
           }
         },
-        {
-          "name": "Single-arm swing", 
-          "link": "https://www.youtube.com/shorts/jidchvotn6s",
-          "area": "lower",
-          "muscles": "glutes, hamstrings, shoulders, core",
-          "equipment": {
-            "kettlebells_16kg": {
-              "count": 1
-            }
+        "skip": false
+      },
+      {
+        "name": "Single-arm swing",
+        "link": "https://www.youtube.com/shorts/jidchvotn6s",
+        "area": "lower",
+        "muscles": "glutes, hamstrings, shoulders, core",
+        "equipment": {
+          "kettlebells_16kg": {
+            "count": 1
           }
         },
-        {
-          "name": "Kettlebell clean", 
-          "link": "https://www.youtube.com/shorts/xQb9Tc3iQpI",
-          "area": "core",
-          "muscles": "shoulders, quadriceps, glutes, core",
-          "equipment": {
-            "kettlebells_6kg": {
-              "count": 1
-            }
+        "skip": false
+      },
+      {
+        "name": "Kettlebell clean",
+        "link": "https://www.youtube.com/shorts/xQb9Tc3iQpI",
+        "area": "core",
+        "muscles": "shoulders, quadriceps, glutes, core",
+        "equipment": {
+          "kettlebells_6kg": {
+            "count": 1
           }
         },
-        {
-          "name": "Clean + jerk", 
-          "link": "https://www.youtube.com/shorts/oyz20GR9KEg",
-          "area": "core",
-          "muscles": "full body, shoulders, legs, core",
-          "equipment": {
-            "kettlebells_6kg": {
-              "count": 1
-            }
+        "skip": false
+      },
+      {
+        "name": "Clean + jerk",
+        "link": "https://www.youtube.com/shorts/oyz20GR9KEg",
+        "area": "core",
+        "muscles": "full body, shoulders, legs, core",
+        "equipment": {
+          "kettlebells_6kg": {
+            "count": 1
           }
         },
-        {
-          "name": "Snatch", 
-          "link": "https://www.youtube.com/shorts/9IptF07Ugh4",
-          "area": "core",
-          "muscles": "full body, shoulders, legs, core",
-          "equipment": {
-            "kettlebells_6kg": {
-              "count": 1
-            },
-            "kettlebells_16kg": {
-              "count": 1
-            }
+        "skip": false
+      },
+      {
+        "name": "Snatch",
+        "link": "https://www.youtube.com/shorts/9IptF07Ugh4",
+        "area": "core",
+        "muscles": "full body, shoulders, legs, core",
+        "equipment": {
+          "kettlebells_6kg": {
+            "count": 1
+          },
+          "kettlebells_16kg": {
+            "count": 1
           }
         },
-        {
-          "name": "High pull", 
-          "link": "https://www.youtube.com/shorts/JYwkgnohFyQ",
-          "area": "upper",
-          "muscles": "shoulders, latissimus dorsi, trapezius",
-          "equipment": {
-            "kettlebells_6kg": {
-              "count": 1
-            },
-            "kettlebells_16kg": {
-              "count": 1
-            }
-          }
-        }
-      ],
-      "squat_lunge": [
-        {
-          "name": "Goblet squat", 
-          "link": "https://www.youtube.com/shorts/PP4XRTIIyRI",
-          "area": "lower",
-          "muscles": "quadriceps, glutes, core",
-          "equipment": {
-            "kettlebells_6kg": {
-              "count": 1
-            },
-            "kettlebells_16kg": {
-              "count": 1
-            }
+        "skip": false
+      },
+      {
+        "name": "High pull",
+        "link": "https://www.youtube.com/shorts/JYwkgnohFyQ",
+        "area": "upper",
+        "muscles": "shoulders, latissimus dorsi, trapezius",
+        "equipment": {
+          "kettlebells_6kg": {
+            "count": 1
+          },
+          "kettlebells_16kg": {
+            "count": 1
           }
         },
-        {
-          "name": "Double-KB front squat", 
-          "link": "https://www.youtube.com/shorts/8Wc7Y179inM",
-          "area": "lower",
-          "muscles": "quadriceps, glutes, core",
-          "equipment": {
-            "kettlebells_4kg": {
-              "count": 2
-            },
-            "kettlebells_6kg": {
-              "count": 2
-            }
+        "skip": false
+      }
+    ],
+    "squat_lunge": [
+      {
+        "name": "Goblet squat",
+        "link": "https://www.youtube.com/shorts/PP4XRTIIyRI",
+        "area": "lower",
+        "muscles": "quadriceps, glutes, core",
+        "equipment": {
+          "kettlebells_6kg": {
+            "count": 1
+          },
+          "kettlebells_16kg": {
+            "count": 1
           }
         },
-        {
-          "name": "Split squat (rack)", 
-          "link": "https://www.youtube.com/shorts/uGbwrBd9LL4",
-          "area": "lower",
-          "muscles": "quadriceps, glutes, hamstrings",
-          "equipment": {
-            "kettlebells_4kg": {
-              "count": 2
-            },
-            "kettlebells_6kg": {
-              "count": 2
-            }
+        "skip": false
+      },
+      {
+        "name": "Double-KB front squat",
+        "link": "https://www.youtube.com/shorts/8Wc7Y179inM",
+        "area": "lower",
+        "muscles": "quadriceps, glutes, core",
+        "equipment": {
+          "kettlebells_4kg": {
+            "count": 2
+          },
+          "kettlebells_6kg": {
+            "count": 2
           }
         },
-        {
-          "name": "Reverse lunge (suitcase or rack)", 
-          "link": "https://www.youtube.com/shorts/I0Ie12QVlKU",
-          "area": "lower",
-          "muscles": "quadriceps, glutes, hamstrings",
-          "equipment": {
-            "kettlebells_6kg": {
-              "count": 1
-            },
-            "kettlebells_16kg": {
-              "count": 1
-            }
-          }
-        }
-      ],
-      "upper_body": [
-        {
-          "name": "Strict press", 
-          "link": "https://www.youtube.com/shorts/6SDJvE7uHAo",
-          "area": "upper",
-          "muscles": "shoulders, triceps, core",
-          "equipment": {
-            "kettlebells_6kg": {
-              "count": 1
-            },
-            "kettlebells_16kg": {
-              "count": 1
-            }
+        "skip": false
+      },
+      {
+        "name": "Split squat (rack)",
+        "link": "https://www.youtube.com/shorts/uGbwrBd9LL4",
+        "area": "lower",
+        "muscles": "quadriceps, glutes, hamstrings",
+        "equipment": {
+          "kettlebells_4kg": {
+            "count": 2
+          },
+          "kettlebells_6kg": {
+            "count": 2
           }
         },
-        {
-          "name": "Push-press", 
-          "link": "https://www.youtube.com/shorts/iO6JMIW1lYQ",
-          "area": "upper",
-          "muscles": "shoulders, triceps, quadriceps, core",
-          "equipment": {
-            "kettlebells_6kg": {
-              "count": 1
-            }
+        "skip": false
+      },
+      {
+        "name": "Reverse lunge (suitcase or rack)",
+        "link": "https://www.youtube.com/shorts/I0Ie12QVlKU",
+        "area": "lower",
+        "muscles": "quadriceps, glutes, hamstrings",
+        "equipment": {
+          "kettlebells_6kg": {
+            "count": 1
+          },
+          "kettlebells_16kg": {
+            "count": 1
           }
         },
-        {
-          "name": "Single-arm floor press", 
-          "link": "https://www.youtube.com/shorts/rYVPIP9KMLQ",
-          "area": "upper",
-          "muscles": "chest, triceps, shoulders, core",
-          "equipment": {
-            "kettlebells_6kg": {
-              "count": 1
-            },
-            "kettlebells_16kg": {
-              "count": 1
-            }
+        "skip": false
+      }
+    ],
+    "upper_body": [
+      {
+        "name": "Strict press",
+        "link": "https://www.youtube.com/shorts/6SDJvE7uHAo",
+        "area": "upper",
+        "muscles": "shoulders, triceps, core",
+        "equipment": {
+          "kettlebells_6kg": {
+            "count": 1
+          },
+          "kettlebells_16kg": {
+            "count": 1
           }
         },
-        {
-          "name": "Bent-over row", 
-          "link": "https://www.youtube.com/shorts/PzvvvZmNdq0",
-          "area": "upper",
-          "muscles": "latissimus dorsi, rhomboids, biceps",
-          "equipment": {
-            "kettlebells_6kg": {
-              "count": 1
-            },
-            "kettlebells_16kg": {
-              "count": 1
-            }
+        "skip": false
+      },
+      {
+        "name": "Push-press",
+        "link": "https://www.youtube.com/shorts/iO6JMIW1lYQ",
+        "area": "upper",
+        "muscles": "shoulders, triceps, quadriceps, core",
+        "equipment": {
+          "kettlebells_6kg": {
+            "count": 1
           }
         },
-        {
-          "name": "Renegade row", 
-          "link": "https://www.youtube.com/shorts/cbQFdA0GG4g",
-          "area": "core",
-          "muscles": "core, latissimus dorsi, shoulders",
-          "equipment": {
-            "kettlebells_6kg": {
-              "count": 2
-            }
-          }
-        }
-      ],
-      "core_carry": [
-        {
-          "name": "Turkish get-up", 
-          "link": "https://www.youtube.com/shorts/TcxzzyBziYA",
-          "area": "core",
-          "muscles": "full body, core, shoulders, legs",
-          "equipment": {
-            "kettlebells_4kg": {
-              "count": 1
-            },
-            "kettlebells_6kg": {
-              "count": 1
-            }
+        "skip": false
+      },
+      {
+        "name": "Single-arm floor press",
+        "link": "https://www.youtube.com/shorts/rYVPIP9KMLQ",
+        "area": "upper",
+        "muscles": "chest, triceps, shoulders, core",
+        "equipment": {
+          "kettlebells_6kg": {
+            "count": 1
+          },
+          "kettlebells_16kg": {
+            "count": 1
           }
         },
-        {
-          "name": "Windmill", 
-          "link": "https://www.youtube.com/shorts/EZWHnzAjctU",
-          "area": "core",
-          "muscles": "core, shoulders, hamstrings",
-          "equipment": {
-            "kettlebells_6kg": {
-              "count": 1
-            },
-            "kettlebells_16kg": {
-              "count": 1
-            }
+        "skip": false
+      },
+      {
+        "name": "Bent-over row",
+        "link": "https://www.youtube.com/shorts/PzvvvZmNdq0",
+        "area": "upper",
+        "muscles": "latissimus dorsi, rhomboids, biceps",
+        "equipment": {
+          "kettlebells_6kg": {
+            "count": 1
+          },
+          "kettlebells_16kg": {
+            "count": 1
           }
         },
-        {
-          "name": "Halo", 
-          "link": "https://www.youtube.com/shorts/k-YcemjRASg",
-          "area": "core",
-          "muscles": "shoulders, core, stabilizers",
-          "equipment": {
-            "kettlebells_4kg": {
-              "count": 1
-            },
-            "kettlebells_6kg": {
-              "count": 1
-            }
+        "skip": false
+      },
+      {
+        "name": "Renegade row",
+        "link": "https://www.youtube.com/shorts/cbQFdA0GG4g",
+        "area": "core",
+        "muscles": "core, latissimus dorsi, shoulders",
+        "equipment": {
+          "kettlebells_6kg": {
+            "count": 2
           }
         },
-        {
-          "name": "reverse flies k", 
-          "link": "https://www.youtube.com/shorts/55aZ3C8xYtI",
-          "area": "upper",
-          "muscles": "rear deltoids, rhomboids",
-          "equipment": {
-            "kettlebells_4kg": {
-              "count": 1
-            },
-            "kettlebells_6kg": {
-              "count": 1
-            }
-          }
-        }
-      ],
-      "shoulders": [
-        
-        
-        {
-          "name": "Half-Kneeling Press", 
-          "link": "https://www.youtube.com/shorts/4nmVaAZ3bPU",
-          "area": "upper",
-          "muscles": "shoulders, triceps, core",
-          "equipment": {
-            "kettlebells_4kg": {
-              "count": 1
-            },
-            "kettlebells_6kg": {
-              "count": 1
-            }
+        "skip": false
+      }
+    ],
+    "core_carry": [
+      {
+        "name": "Turkish get-up",
+        "link": "https://www.youtube.com/shorts/TcxzzyBziYA",
+        "area": "core",
+        "muscles": "full body, core, shoulders, legs",
+        "equipment": {
+          "kettlebells_4kg": {
+            "count": 1
+          },
+          "kettlebells_6kg": {
+            "count": 1
           }
         },
-        {
-          "name": "Z-Press (seated on floor)", 
-          "link": "https://www.youtube.com/shorts/DzYK2-lUFus",
-          "area": "upper",
-          "muscles": "shoulders, triceps, core",
-          "equipment": {
-            "kettlebells_4kg": {
-              "count": 1
-            },
-            "kettlebells_6kg": {
-              "count": 1
-            }
+        "skip": false
+      },
+      {
+        "name": "Windmill",
+        "link": "https://www.youtube.com/shorts/EZWHnzAjctU",
+        "area": "core",
+        "muscles": "core, shoulders, hamstrings",
+        "equipment": {
+          "kettlebells_6kg": {
+            "count": 1
+          },
+          "kettlebells_16kg": {
+            "count": 1
           }
         },
-        {
-          "name": "Double See-Saw Press", 
-          "link": "https://www.youtube.com/shorts/4l_orKPjj8Q",
-          "area": "upper",
-          "muscles": "shoulders, triceps, core",
-          "equipment": {
-            "kettlebells_4kg": {
-              "count": 1
-            },
-            "kettlebells_6kg": {
-              "count": 1
-            }
+        "skip": false
+      },
+      {
+        "name": "Halo",
+        "link": "https://www.youtube.com/shorts/k-YcemjRASg",
+        "area": "core",
+        "muscles": "shoulders, core, stabilizers",
+        "equipment": {
+          "kettlebells_4kg": {
+            "count": 1
+          },
+          "kettlebells_6kg": {
+            "count": 1
           }
         },
-        {
-          "name": "Bottoms-Up Press", 
-          "link": "https://www.youtube.com/shorts/PDVTbKBXAl4",
-          "area": "upper",
-          "muscles": "shoulders, triceps, core, stabilizers",
-          "equipment": {
-            "kettlebells_4kg": {
-              "count": 1
-            },
-            "kettlebells_6kg": {
-              "count": 1
-            }
+        "skip": false
+      },
+      {
+        "name": "reverse flies k",
+        "link": "https://www.youtube.com/shorts/55aZ3C8xYtI",
+        "area": "upper",
+        "muscles": "rear deltoids, rhomboids",
+        "equipment": {
+          "kettlebells_4kg": {
+            "count": 1
+          },
+          "kettlebells_6kg": {
+            "count": 1
           }
         },
-        {
-          "name": "Arnold Press (rotation for front delts)", 
-          "link": "https://www.youtube.com/shorts/Y_09W4XKDgY",
-          "area": "upper",
-          "muscles": "shoulders, triceps, core",
-          "equipment": {
-            "kettlebells_4kg": {
-              "count": 1
-            },
-            "kettlebells_6kg": {
-              "count": 1
-            }
+        "skip": false
+      }
+    ],
+    "shoulders": [
+      {
+        "name": "Half-Kneeling Press",
+        "link": "https://www.youtube.com/shorts/4nmVaAZ3bPU",
+        "area": "upper",
+        "muscles": "shoulders, triceps, core",
+        "equipment": {
+          "kettlebells_4kg": {
+            "count": 1
+          },
+          "kettlebells_6kg": {
+            "count": 1
           }
         },
-
-        {
-          "name": "Upright Row", 
-          "link": "https://www.youtube.com/shorts/_E2wnqjBciE",
-          "area": "upper",
-          "muscles": "shoulders, trapezius, biceps",
-          "equipment": {
-            "kettlebells_6kg": {
-              "count": 1
-            }
+        "skip": false
+      },
+      {
+        "name": "Z-Press (seated on floor)",
+        "link": "https://www.youtube.com/shorts/DzYK2-lUFus",
+        "area": "upper",
+        "muscles": "shoulders, triceps, core",
+        "equipment": {
+          "kettlebells_4kg": {
+            "count": 1
+          },
+          "kettlebells_6kg": {
+            "count": 1
           }
         },
-        {
-          "name": "Figure-8 to Overhead Press", 
-          "link": "https://www.youtube.com/shorts/I7T_P5HnUr0",
-          "area": "upper",
-          "muscles": "shoulders, triceps, core",
-          "equipment": {
-            "kettlebells_6kg": {
-              "count": 1
-            }
+        "skip": false
+      },
+      {
+        "name": "Double See-Saw Press",
+        "link": "https://www.youtube.com/shorts/4l_orKPjj8Q",
+        "area": "upper",
+        "muscles": "shoulders, triceps, core",
+        "equipment": {
+          "kettlebells_4kg": {
+            "count": 1
+          },
+          "kettlebells_6kg": {
+            "count": 1
           }
         },
-        {
-          "name": "Bottoms-Up Waiter Walk (isometric)", 
-          "link": "https://www.youtube.com/shorts/-yuOeCWs5Cg",
-          "area": "upper",
-          "muscles": "shoulders, core, stabilizers",
-          "equipment": {
-            "kettlebells_4kg": {
-              "count": 1
-            },
-            "kettlebells_6kg": {
-              "count": 1
-            }
+        "skip": false
+      },
+      {
+        "name": "Bottoms-Up Press",
+        "link": "https://www.youtube.com/shorts/PDVTbKBXAl4",
+        "area": "upper",
+        "muscles": "shoulders, triceps, core, stabilizers",
+        "equipment": {
+          "kettlebells_4kg": {
+            "count": 1
+          },
+          "kettlebells_6kg": {
+            "count": 1
           }
         },
-        
-        {
-          "name": "Around-the-World waist", 
-          "link": "https://www.youtube.com/shorts/SDqeQ9b67AM",
-          "area": "core",
-          "muscles": "core, shoulders, obliques",
-          "equipment": {
-            "kettlebells_6kg": {
-              "count": 1
-            }
+        "skip": false
+      },
+      {
+        "name": "Arnold Press (rotation for front delts)",
+        "link": "https://www.youtube.com/shorts/Y_09W4XKDgY",
+        "area": "upper",
+        "muscles": "shoulders, triceps, core",
+        "equipment": {
+          "kettlebells_4kg": {
+            "count": 1
+          },
+          "kettlebells_6kg": {
+            "count": 1
           }
         },
-        {
-          "name": "Around-the-World overhead", 
-          "link": "https://www.youtube.com/shorts/k3elhfyMI4k",
-          "area": "core",
-          "muscles": "shoulders, core, stabilizers",
-          "equipment": {
-            "kettlebells_6kg": {
-              "count": 1
-            }
+        "skip": false
+      },
+      {
+        "name": "Upright Row",
+        "link": "https://www.youtube.com/shorts/_E2wnqjBciE",
+        "area": "upper",
+        "muscles": "shoulders, trapezius, biceps",
+        "equipment": {
+          "kettlebells_6kg": {
+            "count": 1
           }
         },
-        {
-          "name": "Sotts Press (overhead squat press)", 
-          "link": "https://www.youtube.com/shorts/MHNe9FcMYtA",
-          "area": "core",
-          "muscles": "shoulders, quadriceps, core",
-          "equipment": {
-            "kettlebells_4kg": {
-              "count": 1
-            },
-            "kettlebells_6kg": {
-              "count": 1
-            }
-          }
-        }
-      ],
-      "triceps": [
-        {
-          "name": "Overhead Triceps Extension (standing or kneeling)", 
-          "link": "https://www.youtube.com/shorts/2g6IrtUqXRg",
-          "area": "upper",
-          "muscles": "triceps, shoulders",
-          "equipment": {
-            "kettlebells_4kg": {
-              "count": 1
-            },
-            "kettlebells_6kg": {
-              "count": 1
-            }
+        "skip": false
+      },
+      {
+        "name": "Figure-8 to Overhead Press",
+        "link": "https://www.youtube.com/shorts/I7T_P5HnUr0",
+        "area": "upper",
+        "muscles": "shoulders, triceps, core",
+        "equipment": {
+          "kettlebells_6kg": {
+            "count": 1
           }
         },
-        {
-          "name": "Lying Skull Crusher (floor or bench)", 
-          "link": "https://www.youtube.com/shorts/y9aTIJVfuDM",
-          "area": "upper",
-          "muscles": "triceps, shoulders",
-          "equipment": {
-            "kettlebells_4kg": {
-              "count": 1
-            },
-            "kettlebells_6kg": {
-              "count": 1
-            }
+        "skip": false
+      },
+      {
+        "name": "Bottoms-Up Waiter Walk (isometric)",
+        "link": "https://www.youtube.com/shorts/-yuOeCWs5Cg",
+        "area": "upper",
+        "muscles": "shoulders, core, stabilizers",
+        "equipment": {
+          "kettlebells_4kg": {
+            "count": 1
+          },
+          "kettlebells_6kg": {
+            "count": 1
           }
         },
-        {
-          "name": "Close-Grip Floor Press", 
-          "link": "https://www.youtube.com/shorts/kzH-UO2ppO0",
-          "area": "upper",
-          "muscles": "triceps, chest, shoulders",
-          "equipment": {
-            "kettlebells_4kg": {
-              "count": 1
-            },
-            "kettlebells_6kg": {
-              "count": 1
-            }
+        "skip": false
+      },
+      {
+        "name": "Around-the-World waist",
+        "link": "https://www.youtube.com/shorts/SDqeQ9b67AM",
+        "area": "core",
+        "muscles": "core, shoulders, obliques",
+        "equipment": {
+          "kettlebells_6kg": {
+            "count": 1
           }
         },
-        {
-          "name": "Tate Press", 
-          "link": "https://www.youtube.com/shorts/IoHMhgn8jDI",
-          "area": "upper",
-          "muscles": "triceps, chest",
-          "equipment": {
-            "kettlebells_4kg": {
-              "count": 1
-            },
-            "kettlebells_6kg": {
-              "count": 1
-            }
+        "skip": false
+      },
+      {
+        "name": "Around-the-World overhead",
+        "link": "https://www.youtube.com/shorts/k3elhfyMI4k",
+        "area": "core",
+        "muscles": "shoulders, core, stabilizers",
+        "equipment": {
+          "kettlebells_6kg": {
+            "count": 1
           }
         },
-        {
-          "name": "Kickback standing", 
-          "link": "https://www.youtube.com/watch?v=UR1_7Es1qUk",
-          "area": "upper",
-          "muscles": "triceps, shoulders",
-          "equipment": {
-            "kettlebells_4kg": {
-              "count": 1
-            },
-            "kettlebells_6kg": {
-              "count": 1
-            }
+        "skip": false
+      },
+      {
+        "name": "Sotts Press (overhead squat press)",
+        "link": "https://www.youtube.com/shorts/MHNe9FcMYtA",
+        "area": "core",
+        "muscles": "shoulders, quadriceps, core",
+        "equipment": {
+          "kettlebells_4kg": {
+            "count": 1
+          },
+          "kettlebells_6kg": {
+            "count": 1
           }
         },
-        {
-          "name": "Crush-Grip Push-Up", 
-          "link": "https://www.youtube.com/shorts/mNfBfVhNvRc",
-          "area": "upper",
-          "muscles": "triceps, chest, shoulders",
-          "equipment": {
-            "kettlebells_6kg": {
-              "count": 1
-            }
+        "skip": false
+      }
+    ],
+    "triceps": [
+      {
+        "name": "Overhead Triceps Extension (standing or kneeling)",
+        "link": "https://www.youtube.com/shorts/2g6IrtUqXRg",
+        "area": "upper",
+        "muscles": "triceps, shoulders",
+        "equipment": {
+          "kettlebells_4kg": {
+            "count": 1
+          },
+          "kettlebells_6kg": {
+            "count": 1
           }
         },
-        {
-          "name": "Tall-Kneeling Overhead Extension", 
-          "link": "https://www.youtube.com/shorts/3s_dRicgY5U",
-          "area": "upper",
-          "muscles": "triceps, shoulders, core",
-          "equipment": {
-            "kettlebells_4kg": {
-              "count": 1
-            },
-            "kettlebells_6kg": {
-              "count": 1
-            }
-          }
-        }
-      ],
-      "biceps": [
-        
-        {
-          "name": "Standard Supinated Curl", 
-          "link": "https://www.youtube.com/shorts/1naOMuRpNqA",
-          "area": "upper",
-          "muscles": "biceps, forearms",
-          "equipment": {
-            "kettlebells_4kg": {
-              "count": 1
-            },
-            "kettlebells_6kg": {
-              "count": 1
-            }
+        "skip": false
+      },
+      {
+        "name": "Lying Skull Crusher (floor or bench)",
+        "link": "https://www.youtube.com/shorts/y9aTIJVfuDM",
+        "area": "upper",
+        "muscles": "triceps, shoulders",
+        "equipment": {
+          "kettlebells_4kg": {
+            "count": 1
+          },
+          "kettlebells_6kg": {
+            "count": 1
           }
         },
-        {
-          "name": "Alternating Curl", 
-          "link": "https://www.youtube.com/shorts/ugWGpcbcaeQ",
-          "area": "upper",
-          "muscles": "biceps, forearms",
-          "equipment": {
-            "kettlebells_4kg": {
-              "count": 1
-            },
-            "kettlebells_6kg": {
-              "count": 1
-            }
+        "skip": false
+      },
+      {
+        "name": "Close-Grip Floor Press",
+        "link": "https://www.youtube.com/shorts/kzH-UO2ppO0",
+        "area": "upper",
+        "muscles": "triceps, chest, shoulders",
+        "equipment": {
+          "kettlebells_4kg": {
+            "count": 1
+          },
+          "kettlebells_6kg": {
+            "count": 1
           }
         },
-        {
-          "name": "Reverse Curl", 
-          "link": "https://www.youtube.com/shorts/1naOMuRpNqA",
-          "area": "upper",
-          "muscles": "biceps, forearms",
-          "equipment": {
-            "kettlebells_4kg": {
-              "count": 1
-            },
-            "kettlebells_6kg": {
-              "count": 1
-            }
+        "skip": false
+      },
+      {
+        "name": "Tate Press",
+        "link": "https://www.youtube.com/shorts/IoHMhgn8jDI",
+        "area": "upper",
+        "muscles": "triceps, chest",
+        "equipment": {
+          "kettlebells_4kg": {
+            "count": 1
+          },
+          "kettlebells_6kg": {
+            "count": 1
           }
         },
-        {
-          "name": "Bottoms-Up Curl (huge grip challenge)", 
-          "link": "",
-          "area": "upper",
-          "muscles": "biceps, forearms, stabilizers",
-          "equipment": {
-            "kettlebells_4kg": {
-              "count": 1
-            },
-            "kettlebells_6kg": {
-              "count": 1
-            }
+        "skip": false
+      },
+      {
+        "name": "Kickback standing",
+        "link": "https://www.youtube.com/watch?v=UR1_7Es1qUk",
+        "area": "upper",
+        "muscles": "triceps, shoulders",
+        "equipment": {
+          "kettlebells_4kg": {
+            "count": 1
+          },
+          "kettlebells_6kg": {
+            "count": 1
           }
         },
-        {
-          "name": "Concentration Curl", 
-          "link": "",
-          "area": "upper",
-          "muscles": "biceps, forearms",
-          "equipment": {
-            "kettlebells_4kg": {
-              "count": 1
-            },
-            "kettlebells_6kg": {
-              "count": 1
-            }
+        "skip": false
+      },
+      {
+        "name": "Crush-Grip Push-Up",
+        "link": "https://www.youtube.com/shorts/mNfBfVhNvRc",
+        "area": "upper",
+        "muscles": "triceps, chest, shoulders",
+        "equipment": {
+          "kettlebells_6kg": {
+            "count": 1
           }
         },
-        {
-          "name": "Preacher Curl (arm braced on bench)", 
-          "link": "",
-          "area": "upper",
-          "muscles": "biceps, forearms",
-          "equipment": {
-            "kettlebells_4kg": {
-              "count": 1
-            },
-            "kettlebells_6kg": {
-              "count": 1
-            }
+        "skip": false
+      },
+      {
+        "name": "Tall-Kneeling Overhead Extension",
+        "link": "https://www.youtube.com/shorts/3s_dRicgY5U",
+        "area": "upper",
+        "muscles": "triceps, shoulders, core",
+        "equipment": {
+          "kettlebells_4kg": {
+            "count": 1
+          },
+          "kettlebells_6kg": {
+            "count": 1
           }
         },
-        {
-          "name": "Drag Curl (elbows drift back)", 
-          "link": "",
-          "area": "upper",
-          "muscles": "biceps, forearms",
-          "equipment": {
-            "kettlebells_4kg": {
-              "count": 1
-            },
-            "kettlebells_6kg": {
-              "count": 1
-            }
+        "skip": false
+      }
+    ],
+    "biceps": [
+      {
+        "name": "Standard Supinated Curl",
+        "link": "https://www.youtube.com/shorts/1naOMuRpNqA",
+        "area": "upper",
+        "muscles": "biceps, forearms",
+        "equipment": {
+          "kettlebells_4kg": {
+            "count": 1
+          },
+          "kettlebells_6kg": {
+            "count": 1
           }
         },
-        {
-          "name": "Curl-to-Press (flow move)", 
-          "link": "",
-          "area": "core",
-          "muscles": "biceps, shoulders, core",
-          "equipment": {
-            "kettlebells_4kg": {
-              "count": 1
-            },
-            "kettlebells_6kg": {
-              "count": 1
-            }
+        "skip": false
+      },
+      {
+        "name": "Alternating Curl",
+        "link": "https://www.youtube.com/shorts/ugWGpcbcaeQ",
+        "area": "upper",
+        "muscles": "biceps, forearms",
+        "equipment": {
+          "kettlebells_4kg": {
+            "count": 1
+          },
+          "kettlebells_6kg": {
+            "count": 1
           }
         },
-        {
-          "name": "Spider Curl (incline bench, chest down)", 
-          "link": "",
-          "area": "upper",
-          "muscles": "biceps, forearms",
-          "equipment": {
-            "kettlebells_4kg": {
-              "count": 1
-            },
-            "kettlebells_6kg": {
-              "count": 1
-            }
+        "skip": false
+      },
+      {
+        "name": "Reverse Curl",
+        "link": "https://www.youtube.com/shorts/1naOMuRpNqA",
+        "area": "upper",
+        "muscles": "biceps, forearms",
+        "equipment": {
+          "kettlebells_4kg": {
+            "count": 1
+          },
+          "kettlebells_6kg": {
+            "count": 1
           }
         },
-        {
-          "name": "Incline Curl (leaned-back bench)", 
-          "link": "",
-          "area": "upper",
-          "muscles": "biceps, forearms",
-          "equipment": {
-            "kettlebells_4kg": {
-              "count": 1
-            },
-            "kettlebells_6kg": {
-              "count": 1
-            }
+        "skip": false
+      },
+      {
+        "name": "Bottoms-Up Curl (huge grip challenge)",
+        "link": "",
+        "area": "upper",
+        "muscles": "biceps, forearms, stabilizers",
+        "equipment": {
+          "kettlebells_4kg": {
+            "count": 1
+          },
+          "kettlebells_6kg": {
+            "count": 1
           }
         },
-        {
-          "name": "Cross-Body Curl (diagonal)", 
-          "link": "",
-          "area": "upper",
-          "muscles": "biceps, forearms, core",
-          "equipment": {
-            "kettlebells_4kg": {
-              "count": 1
-            },
-            "kettlebells_6kg": {
-              "count": 1
-            }
+        "skip": false
+      },
+      {
+        "name": "Concentration Curl",
+        "link": "",
+        "area": "upper",
+        "muscles": "biceps, forearms",
+        "equipment": {
+          "kettlebells_4kg": {
+            "count": 1
+          },
+          "kettlebells_6kg": {
+            "count": 1
           }
         },
-        {
-          "name": "Waiter Curl (bell held upside-down like a tray)", 
-          "link": "https://www.youtube.com/shorts/c_fczYLIt2U",
-          "equipment": {
-            "kettlebells_4kg": {
-              "count": 1
-            },
-            "kettlebells_6kg": {
-              "count": 1
-            }
+        "skip": false
+      },
+      {
+        "name": "Preacher Curl (arm braced on bench)",
+        "link": "",
+        "area": "upper",
+        "muscles": "biceps, forearms",
+        "equipment": {
+          "kettlebells_4kg": {
+            "count": 1
+          },
+          "kettlebells_6kg": {
+            "count": 1
           }
-        }
-      ]
-    }
+        },
+        "skip": false
+      },
+      {
+        "name": "Drag Curl (elbows drift back)",
+        "link": "",
+        "area": "upper",
+        "muscles": "biceps, forearms",
+        "equipment": {
+          "kettlebells_4kg": {
+            "count": 1
+          },
+          "kettlebells_6kg": {
+            "count": 1
+          }
+        },
+        "skip": false
+      },
+      {
+        "name": "Curl-to-Press (flow move)",
+        "link": "",
+        "area": "core",
+        "muscles": "biceps, shoulders, core",
+        "equipment": {
+          "kettlebells_4kg": {
+            "count": 1
+          },
+          "kettlebells_6kg": {
+            "count": 1
+          }
+        },
+        "skip": false
+      },
+      {
+        "name": "Spider Curl (incline bench, chest down)",
+        "link": "",
+        "area": "upper",
+        "muscles": "biceps, forearms",
+        "equipment": {
+          "kettlebells_4kg": {
+            "count": 1
+          },
+          "kettlebells_6kg": {
+            "count": 1
+          }
+        },
+        "skip": false
+      },
+      {
+        "name": "Incline Curl (leaned-back bench)",
+        "link": "",
+        "area": "upper",
+        "muscles": "biceps, forearms",
+        "equipment": {
+          "kettlebells_4kg": {
+            "count": 1
+          },
+          "kettlebells_6kg": {
+            "count": 1
+          }
+        },
+        "skip": false
+      },
+      {
+        "name": "Cross-Body Curl (diagonal)",
+        "link": "",
+        "area": "upper",
+        "muscles": "biceps, forearms, core",
+        "equipment": {
+          "kettlebells_4kg": {
+            "count": 1
+          },
+          "kettlebells_6kg": {
+            "count": 1
+          }
+        },
+        "skip": false
+      },
+      {
+        "name": "Waiter Curl (bell held upside-down like a tray)",
+        "link": "https://www.youtube.com/shorts/c_fczYLIt2U",
+        "equipment": {
+          "kettlebells_4kg": {
+            "count": 1
+          },
+          "kettlebells_6kg": {
+            "count": 1
+          }
+        },
+        "skip": false
+      }
+    ]
   }
+}
