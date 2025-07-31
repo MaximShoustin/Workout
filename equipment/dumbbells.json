@@ -132,19 +132,11 @@
         "area": "lower",
         "muscles": "hamstrings, glutes, core",
         "equipment": {
-          "dumbbells_3kg": {
-            "count": 1
-          },
-          "dumbbells_5kg": {
-            "count": 1
-          },
           "dumbbells_10kg": {
-            "count": 1
-          },
-          "dumbbells_15kg": {
             "count": 1
           }
         },
+        "unilateral": true,
         "skip": false
       }
     ],

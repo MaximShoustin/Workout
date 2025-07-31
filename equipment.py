@@ -58,12 +58,12 @@ def can_exercise_be_performed(exercise_equipment: dict, available_inventory: dic
     return is_valid
 
 
-def filter_feasible_exercises(pool: List[Tuple[str, str, str, str, dict]], available_inventory: dict) -> List[Tuple[str, str, str, str, dict]]:
+def filter_feasible_exercises(pool: List[Tuple[str, str, str, str, dict, str, bool]], available_inventory: dict) -> List[Tuple[str, str, str, str, dict, str, bool]]:
     """
     Filter exercise pool to only include exercises that can be performed with available equipment.
     
     Args:
-        pool: List of (area, equip_name, exercise_name, exercise_link, equipment_data, muscles)
+        pool: List of (area, equip_name, exercise_name, exercise_link, equipment_data, muscles, unilateral)
         available_inventory: Available equipment from plan.json
         
     Returns:
@@ -73,7 +73,7 @@ def filter_feasible_exercises(pool: List[Tuple[str, str, str, str, dict]], avail
     excluded_exercises = []
     
     for exercise_tuple in pool:
-        area, equip_name, exercise_name, exercise_link, equipment_data, muscles = exercise_tuple
+        area, equip_name, exercise_name, exercise_link, equipment_data, muscles, unilateral = exercise_tuple
         
         if can_exercise_be_performed(equipment_data, available_inventory):
             feasible_pool.append(exercise_tuple)
@@ -105,8 +105,8 @@ def parse_equipment() -> Dict[str, dict]:
     return gear
 
 
-def build_station_pool(gear: Dict[str, dict], available_inventory: Optional[dict] = None) -> List[Tuple[str, str, str, str, dict, str]]:
-    """Return list of (area, equip_name, exercise_name, exercise_link, equipment_data, muscles)"""
+def build_station_pool(gear: Dict[str, dict], available_inventory: Optional[dict] = None) -> List[Tuple[str, str, str, str, dict, str, bool]]:
+    """Return list of (area, equip_name, exercise_name, exercise_link, equipment_data, muscles, unilateral)"""
     pool = []
     skipped_exercises = []
     
@@ -126,6 +126,7 @@ def build_station_pool(gear: Dict[str, dict], available_inventory: Optional[dict
                     # Use the area field directly from the exercise data
                     area = ex.get("area", "core")  # Default to "core" if area field is missing
                     muscles = ex.get("muscles", "")  # Get muscles data
+                    unilateral = ex.get("unilateral", False)  # Get unilateral flag
                 else:
                     # Fallback for old string format (shouldn't happen anymore)
                     exercise_name = ex
@@ -133,7 +134,8 @@ def build_station_pool(gear: Dict[str, dict], available_inventory: Optional[dict
                     equipment_data = {}
                     area = classify_area(cat)  # Use old method as fallback
                     muscles = ""  # No muscles data for old format
-                pool.append((area, equip_name, exercise_name, exercise_link, equipment_data, muscles))
+                    unilateral = False  # Default to bilateral for old format
+                pool.append((area, equip_name, exercise_name, exercise_link, equipment_data, muscles, unilateral))
     
     # Report skipped exercises if any
     if skipped_exercises:

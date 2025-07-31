@@ -23,6 +23,7 @@
             "count": 1
           }
         },
+        "unilateral": true,
         "skip": false
       },
       {
@@ -183,6 +184,7 @@
             "count": 1
           }
         },
+        "unilateral": true,
         "skip": false
       },
       {
@@ -289,6 +291,7 @@
             "count": 1
           }
         },
+        "unilateral": true,
         "skip": false
       },
       {
@@ -334,6 +337,7 @@
             "count": 1
           }
         },
+        "unilateral": true,
         "skip": false
       },
       {
@@ -582,7 +586,7 @@
       },
       {
         "name": "Bottoms-Up Curl (huge grip challenge)",
-        "link": "",
+        "link": "https://www.youtube.com/shorts/XQbuJ5euemc",
         "area": "upper",
         "muscles": "biceps, forearms, stabilizers",
         "equipment": {
@@ -597,7 +601,7 @@
       },
       {
         "name": "Concentration Curl",
-        "link": "",
+        "link": "https://www.youtube.com/shorts/LyI482x_HyM",
         "area": "upper",
         "muscles": "biceps, forearms",
         "equipment": {
@@ -608,6 +612,7 @@
             "count": 1
           }
         },
+        "unilateral": false,
         "skip": false
       },
       {
