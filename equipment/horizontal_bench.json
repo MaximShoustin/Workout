@@ -17,7 +17,8 @@
             "count": 2
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "Barbell bench press (20 kg technique load)",
@@ -32,7 +33,8 @@
             "count": 1
           }
         },
-        "skip": false
+        "skip": true,
+        "unilateral": false
       },
       {
         "name": "Close-grip dumbbell press",
@@ -50,7 +52,8 @@
             "count": 2
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "Dumbbell pullover",
@@ -63,15 +66,10 @@
           },
           "dumbbells_5kg": {
             "count": 1
-          },
-          "dumbbells_10kg": {
-            "count": 1
-          },
-          "dumbbells_15kg": {
-            "count": 1
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       }
     ],
     "lower_core": [
@@ -85,7 +83,8 @@
             "count": 1
           }
         },
-        "skip": false
+        "skip": true,
+        "unilateral": false
       },
       {
         "name": "Bulgarian split-squat (rear foot on bench)",
@@ -97,7 +96,8 @@
             "count": 1
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       }
     ],
     "accessory": [
@@ -111,7 +111,8 @@
             "count": 1
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "Feet-elevated push-ups",
@@ -123,7 +124,8 @@
             "count": 1
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       }
     ]
   }

@@ -17,7 +17,8 @@
             "count": 2
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "reverse flies d",
@@ -29,7 +30,8 @@
             "count": 2
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "Alternating curl / hammer curl",
@@ -44,7 +46,8 @@
             "count": 2
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "Overhead press",
@@ -62,7 +65,8 @@
             "count": 2
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "Lateral / front raise",
@@ -80,7 +84,8 @@
             "count": 2
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "Rear-delt fly",
@@ -92,7 +97,8 @@
             "count": 2
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       }
     ],
     "lower_body": [
@@ -106,7 +112,8 @@
             "count": 1
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "Reverse or walking lunge",
@@ -124,7 +131,8 @@
             "count": 2
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "Single-leg RDL",
@@ -151,7 +159,8 @@
             "count": 2
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "DB thruster",
@@ -169,7 +178,8 @@
             "count": 2
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "Devil's press",
@@ -181,7 +191,8 @@
             "count": 2
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "Zottman Curl (supinate up, pronate down)",
@@ -193,7 +204,8 @@
             "count": 2
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       }
     ]
   }

@@ -11,7 +11,8 @@
             "count": 1
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "Single-arm swing",
@@ -36,7 +37,8 @@
             "count": 1
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "Clean + jerk",
@@ -48,7 +50,8 @@
             "count": 1
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "Snatch",
@@ -63,7 +66,8 @@
             "count": 1
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "High pull",
@@ -78,7 +82,8 @@
             "count": 1
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       }
     ],
     "squat_lunge": [
@@ -95,7 +100,8 @@
             "count": 1
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "Double-KB front squat",
@@ -110,7 +116,8 @@
             "count": 2
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "Split squat (rack)",
@@ -125,7 +132,8 @@
             "count": 2
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "Reverse lunge (suitcase or rack)",
@@ -140,7 +148,8 @@
             "count": 1
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       }
     ],
     "upper_body": [
@@ -157,7 +166,8 @@
             "count": 1
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "Push-press",
@@ -169,7 +179,8 @@
             "count": 1
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "Single-arm floor press",
@@ -200,7 +211,8 @@
             "count": 1
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "Renegade row",
@@ -212,7 +224,8 @@
             "count": 2
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       }
     ],
     "core_carry": [
@@ -229,7 +242,8 @@
             "count": 1
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "Windmill",
@@ -244,7 +258,8 @@
             "count": 1
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "Halo",
@@ -259,7 +274,8 @@
             "count": 1
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "reverse flies k",
@@ -274,7 +290,8 @@
             "count": 1
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       }
     ],
     "shoulders": [
@@ -307,7 +324,8 @@
             "count": 1
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "Double See-Saw Press",
@@ -322,7 +340,8 @@
             "count": 1
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "Bottoms-Up Press",
@@ -353,7 +372,8 @@
             "count": 1
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "Upright Row",
@@ -365,7 +385,8 @@
             "count": 1
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "Figure-8 to Overhead Press",
@@ -377,7 +398,8 @@
             "count": 1
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "Bottoms-Up Waiter Walk (isometric)",
@@ -392,7 +414,8 @@
             "count": 1
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "Around-the-World waist",
@@ -404,7 +427,8 @@
             "count": 1
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "Around-the-World overhead",
@@ -416,7 +440,8 @@
             "count": 1
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "Sotts Press (overhead squat press)",
@@ -431,7 +456,8 @@
             "count": 1
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       }
     ],
     "triceps": [
@@ -448,7 +474,8 @@
             "count": 1
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "Lying Skull Crusher (floor or bench)",
@@ -463,7 +490,8 @@
             "count": 1
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "Close-Grip Floor Press",
@@ -478,7 +506,8 @@
             "count": 1
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "Tate Press",
@@ -493,7 +522,8 @@
             "count": 1
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "Kickback standing",
@@ -508,7 +538,8 @@
             "count": 1
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "Crush-Grip Push-Up",
@@ -520,7 +551,8 @@
             "count": 1
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "Tall-Kneeling Overhead Extension",
@@ -535,7 +567,8 @@
             "count": 1
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       }
     ],
     "biceps": [
@@ -552,7 +585,8 @@
             "count": 1
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "Alternating Curl",
@@ -567,7 +601,8 @@
             "count": 1
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "Reverse Curl",
@@ -582,7 +617,8 @@
             "count": 1
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "Bottoms-Up Curl (huge grip challenge)",
@@ -597,7 +633,8 @@
             "count": 1
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "Concentration Curl",
@@ -628,7 +665,8 @@
             "count": 1
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "Drag Curl (elbows drift back)",
@@ -643,7 +681,8 @@
             "count": 1
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "Curl-to-Press (flow move)",
@@ -658,7 +697,8 @@
             "count": 1
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "Spider Curl (incline bench, chest down)",
@@ -673,7 +713,8 @@
             "count": 1
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "Incline Curl (leaned-back bench)",
@@ -688,7 +729,8 @@
             "count": 1
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "Cross-Body Curl (diagonal)",
@@ -703,7 +745,8 @@
             "count": 1
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       },
       {
         "name": "Waiter Curl (bell held upside-down like a tray)",
@@ -716,7 +759,8 @@
             "count": 1
           }
         },
-        "skip": false
+        "skip": false,
+        "unilateral": false
       }
     ]
   }
