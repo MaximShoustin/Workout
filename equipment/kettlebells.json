@@ -38,7 +38,7 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": true
       },
       {
         "name": "Clean + jerk",
@@ -51,7 +51,7 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": true
       },
       {
         "name": "Snatch",
@@ -67,7 +67,7 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": true
       },
       {
         "name": "High pull",
@@ -109,9 +109,6 @@
         "area": "lower",
         "muscles": "quadriceps, glutes, core",
         "equipment": {
-          "kettlebells_4kg": {
-            "count": 2
-          },
           "kettlebells_6kg": {
             "count": 2
           }
@@ -125,9 +122,6 @@
         "area": "lower",
         "muscles": "quadriceps, glutes, hamstrings",
         "equipment": {
-          "kettlebells_4kg": {
-            "count": 2
-          },
           "kettlebells_6kg": {
             "count": 2
           }
@@ -143,13 +137,10 @@
         "equipment": {
           "kettlebells_6kg": {
             "count": 1
-          },
-          "kettlebells_16kg": {
-            "count": 1
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": true
       }
     ],
     "upper_body": [
@@ -161,13 +152,10 @@
         "equipment": {
           "kettlebells_6kg": {
             "count": 1
-          },
-          "kettlebells_16kg": {
-            "count": 1
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": true
       },
       {
         "name": "Push-press",
@@ -180,7 +168,7 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": true
       },
       {
         "name": "Single-arm floor press",
@@ -206,13 +194,10 @@
         "equipment": {
           "kettlebells_6kg": {
             "count": 1
-          },
-          "kettlebells_16kg": {
-            "count": 1
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": true
       },
       {
         "name": "Renegade row",
@@ -243,7 +228,7 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": true
       },
       {
         "name": "Windmill",
@@ -259,7 +244,7 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": true
       },
       {
         "name": "Halo",
@@ -402,22 +387,6 @@
         "unilateral": false
       },
       {
-        "name": "Bottoms-Up Waiter Walk (isometric)",
-        "link": "https://www.youtube.com/shorts/-yuOeCWs5Cg",
-        "area": "upper",
-        "muscles": "shoulders, core, stabilizers",
-        "equipment": {
-          "kettlebells_4kg": {
-            "count": 1
-          },
-          "kettlebells_6kg": {
-            "count": 1
-          }
-        },
-        "skip": false,
-        "unilateral": false
-      },
-      {
         "name": "Around-the-World waist",
         "link": "https://www.youtube.com/shorts/SDqeQ9b67AM",
         "area": "core",
@@ -457,7 +426,7 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": true
       }
     ],
     "triceps": [
@@ -605,22 +574,6 @@
         "unilateral": false
       },
       {
-        "name": "Reverse Curl",
-        "link": "https://www.youtube.com/shorts/1naOMuRpNqA",
-        "area": "upper",
-        "muscles": "biceps, forearms",
-        "equipment": {
-          "kettlebells_4kg": {
-            "count": 1
-          },
-          "kettlebells_6kg": {
-            "count": 1
-          }
-        },
-        "skip": false,
-        "unilateral": false
-      },
-      {
         "name": "Bottoms-Up Curl (huge grip challenge)",
         "link": "https://www.youtube.com/shorts/XQbuJ5euemc",
         "area": "upper",
@@ -642,10 +595,10 @@
         "area": "upper",
         "muscles": "biceps, forearms",
         "equipment": {
-          "kettlebells_4kg": {
+          "kettlebells_6kg": {
             "count": 1
           },
-          "kettlebells_6kg": {
+          "bench": {
             "count": 1
           }
         },
@@ -654,7 +607,7 @@
       },
       {
         "name": "Preacher Curl (arm braced on bench)",
-        "link": "",
+        "link": "https://www.youtube.com/shorts/mPiTdI_FcOY",
         "area": "upper",
         "muscles": "biceps, forearms",
         "equipment": {
@@ -670,25 +623,9 @@
       },
       {
         "name": "Drag Curl (elbows drift back)",
-        "link": "",
+        "link": "https://www.youtube.com/shorts/dfn3l_DW2UA",
         "area": "upper",
         "muscles": "biceps, forearms",
-        "equipment": {
-          "kettlebells_4kg": {
-            "count": 1
-          },
-          "kettlebells_6kg": {
-            "count": 1
-          }
-        },
-        "skip": false,
-        "unilateral": false
-      },
-      {
-        "name": "Curl-to-Press (flow move)",
-        "link": "",
-        "area": "core",
-        "muscles": "biceps, shoulders, core",
         "equipment": {
           "kettlebells_4kg": {
             "count": 1
@@ -713,7 +650,7 @@
             "count": 1
           }
         },
-        "skip": false,
+        "skip": true,
         "unilateral": false
       },
       {
@@ -729,7 +666,7 @@
             "count": 1
           }
         },
-        "skip": false,
+        "skip": true,
         "unilateral": false
       },
       {
@@ -745,7 +682,7 @@
             "count": 1
           }
         },
-        "skip": false,
+        "skip": true,
         "unilateral": false
       },
       {

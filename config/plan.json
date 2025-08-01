@@ -17,8 +17,9 @@
     "must_use": [
       "plyo_box",
       "barbells", 
-      "slam_balls_5kg",
-      "bench"
+      "bench",
+      "slam_balls_5kg"
+      
     ],
     "equipment": {
       "bench": {
@@ -76,6 +77,6 @@
         "count": 2
       }
     },
-    "title": "Strength Block – Week 1",
-    "notes": "Dont' crash the first week"
+    "title": "Strength Block – Week 2",
+    "notes": "Dont' crash the second week, you're getting stronger"
   }

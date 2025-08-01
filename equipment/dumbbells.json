@@ -12,22 +12,6 @@
           },
           "dumbbells_5kg": {
             "count": 2
-          },
-          "dumbbells_10kg": {
-            "count": 2
-          }
-        },
-        "skip": false,
-        "unilateral": false
-      },
-      {
-        "name": "reverse flies d",
-        "link": "https://www.youtube.com/shorts/apcNuGp97sY",
-        "area": "upper",
-        "muscles": "rear deltoids, rhomboids",
-        "equipment": {
-          "dumbbells_3kg": {
-            "count": 2
           }
         },
         "skip": false,
@@ -172,9 +156,6 @@
             "count": 2
           },
           "dumbbells_5kg": {
-            "count": 2
-          },
-          "dumbbells_10kg": {
             "count": 2
           }
         },
