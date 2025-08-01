@@ -469,6 +469,17 @@ def find_compatible_exercises_for_station(station_pool: List[Tuple[str, str, str
                     step_equipments.append(selected_equipment)
             
             if can_add_station_to_workout(step_equipments, cumulative_station_usage, available_inventory, people_per_station):
+                # If we're prioritizing must-use equipment, ensure at least one exercise actually uses it
+                if must_use_equipment:
+                    uses_must_use = False
+                    for exercise in selected_exercises:
+                        _, _, _, _, equipment, _, _ = exercise
+                        if any(eq_type in equipment for eq_type in must_use_equipment):
+                            uses_must_use = True
+                            break
+                    if not uses_must_use:
+                        return []  # Reject combinations that don't use must-use equipment
+                
                 return selected_exercises[:]
             return []
         
