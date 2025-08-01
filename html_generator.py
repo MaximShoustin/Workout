@@ -356,6 +356,16 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
             z-index: 1000;
             overflow: hidden;
         }
+        
+        /* Fix video positioning in Global Active Rest section */
+        .active-rest-section .video-popup {
+            position: fixed !important;
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%) !important;
+            margin: 0 !important;
+            z-index: 10000 !important;
+        }
         .video-popup iframe {
             width: 100%;
             height: calc(100% - 35px);
@@ -1423,6 +1433,45 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
         }}
         
         function positionVideoSmart(videoElement) {{
+            // Check if video is in active rest section
+            const activeRestSection = videoElement.closest('.active-rest-section');
+            if (activeRestSection) {{
+                // Create backdrop for active rest videos
+                let backdrop = document.getElementById('video-backdrop');
+                if (!backdrop) {{
+                    backdrop = document.createElement('div');
+                    backdrop.id = 'video-backdrop';
+                    backdrop.style.position = 'fixed';
+                    backdrop.style.top = '0';
+                    backdrop.style.left = '0';
+                    backdrop.style.width = '100vw';
+                    backdrop.style.height = '100vh';
+                    backdrop.style.background = 'rgba(0, 0, 0, 0.7)';
+                    backdrop.style.zIndex = '9999';
+                    backdrop.style.display = 'none';
+                    document.body.appendChild(backdrop);
+                    
+                    // Close video when clicking backdrop
+                    backdrop.addEventListener('click', function() {{
+                        document.querySelectorAll('.video-popup').forEach(video => {{
+                            stopVideo(video);
+                        }});
+                    }});
+                }}
+                backdrop.style.display = 'block';
+                
+                // For active rest videos, use fixed centering to avoid overlap
+                videoElement.style.position = 'fixed';
+                videoElement.style.top = '50%';
+                videoElement.style.left = '50%';
+                videoElement.style.transform = 'translate(-50%, -50%)';
+                videoElement.style.margin = '0';
+                videoElement.style.zIndex = '10000';
+                videoElement.style.right = 'auto';
+                videoElement.style.bottom = 'auto';
+                return; // Skip the normal positioning logic
+            }}
+            
             const viewportHeight = window.innerHeight;
             const viewportWidth = window.innerWidth;
             const videoHeight = 360;
@@ -1487,6 +1536,12 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
             iframe.setAttribute('data-src', originalSrc);
             iframe.src = '';
             videoElement.style.display = 'none';
+            
+            // Hide backdrop if it exists
+            const backdrop = document.getElementById('video-backdrop');
+            if (backdrop) {{
+                backdrop.style.display = 'none';
+            }}
         }}
         
         // Close video when clicking outside
