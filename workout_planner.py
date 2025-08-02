@@ -299,7 +299,7 @@ def filter_exercises_by_remaining_equipment(station_pool: List[Tuple[str, str, s
     filtered_pool = []
     
     for exercise_tuple in station_pool:
-        area, equip_name, exercise_name, exercise_link, equipment_data, muscles, unilateral = exercise_tuple
+        area, equip_name, exercise_name, exercise_link, equipment_data, muscles, unilateral, exercise_id = exercise_tuple
         
         # Select best equipment option for this exercise
         selected_equipment = select_best_equipment_option(equipment_data, available_inventory)
@@ -328,7 +328,7 @@ def filter_exercises_by_remaining_equipment(station_pool: List[Tuple[str, str, s
     return filtered_pool
 
 
-def prioritize_must_use_exercises(station_pool: List[Tuple[str, str, str, str, dict]], 
+def prioritize_must_use_exercises(station_pool: List[Tuple[str, str, str, str, dict, str, bool, int]], 
                                  must_use_equipment: List[str],
                                  cumulative_station_usage: dict,
                                  available_inventory: dict) -> List[str]:
@@ -371,7 +371,7 @@ def prioritize_must_use_exercises(station_pool: List[Tuple[str, str, str, str, d
     return unused_must_use
 
 
-def find_exercise_using_equipment(station_pool: List[Tuple[str, str, str, str, dict]], 
+def find_exercise_using_equipment(station_pool: List[Tuple[str, str, str, str, dict, str, bool, int]], 
                                 equipment_type: str,
                                 area_target: str = None,
                                 used_names: set = None) -> Tuple:
@@ -393,7 +393,7 @@ def find_exercise_using_equipment(station_pool: List[Tuple[str, str, str, str, d
     # Filter to unused exercises that use the target equipment
     candidates = []
     for exercise_tuple in station_pool:
-        area, equip_name, exercise_name, exercise_link, equipment_data, muscles, unilateral = exercise_tuple
+        area, equip_name, exercise_name, exercise_link, equipment_data, muscles, unilateral, exercise_id = exercise_tuple
         if exercise_name not in used_names and equipment_type in equipment_data:
             candidates.append(exercise_tuple)
     
@@ -450,8 +450,16 @@ def find_compatible_exercises_for_station(station_pool: List[Tuple[str, str, str
     def uses_must_use_equipment(exercise_tuple):
         if not must_use_equipment:
             return False
-        _, _, _, _, equipment, _, _ = exercise_tuple
+        _, _, _, _, equipment, _, _, _ = exercise_tuple
         return any(eq_type in equipment for eq_type in must_use_equipment)
+    
+    # Helper function for variety optimization
+    from workout_history import WorkoutHistoryManager
+    history_manager = WorkoutHistoryManager()
+    
+    def get_variety_score(exercise_tuple):
+        exercise_id = exercise_tuple[7] if exercise_tuple[7] != -1 else 0
+        return history_manager.calculate_exercise_priority_score(exercise_id)
     
     # Try to find N compatible exercises, prioritizing target area
     def try_combination(exercises_to_try, selected_exercises, remaining_steps):
@@ -459,7 +467,7 @@ def find_compatible_exercises_for_station(station_pool: List[Tuple[str, str, str
             # Check if all selected exercises can work together
             step_equipments = []
             for exercise in selected_exercises:
-                _, _, _, _, equipment, _, unilateral = exercise
+                _, _, _, _, equipment, _, unilateral, _ = exercise
                 selected_equipment = select_best_equipment_option(equipment, available_inventory)
                 # For unilateral exercises, add equipment requirements twice (left + right)
                 if unilateral:
@@ -473,7 +481,7 @@ def find_compatible_exercises_for_station(station_pool: List[Tuple[str, str, str
                 if must_use_equipment:
                     uses_must_use = False
                     for exercise in selected_exercises:
-                        _, _, _, _, equipment, _, _ = exercise
+                        _, _, _, _, equipment, _, _, _ = exercise
                         if any(eq_type in equipment for eq_type in must_use_equipment):
                             uses_must_use = True
                             break
@@ -492,7 +500,7 @@ def find_compatible_exercises_for_station(station_pool: List[Tuple[str, str, str
         
         # Try each exercise in priority order
         for i, exercise in enumerate(ordered_exercises):
-            area, equip, name, link, equipment, muscles, unilateral = exercise
+            area, equip, name, link, equipment, muscles, unilateral, exercise_id = exercise
             
             # Avoid duplicates within the station
             if name not in [ex[2] for ex in selected_exercises]:
@@ -512,40 +520,53 @@ def find_compatible_exercises_for_station(station_pool: List[Tuple[str, str, str
         
         return []
     
-    # Strategy 0: PRIORITIZE must-use equipment first, preferring target area
+    # Strategy 0: PRIORITIZE must-use equipment first, preferring target area AND variety
     if must_use_equipment:
         must_use_exercises = [ex for ex in available_exercises if uses_must_use_equipment(ex)]
         if must_use_exercises:
             print(f"   🎯 Found {len(must_use_exercises)} exercises using must-use equipment")
             
-            # First, try must-use exercises from the target area
+            # Apply variety optimization to must-use exercises - prioritize least recently used
+            must_use_exercises.sort(key=get_variety_score, reverse=True)
+            
+            # First, try must-use exercises from the target area (variety-optimized within area)
+            # But only if the best target area option has reasonable variety (score >= 0.8)
             target_area_must_use = [ex for ex in must_use_exercises if ex[0] == area_target]
             if target_area_must_use:
-                for must_use_ex in target_area_must_use:
-                    remaining_exercises = [ex for ex in available_exercises if ex != must_use_ex]
-                    result = try_combination(remaining_exercises, [must_use_ex], steps_per_station - 1)
-                    if result:
-                        print(f"   ✅ Successfully prioritized must-use equipment in: {must_use_ex[2]}")
-                        return result
+                # Apply variety optimization to the area-filtered exercises
+                target_area_must_use.sort(key=get_variety_score, reverse=True)
+                best_target_area_score = get_variety_score(target_area_must_use[0]) if target_area_must_use else 0
+                # Only try target area first if the best option has decent variety (>= 0.8)
+                if best_target_area_score >= 0.8:
+                    for must_use_ex in target_area_must_use:
+                        remaining_exercises = [ex for ex in available_exercises if ex != must_use_ex]
+                        result = try_combination(remaining_exercises, [must_use_ex], steps_per_station - 1)
+                        if result:
+                            print(f"   ✅ Successfully prioritized must-use equipment in: {must_use_ex[2]}")
+                            return result
             
-            # If no target area must-use exercises work, try any area
+            # If no target area must-use exercises work, or if target area has poor variety options,
+            # try any area (variety-optimized order) - prioritize variety over area matching for must-use equipment
             for must_use_ex in must_use_exercises:
-                # Start with a must-use exercise and try to build a complete station
+                # Start with the variety-optimized must-use exercise and try to build a complete station
                 remaining_exercises = [ex for ex in available_exercises if ex != must_use_ex]
                 result = try_combination(remaining_exercises, [must_use_ex], steps_per_station - 1)
                 if result:
                     print(f"   ✅ Successfully prioritized must-use equipment in: {must_use_ex[2]}")
                     return result
     
-    # Strategy 1: Try exercises from target area first
+    # Strategy 1: Try exercises from target area first (variety-optimized)
     area_exercises = [ex for ex in available_exercises if ex[0] == area_target]
     if len(area_exercises) >= steps_per_station:
+        # Apply variety optimization to area exercises
+        area_exercises.sort(key=get_variety_score, reverse=True)
         result = try_combination(area_exercises, [], steps_per_station)
         if result:
             return result
     
-    # Strategy 2: Mix target area with other areas
+    # Strategy 2: Mix target area with other areas (variety-optimized)
     other_exercises = [ex for ex in available_exercises if ex[0] != area_target]
+    other_exercises.sort(key=get_variety_score, reverse=True)
     mixed_exercises = area_exercises + other_exercises
     result = try_combination(mixed_exercises, [], steps_per_station)
     if result:
@@ -708,6 +729,7 @@ def build_plan(plan: dict, station_pool: List[Tuple[str, str, str, str, dict]], 
     order_cycle = plan["balance_order"]
     stations: List[dict] = []
     used_names = set()
+    used_exercise_ids = []  # Track exercise IDs for history
     equipment_requirements = {}  # Track max equipment needed across all stations (for display)
     cumulative_station_usage = {}  # Track equipment usage across all stations (stations run simultaneously)
     available_inventory = plan.get("equipment", {})
@@ -791,8 +813,13 @@ def build_plan(plan: dict, station_pool: List[Tuple[str, str, str, str, dict]], 
         step_muscles = []
         
         for exercise in station_exercises:
-            area, equip, name, link, equipment, muscles, unilateral = exercise
+            area, equip, name, link, equipment, muscles, unilateral, exercise_id = exercise
             used_names.add(name)
+            
+            # Track exercise ID for history (only if it's a valid ID)
+            if exercise_id != -1:
+                used_exercise_ids.append(exercise_id)
+            
             selected_equipment = select_best_equipment_option(equipment, available_inventory)
             
             if unilateral:
@@ -893,5 +920,6 @@ def build_plan(plan: dict, station_pool: List[Tuple[str, str, str, str, dict]], 
         "stations": stations,
         "equipment_requirements": final_equipment_requirements,  # Use clean copy for validation
         "global_active_rest_schedule": global_active_rest_schedule,  # Global rest schedule for all stations
-        "selected_active_rest_exercises": selected_exercises  # All selected active rest exercises (for display)
+        "selected_active_rest_exercises": selected_exercises,  # All selected active rest exercises (for display)
+        "used_exercise_ids": used_exercise_ids  # Exercise IDs used in this workout (for history tracking)
     } 

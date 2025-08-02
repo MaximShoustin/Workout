@@ -12,7 +12,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 33
       },
       {
         "name": "Single-arm swing",
@@ -25,7 +26,8 @@
           }
         },
         "unilateral": true,
-        "skip": false
+        "skip": false,
+        "id": 34
       },
       {
         "name": "Kettlebell clean",
@@ -38,7 +40,8 @@
           }
         },
         "skip": false,
-        "unilateral": true
+        "unilateral": true,
+        "id": 35
       },
       {
         "name": "Clean + jerk",
@@ -51,7 +54,8 @@
           }
         },
         "skip": false,
-        "unilateral": true
+        "unilateral": true,
+        "id": 36
       },
       {
         "name": "Snatch",
@@ -67,7 +71,8 @@
           }
         },
         "skip": false,
-        "unilateral": true
+        "unilateral": true,
+        "id": 37
       },
       {
         "name": "High pull",
@@ -83,7 +88,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 38
       }
     ],
     "squat_lunge": [
@@ -101,7 +107,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 39
       },
       {
         "name": "Double-KB front squat",
@@ -114,7 +121,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 40
       },
       {
         "name": "Split squat (rack)",
@@ -127,7 +135,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 41
       },
       {
         "name": "Reverse lunge (suitcase or rack)",
@@ -140,7 +149,8 @@
           }
         },
         "skip": false,
-        "unilateral": true
+        "unilateral": true,
+        "id": 42
       }
     ],
     "upper_body": [
@@ -155,7 +165,8 @@
           }
         },
         "skip": false,
-        "unilateral": true
+        "unilateral": true,
+        "id": 43
       },
       {
         "name": "Push-press",
@@ -168,7 +179,8 @@
           }
         },
         "skip": false,
-        "unilateral": true
+        "unilateral": true,
+        "id": 44
       },
       {
         "name": "Single-arm floor press",
@@ -184,7 +196,8 @@
           }
         },
         "unilateral": true,
-        "skip": false
+        "skip": false,
+        "id": 45
       },
       {
         "name": "Bent-over row",
@@ -197,7 +210,8 @@
           }
         },
         "skip": false,
-        "unilateral": true
+        "unilateral": true,
+        "id": 46
       },
       {
         "name": "Renegade row",
@@ -210,7 +224,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 47
       }
     ],
     "core_carry": [
@@ -228,7 +243,8 @@
           }
         },
         "skip": false,
-        "unilateral": true
+        "unilateral": true,
+        "id": 48
       },
       {
         "name": "Windmill",
@@ -244,7 +260,8 @@
           }
         },
         "skip": false,
-        "unilateral": true
+        "unilateral": true,
+        "id": 49
       },
       {
         "name": "Halo",
@@ -260,7 +277,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 50
       },
       {
         "name": "reverse flies k",
@@ -276,7 +294,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 51
       }
     ],
     "shoulders": [
@@ -294,7 +313,8 @@
           }
         },
         "unilateral": true,
-        "skip": false
+        "skip": false,
+        "id": 52
       },
       {
         "name": "Z-Press (seated on floor)",
@@ -310,7 +330,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 53
       },
       {
         "name": "Double See-Saw Press",
@@ -326,7 +347,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 54
       },
       {
         "name": "Bottoms-Up Press",
@@ -342,7 +364,8 @@
           }
         },
         "unilateral": true,
-        "skip": false
+        "skip": false,
+        "id": 55
       },
       {
         "name": "Arnold Press (rotation for front delts)",
@@ -358,7 +381,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 56
       },
       {
         "name": "Upright Row",
@@ -371,7 +395,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 57
       },
       {
         "name": "Figure-8 to Overhead Press",
@@ -384,7 +409,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 58
       },
       {
         "name": "Around-the-World waist",
@@ -397,7 +423,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 59
       },
       {
         "name": "Around-the-World overhead",
@@ -410,7 +437,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 60
       },
       {
         "name": "Sotts Press (overhead squat press)",
@@ -426,7 +454,8 @@
           }
         },
         "skip": false,
-        "unilateral": true
+        "unilateral": true,
+        "id": 61
       }
     ],
     "triceps": [
@@ -444,7 +473,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 62
       },
       {
         "name": "Lying Skull Crusher (floor or bench)",
@@ -460,7 +490,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 63
       },
       {
         "name": "Close-Grip Floor Press",
@@ -468,15 +499,13 @@
         "area": "upper",
         "muscles": "triceps, chest, shoulders",
         "equipment": {
-          "kettlebells_4kg": {
-            "count": 1
-          },
-          "kettlebells_6kg": {
+          "kettlebells_16kg": {
             "count": 1
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 64
       },
       {
         "name": "Tate Press",
@@ -492,7 +521,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 65
       },
       {
         "name": "Kickback standing",
@@ -508,7 +538,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 66
       },
       {
         "name": "Crush-Grip Push-Up",
@@ -521,7 +552,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 67
       },
       {
         "name": "Tall-Kneeling Overhead Extension",
@@ -537,7 +569,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 68
       }
     ],
     "biceps": [
@@ -555,7 +588,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 69
       },
       {
         "name": "Alternating Curl",
@@ -571,7 +605,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 70
       },
       {
         "name": "Bottoms-Up Curl (huge grip challenge)",
@@ -587,7 +622,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 71
       },
       {
         "name": "Concentration Curl",
@@ -603,7 +639,8 @@
           }
         },
         "unilateral": false,
-        "skip": false
+        "skip": false,
+        "id": 72
       },
       {
         "name": "Preacher Curl (arm braced on bench)",
@@ -619,7 +656,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 73
       },
       {
         "name": "Drag Curl (elbows drift back)",
@@ -635,7 +673,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 74
       },
       {
         "name": "Spider Curl (incline bench, chest down)",
@@ -651,7 +690,8 @@
           }
         },
         "skip": true,
-        "unilateral": false
+        "unilateral": false,
+        "id": 75
       },
       {
         "name": "Incline Curl (leaned-back bench)",
@@ -667,7 +707,8 @@
           }
         },
         "skip": true,
-        "unilateral": false
+        "unilateral": false,
+        "id": 76
       },
       {
         "name": "Cross-Body Curl (diagonal)",
@@ -683,7 +724,8 @@
           }
         },
         "skip": true,
-        "unilateral": false
+        "unilateral": false,
+        "id": 77
       },
       {
         "name": "Waiter Curl (bell held upside-down like a tray)",
@@ -697,7 +739,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 78
       }
     ]
   }

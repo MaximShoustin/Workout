@@ -12,7 +12,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 0
       },
       {
         "name": "Good-morning",
@@ -25,7 +26,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 1
       }
     ],
     "upper_pull": [
@@ -40,7 +42,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 2
       }
     ],
     "upper_push": [
@@ -55,7 +58,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 3
       }
     ],
     "complex": [
@@ -70,7 +74,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 4
       }
     ]
   }

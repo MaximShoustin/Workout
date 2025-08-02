@@ -12,7 +12,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 5
       }
     ],
     "static_support_core": [
@@ -27,7 +28,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 6
       },
       {
         "name": "L-sit hold",
@@ -40,7 +42,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 7
       },
       {
         "name": "Tuck hold",
@@ -53,7 +56,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 8
       },
       {
         "name": "Knee-raise support hold",
@@ -66,7 +70,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 9
       }
     ],
     "dynamic_core": [
@@ -81,7 +86,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 10
       }
     ],
     "accessory_mobility": [
@@ -96,7 +102,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 11
       },
       {
         "name": "Assisted dip eccentric (slow lower)",
@@ -109,7 +116,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 12
       }
     ]
   }

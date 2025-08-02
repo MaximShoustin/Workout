@@ -15,11 +15,12 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 13
       },
       {
         "name": "Alternating curl / hammer curl",
-        "link": "https://www.youtube.com/shorts/vm0zV_WQerE",
+        "link": "https://www.youtube.com/shorts/oB-RyX8AdO4",
         "area": "upper",
         "muscles": "biceps, forearms",
         "equipment": {
@@ -31,7 +32,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 14
       },
       {
         "name": "Overhead press",
@@ -50,7 +52,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 15
       },
       {
         "name": "Lateral / front raise",
@@ -69,7 +72,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 16
       },
       {
         "name": "Rear-delt fly",
@@ -82,7 +86,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 17
       }
     ],
     "lower_body": [
@@ -97,7 +102,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 18
       },
       {
         "name": "Reverse or walking lunge",
@@ -116,7 +122,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 19
       },
       {
         "name": "Single-leg RDL",
@@ -129,7 +136,8 @@
           }
         },
         "unilateral": true,
-        "skip": false
+        "skip": false,
+        "id": 20
       }
     ],
     "full_core": [
@@ -144,7 +152,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 21
       },
       {
         "name": "DB thruster",
@@ -160,7 +169,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 22
       },
       {
         "name": "Devil's press",
@@ -173,7 +183,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 23
       },
       {
         "name": "Zottman Curl (supinate up, pronate down)",
@@ -186,7 +197,8 @@
           }
         },
         "skip": false,
-        "unilateral": false
+        "unilateral": false,
+        "id": 24
       }
     ]
   }

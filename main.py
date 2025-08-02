@@ -10,6 +10,7 @@ from config import load_plan, die, load_json, ACTIVE_REST_FILE
 from equipment import parse_equipment, build_station_pool, get_equipment_validation_summary
 from workout_planner import build_plan
 from file_utils import save_workout_html
+from workout_history import WorkoutHistoryManager, prioritize_exercises_by_variety
 
 
 def setup_active_rest(plan: dict) -> tuple:
@@ -80,6 +81,25 @@ def generate_workout_with_retries(max_retries=15):
     gear = parse_equipment()
     station_pool = build_station_pool(gear, equipment_inventory if equipment_inventory else None)
     
+    # Initialize workout history for variety optimization
+    history_manager = WorkoutHistoryManager()
+    history_summary = history_manager.get_history_summary()
+    
+    if history_summary["total_workouts"] > 0:
+        print(f"🔄 Workout History: {history_summary['total_workouts']} workouts generated, last on {history_summary['last_workout_date']}")
+        
+        # Apply variety prioritization to promote unused/less-used exercises
+        print("🎯 Applying exercise variety optimization...")
+        station_pool = prioritize_exercises_by_variety(station_pool, history_manager)
+        
+        recently_used = history_manager.get_recently_used_exercise_ids(last_n_sessions=2)
+        if recently_used:
+            print(f"   📉 Deprioritizing {len(recently_used)} recently used exercises")
+        print()
+    else:
+        print("🆕 First workout generation - no history to apply")
+        print()
+    
     print(f"🔄 Attempting to generate workout (max {max_retries} attempts)...")
     print()
     
@@ -109,7 +129,7 @@ def generate_workout_with_retries(max_retries=15):
                 equipment_inventory
             )
             
-            return plan_result, validation_summary, seed, plan_with_active_rest
+            return plan_result, validation_summary, seed, plan_with_active_rest, history_manager
             
         except SystemExit as e:
             # Catch the die() call from build_plan when equipment is insufficient
@@ -136,7 +156,7 @@ def generate_workout_with_retries(max_retries=15):
 def main():
     """Main entry point for workout generation."""
     try:
-        plan_result, validation_summary, seed_used, plan = generate_workout_with_retries()
+        plan_result, validation_summary, seed_used, plan, history_manager = generate_workout_with_retries()
         
         # Print validation status
         if validation_summary["is_valid"]:
@@ -151,6 +171,15 @@ def main():
         print(f"✅ Workout saved to: {filename}")
         print(f"🌐 Open in browser: file://{filename.absolute()}")
         print(f"🎲 Final seed used: {seed_used}")
+        print()
+        
+        # Record workout session for variety tracking
+        workout_title = plan.get("title", "Workout")
+        used_exercise_ids = plan_result.get("used_exercise_ids", [])
+        
+        # Record the session
+        if used_exercise_ids:
+            history_manager.record_workout_session(workout_title, used_exercise_ids)
         
     except KeyboardInterrupt:
         print("\n⚠️ Workout generation cancelled by user")
