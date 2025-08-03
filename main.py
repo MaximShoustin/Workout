@@ -81,23 +81,30 @@ def generate_workout_with_retries(max_retries=15):
     gear = parse_equipment()
     station_pool = build_station_pool(gear, equipment_inventory if equipment_inventory else None)
     
-    # Initialize workout history for variety optimization
-    history_manager = WorkoutHistoryManager()
-    history_summary = history_manager.get_history_summary()
+    # Initialize workout history for variety optimization (if enabled)
+    history_manager = None
+    use_history = plan.get("use_workout_history", True)
     
-    if history_summary["total_workouts"] > 0:
-        print(f"🔄 Workout History: {history_summary['total_workouts']} workouts generated, last on {history_summary['last_workout_date']}")
+    if use_history:
+        history_manager = WorkoutHistoryManager()
+        history_summary = history_manager.get_history_summary()
         
-        # Apply variety prioritization to promote unused/less-used exercises
-        print("🎯 Applying exercise variety optimization...")
-        station_pool = prioritize_exercises_by_variety(station_pool, history_manager)
-        
-        recently_used = history_manager.get_recently_used_exercise_ids(last_n_sessions=2)
-        if recently_used:
-            print(f"   📉 Deprioritizing {len(recently_used)} recently used exercises")
-        print()
+        if history_summary["total_workouts"] > 0:
+            print(f"🔄 Workout History: {history_summary['total_workouts']} workouts generated, last on {history_summary['last_workout_date']}")
+            
+            # Apply variety prioritization to promote unused/less-used exercises
+            print("🎯 Applying exercise variety optimization...")
+            station_pool = prioritize_exercises_by_variety(station_pool, history_manager)
+            
+            recently_used = history_manager.get_recently_used_exercise_ids(last_n_sessions=2)
+            if recently_used:
+                print(f"   📉 Deprioritizing {len(recently_used)} recently used exercises")
+            print()
+        else:
+            print("🆕 First workout generation - no history to apply")
+            print()
     else:
-        print("🆕 First workout generation - no history to apply")
+        print("⚪ Workout history disabled - using random exercise selection")
         print()
     
     print(f"🔄 Attempting to generate workout (max {max_retries} attempts)...")
@@ -173,13 +180,14 @@ def main():
         print(f"🎲 Final seed used: {seed_used}")
         print()
         
-        # Record workout session for variety tracking
-        workout_title = plan.get("title", "Workout")
-        used_exercise_ids = plan_result.get("used_exercise_ids", [])
-        
-        # Record the session
-        if used_exercise_ids:
-            history_manager.record_workout_session(workout_title, used_exercise_ids)
+        # Record workout session for variety tracking (if history is enabled)
+        if history_manager is not None:
+            workout_title = plan.get("title", "Workout")
+            used_exercise_ids = plan_result.get("used_exercise_ids", [])
+            
+            # Record the session
+            if used_exercise_ids:
+                history_manager.record_workout_session(workout_title, used_exercise_ids)
         
     except KeyboardInterrupt:
         print("\n⚠️ Workout generation cancelled by user")

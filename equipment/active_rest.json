@@ -16,16 +16,6 @@
       "skip": false
     },
     {
-      "name": "Mountain climbers",
-      "link": "https://www.youtube.com/shorts/3ans8fNL1Z8",
-      "skip": false
-    },
-    {
-      "name": "Skater hops",
-      "link": "https://www.youtube.com/shorts/PSVySCGbGp0",
-      "skip": false
-    },
-    {
       "name": "Butt-kicks",
       "link": "https://www.youtube.com/shorts/H-8EiUccyGg",
       "skip": false
@@ -45,20 +35,11 @@
       "link": "https://www.youtube.com/shorts/N28Hpdezg7Q",
       "skip": false
     },
-    {
-      "name": "Calf Raises",
-      "link": "https://www.youtube.com/shorts/ADITZCcUyVo",
-      "skip": false
-    },
+   
     {
       "name": "Isometric Lunge Hold",
       "link": "https://www.youtube.com/shorts/RnfU357uYn0",
-      "skip": false
-    },
-    {
-      "name": "Cossack Shift",
-      "link": "https://www.youtube.com/shorts/DkeFVmqy0ys",
-      "skip": false
+      "skip": true
     }
   ]
 }

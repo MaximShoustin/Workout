@@ -318,6 +318,7 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
         .upper { background: #e74c3c; }
         .lower { background: #27ae60; }
         .core { background: #f39c12; }
+        .active-rest { background: #28a745; }
         .exercise {
             font-weight: 500;
             margin-bottom: 3px;
@@ -791,119 +792,37 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
             margin-bottom: 25px;
             font-size: 1.1em;
         }
-        .active-rest-table {
+        .active-rest-section table {
             width: 100%;
-            max-width: 600px;
-            margin: 0 auto;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
             border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
-        .active-rest-table th {
+        .active-rest-section table th {
             background: linear-gradient(135deg, #28a745, #20c997);
             color: white;
             padding: 15px;
-            text-align: center;
+            text-align: left;
             font-weight: 600;
-            font-size: 1em;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            white-space: nowrap;
         }
-        .active-rest-table td {
-            padding: 20px;
-            text-align: center;
-            border-bottom: 1px solid #dee2e6;
-            font-size: 1.1em;
+        .active-rest-section table td {
+            padding: 15px;
+            border-bottom: 1px solid #ecf0f1;
+            vertical-align: top;
         }
-        .active-rest-table tr:nth-child(even) {
+        .active-rest-section table tr:nth-child(even) {
             background: #f8f9fa;
         }
-        .active-rest-table tr:hover {
+        .active-rest-section table tr:hover {
             background: #e8f5e8;
             transition: all 0.3s ease;
-        }
-        .rest-period-label {
-            font-weight: 600;
-            color: #495057;
-            background: rgba(40, 167, 69, 0.1);
-            border-radius: 8px;
-        }
-        .active-rest-activity {
-            font-weight: 500;
-        }
-        .active-rest-activity .exercise-name {
-            color: #28a745;
-            border-bottom: 1px dotted #28a745;
-            font-weight: 600;
-        }
-        .active-rest-activity .exercise-name:hover {
-            color: #dc3545;
-            border-bottom: 1px solid #dc3545;
-            background: rgba(220, 53, 69, 0.1);
-        }
-        .active-rest-content {
-            margin-top: 20px;
-        }
-        .selected-exercises {
-            background: white;
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-            border: 1px solid #e9ecef;
-        }
-        .exercises-title {
-            color: #2c3e50;
-            font-size: 1.3em;
-            font-weight: 600;
-            margin-bottom: 20px;
-            text-align: center;
-            border-bottom: 2px solid #28a745;
-            padding-bottom: 10px;
-        }
-        .exercises-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-        .exercise-card {
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            border: 2px solid #28a745;
-            border-radius: 10px;
-            padding: 15px;
-            text-align: center;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-        .exercise-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
-        }
-        .exercise-number {
-            position: absolute;
-            top: -10px;
-            left: -10px;
-            background: #28a745;
-            color: white;
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
-            font-size: 0.9em;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-        .exercise-content {
-            margin-top: 5px;
-            font-weight: 500;
-        }
-        .exercise-content .exercise-name {
-            color: #2c3e50;
-            font-weight: 600;
-        }
-        @media (max-width: 768px) {
-            .exercises-grid {
-                grid-template-columns: 1fr;
-            }
         }
         
         /* Mobile step labels - hidden on desktop */
@@ -1109,25 +1028,40 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
             <h2 class="active-rest-title">🏃‍♂️ Global Active Rest Program</h2>
             <p class="active-rest-description">Everyone does these exercises together during rest periods</p>
             
-            <div class="active-rest-content">
-                <div class="selected-exercises">
-                    <h3 class="exercises-title">📋 Selected Active Rest Exercises ({active_rest_count})</h3>
-                    <div class="exercises-grid">"""
+            <table>
+                <thead>
+                    <tr>
+                        <th>Station</th>"""
         
+        # Add step headers for active rest exercises
         for idx, exercise in enumerate(selected_active_rest_exercises, 1):
             if exercise["name"] != "Rest":
                 html += f"""
-                        <div class="exercise-card">
-                            <div class="exercise-number">{idx}</div>
-                            <div class="exercise-content">
-                                {format_exercise_link(exercise["name"], exercise.get("link", ""))}
-                            </div>
-                        </div>"""
+                        <th>{rest}s Step {idx}</th>"""
         
-        html += f"""
-                    </div>
-                </div>
-            </div>
+        html += """
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="Station">
+                            <span class="station-letter">⚡</span><br>
+                            <span class="area-badge active-rest">active rest</span>
+                        </td>"""
+        
+        # Add exercise columns
+        for idx, exercise in enumerate(selected_active_rest_exercises, 1):
+            if exercise["name"] != "Rest":
+                html += f"""
+                        <td data-label="Step {idx}" class="exercise">
+                            <span class="mobile-step-label">Step {idx}:</span>
+                            {format_exercise_link(exercise["name"], exercise.get("link", ""))}
+                        </td>"""
+        
+        html += """
+                    </tr>
+                </tbody>
+            </table>
         </div>"""
     
     # Add equipment requirements section if available

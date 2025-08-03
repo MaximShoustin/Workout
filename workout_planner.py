@@ -417,7 +417,8 @@ def find_compatible_exercises_for_station(station_pool: List[Tuple[str, str, str
                                         available_inventory: dict, 
                                         people_per_station: int = 1,
                                         used_names: set = None,
-                                        must_use_equipment: List[str] = None) -> List[Tuple]:
+                                        must_use_equipment: List[str] = None,
+                                        use_workout_history: bool = True) -> List[Tuple]:
     """
     Find N compatible exercises for a station that can be performed with remaining equipment.
     
@@ -453,13 +454,23 @@ def find_compatible_exercises_for_station(station_pool: List[Tuple[str, str, str
         _, _, _, _, equipment, _, _, _ = exercise_tuple
         return any(eq_type in equipment for eq_type in must_use_equipment)
     
-    # Helper function for variety optimization
-    from workout_history import WorkoutHistoryManager
-    history_manager = WorkoutHistoryManager()
-    
+    # Helper function for variety optimization (if enabled)
     def get_variety_score(exercise_tuple):
-        exercise_id = exercise_tuple[7] if exercise_tuple[7] != -1 else 0
-        return history_manager.calculate_exercise_priority_score(exercise_id)
+        if not use_workout_history:
+            # If history is disabled, return random score
+            import random
+            return random.random()
+        
+        # Use workout history for variety optimization
+        try:
+            from workout_history import WorkoutHistoryManager
+            history_manager = WorkoutHistoryManager()
+            exercise_id = exercise_tuple[7] if exercise_tuple[7] != -1 else 0
+            return history_manager.calculate_exercise_priority_score(exercise_id)
+        except:
+            # Fallback to random if history system unavailable
+            import random
+            return random.random()
     
     # Try to find N compatible exercises, prioritizing target area
     def try_combination(exercises_to_try, selected_exercises, remaining_steps):
@@ -784,7 +795,8 @@ def build_plan(plan: dict, station_pool: List[Tuple[str, str, str, str, dict]], 
             
             station_exercises = find_compatible_exercises_for_station(
                 station_pool, area_target, steps_per_station, cumulative_station_usage, 
-                available_inventory, plan["people_per_station"], used_names, [priority_equipment]
+                available_inventory, plan["people_per_station"], used_names, [priority_equipment],
+                plan.get("use_workout_history", True)
             )
             
             if station_exercises:
@@ -798,7 +810,8 @@ def build_plan(plan: dict, station_pool: List[Tuple[str, str, str, str, dict]], 
             print(f"   🔄 No must-use equipment could build complete station, trying without prioritization...")
             station_exercises = find_compatible_exercises_for_station(
                 station_pool, area_target, steps_per_station, cumulative_station_usage, 
-                available_inventory, plan["people_per_station"], used_names, []
+                available_inventory, plan["people_per_station"], used_names, [],
+                plan.get("use_workout_history", True)
             )
             
         if not station_exercises:

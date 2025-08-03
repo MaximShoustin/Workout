@@ -199,6 +199,46 @@
         "skip": false,
         "unilateral": false,
         "id": 24
+      },
+      {
+        "name": "Skater hops",
+        "link": "https://www.youtube.com/shorts/PSVySCGbGp0",
+        "equipment": {},
+        "area": "lower",
+        "muscles": "quadriceps",
+        "skip": false,
+        "unilateral": false,
+        "id": 99
+      },
+      {
+        "name": "Mountain climbers",
+        "link": "https://www.youtube.com/shorts/3ans8fNL1Z8",
+        "equipment": {},
+        "area": "core",
+        "muscles": "core",
+        "skip": false,
+        "unilateral": false,
+        "id": 100
+      },
+       {
+        "name": "Calf Raises",
+        "link": "https://www.youtube.com/shorts/ADITZCcUyVo",
+        "equipment": {},
+        "area": "lower",
+        "muscles": "calves",
+        "skip": false,
+        "unilateral": false,
+        "id": 101
+      },
+      {
+        "name": "Cossack Shift",
+        "link": "https://www.youtube.com/shorts/DkeFVmqy0ys",
+        "equipment": {},
+        "area": "lower",
+        "muscles": "quadriceps",
+        "skip": false,
+        "unilateral": false,
+        "id": 102
       }
     ]
   }

@@ -1,6 +1,7 @@
 {
-    "active_rest": "true",
+    "active_rest": "false",
     "active_rest_count": 4,
+    "use_workout_history": true,
     "steps_per_station": 2,
     "stations": 5,               
     "people": 10,
