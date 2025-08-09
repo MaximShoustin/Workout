@@ -174,7 +174,8 @@ def main():
                 print(f"   • {issue}")
         
         # Save the HTML file  
-        filename = save_workout_html(plan, plan_result["stations"], plan_result["equipment_requirements"], validation_summary, plan_result["global_active_rest_schedule"], plan_result["selected_active_rest_exercises"])
+        update_index_html = plan.get("use_workout_history", True)
+        filename = save_workout_html(plan, plan_result["stations"], plan_result["equipment_requirements"], validation_summary, plan_result["global_active_rest_schedule"], plan_result["selected_active_rest_exercises"], update_index_html=update_index_html)
         print(f"✅ Workout saved to: {filename}")
         print(f"🌐 Open in browser: file://{filename.absolute()}")
         print(f"🎲 Final seed used: {seed_used}")

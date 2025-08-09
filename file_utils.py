@@ -10,9 +10,9 @@ from config import WORKOUT_STORE_DIR
 from html_generator import generate_html_workout
 
 
-def save_workout_html(plan: Dict, stations: List[Dict], equipment_requirements: Optional[Dict] = None, validation_summary: Optional[Dict] = None, global_active_rest_schedule: Optional[List[Dict]] = None, selected_active_rest_exercises: Optional[List[Dict]] = None) -> Path:
+def save_workout_html(plan: Dict, stations: List[Dict], equipment_requirements: Optional[Dict] = None, validation_summary: Optional[Dict] = None, global_active_rest_schedule: Optional[List[Dict]] = None, selected_active_rest_exercises: Optional[List[Dict]] = None, update_index_html: bool = True) -> Path:
     """Generate HTML workout and save to timestamped file in workout_store directory.
-    Also updates index.html in project root for GitHub Pages."""
+    Also updates index.html in project root for GitHub Pages if update_index_html is True."""
     # Create workout_store directory if it doesn't exist
     WORKOUT_STORE_DIR.mkdir(exist_ok=True)
     
@@ -28,10 +28,11 @@ def save_workout_html(plan: Dict, stations: List[Dict], equipment_requirements: 
     with filepath.open('w', encoding='utf-8') as f:
         f.write(html_content)
     
-    # Also save to index.html in project root for GitHub Pages
-    index_path = Path("index.html")
-    with index_path.open('w', encoding='utf-8') as f:
-        f.write(html_content)
+    # Also save to index.html in project root for GitHub Pages if requested
+    if update_index_html:
+        index_path = Path("index.html")
+        with index_path.open('w', encoding='utf-8') as f:
+            f.write(html_content)
     
     return filepath
 

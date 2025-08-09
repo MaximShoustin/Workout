@@ -1,7 +1,7 @@
 {
     "active_rest": "false",
     "active_rest_count": 4,
-    "use_workout_history": true,
+    "use_workout_history": false,
     "steps_per_station": 2,
     "stations": 5,               
     "people": 10,
@@ -15,13 +15,14 @@
       "lower",
       "core"
     ],
-    "must_use": [
+    "must_use_old": [
       "plyo_box",
       "barbells", 
       "bench",
       "slam_balls_5kg"
       
     ],
+    "must_use": [],
     "equipment": {
       "bench": {
         "count": 1

@@ -5,8 +5,11 @@ from datetime import datetime
 from typing import Dict, List, Optional
 
 
-def format_exercise_link(exercise_name: str, exercise_link: str) -> str:
-    """Format exercise with embedded video popup if valid URL provided, otherwise return plain name."""
+def format_exercise_link(exercise_name: str, exercise_link: str, exercise_id: int = None) -> str:
+    """Format exercise with embedded video popup if valid URL provided, otherwise return plain name. Show ID if provided."""
+    display_name = exercise_name
+    if exercise_id is not None and exercise_id != -1:
+        display_name = f"{exercise_name} ({exercise_id})"
     if exercise_link and exercise_link != "some url" and exercise_link.strip():
         # Convert YouTube URLs to embed format with autoplay (muted to bypass browser restrictions)
         embed_url = exercise_link
@@ -22,17 +25,17 @@ def format_exercise_link(exercise_name: str, exercise_link: str) -> str:
             embed_url = f"https://www.youtube.com/embed/{video_id}?{autoplay_params}"
         
         # Create unique ID for this exercise
-        exercise_id = exercise_name.lower().replace(" ", "_").replace("-", "_").replace("+", "plus").replace("→", "to")
+        html_id = exercise_name.lower().replace(" ", "_").replace("-", "_").replace("+", "plus").replace("→", "to")
         
         return f'''<span class="exercise-with-video">
-            <span class="exercise-name" onclick="toggleVideo('{exercise_id}')">{exercise_name}</span>
-            <div id="video_{exercise_id}" class="video-popup">
+            <span class="exercise-name" onclick="toggleVideo('{html_id}')">{display_name}</span>
+            <div id="video_{html_id}" class="video-popup">
                 <iframe src="{embed_url}" frameborder="0" allowfullscreen></iframe>
-                <button class="close-video" onclick="toggleVideo('{exercise_id}')">&times;</button>
+                <button class="close-video" onclick="toggleVideo('{html_id}')">&times;</button>
             </div>
         </span>'''
     else:
-        return exercise_name
+        return display_name
 
 
 def get_equipment_icon(equipment_name: str) -> str:
@@ -1000,11 +1003,12 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
             step_link_key = f'step{step_num}_link'
             step_equipment_key = f'step{step_num}_equipment'
             step_muscles_key = f'step{step_num}_muscles'
+            step_id_key = f'step{step_num}_id'
             
             html += f"""
                      <td data-label="Step {step_num}" class="exercise">
                          <span class="mobile-step-label">Step {step_num}:</span>
-                         {format_exercise_link(st.get(step_key, ''), st.get(step_link_key, ''))}
+                         {format_exercise_link(st.get(step_key, ''), st.get(step_link_key, ''), st.get(step_id_key, None))}
                          {format_muscle_tags(st.get(step_muscles_key, ''))}
                          {format_equipment_tags(st.get(step_equipment_key, {}))}
                      </td>"""
@@ -1055,7 +1059,7 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
                 html += f"""
                         <td data-label="Step {idx}" class="exercise">
                             <span class="mobile-step-label">Step {idx}:</span>
-                            {format_exercise_link(exercise["name"], exercise.get("link", ""))}
+                            {format_exercise_link(exercise["name"], exercise.get("link", ""), exercise.get("id", -1))}
                         </td>"""
         
         html += """

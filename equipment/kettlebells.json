@@ -741,6 +741,57 @@
         "skip": false,
         "unilateral": false,
         "id": 78
+      },
+
+
+      {
+        "name": "Uppercut kettlbell rotations",
+        "link": "https://www.youtube.com/shorts/e4gAbnf69_U",
+        "equipment": {
+          "kettlebells_6kg": {
+            "count": 1
+          }
+        },
+        "skip": false,
+        "unilateral": false,
+        "id": 103
+      },
+      {
+        "name": "Split stance KB rotation",
+        "link": "https://www.youtube.com/shorts/WB93lYdkDt4",
+        "equipment": {
+          "kettlebells_6kg": {
+            "count": 1
+          }
+        },
+        "skip": false,
+        "unilateral": false,
+        "id": 104
+      },
+      {
+        "name": "Half-kneeling KB rotation lift",
+        "link": "https://www.youtube.com/shorts/WB93lYdkDt4",
+        "equipment": {
+          "kettlebells_6kg": {
+            "count": 1
+          }
+        },
+        "skip": false,
+        "unilateral": false,
+        "id": 105
+      },
+
+      {
+        "name": "Reverse lunge KB Rotational lift",
+        "link": "https://www.youtube.com/shorts/WB93lYdkDt4",
+        "equipment": {
+          "kettlebells_6kg": {
+            "count": 1
+          }
+        },
+        "skip": false,
+        "unilateral": false,
+        "id": 106
       }
     ]
   }

@@ -892,6 +892,14 @@ def build_plan(plan: dict, station_pool: List[Tuple[str, str, str, str, dict]], 
             station_data[f"step{step_num}_link"] = step_links[step_idx]
             station_data[f"step{step_num}_equipment"] = step_equipments[step_idx]
             station_data[f"step{step_num}_muscles"] = step_muscles[step_idx]
+            # Add exercise ID for each step
+            if step_idx < len(station_exercises):
+                ex = station_exercises[step_idx]
+                ex_id = ex[7] if len(ex) > 7 else -1
+            else:
+                # If duplicating last exercise for extra steps
+                ex_id = station_data.get(f"step{step_num-1}_id", -1)
+            station_data[f"step{step_num}_id"] = ex_id
             station_data[f"rest_step{step_num}"] = global_active_rest_schedule[step_idx]["name"]
             station_data[f"rest_step{step_num}_link"] = global_active_rest_schedule[step_idx]["link"]
         
