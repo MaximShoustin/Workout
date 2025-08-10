@@ -38,6 +38,12 @@ def format_exercise_link(exercise_name: str, exercise_link: str, exercise_id: in
         return display_name
 
 
+def format_exercise_id_badge(exercise_id: int) -> str:
+    if exercise_id is not None and exercise_id != -1:
+        return f'<span class="exercise-id-badge">{exercise_id}</span>'
+    return ''
+
+
 def get_equipment_icon(equipment_name: str) -> str:
     """Get appropriate icon for equipment type - SVG icon or emoji fallback."""
     from image_utils.icon_manager import get_equipment_icon_html
@@ -953,6 +959,24 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
                 position: static !important;
             }
         }
+        .exercise-cell-wrapper {
+            position: relative;
+            display: block;
+            min-height: 28px;
+        }
+        .exercise-id-badge {
+            position: absolute;
+            top: 2px;
+            right: 4px;
+            background: #e0e0e0;
+            color: #444;
+            font-size: 0.75em;
+            padding: 2px 7px;
+            border-radius: 10px;
+            font-weight: 600;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+            z-index: 2;
+        }
     </style>
     """
     
@@ -1008,7 +1032,10 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
             html += f"""
                      <td data-label="Step {step_num}" class="exercise">
                          <span class="mobile-step-label">Step {step_num}:</span>
-                         {format_exercise_link(st.get(step_key, ''), st.get(step_link_key, ''), st.get(step_id_key, None))}
+                         <div class="exercise-cell-wrapper">
+                             {format_exercise_link(st.get(step_key, ''), st.get(step_link_key, ''), None)}
+                             {format_exercise_id_badge(st.get(step_id_key, None))}
+                         </div>
                          {format_muscle_tags(st.get(step_muscles_key, ''))}
                          {format_equipment_tags(st.get(step_equipment_key, {}))}
                      </td>"""

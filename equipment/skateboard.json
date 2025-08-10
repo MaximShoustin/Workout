@@ -1,0 +1,48 @@
+{
+    "lifts": {
+      "power": [
+        {
+          "name": "Skateboard v1",
+          "link": "",
+          "area": "core",
+          "muscles": "core",
+          "equipment": {
+            "skateboard": {
+              "count": 1
+            }
+          },
+          "skip": false,
+          "unilateral": false,
+          "id": 107
+        },
+        {
+            "name": "Skateboard v2",
+            "link": "",
+            "area": "core",
+            "muscles": "core",
+            "equipment": {
+              "skateboard": {
+                "count": 1
+              }
+            },
+            "skip": false,
+            "unilateral": false,
+            "id": 108
+          },
+          {
+            "name": "Skateboard v3",
+            "link": "",
+            "area": "core",
+            "muscles": "core",
+            "equipment": {
+              "skateboard": {
+                "count": 1
+              }
+            },
+            "skip": false,
+            "unilateral": false,
+            "id": 109
+          }
+    ]
+    }
+}

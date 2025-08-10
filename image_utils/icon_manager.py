@@ -112,6 +112,29 @@ def create_icon_template(equipment_name: str, color: str = "#808080"):
     print(f"📝 Created template icon: {output_path}")
     print(f"   Edit the SVG to customize the {equipment_name} appearance")
 
+def create_skateboard_icon(color: str = "#444444"):
+    """Create a simple SVG skateboard icon and save it to the icons directory."""
+    svg = f'''<svg width="48" height="24" viewBox="0 0 48 24" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="skateboard_grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e8e8e8;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:{color};stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#222;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <!-- Deck -->
+  <rect x="4" y="8" width="40" height="8" rx="4" fill="url(#skateboard_grad)" stroke="#222" stroke-width="1.2"/>
+  <!-- Wheels -->
+  <ellipse cx="10" cy="20" rx="3" ry="3" fill="#888" stroke="#444" stroke-width="0.7"/>
+  <ellipse cx="38" cy="20" rx="3" ry="3" fill="#888" stroke="#444" stroke-width="0.7"/>
+  <ellipse cx="10" cy="4" rx="3" ry="3" fill="#888" stroke="#444" stroke-width="0.7"/>
+  <ellipse cx="38" cy="4" rx="3" ry="3" fill="#888" stroke="#444" stroke-width="0.7"/>
+</svg>'''
+    output_path = ICONS_DIR / "skateboard.svg"
+    with open(output_path, 'w') as f:
+        f.write(svg)
+    print(f"🛹 Created skateboard SVG icon: {output_path}")
+
 if __name__ == "__main__":
     import sys
     

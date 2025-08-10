@@ -1,7 +1,7 @@
 {
     "title": "Strength Block – Week 4",
     "notes": "Dont' crash the second week, you're getting stronger",
-    "edit_mode": true,
+    "edit_mode": false,
     "active_rest": "false",
     "active_rest_count": 4,
     "use_workout_history": false,
@@ -25,7 +25,9 @@
       "slam_balls_5kg"
       
     ],
-    "must_use": [],
+    "must_use": [
+      "skateboard"
+    ],
     "equipment": {
       "bench": {
         "count": 1
@@ -80,6 +82,10 @@
       },
       "dip_parallel_bars": {
         "count": 2
+      },
+      "skateboard": {
+        "count": 3,
+        "exs":"https://www.youtube.com/watch?v=SZWuk39LUw0"
       }
     }
   }
