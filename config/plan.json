@@ -2,15 +2,15 @@
     "active_rest": "false",
     "active_rest_count": 4,
     "use_workout_history": false,
-    "steps_per_station": 2,
+    "steps_per_station": 4,
     "stations": 5,               
     "people": 10,
-    "rounds": 2,                 
+    "rounds": 1,                 
     "timing": {                  
       "work": 40,
       "rest": 20
     },
-    "balance_order": [           
+    "balance_order_old": [           
       "upper",                   
       "lower",
       "core"

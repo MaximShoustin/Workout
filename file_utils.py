@@ -5,12 +5,13 @@ import csv
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional
+import json
 
 from config import WORKOUT_STORE_DIR
 from html_generator import generate_html_workout
 
 
-def save_workout_html(plan: Dict, stations: List[Dict], equipment_requirements: Optional[Dict] = None, validation_summary: Optional[Dict] = None, global_active_rest_schedule: Optional[List[Dict]] = None, selected_active_rest_exercises: Optional[List[Dict]] = None, update_index_html: bool = True) -> Path:
+def save_workout_html(plan: Dict, stations: List[Dict], equipment_requirements: Optional[Dict] = None, validation_summary: Optional[Dict] = None, global_active_rest_schedule: Optional[List[Dict]] = None, selected_active_rest_exercises: Optional[List[Dict]] = None, update_index_html: bool = True, used_exercise_ids: Optional[List[int]] = None) -> Path:
     """Generate HTML workout and save to timestamped file in workout_store directory.
     Also updates index.html in project root for GitHub Pages if update_index_html is True."""
     # Create workout_store directory if it doesn't exist
@@ -27,6 +28,12 @@ def save_workout_html(plan: Dict, stations: List[Dict], equipment_requirements: 
     # Save to timestamped file in workout_store directory
     with filepath.open('w', encoding='utf-8') as f:
         f.write(html_content)
+
+    # Write LAST_WORKOUT_PLAN.json with used exercise IDs if provided
+    if used_exercise_ids is not None:
+        last_plan_path = WORKOUT_STORE_DIR / "LAST_WORKOUT_PLAN.json"
+        with last_plan_path.open('w', encoding='utf-8') as f:
+            json.dump({"used_exercise_ids": used_exercise_ids}, f, indent=2)
     
     # Also save to index.html in project root for GitHub Pages if requested
     if update_index_html:
