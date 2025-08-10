@@ -29,11 +29,28 @@ def save_workout_html(plan: Dict, stations: List[Dict], equipment_requirements: 
     with filepath.open('w', encoding='utf-8') as f:
         f.write(html_content)
 
-    # Write LAST_WORKOUT_PLAN.json with used exercise IDs if provided
-    if used_exercise_ids is not None:
+    # Write LAST_WORKOUT_PLAN.json with per-station used exercise IDs if stations are provided
+    if stations is not None:
         last_plan_path = WORKOUT_STORE_DIR / "LAST_WORKOUT_PLAN.json"
+        station_letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        stations_json = []
+        for idx, st in enumerate(stations):
+            letter = station_letters[idx]
+            # Collect all step IDs for this station
+            step_ids = []
+            step_num = 1
+            while True:
+                step_id_key = f"step{step_num}_id"
+                if step_id_key in st:
+                    step_id = st[step_id_key]
+                    if step_id != -1:
+                        step_ids.append(step_id)
+                    step_num += 1
+                else:
+                    break
+            stations_json.append({"station": letter, "used_exercise_ids": step_ids})
         with last_plan_path.open('w', encoding='utf-8') as f:
-            json.dump({"used_exercise_ids": used_exercise_ids}, f, indent=2)
+            json.dump({"stations": stations_json}, f, indent=2)
     
     # Also save to index.html in project root for GitHub Pages if requested
     if update_index_html:
