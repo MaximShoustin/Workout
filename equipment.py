@@ -150,14 +150,11 @@ def build_station_pool(gear: Dict[str, dict], available_inventory: Optional[dict
     
     if not pool:
         die("Equipment JSONs contained no lifts!")
-    
     # Filter pool based on available equipment if inventory is provided
     if available_inventory:
         pool = filter_feasible_exercises(pool, available_inventory)
         if not pool:
             die("No exercises can be performed with available equipment! Check your equipment inventory in plan.json")
-    
-    random.shuffle(pool)
     return pool
 
 

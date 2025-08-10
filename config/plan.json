@@ -1,4 +1,7 @@
 {
+    "title": "Strength Block – Week 2",
+    "notes": "Dont' crash the second week, you're getting stronger",
+    "edit_mode": true,
     "active_rest": "false",
     "active_rest_count": 4,
     "use_workout_history": false,
@@ -78,7 +81,5 @@
       "dip_parallel_bars": {
         "count": 2
       }
-    },
-    "title": "Strength Block – Week 2",
-    "notes": "Dont' crash the second week, you're getting stronger"
+    }
   }

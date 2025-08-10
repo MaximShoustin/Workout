@@ -11,7 +11,7 @@ from config import WORKOUT_STORE_DIR
 from html_generator import generate_html_workout
 
 
-def save_workout_html(plan: Dict, stations: List[Dict], equipment_requirements: Optional[Dict] = None, validation_summary: Optional[Dict] = None, global_active_rest_schedule: Optional[List[Dict]] = None, selected_active_rest_exercises: Optional[List[Dict]] = None, update_index_html: bool = True, used_exercise_ids: Optional[List[int]] = None) -> Path:
+def save_workout_html(plan: Dict, stations: List[Dict], equipment_requirements: Optional[Dict] = None, validation_summary: Optional[Dict] = None, global_active_rest_schedule: Optional[List[Dict]] = None, selected_active_rest_exercises: Optional[List[Dict]] = None, update_index_html: bool = True, used_exercise_ids: Optional[List[int]] = None, seed: Optional[int] = None) -> Path:
     """Generate HTML workout and save to timestamped file in workout_store directory.
     Also updates index.html in project root for GitHub Pages if update_index_html is True."""
     # Create workout_store directory if it doesn't exist
@@ -29,7 +29,7 @@ def save_workout_html(plan: Dict, stations: List[Dict], equipment_requirements: 
     with filepath.open('w', encoding='utf-8') as f:
         f.write(html_content)
 
-    # Write LAST_WORKOUT_PLAN.json with per-station used exercise IDs if stations are provided
+    # Write LAST_WORKOUT_PLAN.json with per-station used exercise IDs and seed if stations are provided
     if stations is not None:
         last_plan_path = WORKOUT_STORE_DIR / "LAST_WORKOUT_PLAN.json"
         station_letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -49,8 +49,11 @@ def save_workout_html(plan: Dict, stations: List[Dict], equipment_requirements: 
                 else:
                     break
             stations_json.append({"station": letter, "used_exercise_ids": step_ids})
+        last_plan_data = {"stations": stations_json}
+        if seed is not None:
+            last_plan_data["seed"] = seed
         with last_plan_path.open('w', encoding='utf-8') as f:
-            json.dump({"stations": stations_json}, f, indent=2)
+            json.dump(last_plan_data, f, indent=2)
     
     # Also save to index.html in project root for GitHub Pages if requested
     if update_index_html:

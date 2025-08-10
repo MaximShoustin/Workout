@@ -5,6 +5,7 @@ import sys
 import time
 import random
 from pathlib import Path
+import json
 
 from config import load_plan, die, load_json, ACTIVE_REST_FILE
 from equipment import parse_equipment, build_station_pool, get_equipment_validation_summary
@@ -111,9 +112,27 @@ def generate_workout_with_retries(max_retries=15):
     print()
     
     for attempt in range(1, max_retries + 1):
-        # Use a new random seed for each attempt
-        seed = int(time.time() * 1000) % 2147483647  # Ensure it fits in 32-bit int
+        # Use a fixed random seed if edit_mode is true, else use time-based seed
+        if plan.get('edit_mode', False):
+            # Try to read the seed from LAST_WORKOUT_PLAN.json
+            last_plan_path = Path('workout_store/LAST_WORKOUT_PLAN.json')
+            seed = 42
+            if last_plan_path.exists():
+                try:
+                    with last_plan_path.open('r', encoding='utf-8') as f:
+                        last_plan_data = json.load(f)
+                        if 'seed' in last_plan_data:
+                            seed = last_plan_data['seed']
+                        else:
+                            print('⚠️  No seed found in LAST_WORKOUT_PLAN.json, using default seed 42.')
+                except Exception as e:
+                    print(f'⚠️  Could not read seed from LAST_WORKOUT_PLAN.json: {e}. Using default seed 42.')
+            else:
+                print('⚠️  LAST_WORKOUT_PLAN.json not found, using default seed 42.')
+        else:
+            seed = int(time.time() * 1000) % 2147483647  # Ensure it fits in 32-bit int
         random.seed(seed)
+        random.shuffle(station_pool)
         
         print(f"🎲 Attempt {attempt}/{max_retries} - Using seed: {seed}")
         
@@ -176,7 +195,7 @@ def main():
         # Save the HTML file  
         update_index_html = plan.get("use_workout_history", True)
         used_exercise_ids = plan_result.get("used_exercise_ids", [])
-        filename = save_workout_html(plan, plan_result["stations"], plan_result["equipment_requirements"], validation_summary, plan_result["global_active_rest_schedule"], plan_result["selected_active_rest_exercises"], update_index_html=update_index_html, used_exercise_ids=used_exercise_ids)
+        filename = save_workout_html(plan, plan_result["stations"], plan_result["equipment_requirements"], validation_summary, plan_result["global_active_rest_schedule"], plan_result["selected_active_rest_exercises"], update_index_html=update_index_html, used_exercise_ids=used_exercise_ids, seed=seed_used)
         print(f"✅ Workout saved to: {filename}")
         print(f"🌐 Open in browser: file://{filename.absolute()}")
         print(f"🎲 Final seed used: {seed_used}")
