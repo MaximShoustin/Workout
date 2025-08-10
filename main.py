@@ -179,8 +179,137 @@ def generate_workout_with_retries(max_retries=15):
     die("Unable to generate valid workout after maximum retries")
 
 
+def get_exercise_by_id(ex_id, pool):
+    for ex in pool:
+        if ex[-1] == ex_id:
+            return ex
+    return None
+
+def reconstruct_stations_from_ids(stations_ids, pool, steps_per_station):
+    # pool: list of (area, equip_name, exercise_name, exercise_link, equipment_data, muscles, unilateral, exercise_id)
+    import random
+    station_letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    stations = []
+    for sidx, st in enumerate(stations_ids):
+        letter = st.get('station', station_letters[sidx])
+        ids = st.get('used_exercise_ids', [])
+        station_data = {
+            'area': '',
+            'equipment': '',
+        }
+        step_names = []
+        step_links = []
+        step_equipments = []
+        step_muscles = []
+        for step_num, ex_id in enumerate(ids):
+            ex = get_exercise_by_id(ex_id, pool)
+            if ex is None:
+                print(f'⚠️  Warning: Exercise ID {ex_id} not found in equipment database. Using random exercise.')
+                ex = random.choice(pool)
+            area, equip, name, link, equipment, muscles, unilateral, exercise_id = ex
+            if step_num == 0:
+                station_data['area'] = area
+                station_data['equipment'] = equip
+            step_names.append(name)
+            step_links.append(link)
+            step_equipments.append(equipment)
+            step_muscles.append(muscles)
+            station_data[f'step{step_num+1}'] = name
+            station_data[f'step{step_num+1}_link'] = link
+            station_data[f'step{step_num+1}_equipment'] = equipment
+            station_data[f'step{step_num+1}_muscles'] = muscles
+            station_data[f'step{step_num+1}_id'] = exercise_id
+        stations.append(station_data)
+    return stations
+
+
 def main():
     """Main entry point for workout generation."""
+    plan = load_plan()
+    if edit_ids is not None:
+        if not plan.get('edit_mode', False):
+            print('❌ Error: -edit flag can only be used when "edit_mode": true in plan.json.')
+            sys.exit(1)
+        # Validate edit_ids against LAST_WORKOUT_PLAN.json
+        last_plan_path = Path('workout_store/LAST_WORKOUT_PLAN.json')
+        if not last_plan_path.exists():
+            print('❌ Error: LAST_WORKOUT_PLAN.json not found. Cannot use -edit.')
+            sys.exit(1)
+        with last_plan_path.open('r', encoding='utf-8') as f:
+            last_plan_data = json.load(f)
+        # Collect all used_exercise_ids from all stations
+        used_ids = set()
+        for st in last_plan_data.get('stations', []):
+            used_ids.update(st.get('used_exercise_ids', []))
+        filtered_edit_ids = []
+        for eid in edit_ids:
+            if eid not in used_ids:
+                print(f'⚠️  Warning: Exercise ID {eid} not found in current workout. Skipping.')
+            else:
+                filtered_edit_ids.append(eid)
+        if not filtered_edit_ids:
+            print('❌ Error: None of the provided IDs to edit are present in the current workout.')
+            sys.exit(1)
+        # Store for use in next step
+        edit_ids[:] = filtered_edit_ids
+
+        # --- Begin replacement logic ---
+        # 1. Build a set of all used exercise IDs (excluding those to be replaced)
+        current_stations = last_plan_data['stations']
+        ids_to_replace = set(edit_ids)
+        keep_ids = set()
+        for st in current_stations:
+            for eid in st['used_exercise_ids']:
+                if eid not in ids_to_replace:
+                    keep_ids.add(eid)
+        # 2. Get all available exercises from the pool
+        plan_equipment = plan.get('equipment', {})
+        gear = parse_equipment()
+        pool = build_station_pool(gear, plan_equipment if plan_equipment else None)
+        # Map: exercise_id -> pool tuple
+        pool_by_id = {ex[-1]: ex for ex in pool if ex[-1] != -1}
+        # 3. Find all locations (station, step) for each ID to replace
+        locations = []  # (station_idx, step_idx, old_id)
+        for sidx, st in enumerate(current_stations):
+            for step_idx, eid in enumerate(st['used_exercise_ids']):
+                if eid in ids_to_replace:
+                    locations.append((sidx, step_idx, eid))
+        # 4. For each ID to replace, pick a new valid exercise
+        import secrets
+        new_seed = secrets.randbits(32)
+        random.seed(new_seed)
+        replacement_map = {}
+        already_used = keep_ids.copy()
+        for (sidx, step_idx, old_id) in locations:
+            # Find a replacement not already in the workout
+            candidates = [ex for exid, ex in pool_by_id.items() if exid not in already_used and exid not in ids_to_replace]
+            if not candidates:
+                print(f'❌ Error: No available replacement for exercise ID {old_id}.')
+                sys.exit(1)
+            new_ex = random.choice(candidates)
+            new_id = new_ex[-1]
+            replacement_map[old_id] = new_id
+            # Update the station's used_exercise_ids
+            current_stations[sidx]['used_exercise_ids'][step_idx] = new_id
+            already_used.add(new_id)
+        # 5. Log the mapping
+        print('🔄 Replacement summary:')
+        for old_id, new_id in replacement_map.items():
+            print(f'   Replaced {old_id} → {new_id}')
+        # 6. Regenerate the HTML and JSON outputs
+        # Rebuild the full plan_result structure for save_workout_html
+        # (We only update LAST_WORKOUT_PLAN.json and HTML, not full validation, for now)
+        # Save new LAST_WORKOUT_PLAN.json with new seed
+        last_plan_data['seed'] = new_seed
+        with last_plan_path.open('w', encoding='utf-8') as f:
+            json.dump(last_plan_data, f, indent=2)
+        # 7. Regenerate the HTML report using the updated station structure
+        # Use the same plan and other parameters as before, but with updated stations and new seed
+        steps_per_station = plan.get('steps_per_station', 2)
+        rebuilt_stations = reconstruct_stations_from_ids(current_stations, pool, steps_per_station)
+        filename = save_workout_html(plan, rebuilt_stations, update_index_html=True, seed=new_seed)
+        print(f'✅ HTML report regenerated: {filename}')
+        return
     try:
         plan_result, validation_summary, seed_used, plan, history_manager = generate_workout_with_retries()
         
@@ -218,5 +347,29 @@ def main():
         sys.exit(1)
 
 
+def parse_edit_args():
+    import sys
+    edit_ids = None
+    if '-edit' in sys.argv:
+        idx = sys.argv.index('-edit')
+        if idx + 1 >= len(sys.argv):
+            print('❌ Error: -edit flag provided but no list of IDs given.')
+            sys.exit(1)
+        id_str = sys.argv[idx + 1]
+        if not id_str.strip():
+            print('❌ Error: -edit flag provided but list is empty.')
+            sys.exit(1)
+        try:
+            edit_ids = [int(x) for x in id_str.split(',') if x.strip()]
+            if not edit_ids:
+                print('❌ Error: -edit flag provided but list is empty.')
+                sys.exit(1)
+        except Exception:
+            print('❌ Error: -edit flag provided but list is malformed. Use comma-separated integers, e.g. -edit 1,2,3')
+            sys.exit(1)
+    return edit_ids
+
+
 if __name__ == "__main__":
+    edit_ids = parse_edit_args()
     main() 
