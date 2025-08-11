@@ -185,11 +185,25 @@ def get_exercise_by_id(ex_id, pool):
             return ex
     return None
 
+def get_base_exercise_name(name):
+    import re
+    return re.sub(r'\s*\((Left|Right)\)$', '', name, flags=re.IGNORECASE)
+
 def reconstruct_stations_from_ids(stations_ids, pool, steps_per_station):
-    # pool: list of (area, equip_name, exercise_name, exercise_link, equipment_data, muscles, unilateral, exercise_id)
     import random
     station_letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     stations = []
+    # Build a mapping from base name to canonical ID from the pool
+    base_name_to_id = {}
+    id_to_name = {}
+    for ex in pool:
+        name = ex[2]
+        ex_id = ex[-1]
+        base_name = get_base_exercise_name(name)
+        base_name_to_id[base_name] = ex_id
+        id_to_name[ex_id] = name
+    used_names = set()
+    used_ids = set()
     for sidx, st in enumerate(stations_ids):
         letter = st.get('station', station_letters[sidx])
         ids = st.get('used_exercise_ids', [])
@@ -197,28 +211,38 @@ def reconstruct_stations_from_ids(stations_ids, pool, steps_per_station):
             'area': '',
             'equipment': '',
         }
-        step_names = []
-        step_links = []
-        step_equipments = []
-        step_muscles = []
         for step_num, ex_id in enumerate(ids):
             ex = get_exercise_by_id(ex_id, pool)
             if ex is None:
                 print(f'⚠️  Warning: Exercise ID {ex_id} not found in equipment database. Using random exercise.')
                 ex = random.choice(pool)
-            area, equip, name, link, equipment, muscles, unilateral, exercise_id = ex
+            area, equip, name, link, equipment, muscles, unilateral, _ = ex
+            base_name = get_base_exercise_name(name)
+            canonical_id = base_name_to_id.get(base_name, ex_id)
+            canonical_name = id_to_name.get(canonical_id, name)
+            # Enforce: never allow two different IDs for the same name, or the same ID for different names
+            if canonical_name in used_names or canonical_id in used_ids:
+                # Find a unique candidate
+                for alt_ex in pool:
+                    alt_base = get_base_exercise_name(alt_ex[2])
+                    alt_id = alt_ex[-1]
+                    alt_name = alt_ex[2]
+                    if alt_name not in used_names and alt_id not in used_ids:
+                        area, equip, name, link, equipment, muscles, unilateral, _ = alt_ex
+                        base_name = get_base_exercise_name(name)
+                        canonical_id = alt_id
+                        canonical_name = alt_name
+                        break
             if step_num == 0:
                 station_data['area'] = area
                 station_data['equipment'] = equip
-            step_names.append(name)
-            step_links.append(link)
-            step_equipments.append(equipment)
-            step_muscles.append(muscles)
-            station_data[f'step{step_num+1}'] = name
+            station_data[f'step{step_num+1}'] = canonical_name
             station_data[f'step{step_num+1}_link'] = link
             station_data[f'step{step_num+1}_equipment'] = equipment
             station_data[f'step{step_num+1}_muscles'] = muscles
-            station_data[f'step{step_num+1}_id'] = exercise_id
+            station_data[f'step{step_num+1}_id'] = canonical_id
+            used_names.add(canonical_name)
+            used_ids.add(canonical_id)
         stations.append(station_data)
     return stations
 
@@ -257,11 +281,31 @@ def main():
         # 1. Build a set of all used exercise IDs (excluding those to be replaced)
         current_stations = last_plan_data['stations']
         ids_to_replace = set(edit_ids)
-        keep_ids = set()
-        for st in current_stations:
-            for eid in st['used_exercise_ids']:
-                if eid not in ids_to_replace:
-                    keep_ids.add(eid)
+        # --- NEW: Expand edit_ids to include both sides of any unilateral exercise ---
+        # Get all names and IDs from the pool
+        plan_equipment = plan.get('equipment', {})
+        gear = parse_equipment()
+        pool = build_station_pool(gear, plan_equipment if plan_equipment else None)
+        id_to_name = {ex[-1]: ex[2] for ex in pool if ex[-1] != -1}
+        # Expand edit_ids to include both sides for any unilateral exercise
+        expanded_edit_ids = set(edit_ids)
+        for sidx, st in enumerate(current_stations):
+            used_ids = st.get('used_exercise_ids', [])
+            # Build a map of base name to all step indices for this station
+            base_name_to_indices = {}
+            for idx, eid in enumerate(used_ids):
+                name = id_to_name.get(eid, None)
+                if name:
+                    base = get_base_exercise_name(name)
+                    base_name_to_indices.setdefault(base, []).append((idx, eid))
+            # If any eid in edit_ids is in this station, add all steps with the same base name
+            for eid in edit_ids:
+                name = id_to_name.get(eid, None)
+                if name:
+                    base = get_base_exercise_name(name)
+                    for idx, eid2 in base_name_to_indices.get(base, []):
+                        expanded_edit_ids.add(eid2)
+        edit_ids[:] = list(expanded_edit_ids)
         # 2. Get all available exercises from the pool
         plan_equipment = plan.get('equipment', {})
         gear = parse_equipment()
@@ -276,38 +320,137 @@ def main():
                     locations.append((sidx, step_idx, eid))
         # 4. For each ID to replace, pick a new valid exercise
         import secrets
-        new_seed = secrets.randbits(32)
-        random.seed(new_seed)
+        new_seed = secrets.randbits(32)  # Generate a new seed for replacement randomness
+        random.seed(new_seed)            # Reseed RNG for replacement selection
         replacement_map = {}
+        keep_ids = set()
+        for st in current_stations:
+            for eid in st['used_exercise_ids']:
+                if eid not in ids_to_replace:
+                    keep_ids.add(eid)
         already_used = keep_ids.copy()
+        # In replacement logic, only allow a replacement if the new exercise name is not already present in the workout, and never assign the same ID to two different names
+        # Set stations_to_use depending on workflow
+        if edit_ids is not None:
+            rebuilt_stations = reconstruct_stations_from_ids(current_stations, pool, plan.get('steps_per_station', 2))
+            stations_to_use = rebuilt_stations
+        else:
+            stations_to_use = plan_result["stations"]
+        # Use stations_to_use everywhere below
+        all_used_names = set()
+        for st in stations_to_use:
+            step_num = 1
+            while True:
+                key = f'step{step_num}'
+                if key in st:
+                    all_used_names.add(st[key])
+                    step_num += 1
+                else:
+                    break
         for (sidx, step_idx, old_id) in locations:
-            # Find a replacement not already in the workout
-            candidates = [ex for exid, ex in pool_by_id.items() if exid not in already_used and exid not in ids_to_replace]
+            # Find a replacement not already in the workout (by name and ID)
+            candidates = [ex for exid, ex in pool_by_id.items()
+                          if exid not in already_used and exid not in ids_to_replace and ex[2] not in all_used_names]
             if not candidates:
                 print(f'❌ Error: No available replacement for exercise ID {old_id}.')
                 sys.exit(1)
             new_ex = random.choice(candidates)
             new_id = new_ex[-1]
+            new_name = new_ex[2]
             replacement_map[old_id] = new_id
             # Update the station's used_exercise_ids
             current_stations[sidx]['used_exercise_ids'][step_idx] = new_id
             already_used.add(new_id)
+            all_used_names.add(new_name)
         # 5. Log the mapping
-        print('🔄 Replacement summary:')
+        print(f'🔄 Replacement summary (using new seed {new_seed}):')
         for old_id, new_id in replacement_map.items():
             print(f'   Replaced {old_id} → {new_id}')
         # 6. Regenerate the HTML and JSON outputs
-        # Rebuild the full plan_result structure for save_workout_html
-        # (We only update LAST_WORKOUT_PLAN.json and HTML, not full validation, for now)
-        # Save new LAST_WORKOUT_PLAN.json with new seed
-        last_plan_data['seed'] = new_seed
-        with last_plan_path.open('w', encoding='utf-8') as f:
-            json.dump(last_plan_data, f, indent=2)
+        # Reconstruct full station dicts for HTML and JSON output
+        steps_per_station = plan.get('steps_per_station', 2)
+        rebuilt_stations = reconstruct_stations_from_ids(current_stations, pool, steps_per_station)
+        # Save new LAST_WORKOUT_PLAN.json with updated stations (seed stays the same)
+        for st in current_stations:
+            if 'area' not in st:
+                st['area'] = ''
+        last_plan_data['stations'] = current_stations
+        print('DEBUG: current_stations just before write:', current_stations)
+        print('DEBUG: last_plan_data["stations"] just before write:', last_plan_data['stations'])
+        print(f'📝 Attempting to write LAST_WORKOUT_PLAN.json to: {last_plan_path.absolute()}')
+        try:
+            with last_plan_path.open('w', encoding='utf-8') as f:
+                json.dump(last_plan_data, f, indent=2)
+                f.flush()
+                import os
+                os.fsync(f.fileno())
+            print(f'✅ LAST_WORKOUT_PLAN.json updated with new stations (seed unchanged).')
+            for st in current_stations:
+                print(f"   Station {st.get('station', '?')}: {st.get('used_exercise_ids', [])}")
+            # Immediately read back and print file contents
+            with last_plan_path.open('r', encoding='utf-8') as f:
+                print('DEBUG: File contents immediately after write:')
+                print(f.read())
+            # Regenerate the HTML report using the reconstructed station structure
+            from workout_planner import get_station_equipment_requirements
+            equipment_requirements = {}
+            people_per_station = plan.get('people_per_station', 1)
+            for st in rebuilt_stations:
+                step_equipments = []
+                step_num = 1
+                while True:
+                    key = f'step{step_num}_equipment'
+                    if key in st:
+                        step_equipments.append(st[key])
+                        step_num += 1
+                    else:
+                        break
+                req = get_station_equipment_requirements(step_equipments, people_per_station)
+                for eq_type, eq_info in req.items():
+                    if eq_type in equipment_requirements:
+                        equipment_requirements[eq_type]['count'] += eq_info['count']
+                    else:
+                        equipment_requirements[eq_type] = dict(eq_info)
+            global_active_rest_schedule = last_plan_data.get('global_active_rest_schedule')
+            selected_active_rest_exercises = last_plan_data.get('selected_active_rest_exercises')
+            # Use the existing seed from LAST_WORKOUT_PLAN.json for HTML
+            filename = save_workout_html(plan, rebuilt_stations, equipment_requirements=equipment_requirements, global_active_rest_schedule=global_active_rest_schedule, selected_active_rest_exercises=selected_active_rest_exercises, update_index_html=True, seed=last_plan_data.get('seed'))
+            print(f'✅ HTML report regenerated: {filename}')
+            return  # Prevent further execution and overwriting in normal workflow
+        except Exception as e:
+            print(f'❌ Error writing LAST_WORKOUT_PLAN.json: {e}')
         # 7. Regenerate the HTML report using the updated station structure
         # Use the same plan and other parameters as before, but with updated stations and new seed
         steps_per_station = plan.get('steps_per_station', 2)
         rebuilt_stations = reconstruct_stations_from_ids(current_stations, pool, steps_per_station)
-        filename = save_workout_html(plan, rebuilt_stations, update_index_html=True, seed=new_seed)
+        # Compute equipment_requirements from rebuilt_stations
+        from workout_planner import get_station_equipment_requirements
+        equipment_requirements = {}
+        people_per_station = plan.get('people_per_station', 1)
+        for st in stations_to_use:
+            step_equipments = []
+            step_num = 1
+            while True:
+                key = f'step{step_num}_equipment'
+                if key in st:
+                    step_equipments.append(st[key])
+                    step_num += 1
+                else:
+                    break
+            req = get_station_equipment_requirements(step_equipments, people_per_station)
+            for eq_type, eq_info in req.items():
+                if eq_type in equipment_requirements:
+                    equipment_requirements[eq_type]['count'] += eq_info['count']
+                else:
+                    equipment_requirements[eq_type] = dict(eq_info)
+        # Try to reconstruct global_active_rest_schedule and selected_active_rest_exercises from plan if possible
+        global_active_rest_schedule = None
+        selected_active_rest_exercises = None
+        if 'global_active_rest_schedule' in last_plan_data:
+            global_active_rest_schedule = last_plan_data['global_active_rest_schedule']
+        if 'selected_active_rest_exercises' in last_plan_data:
+            selected_active_rest_exercises = last_plan_data['selected_active_rest_exercises']
+        filename = save_workout_html(plan, stations_to_use, equipment_requirements=equipment_requirements, global_active_rest_schedule=global_active_rest_schedule, selected_active_rest_exercises=selected_active_rest_exercises, update_index_html=True, seed=new_seed)
         print(f'✅ HTML report regenerated: {filename}')
         return
     try:

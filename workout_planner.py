@@ -4,7 +4,7 @@
 import random
 from typing import Dict, List, Tuple
 
-from equipment import merge_equipment_requirements
+from equipment import merge_equipment_requirements, build_exercise_name_to_id_map, get_base_exercise_name
 
 
 def next_active_rest(rest_pool: List[dict], used_rest: List[dict]) -> dict:
@@ -775,6 +775,8 @@ def build_plan(plan: dict, station_pool: List[Tuple[str, str, str, str, dict]], 
             print(f"   • {steps_desc} exercises happen SEQUENTIALLY (same person does all steps)")
         print()
     
+    exercise_name_to_id = build_exercise_name_to_id_map()
+    
     while len(stations) < stations_needed:
         if not station_pool:
             from config import die
@@ -826,12 +828,8 @@ def build_plan(plan: dict, station_pool: List[Tuple[str, str, str, str, dict]], 
         step_muscles = []
         
         for exercise in station_exercises:
-            area, equip, name, link, equipment, muscles, unilateral, exercise_id = exercise
+            area, equip, name, link, equipment, muscles, unilateral, _ = exercise  # ignore pool id
             used_names.add(name)
-            
-            # Track exercise ID for history (only if it's a valid ID)
-            if exercise_id != -1:
-                used_exercise_ids.append(exercise_id)
             
             selected_equipment = select_best_equipment_option(equipment, available_inventory)
             
@@ -888,18 +886,16 @@ def build_plan(plan: dict, station_pool: List[Tuple[str, str, str, str, dict]], 
         # Add each step to the station
         for step_idx in range(steps_per_station):
             step_num = step_idx + 1
-            station_data[f"step{step_num}"] = step_names[step_idx]
+            name = step_names[step_idx]
+            base_name = get_base_exercise_name(name)
+            ex_id = exercise_name_to_id.get(base_name, -1)
+            station_data[f"step{step_num}_id"] = ex_id
+            if ex_id != -1:
+                used_exercise_ids.append(ex_id)
+            station_data[f"step{step_num}"] = name
             station_data[f"step{step_num}_link"] = step_links[step_idx]
             station_data[f"step{step_num}_equipment"] = step_equipments[step_idx]
             station_data[f"step{step_num}_muscles"] = step_muscles[step_idx]
-            # Add exercise ID for each step
-            if step_idx < len(station_exercises):
-                ex = station_exercises[step_idx]
-                ex_id = ex[7] if len(ex) > 7 else -1
-            else:
-                # If duplicating last exercise for extra steps
-                ex_id = station_data.get(f"step{step_num-1}_id", -1)
-            station_data[f"step{step_num}_id"] = ex_id
             station_data[f"rest_step{step_num}"] = global_active_rest_schedule[step_idx]["name"]
             station_data[f"rest_step{step_num}_link"] = global_active_rest_schedule[step_idx]["link"]
         
@@ -922,6 +918,32 @@ def build_plan(plan: dict, station_pool: List[Tuple[str, str, str, str, dict]], 
             if filtered_count > 0:
                 print(f"   🔧 Filtered out {filtered_count} exercises that can no longer be performed with remaining equipment")
                 print()
+    
+    # After building all stations, validate uniqueness of IDs and names
+    name_to_id = {}
+    id_to_name = {}
+    for st in stations:
+        for step_num in range(1, steps_per_station + 1):
+            name = st.get(f"step{step_num}")
+            ex_id = st.get(f"step{step_num}_id")
+            if name is None or ex_id is None or ex_id == -1:
+                continue
+            # For unilateral, strip (Left)/(Right) for base name
+            base_name = name
+            if base_name.endswith(" (Left)") or base_name.endswith(" (Right)"):
+                base_name = base_name.rsplit(" ", 1)[0]
+            # Check name->id uniqueness
+            if base_name in name_to_id:
+                if name_to_id[base_name] != ex_id:
+                    print(f"❌ ERROR: Exercise '{base_name}' appears with multiple IDs: {name_to_id[base_name]} and {ex_id}")
+            else:
+                name_to_id[base_name] = ex_id
+            # Check id->name uniqueness
+            if ex_id in id_to_name:
+                if id_to_name[ex_id] != base_name:
+                    print(f"❌ ERROR: ID {ex_id} assigned to multiple names: '{id_to_name[ex_id]}' and '{base_name}'")
+            else:
+                id_to_name[ex_id] = base_name
     
     # Check for must-use equipment warnings
     if available_inventory:

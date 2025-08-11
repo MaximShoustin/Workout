@@ -1,7 +1,7 @@
 {
     "title": "Strength Block – Week 4",
     "notes": "Dont' crash the second week, you're getting stronger",
-    "edit_mode": false,
+    "edit_mode": true,
     "active_rest": "false",
     "active_rest_count": 4,
     "use_workout_history": false,
@@ -26,7 +26,7 @@
       
     ],
     "must_use": [
-      "skateboard"
+     
     ],
     "equipment": {
       "bench": {

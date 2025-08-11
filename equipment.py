@@ -206,3 +206,29 @@ def get_equipment_validation_summary(requirements: dict, available_inventory: di
         "total_items_available": total_available_items,
         "utilization_by_type": utilization_by_type
     } 
+
+
+def get_base_exercise_name(name: str) -> str:
+    import re
+    return re.sub(r'\s*\((Left|Right)\)$', '', name, flags=re.IGNORECASE)
+
+
+def build_exercise_name_to_id_map() -> dict:
+    """Build a map from base exercise name to canonical ID from all equipment JSONs."""
+    gear = parse_equipment()
+    name_to_id = {}
+    for equip_name, data in gear.items():
+        for cat, lst in data["lifts"].items():
+            for ex in lst:
+                if isinstance(ex, dict):
+                    if ex.get("skip", False):
+                        continue
+                    name = get_base_exercise_name(ex["name"])
+                    ex_id = ex.get("id", -1)
+                    if name in name_to_id and name_to_id[name] != ex_id:
+                        print(f"❌ ERROR: Duplicate base name '{name}' with different IDs: {name_to_id[name]} and {ex_id}")
+                    name_to_id[name] = ex_id
+                else:
+                    name = get_base_exercise_name(ex)
+                    name_to_id[name] = -1
+    return name_to_id 
