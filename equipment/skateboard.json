@@ -2,8 +2,8 @@
     "lifts": {
       "power": [
         {
-          "name": "Skateboard v1",
-          "link": "",
+          "name": "AB roll out",
+          "link": "https://www.youtube.com/shorts/JCIr7-0La80",
           "area": "core",
           "muscles": "core",
           "equipment": {
@@ -16,8 +16,8 @@
           "id": 107
         },
         {
-            "name": "Skateboard v2",
-            "link": "",
+            "name": "Knee Tuck 2 Pike",
+            "link": "https://www.youtube.com/shorts/YEUI8d-PQM4",
             "area": "core",
             "muscles": "core",
             "equipment": {
@@ -30,10 +30,10 @@
             "id": 108
           },
           {
-            "name": "Skateboard v3",
-            "link": "",
-            "area": "core",
-            "muscles": "core",
+            "name": "Split Lunge",
+            "link": "https://www.youtube.com/shorts/1-GrS4y3Q6g",
+            "area": "lower",
+            "muscles": "core, hamstrings",
             "equipment": {
               "skateboard": {
                 "count": 1
@@ -42,6 +42,34 @@
             "skip": false,
             "unilateral": false,
             "id": 109
+          },
+          {
+            "name": "Lateral Lunge",
+            "link": "https://www.youtube.com/shorts/R5JQW8qD8k0",
+            "area": "lower",
+            "muscles": "core",
+            "equipment": {
+              "skateboard": {
+                "count": 1
+              }
+            },
+            "skip": false,
+            "unilateral": false,
+            "id": 110
+          },
+          {
+            "name": "Single Leg Hamstring Curl",
+            "link": "https://www.youtube.com/shorts/ImOe0TsVX8Q",
+            "area": "lower",
+            "muscles": "core",
+            "equipment": {
+              "skateboard": {
+                "count": 1
+              }
+            },
+            "skip": false,
+            "unilateral": false,
+            "id": 111
           }
     ]
     }
