@@ -348,20 +348,41 @@ def main():
                 else:
                     break
         for (sidx, step_idx, old_id) in locations:
-            # Find a replacement not already in the workout (by name and ID)
-            candidates = [ex for exid, ex in pool_by_id.items()
-                          if exid not in already_used and exid not in ids_to_replace and ex[2] not in all_used_names]
+            # Get the original exercise to determine its area for balance_order compliance
+            old_ex = get_exercise_by_id(old_id, pool)
+            if old_ex is None:
+                print(f'⚠️  Warning: Original exercise ID {old_id} not found, allowing any area for replacement.')
+                original_area = None
+            else:
+                original_area = old_ex[0]  # area is the first element in the tuple
+            
+            # Find a replacement not already in the workout (by name and ID) and from the same area
+            if original_area is not None:
+                candidates = [ex for exid, ex in pool_by_id.items()
+                              if exid not in already_used and exid not in ids_to_replace and ex[2] not in all_used_names and ex[0] == original_area]
+                print(f'   🎯 Looking for {original_area} replacement for exercise ID {old_id}...')
+            else:
+                candidates = [ex for exid, ex in pool_by_id.items()
+                              if exid not in already_used and exid not in ids_to_replace and ex[2] not in all_used_names]
+                print(f'   🎯 Looking for any area replacement for exercise ID {old_id}...')
+            
             if not candidates:
-                print(f'❌ Error: No available replacement for exercise ID {old_id}.')
+                if original_area is not None:
+                    print(f'❌ Error: No available {original_area} replacement for exercise ID {old_id}.')
+                    print(f'   💡 Try expanding your {original_area} exercise database or reducing edit scope.')
+                else:
+                    print(f'❌ Error: No available replacement for exercise ID {old_id}.')
                 sys.exit(1)
             new_ex = random.choice(candidates)
             new_id = new_ex[-1]
             new_name = new_ex[2]
+            new_area = new_ex[0]
             replacement_map[old_id] = new_id
             # Update the station's used_exercise_ids
             current_stations[sidx]['used_exercise_ids'][step_idx] = new_id
             already_used.add(new_id)
             all_used_names.add(new_name)
+            print(f'   ✅ Replaced {old_id} → {new_id} ({new_name}) [area: {new_area}]')
         # 5. Log the mapping
         print(f'🔄 Replacement summary (using new seed {new_seed}):')
         for old_id, new_id in replacement_map.items():

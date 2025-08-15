@@ -18,6 +18,13 @@
       "lower",
       "core"
     ],
+    "balance_order": [
+      "lower",
+      "core",
+      "lower",
+      "core",
+      "lower"
+    ],
     "must_use_old": [
       "plyo_box",
       "barbells", 
@@ -26,7 +33,8 @@
       
     ],
     "must_use": [
-     
+     "plyo_box",
+     "skateboard"
     ],
     "equipment": {
       "bench": {

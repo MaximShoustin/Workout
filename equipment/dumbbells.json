@@ -226,7 +226,7 @@
         "equipment": {},
         "area": "lower",
         "muscles": "calves",
-        "skip": false,
+        "skip": true,
         "unilateral": false,
         "id": 101
       },
