@@ -40,7 +40,7 @@
               }
             },
             "skip": false,
-            "unilateral": false,
+            "unilateral": true,
             "id": 109
           },
           {
@@ -54,12 +54,12 @@
               }
             },
             "skip": false,
-            "unilateral": false,
+            "unilateral": true,
             "id": 110
           },
           {
             "name": "Single Leg Hamstring Curl",
-            "link": "https://www.youtube.com/shorts/ImOe0TsVX8Q",
+            "link": "https://www.youtube.com/shorts/DRceLY_h_gY",
             "area": "lower",
             "muscles": "core",
             "equipment": {

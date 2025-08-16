@@ -93,23 +93,7 @@
       }
     ],
     "squat_lunge": [
-      {
-        "name": "Goblet squat",
-        "link": "https://www.youtube.com/shorts/PP4XRTIIyRI",
-        "area": "lower",
-        "muscles": "quadriceps, glutes, core",
-        "equipment": {
-          "kettlebells_6kg": {
-            "count": 1
-          },
-          "kettlebells_16kg": {
-            "count": 1
-          }
-        },
-        "skip": false,
-        "unilateral": false,
-        "id": 39
-      },
+      
       {
         "name": "Double-KB front squat",
         "link": "https://www.youtube.com/shorts/8Wc7Y179inM",
@@ -212,20 +196,6 @@
         "skip": false,
         "unilateral": true,
         "id": 46
-      },
-      {
-        "name": "Renegade row",
-        "link": "https://www.youtube.com/shorts/cbQFdA0GG4g",
-        "area": "core",
-        "muscles": "core, latissimus dorsi, shoulders",
-        "equipment": {
-          "kettlebells_6kg": {
-            "count": 2
-          }
-        },
-        "skip": false,
-        "unilateral": false,
-        "id": 47
       }
     ],
     "core_carry": [
@@ -254,9 +224,6 @@
         "equipment": {
           "kettlebells_6kg": {
             "count": 1
-          },
-          "kettlebells_16kg": {
-            "count": 1
           }
         },
         "skip": false,
@@ -277,7 +244,7 @@
           }
         },
         "skip": false,
-        "unilateral": false,
+        "unilateral": true,
         "id": 50
       },
       {
@@ -434,7 +401,7 @@
           }
         },
         "skip": false,
-        "unilateral": false,
+        "unilateral": true,
         "id": 60
       },
       {

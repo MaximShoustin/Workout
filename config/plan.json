@@ -1,5 +1,5 @@
 {
-    "title": "Strength Block – Week 4",
+    "title": "Strength Block – Week 5",
     "notes": "Dont' crash the second week, you're getting stronger",
     "edit_mode": true,
     "active_rest": "false",
@@ -7,7 +7,7 @@
     "use_workout_history": false,
     "steps_per_station": 4,
     "stations": 5,               
-    "people": 10,
+    "people": 5,
     "rounds": 1,                 
     "timing": {                  
       "work": 40,
@@ -19,7 +19,7 @@
       "core"
     ],
     "balance_order": [
-      "lower",
+      "upper",
       "core",
       "lower",
       "core",

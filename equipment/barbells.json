@@ -30,22 +30,7 @@
         "id": 1
       }
     ],
-    "upper_pull": [
-      {
-        "name": "Bent-over row",
-        "link": "https://www.youtube.com/shorts/HROup6N-olM",
-        "area": "upper",
-        "muscles": "latissimus dorsi, rhomboids, biceps",
-        "equipment": {
-          "barbells": {
-            "count": 1
-          }
-        },
-        "skip": false,
-        "unilateral": false,
-        "id": 2
-      }
-    ],
+    
     "upper_push": [
       {
         "name": "Strict overhead press",

@@ -211,38 +211,72 @@ def reconstruct_stations_from_ids(stations_ids, pool, steps_per_station):
             'area': '',
             'equipment': '',
         }
-        for step_num, ex_id in enumerate(ids):
+        # First pass: detect unilateral exercises (consecutive identical IDs)
+        processed_steps = []
+        i = 0
+        while i < len(ids):
+            ex_id = ids[i]
             ex = get_exercise_by_id(ex_id, pool)
             if ex is None:
                 print(f'⚠️  Warning: Exercise ID {ex_id} not found in equipment database. Using random exercise.')
                 ex = random.choice(pool)
+            
             area, equip, name, link, equipment, muscles, unilateral, _ = ex
             base_name = get_base_exercise_name(name)
             canonical_id = base_name_to_id.get(base_name, ex_id)
             canonical_name = id_to_name.get(canonical_id, name)
-            # Enforce: never allow two different IDs for the same name, or the same ID for different names
-            if canonical_name in used_names or canonical_id in used_ids:
-                # Find a unique candidate
-                for alt_ex in pool:
-                    alt_base = get_base_exercise_name(alt_ex[2])
-                    alt_id = alt_ex[-1]
-                    alt_name = alt_ex[2]
-                    if alt_name not in used_names and alt_id not in used_ids:
-                        area, equip, name, link, equipment, muscles, unilateral, _ = alt_ex
-                        base_name = get_base_exercise_name(name)
-                        canonical_id = alt_id
-                        canonical_name = alt_name
-                        break
+            
+            # Check if this is a unilateral exercise (next ID is the same)
+            is_unilateral_pair = (i + 1 < len(ids) and ids[i + 1] == ex_id)
+            
+            if is_unilateral_pair:
+                # Add both Left and Right steps
+                processed_steps.append({
+                    'name': f"{canonical_name} (Left)",
+                    'link': link,
+                    'equipment': equipment,
+                    'muscles': muscles,
+                    'id': canonical_id,
+                    'area': area,
+                    'equip': equip
+                })
+                processed_steps.append({
+                    'name': f"{canonical_name} (Right)",
+                    'link': link,
+                    'equipment': equipment,
+                    'muscles': muscles,
+                    'id': canonical_id,
+                    'area': area,
+                    'equip': equip
+                })
+                i += 2  # Skip the next identical ID
+            else:
+                # Regular non-unilateral exercise
+                processed_steps.append({
+                    'name': canonical_name,
+                    'link': link,
+                    'equipment': equipment,
+                    'muscles': muscles,
+                    'id': canonical_id,
+                    'area': area,
+                    'equip': equip
+                })
+                i += 1
+        
+        # Second pass: build station data from processed steps
+        for step_num, step_data in enumerate(processed_steps):
             if step_num == 0:
-                station_data['area'] = area
-                station_data['equipment'] = equip
-            station_data[f'step{step_num+1}'] = canonical_name
-            station_data[f'step{step_num+1}_link'] = link
-            station_data[f'step{step_num+1}_equipment'] = equipment
-            station_data[f'step{step_num+1}_muscles'] = muscles
-            station_data[f'step{step_num+1}_id'] = canonical_id
-            used_names.add(canonical_name)
-            used_ids.add(canonical_id)
+                station_data['area'] = step_data['area']
+                station_data['equipment'] = step_data['equip']
+            
+            station_data[f'step{step_num+1}'] = step_data['name']
+            station_data[f'step{step_num+1}_link'] = step_data['link']
+            station_data[f'step{step_num+1}_equipment'] = step_data['equipment']
+            station_data[f'step{step_num+1}_muscles'] = step_data['muscles']
+            station_data[f'step{step_num+1}_id'] = step_data['id']
+            
+            used_names.add(step_data['name'])
+            used_ids.add(step_data['id'])
         stations.append(station_data)
     return stations
 
@@ -312,13 +346,16 @@ def main():
         pool = build_station_pool(gear, plan_equipment if plan_equipment else None)
         # Map: exercise_id -> pool tuple
         pool_by_id = {ex[-1]: ex for ex in pool if ex[-1] != -1}
-        # 3. Find all locations (station, step) for each ID to replace
-        locations = []  # (station_idx, step_idx, old_id)
+        # 3. Group locations by exercise ID to handle unilateral exercises properly
+        locations_by_id = {}  # {exercise_id: [(station_idx, step_idx), ...]}
         for sidx, st in enumerate(current_stations):
             for step_idx, eid in enumerate(st['used_exercise_ids']):
                 if eid in ids_to_replace:
-                    locations.append((sidx, step_idx, eid))
-        # 4. For each ID to replace, pick a new valid exercise
+                    if eid not in locations_by_id:
+                        locations_by_id[eid] = []
+                    locations_by_id[eid].append((sidx, step_idx))
+        
+        # 4. For each unique ID to replace, handle unilateral vs non-unilateral logic
         import secrets
         new_seed = secrets.randbits(32)  # Generate a new seed for replacement randomness
         random.seed(new_seed)            # Reseed RNG for replacement selection
@@ -329,7 +366,7 @@ def main():
                 if eid not in ids_to_replace:
                     keep_ids.add(eid)
         already_used = keep_ids.copy()
-        # In replacement logic, only allow a replacement if the new exercise name is not already present in the workout, and never assign the same ID to two different names
+        
         # Set stations_to_use depending on workflow
         if edit_ids is not None:
             rebuilt_stations = reconstruct_stations_from_ids(current_stations, pool, plan.get('steps_per_station', 2))
@@ -347,42 +384,142 @@ def main():
                     step_num += 1
                 else:
                     break
-        for (sidx, step_idx, old_id) in locations:
-            # Get the original exercise to determine its area for balance_order compliance
+        
+        for old_id, positions in locations_by_id.items():
+            # Get the original exercise to determine its properties
             old_ex = get_exercise_by_id(old_id, pool)
             if old_ex is None:
                 print(f'⚠️  Warning: Original exercise ID {old_id} not found, allowing any area for replacement.')
                 original_area = None
+                original_unilateral = False
             else:
-                original_area = old_ex[0]  # area is the first element in the tuple
+                original_unilateral = old_ex[6]  # unilateral is the 7th element (index 6)
             
-            # Find a replacement not already in the workout (by name and ID) and from the same area
-            if original_area is not None:
-                candidates = [ex for exid, ex in pool_by_id.items()
-                              if exid not in already_used and exid not in ids_to_replace and ex[2] not in all_used_names and ex[0] == original_area]
-                print(f'   🎯 Looking for {original_area} replacement for exercise ID {old_id}...')
+            # Determine the intended area from balance_order based on station position
+            # Use the first position to determine which station this exercise belongs to
+            first_position = positions[0]
+            station_idx = first_position[0]  # station index
+            
+            balance_order = plan.get('balance_order', ['upper', 'lower', 'core'])
+            if station_idx < len(balance_order):
+                intended_area = balance_order[station_idx]
+                print(f'   🎯 Station {station_idx + 1} should be "{intended_area}" according to balance_order')
             else:
-                candidates = [ex for exid, ex in pool_by_id.items()
-                              if exid not in already_used and exid not in ids_to_replace and ex[2] not in all_used_names]
-                print(f'   🎯 Looking for any area replacement for exercise ID {old_id}...')
+                # Fallback: cycle through balance_order if more stations than balance_order entries
+                intended_area = balance_order[station_idx % len(balance_order)]
+                print(f'   🎯 Station {station_idx + 1} should be "{intended_area}" (cycling balance_order)')
             
-            if not candidates:
-                if original_area is not None:
-                    print(f'❌ Error: No available {original_area} replacement for exercise ID {old_id}.')
-                    print(f'   💡 Try expanding your {original_area} exercise database or reducing edit scope.')
+            original_area = intended_area  # Use intended area from balance_order, not exercise's area
+            
+            num_positions = len(positions)
+            print(f'🔄 Processing exercise ID {old_id} ({"unilateral" if original_unilateral else "bilateral"}) - {num_positions} position(s)')
+            
+            if original_unilateral and num_positions == 2:
+                # Case 1: Replacing unilateral exercise (2 positions: Left + Right)
+                print(f'   🎯 Replacing unilateral exercise with 2 positions...')
+                
+                # Try to find a unilateral replacement first
+                unilateral_candidates = [ex for exid, ex in pool_by_id.items()
+                                       if exid not in already_used and exid not in ids_to_replace 
+                                       and ex[2] not in all_used_names and ex[6] == True  # unilateral
+                                       and (original_area is None or ex[0] == original_area)]
+                
+                if unilateral_candidates:
+                    # Option A: Replace with 1 unilateral exercise (fills both positions)
+                    new_ex = random.choice(unilateral_candidates)
+                    new_id = new_ex[-1]
+                    new_name = new_ex[2]
+                    new_area = new_ex[0]
+                    
+                    replacement_map[old_id] = new_id
+                    for sidx, step_idx in positions:
+                        current_stations[sidx]['used_exercise_ids'][step_idx] = new_id
+                    already_used.add(new_id)
+                    all_used_names.add(new_name)
+                    print(f'   ✅ Replaced with unilateral: {old_id} → {new_id} ({new_name}) [area: {new_area}]')
                 else:
+                    # Option B: Replace with 2 different non-unilateral exercises
+                    print(f'   🎯 No unilateral candidates available, using 2 bilateral exercises...')
+                    bilateral_candidates = [ex for exid, ex in pool_by_id.items()
+                                          if exid not in already_used and exid not in ids_to_replace 
+                                          and ex[2] not in all_used_names and ex[6] == False  # non-unilateral
+                                          and (original_area is None or ex[0] == original_area)]
+                    
+                    if len(bilateral_candidates) < 2:
+                        print(f'❌ Error: Need at least 2 bilateral {original_area or "any area"} exercises to replace unilateral exercise ID {old_id}.')
+                        print(f'   💡 Try expanding your {original_area or "any area"} exercise database or reducing edit scope.')
+                        sys.exit(1)
+                    
+                    # Pick 2 different exercises
+                    selected_exercises = random.sample(bilateral_candidates, 2)
+                    replacement_ids = []
+                    
+                    for i, (sidx, step_idx) in enumerate(positions):
+                        new_ex = selected_exercises[i]
+                        new_id = new_ex[-1]
+                        new_name = new_ex[2]
+                        new_area = new_ex[0]
+                        
+                        current_stations[sidx]['used_exercise_ids'][step_idx] = new_id
+                        already_used.add(new_id)
+                        all_used_names.add(new_name)
+                        replacement_ids.append(new_id)
+                        print(f'   ✅ Position {i+1}: {old_id} → {new_id} ({new_name}) [area: {new_area}]')
+                    
+                    replacement_map[old_id] = replacement_ids  # Store list for unilateral->bilateral conversion
+            
+            elif not original_unilateral and num_positions == 1:
+                # Case 2: Replacing non-unilateral exercise (1 position)
+                print(f'   🎯 Replacing bilateral exercise with 1 position...')
+                sidx, step_idx = positions[0]
+                
+                # Only allow non-unilateral replacements (1-to-1)
+                bilateral_candidates = [ex for exid, ex in pool_by_id.items()
+                                      if exid not in already_used and exid not in ids_to_replace 
+                                      and ex[2] not in all_used_names and ex[6] == False  # non-unilateral
+                                      and (original_area is None or ex[0] == original_area)]
+                
+                if not bilateral_candidates:
+                    print(f'❌ Error: No available bilateral {original_area or "any area"} replacement for exercise ID {old_id}.')
+                    print(f'   💡 Try expanding your {original_area or "any area"} exercise database or reducing edit scope.')
+                    sys.exit(1)
+                
+                new_ex = random.choice(bilateral_candidates)
+                new_id = new_ex[-1]
+                new_name = new_ex[2]
+                new_area = new_ex[0]
+                
+                replacement_map[old_id] = new_id
+                current_stations[sidx]['used_exercise_ids'][step_idx] = new_id
+                already_used.add(new_id)
+                all_used_names.add(new_name)
+                print(f'   ✅ Replaced bilateral: {old_id} → {new_id} ({new_name}) [area: {new_area}]')
+            
+            else:
+                # Unexpected case - this shouldn't happen with proper expansion logic
+                print(f'⚠️  Warning: Unexpected case for exercise ID {old_id}: unilateral={original_unilateral}, positions={num_positions}')
+                print(f'   Falling back to simple replacement...')
+                
+                # Fallback to original simple logic
+                candidates = [ex for exid, ex in pool_by_id.items()
+                              if exid not in already_used and exid not in ids_to_replace and ex[2] not in all_used_names
+                              and (original_area is None or ex[0] == original_area)]
+                
+                if not candidates:
                     print(f'❌ Error: No available replacement for exercise ID {old_id}.')
-                sys.exit(1)
-            new_ex = random.choice(candidates)
-            new_id = new_ex[-1]
-            new_name = new_ex[2]
-            new_area = new_ex[0]
-            replacement_map[old_id] = new_id
-            # Update the station's used_exercise_ids
-            current_stations[sidx]['used_exercise_ids'][step_idx] = new_id
-            already_used.add(new_id)
-            all_used_names.add(new_name)
-            print(f'   ✅ Replaced {old_id} → {new_id} ({new_name}) [area: {new_area}]')
+                    sys.exit(1)
+                
+                new_ex = random.choice(candidates)
+                new_id = new_ex[-1]
+                new_name = new_ex[2]
+                new_area = new_ex[0]
+                
+                replacement_map[old_id] = new_id
+                for sidx, step_idx in positions:
+                    current_stations[sidx]['used_exercise_ids'][step_idx] = new_id
+                already_used.add(new_id)
+                all_used_names.add(new_name)
+                print(f'   ✅ Fallback replacement: {old_id} → {new_id} ({new_name}) [area: {new_area}]')
         # 5. Log the mapping
         print(f'🔄 Replacement summary (using new seed {new_seed}):')
         for old_id, new_id in replacement_map.items():

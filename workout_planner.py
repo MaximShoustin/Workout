@@ -51,8 +51,9 @@ def get_station_equipment_requirements(step_equipments: list, people_per_station
         
         if people_per_station > 1:
             # Multiple people per station: all steps happen simultaneously
-            # Need equipment for all exercises at the same time
-            required_count = sum(step_counts)
+            # Need equipment for the most demanding step × number of people
+            max_step_count = max(step_counts) if step_counts else 0
+            required_count = max_step_count * people_per_station
         else:
             # Single person per station: all steps are sequential
             # Need the maximum of all exercises
@@ -447,6 +448,9 @@ def find_compatible_exercises_for_station(station_pool: List[Tuple[str, str, str
     if len(available_exercises) < steps_per_station:
         return []  # Not enough exercises available
     
+    # Cache equipment calculations to avoid redundant work
+    equipment_cache = {}
+    
     # Helper function to check if exercise uses must-use equipment
     def uses_must_use_equipment(exercise_tuple):
         if not must_use_equipment:
@@ -475,11 +479,17 @@ def find_compatible_exercises_for_station(station_pool: List[Tuple[str, str, str
     # Try to find N compatible exercises, prioritizing target area
     def try_combination(exercises_to_try, selected_exercises, remaining_steps):
         if remaining_steps <= 0:
-            # Check if all selected exercises can work together
+            # Check if all selected exercises can work together (use cache)
             step_equipments = []
             for exercise in selected_exercises:
-                _, _, _, _, equipment, _, unilateral, _ = exercise
-                selected_equipment = select_best_equipment_option(equipment, available_inventory)
+                exercise_id = exercise[-1]
+                if exercise_id not in equipment_cache:
+                    _, _, _, _, equipment, _, unilateral, _ = exercise
+                    equipment_cache[exercise_id] = select_best_equipment_option(equipment, available_inventory)
+                
+                selected_equipment = equipment_cache[exercise_id]
+                _, _, _, _, _, _, unilateral, _ = exercise
+                
                 # For unilateral exercises, add equipment requirements twice (left + right)
                 if unilateral:
                     step_equipments.append(selected_equipment)
@@ -509,8 +519,9 @@ def find_compatible_exercises_for_station(station_pool: List[Tuple[str, str, str
         # Try target area exercises first, then others as fallback
         ordered_exercises = target_area_exercises + other_area_exercises
         
-        # Try each exercise in priority order
-        for i, exercise in enumerate(ordered_exercises):
+        # Try each exercise in priority order (limit search to avoid exponential explosion)
+        max_attempts = min(20, len(ordered_exercises))  # Limit search for performance
+        for i, exercise in enumerate(ordered_exercises[:max_attempts]):
             area, equip, name, link, equipment, muscles, unilateral, exercise_id = exercise
             
             # Avoid duplicates within the station
