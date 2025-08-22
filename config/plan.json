@@ -22,7 +22,7 @@
       "upper",
       "core",
       "lower",
-      "core",
+      "upper",
       "lower"
     ],
     "must_use_old": [

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Strength Block – Week 4</title>
+    <title>Strength Block – Week 6</title>
     
     <style>
         body { 
@@ -167,6 +167,76 @@
         }
         .close-video:hover {
             background: #c0392b;
+        }
+        
+        /* Picture button and popup styles */
+        .picture-button {
+            margin-left: 8px;
+            background: #2ecc71;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            width: 24px;
+            height: 24px;
+            font-size: 14px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            vertical-align: middle;
+        }
+        .picture-button:hover {
+            background: #27ae60;
+        }
+        .picture-popup {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 100%;
+            margin-left: 20px;
+            max-width: 400px;
+            max-height: 500px;
+            background: white;
+            border: 2px solid #2ecc71;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            z-index: 1000;
+            overflow: hidden;
+        }
+        .picture-popup img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .close-picture {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        .close-picture:hover {
+            background: #c0392b;
+        }
+        
+        /* Fix picture positioning in Global Active Rest section */
+        .active-rest-section .picture-popup {
+            position: fixed !important;
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%) !important;
+            margin: 0 !important;
+            z-index: 10000 !important;
         }
         .rest-activity {
             font-style: italic;
@@ -721,6 +791,17 @@
                 max-height: 400px !important;
                 z-index: 9999 !important;
             }
+            .picture-popup {
+                position: fixed !important;
+                top: 50% !important;
+                left: 50% !important;
+                transform: translate(-50%, -50%) !important;
+                margin: 0 !important;
+                width: 90vw !important;
+                max-width: 350px !important;
+                max-height: 70vh !important;
+                z-index: 9999 !important;
+            }
             .exercise-with-video {
                 position: static !important;
             }
@@ -751,8 +832,8 @@
 </head>
 <body>
     <div class="container">
-        <h1>Strength Block – Week 4</h1>
-        <div class="subtitle">Generated on 2025-08-16 16:11:29</div>
+        <h1>Strength Block – Week 5</h1>
+        <div class="subtitle">Generated on 2025-08-22 18:02:59</div>
         
         <div class="notes">Dont' crash the second week, you're getting stronger</div>
         
@@ -770,66 +851,90 @@
                 <tr>
                     <td data-label="Station">
                         <span class="station-letter">A</span><br>
-                        <span class="area-badge lower">lower</span>
+                        <span class="area-badge upper">upper</span>
                     </td>
                      <td data-label="Step 1" class="exercise">
                          <span class="mobile-step-label">Step 1:</span>
                          <div class="exercise-cell-wrapper">
                              <span class="exercise-with-video">
-            <span class="exercise-name" onclick="toggleVideo('single_leg_hamstring_curl')">Single Leg Hamstring Curl</span>
-            <div id="video_single_leg_hamstring_curl" class="video-popup">
-                <iframe src="https://www.youtube.com/embed/DRceLY_h_gY?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
-                <button class="close-video" onclick="toggleVideo('single_leg_hamstring_curl')">&times;</button>
+            <span class="exercise-name" onclick="toggleVideo('box_dip')">Box dip</span>
+            <div id="video_box_dip" class="video-popup">
+                <iframe src="https://www.youtube.com/embed/qi7ZkE2vOyk?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
+                <button class="close-video" onclick="toggleVideo('box_dip')">&times;</button>
             </div>
-        </span>
-                             <span class="exercise-id-badge">111</span>
+            <button class="picture-button" onclick="togglePicture('box_dip')" title="View exercise image">
+                👁
+            </button>
+            <div id="picture_box_dip" class="picture-popup">
+                <img src="config/pictures/84.png" alt="Box dip" />
+                <button class="close-picture" onclick="togglePicture('box_dip')">&times;</button>
+            </div></span>
+                             <span class="exercise-id-badge">84</span>
                          </div>
-                         <div class="muscle-tags"><span class="muscle-tag muscle-core">Core</span></div>
-                         <div class="equipment-tags"><span class="equipment-tag tag-default"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCA0OCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ic2thdGVib2FyZF9ncmFkIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6I2U4ZThlODtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSI1MCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM0NDQ0NDQ7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzIyMjtzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIDwhLS0gRGVjayAtLT4KICA8cmVjdCB4PSI0IiB5PSI4IiB3aWR0aD0iNDAiIGhlaWdodD0iOCIgcng9IjQiIGZpbGw9InVybCgjc2thdGVib2FyZF9ncmFkKSIgc3Ryb2tlPSIjMjIyIiBzdHJva2Utd2lkdGg9IjEuMiIvPgogIDwhLS0gV2hlZWxzIC0tPgogIDxlbGxpcHNlIGN4PSIxMCIgY3k9IjIwIiByeD0iMyIgcnk9IjMiIGZpbGw9IiM4ODgiIHN0cm9rZT0iIzQ0NCIgc3Ryb2tlLXdpZHRoPSIwLjciLz4KICA8ZWxsaXBzZSBjeD0iMzgiIGN5PSIyMCIgcng9IjMiIHJ5PSIzIiBmaWxsPSIjODg4IiBzdHJva2U9IiM0NDQiIHN0cm9rZS13aWR0aD0iMC43Ii8+CiAgPGVsbGlwc2UgY3g9IjEwIiBjeT0iNCIgcng9IjMiIHJ5PSIzIiBmaWxsPSIjODg4IiBzdHJva2U9IiM0NDQiIHN0cm9rZS13aWR0aD0iMC43Ii8+CiAgPGVsbGlwc2UgY3g9IjM4IiBjeT0iNCIgcng9IjMiIHJ5PSIzIiBmaWxsPSIjODg4IiBzdHJva2U9IiM0NDQiIHN0cm9rZS13aWR0aD0iMC43Ii8+Cjwvc3ZnPg==" alt="skateboard" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;"> skateboard</span></div>
+                         <div class="muscle-tags"><span class="muscle-tag muscle-triceps">Triceps</span><span class="muscle-tag muscle-chest">Chest</span><span class="muscle-tag muscle-shoulders">Shoulders</span></div>
+                         <div class="equipment-tags"><span class="equipment-tag tag-plyo"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYm94VG9wR3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNEMkI0OEM7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdHlsZT0ic3RvcC1jb2xvcjojQ0Q4NTNGO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNBMDUyMkQ7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJib3hTaWRlR3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNBMDUyMkQ7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdHlsZT0ic3RvcC1jb2xvcjojOEI0NTEzO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM2NTQzMjE7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJib3hSaWdodEdyYWQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojOEI0NTEzO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3R5bGU9InN0b3AtY29sb3I6IzY1NDMyMTtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNEEyQzE3O3N0b3Atb3BhY2l0eToxIiAvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgCiAgPCEtLSBCb3ggZnJvbnQgZmFjZSAtLT4KICA8cG9seWdvbiBwb2ludHM9IjMsMTAgMywyMCAxNSwyMCAxNSwxMCIgCiAgICAgICAgICAgZmlsbD0idXJsKCNib3hTaWRlR3JhZCkiIAogICAgICAgICAgIHN0cm9rZT0iIzNBMUYwQiIgCiAgICAgICAgICAgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIEJveCB0b3AgZmFjZSAtLT4KICA8cG9seWdvbiBwb2ludHM9IjMsMTAgNiw3IDE4LDcgMTUsMTAiIAogICAgICAgICAgIGZpbGw9InVybCgjYm94VG9wR3JhZCkiIAogICAgICAgICAgIHN0cm9rZT0iIzhCNDUxMyIgCiAgICAgICAgICAgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIEJveCByaWdodCBmYWNlIC0tPgogIDxwb2x5Z29uIHBvaW50cz0iMTUsMTAgMTgsNyAxOCwxNyAxNSwyMCIgCiAgICAgICAgICAgZmlsbD0idXJsKCNib3hSaWdodEdyYWQpIiAKICAgICAgICAgICBzdHJva2U9IiMzQTFGMEIiIAogICAgICAgICAgIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgCiAgPCEtLSBXb29kIGdyYWluIGxpbmVzIG9uIGZyb250IC0tPgogIDxnIG9wYWNpdHk9IjAuMyIgc3Ryb2tlPSIjNEEyQzE3IiBzdHJva2Utd2lkdGg9IjAuMiI+CiAgICA8bGluZSB4MT0iNCIgeTE9IjEyIiB4Mj0iMTQiIHkyPSIxMiIvPgogICAgPGxpbmUgeDE9IjQiIHkxPSIxNSIgeDI9IjE0IiB5Mj0iMTUiLz4KICAgIDxsaW5lIHgxPSI0IiB5MT0iMTgiIHgyPSIxNCIgeTI9IjE4Ii8+CiAgPC9nPgogIAogIDwhLS0gV29vZCBncmFpbiBsaW5lcyBvbiB0b3AgLS0+CiAgPGcgb3BhY2l0eT0iMC4zIiBzdHJva2U9IiM4QjQ1MTMiIHN0cm9rZS13aWR0aD0iMC4yIj4KICAgIDxsaW5lIHgxPSI1IiB5MT0iOC41IiB4Mj0iMTYiIHkyPSI4LjUiLz4KICA8L2c+CiAgCiAgPCEtLSBDb3JuZXIgZGV0YWlscyAtLT4KICA8Y2lyY2xlIGN4PSIzIiBjeT0iMTAiIHI9IjAuMyIgZmlsbD0iIzY1NDMyMSIvPgogIDxjaXJjbGUgY3g9IjE1IiBjeT0iMTAiIHI9IjAuMyIgZmlsbD0iIzY1NDMyMSIvPgogIDxjaXJjbGUgY3g9IjMiIGN5PSIyMCIgcj0iMC4zIiBmaWxsPSIjNEEyQzE3Ii8+CiAgPGNpcmNsZSBjeD0iMTUiIGN5PSIyMCIgcj0iMC4zIiBmaWxsPSIjNEEyQzE3Ii8+CiAgCiAgPCEtLSBIZWlnaHQgbWFya2luZyAtLT4KICA8dGV4dCB4PSI5IiB5PSIxNiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjQiIGZpbGw9IiM2NTQzMjEiIGZvbnQtd2VpZ2h0PSJib2xkIj5CT1g8L3RleHQ+Cjwvc3ZnPgo=" alt="plyo_box" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;"> plyo box</span></div>
                      </td>
                      <td data-label="Step 2" class="exercise">
                          <span class="mobile-step-label">Step 2:</span>
                          <div class="exercise-cell-wrapper">
                              <span class="exercise-with-video">
-            <span class="exercise-name" onclick="toggleVideo('push_press_(left)')">Push-press (Left)</span>
-            <div id="video_push_press_(left)" class="video-popup">
-                <iframe src="https://www.youtube.com/embed/iO6JMIW1lYQ?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
-                <button class="close-video" onclick="toggleVideo('push_press_(left)')">&times;</button>
+            <span class="exercise-name" onclick="toggleVideo('overhead_triceps_extension_(standing_or_kneeling)')">Overhead Triceps Extension (standing or kneeling)</span>
+            <div id="video_overhead_triceps_extension_(standing_or_kneeling)" class="video-popup">
+                <iframe src="https://www.youtube.com/embed/2g6IrtUqXRg?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
+                <button class="close-video" onclick="toggleVideo('overhead_triceps_extension_(standing_or_kneeling)')">&times;</button>
             </div>
-        </span>
-                             <span class="exercise-id-badge">44</span>
+            <button class="picture-button" onclick="togglePicture('overhead_triceps_extension_(standing_or_kneeling)')" title="View exercise image">
+                👁
+            </button>
+            <div id="picture_overhead_triceps_extension_(standing_or_kneeling)" class="picture-popup">
+                <img src="config/pictures/62.png" alt="Overhead Triceps Extension (standing or kneeling)" />
+                <button class="close-picture" onclick="togglePicture('overhead_triceps_extension_(standing_or_kneeling)')">&times;</button>
+            </div></span>
+                             <span class="exercise-id-badge">62</span>
                          </div>
-                         <div class="muscle-tags"><span class="muscle-tag muscle-shoulders">Shoulders</span><span class="muscle-tag muscle-triceps">Triceps</span><span class="muscle-tag muscle-legs">Quadriceps</span><span class="muscle-tag muscle-core">Core</span></div>
-                         <div class="equipment-tags"><span class="equipment-tag tag-kettlebells"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ia2V0dGxlYmVsbEdyYWQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNjA2MDYwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3R5bGU9InN0b3AtY29sb3I6IzQwNDA0MDtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMjAyMDIwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iaGFuZGxlR3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM5MDkwOTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNzA3MDcwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM1MDUwNTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICAKICA8IS0tIEhhbmRsZSBhcmMgLS0+CiAgPHBhdGggZD0iTSA4IDggUSAxMiA0IDE2IDgiIHN0cm9rZT0idXJsKCNoYW5kbGVHcmFkKSIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICAKICA8IS0tIEhhbmRsZSBjb25uZWN0aW9uIHBvaW50cyAtLT4KICA8Y2lyY2xlIGN4PSI4IiBjeT0iOCIgcj0iMS41IiBmaWxsPSJ1cmwoI2hhbmRsZUdyYWQpIiBzdHJva2U9IiM0MDQwNDAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGNpcmNsZSBjeD0iMTYiIGN5PSI4IiByPSIxLjUiIGZpbGw9InVybCgjaGFuZGxlR3JhZCkiIHN0cm9rZT0iIzQwNDA0MCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIE1haW4gYmVsbCBib2R5IC0tPgogIDxlbGxpcHNlIGN4PSIxMiIgY3k9IjE2IiByeD0iNiIgcnk9IjUiIGZpbGw9InVybCgja2V0dGxlYmVsbEdyYWQpIiBzdHJva2U9IiMzMDMwMzAiIHN0cm9rZS13aWR0aD0iMC41Ii8+CiAgCiAgPCEtLSBUb3AgY29ubmVjdGlvbiAtLT4KICA8cmVjdCB4PSIxMC41IiB5PSI5IiB3aWR0aD0iMyIgaGVpZ2h0PSI3IiByeD0iMSIgZmlsbD0idXJsKCNrZXR0bGViZWxsR3JhZCkiIHN0cm9rZT0iIzMwMzAzMCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIEJvdHRvbSBoaWdobGlnaHQgLS0+CiAgPGVsbGlwc2UgY3g9IjEyIiBjeT0iMTgiIHJ4PSIzIiByeT0iMS41IiBmaWxsPSIjNTA1MDUwIiBvcGFjaXR5PSIwLjYiLz4KICAKICA8IS0tIFdlaWdodCBpbmRpY2F0b3IgLS0+CiAgPHRleHQgeD0iMTIiIHk9IjE3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iNiIgZmlsbD0iI2EwYTBhMCIgZm9udC13ZWlnaHQ9ImJvbGQiPktCPC90ZXh0Pgo8L3N2Zz4K" alt="kettlebell" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;"> kettlebell 6 kg</span></div>
+                         <div class="muscle-tags"><span class="muscle-tag muscle-triceps">Triceps</span><span class="muscle-tag muscle-shoulders">Shoulders</span></div>
+                         <div class="equipment-tags"><span class="equipment-tag tag-kettlebells"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ia2V0dGxlYmVsbEdyYWQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNjA2MDYwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3R5bGU9InN0b3AtY29sb3I6IzQwNDA0MDtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMjAyMDIwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iaGFuZGxlR3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM5MDkwOTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNzA3MDcwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM1MDUwNTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICAKICA8IS0tIEhhbmRsZSBhcmMgLS0+CiAgPHBhdGggZD0iTSA4IDggUSAxMiA0IDE2IDgiIHN0cm9rZT0idXJsKCNoYW5kbGVHcmFkKSIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICAKICA8IS0tIEhhbmRsZSBjb25uZWN0aW9uIHBvaW50cyAtLT4KICA8Y2lyY2xlIGN4PSI4IiBjeT0iOCIgcj0iMS41IiBmaWxsPSJ1cmwoI2hhbmRsZUdyYWQpIiBzdHJva2U9IiM0MDQwNDAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGNpcmNsZSBjeD0iMTYiIGN5PSI4IiByPSIxLjUiIGZpbGw9InVybCgjaGFuZGxlR3JhZCkiIHN0cm9rZT0iIzQwNDA0MCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIE1haW4gYmVsbCBib2R5IC0tPgogIDxlbGxpcHNlIGN4PSIxMiIgY3k9IjE2IiByeD0iNiIgcnk9IjUiIGZpbGw9InVybCgja2V0dGxlYmVsbEdyYWQpIiBzdHJva2U9IiMzMDMwMzAiIHN0cm9rZS13aWR0aD0iMC41Ii8+CiAgCiAgPCEtLSBUb3AgY29ubmVjdGlvbiAtLT4KICA8cmVjdCB4PSIxMC41IiB5PSI5IiB3aWR0aD0iMyIgaGVpZ2h0PSI3IiByeD0iMSIgZmlsbD0idXJsKCNrZXR0bGViZWxsR3JhZCkiIHN0cm9rZT0iIzMwMzAzMCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIEJvdHRvbSBoaWdobGlnaHQgLS0+CiAgPGVsbGlwc2UgY3g9IjEyIiBjeT0iMTgiIHJ4PSIzIiByeT0iMS41IiBmaWxsPSIjNTA1MDUwIiBvcGFjaXR5PSIwLjYiLz4KICAKICA8IS0tIFdlaWdodCBpbmRpY2F0b3IgLS0+CiAgPHRleHQgeD0iMTIiIHk9IjE3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iNiIgZmlsbD0iI2EwYTBhMCIgZm9udC13ZWlnaHQ9ImJvbGQiPktCPC90ZXh0Pgo8L3N2Zz4K" alt="kettlebell" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;"> kettlebell 4 kg</span><span class="equipment-tag tag-kettlebells"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ia2V0dGxlYmVsbEdyYWQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNjA2MDYwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3R5bGU9InN0b3AtY29sb3I6IzQwNDA0MDtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMjAyMDIwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iaGFuZGxlR3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM5MDkwOTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNzA3MDcwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM1MDUwNTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICAKICA8IS0tIEhhbmRsZSBhcmMgLS0+CiAgPHBhdGggZD0iTSA4IDggUSAxMiA0IDE2IDgiIHN0cm9rZT0idXJsKCNoYW5kbGVHcmFkKSIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICAKICA8IS0tIEhhbmRsZSBjb25uZWN0aW9uIHBvaW50cyAtLT4KICA8Y2lyY2xlIGN4PSI4IiBjeT0iOCIgcj0iMS41IiBmaWxsPSJ1cmwoI2hhbmRsZUdyYWQpIiBzdHJva2U9IiM0MDQwNDAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGNpcmNsZSBjeD0iMTYiIGN5PSI4IiByPSIxLjUiIGZpbGw9InVybCgjaGFuZGxlR3JhZCkiIHN0cm9rZT0iIzQwNDA0MCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIE1haW4gYmVsbCBib2R5IC0tPgogIDxlbGxpcHNlIGN4PSIxMiIgY3k9IjE2IiByeD0iNiIgcnk9IjUiIGZpbGw9InVybCgja2V0dGxlYmVsbEdyYWQpIiBzdHJva2U9IiMzMDMwMzAiIHN0cm9rZS13aWR0aD0iMC41Ii8+CiAgCiAgPCEtLSBUb3AgY29ubmVjdGlvbiAtLT4KICA8cmVjdCB4PSIxMC41IiB5PSI5IiB3aWR0aD0iMyIgaGVpZ2h0PSI3IiByeD0iMSIgZmlsbD0idXJsKCNrZXR0bGViZWxsR3JhZCkiIHN0cm9rZT0iIzMwMzAzMCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIEJvdHRvbSBoaWdobGlnaHQgLS0+CiAgPGVsbGlwc2UgY3g9IjEyIiBjeT0iMTgiIHJ4PSIzIiByeT0iMS41IiBmaWxsPSIjNTA1MDUwIiBvcGFjaXR5PSIwLjYiLz4KICAKICA8IS0tIFdlaWdodCBpbmRpY2F0b3IgLS0+CiAgPHRleHQgeD0iMTIiIHk9IjE3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iNiIgZmlsbD0iI2EwYTBhMCIgZm9udC13ZWlnaHQ9ImJvbGQiPktCPC90ZXh0Pgo8L3N2Zz4K" alt="kettlebell" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;"> kettlebell 6 kg</span></div>
                      </td>
                      <td data-label="Step 3" class="exercise">
                          <span class="mobile-step-label">Step 3:</span>
                          <div class="exercise-cell-wrapper">
                              <span class="exercise-with-video">
-            <span class="exercise-name" onclick="toggleVideo('push_press_(right)')">Push-press (Right)</span>
-            <div id="video_push_press_(right)" class="video-popup">
-                <iframe src="https://www.youtube.com/embed/iO6JMIW1lYQ?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
-                <button class="close-video" onclick="toggleVideo('push_press_(right)')">&times;</button>
+            <span class="exercise-name" onclick="toggleVideo('zottman_curl_(supinate_up,_pronate_down)')">Zottman Curl (supinate up, pronate down)</span>
+            <div id="video_zottman_curl_(supinate_up,_pronate_down)" class="video-popup">
+                <iframe src="https://www.youtube.com/embed/oIn50xSx_8s?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
+                <button class="close-video" onclick="toggleVideo('zottman_curl_(supinate_up,_pronate_down)')">&times;</button>
             </div>
-        </span>
-                             <span class="exercise-id-badge">44</span>
+            <button class="picture-button" onclick="togglePicture('zottman_curl_(supinate_up,_pronate_down)')" title="View exercise image">
+                👁
+            </button>
+            <div id="picture_zottman_curl_(supinate_up,_pronate_down)" class="picture-popup">
+                <img src="config/pictures/24.png" alt="Zottman Curl (supinate up, pronate down)" />
+                <button class="close-picture" onclick="togglePicture('zottman_curl_(supinate_up,_pronate_down)')">&times;</button>
+            </div></span>
+                             <span class="exercise-id-badge">24</span>
                          </div>
-                         <div class="muscle-tags"><span class="muscle-tag muscle-shoulders">Shoulders</span><span class="muscle-tag muscle-triceps">Triceps</span><span class="muscle-tag muscle-legs">Quadriceps</span><span class="muscle-tag muscle-core">Core</span></div>
-                         <div class="equipment-tags"><span class="equipment-tag tag-kettlebells"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ia2V0dGxlYmVsbEdyYWQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNjA2MDYwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3R5bGU9InN0b3AtY29sb3I6IzQwNDA0MDtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMjAyMDIwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iaGFuZGxlR3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM5MDkwOTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNzA3MDcwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM1MDUwNTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICAKICA8IS0tIEhhbmRsZSBhcmMgLS0+CiAgPHBhdGggZD0iTSA4IDggUSAxMiA0IDE2IDgiIHN0cm9rZT0idXJsKCNoYW5kbGVHcmFkKSIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICAKICA8IS0tIEhhbmRsZSBjb25uZWN0aW9uIHBvaW50cyAtLT4KICA8Y2lyY2xlIGN4PSI4IiBjeT0iOCIgcj0iMS41IiBmaWxsPSJ1cmwoI2hhbmRsZUdyYWQpIiBzdHJva2U9IiM0MDQwNDAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGNpcmNsZSBjeD0iMTYiIGN5PSI4IiByPSIxLjUiIGZpbGw9InVybCgjaGFuZGxlR3JhZCkiIHN0cm9rZT0iIzQwNDA0MCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIE1haW4gYmVsbCBib2R5IC0tPgogIDxlbGxpcHNlIGN4PSIxMiIgY3k9IjE2IiByeD0iNiIgcnk9IjUiIGZpbGw9InVybCgja2V0dGxlYmVsbEdyYWQpIiBzdHJva2U9IiMzMDMwMzAiIHN0cm9rZS13aWR0aD0iMC41Ii8+CiAgCiAgPCEtLSBUb3AgY29ubmVjdGlvbiAtLT4KICA8cmVjdCB4PSIxMC41IiB5PSI5IiB3aWR0aD0iMyIgaGVpZ2h0PSI3IiByeD0iMSIgZmlsbD0idXJsKCNrZXR0bGViZWxsR3JhZCkiIHN0cm9rZT0iIzMwMzAzMCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIEJvdHRvbSBoaWdobGlnaHQgLS0+CiAgPGVsbGlwc2UgY3g9IjEyIiBjeT0iMTgiIHJ4PSIzIiByeT0iMS41IiBmaWxsPSIjNTA1MDUwIiBvcGFjaXR5PSIwLjYiLz4KICAKICA8IS0tIFdlaWdodCBpbmRpY2F0b3IgLS0+CiAgPHRleHQgeD0iMTIiIHk9IjE3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iNiIgZmlsbD0iI2EwYTBhMCIgZm9udC13ZWlnaHQ9ImJvbGQiPktCPC90ZXh0Pgo8L3N2Zz4K" alt="kettlebell" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;"> kettlebell 6 kg</span></div>
+                         <div class="muscle-tags"><span class="muscle-tag muscle-biceps">Biceps</span><span class="muscle-tag muscle-other">Forearms</span></div>
+                         <div class="equipment-tags"><span class="equipment-tag tag-dumbbells"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ibWV0YWxHcmFkIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6I2U4ZThlODtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSI1MCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNjMGMwYzA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6I2EwYTBhMDtzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIAogIDwhLS0gTGVmdCB3ZWlnaHQgLS0+CiAgPGVsbGlwc2UgY3g9IjQiIGN5PSIxMiIgcng9IjMiIHJ5PSI2IiBmaWxsPSJ1cmwoI21ldGFsR3JhZCkiIHN0cm9rZT0iIzgwODA4MCIgc3Ryb2tlLXdpZHRoPSIwLjUiLz4KICAKICA8IS0tIEhhbmRsZSAtLT4KICA8cmVjdCB4PSI3IiB5PSIxMC41IiB3aWR0aD0iMTAiIGhlaWdodD0iMyIgcng9IjEuNSIgZmlsbD0idXJsKCNtZXRhbEdyYWQpIiBzdHJva2U9IiM4MDgwODAiIHN0cm9rZS13aWR0aD0iMC41Ii8+CiAgCiAgPCEtLSBSaWdodCB3ZWlnaHQgLS0+CiAgPGVsbGlwc2UgY3g9IjIwIiBjeT0iMTIiIHJ4PSIzIiByeT0iNiIgZmlsbD0idXJsKCNtZXRhbEdyYWQpIiBzdHJva2U9IiM4MDgwODAiIHN0cm9rZS13aWR0aD0iMC41Ii8+CiAgCiAgPCEtLSBIYW5kbGUgZ3JpcCBsaW5lcyAtLT4KICA8bGluZSB4MT0iOSIgeTE9IjExIiB4Mj0iOSIgeTI9IjEzIiBzdHJva2U9IiM5MDkwOTAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGxpbmUgeDE9IjExIiB5MT0iMTEiIHgyPSIxMSIgeTI9IjEzIiBzdHJva2U9IiM5MDkwOTAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGxpbmUgeDE9IjEzIiB5MT0iMTEiIHgyPSIxMyIgeTI9IjEzIiBzdHJva2U9IiM5MDkwOTAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGxpbmUgeDE9IjE1IiB5MT0iMTEiIHgyPSIxNSIgeTI9IjEzIiBzdHJva2U9IiM5MDkwOTAiIHN0cm9rZS13aWR0aD0iMC4zIi8+Cjwvc3ZnPg==" alt="dumbbell" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;"> dumbbell 5 kg x2</span></div>
                      </td>
                      <td data-label="Step 4" class="exercise">
                          <span class="mobile-step-label">Step 4:</span>
                          <div class="exercise-cell-wrapper">
                              <span class="exercise-with-video">
-            <span class="exercise-name" onclick="toggleVideo('kickback_standing')">Kickback standing</span>
-            <div id="video_kickback_standing" class="video-popup">
-                <iframe src="https://www.youtube.com/embed/UR1_7Es1qUk?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
-                <button class="close-video" onclick="toggleVideo('kickback_standing')">&times;</button>
+            <span class="exercise-name" onclick="toggleVideo('bottoms_up_curl_(huge_grip_challenge)')">Bottoms-Up Curl (huge grip challenge)</span>
+            <div id="video_bottoms_up_curl_(huge_grip_challenge)" class="video-popup">
+                <iframe src="https://www.youtube.com/embed/XQbuJ5euemc?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
+                <button class="close-video" onclick="toggleVideo('bottoms_up_curl_(huge_grip_challenge)')">&times;</button>
             </div>
-        </span>
-                             <span class="exercise-id-badge">66</span>
+            <button class="picture-button" onclick="togglePicture('bottoms_up_curl_(huge_grip_challenge)')" title="View exercise image">
+                👁
+            </button>
+            <div id="picture_bottoms_up_curl_(huge_grip_challenge)" class="picture-popup">
+                <img src="config/pictures/71.png" alt="Bottoms-Up Curl (huge grip challenge)" />
+                <button class="close-picture" onclick="togglePicture('bottoms_up_curl_(huge_grip_challenge)')">&times;</button>
+            </div></span>
+                             <span class="exercise-id-badge">71</span>
                          </div>
-                         <div class="muscle-tags"><span class="muscle-tag muscle-triceps">Triceps</span><span class="muscle-tag muscle-shoulders">Shoulders</span></div>
+                         <div class="muscle-tags"><span class="muscle-tag muscle-biceps">Biceps</span><span class="muscle-tag muscle-other">Forearms</span><span class="muscle-tag muscle-other">Stabilizers</span></div>
                          <div class="equipment-tags"><span class="equipment-tag tag-kettlebells"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ia2V0dGxlYmVsbEdyYWQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNjA2MDYwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3R5bGU9InN0b3AtY29sb3I6IzQwNDA0MDtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMjAyMDIwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iaGFuZGxlR3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM5MDkwOTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNzA3MDcwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM1MDUwNTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICAKICA8IS0tIEhhbmRsZSBhcmMgLS0+CiAgPHBhdGggZD0iTSA4IDggUSAxMiA0IDE2IDgiIHN0cm9rZT0idXJsKCNoYW5kbGVHcmFkKSIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICAKICA8IS0tIEhhbmRsZSBjb25uZWN0aW9uIHBvaW50cyAtLT4KICA8Y2lyY2xlIGN4PSI4IiBjeT0iOCIgcj0iMS41IiBmaWxsPSJ1cmwoI2hhbmRsZUdyYWQpIiBzdHJva2U9IiM0MDQwNDAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGNpcmNsZSBjeD0iMTYiIGN5PSI4IiByPSIxLjUiIGZpbGw9InVybCgjaGFuZGxlR3JhZCkiIHN0cm9rZT0iIzQwNDA0MCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIE1haW4gYmVsbCBib2R5IC0tPgogIDxlbGxpcHNlIGN4PSIxMiIgY3k9IjE2IiByeD0iNiIgcnk9IjUiIGZpbGw9InVybCgja2V0dGxlYmVsbEdyYWQpIiBzdHJva2U9IiMzMDMwMzAiIHN0cm9rZS13aWR0aD0iMC41Ii8+CiAgCiAgPCEtLSBUb3AgY29ubmVjdGlvbiAtLT4KICA8cmVjdCB4PSIxMC41IiB5PSI5IiB3aWR0aD0iMyIgaGVpZ2h0PSI3IiByeD0iMSIgZmlsbD0idXJsKCNrZXR0bGViZWxsR3JhZCkiIHN0cm9rZT0iIzMwMzAzMCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIEJvdHRvbSBoaWdobGlnaHQgLS0+CiAgPGVsbGlwc2UgY3g9IjEyIiBjeT0iMTgiIHJ4PSIzIiByeT0iMS41IiBmaWxsPSIjNTA1MDUwIiBvcGFjaXR5PSIwLjYiLz4KICAKICA8IS0tIFdlaWdodCBpbmRpY2F0b3IgLS0+CiAgPHRleHQgeD0iMTIiIHk9IjE3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iNiIgZmlsbD0iI2EwYTBhMCIgZm9udC13ZWlnaHQ9ImJvbGQiPktCPC90ZXh0Pgo8L3N2Zz4K" alt="kettlebell" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;"> kettlebell 4 kg</span><span class="equipment-tag tag-kettlebells"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ia2V0dGxlYmVsbEdyYWQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNjA2MDYwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3R5bGU9InN0b3AtY29sb3I6IzQwNDA0MDtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMjAyMDIwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iaGFuZGxlR3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM5MDkwOTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNzA3MDcwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM1MDUwNTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICAKICA8IS0tIEhhbmRsZSBhcmMgLS0+CiAgPHBhdGggZD0iTSA4IDggUSAxMiA0IDE2IDgiIHN0cm9rZT0idXJsKCNoYW5kbGVHcmFkKSIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICAKICA8IS0tIEhhbmRsZSBjb25uZWN0aW9uIHBvaW50cyAtLT4KICA8Y2lyY2xlIGN4PSI4IiBjeT0iOCIgcj0iMS41IiBmaWxsPSJ1cmwoI2hhbmRsZUdyYWQpIiBzdHJva2U9IiM0MDQwNDAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGNpcmNsZSBjeD0iMTYiIGN5PSI4IiByPSIxLjUiIGZpbGw9InVybCgjaGFuZGxlR3JhZCkiIHN0cm9rZT0iIzQwNDA0MCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIE1haW4gYmVsbCBib2R5IC0tPgogIDxlbGxpcHNlIGN4PSIxMiIgY3k9IjE2IiByeD0iNiIgcnk9IjUiIGZpbGw9InVybCgja2V0dGxlYmVsbEdyYWQpIiBzdHJva2U9IiMzMDMwMzAiIHN0cm9rZS13aWR0aD0iMC41Ii8+CiAgCiAgPCEtLSBUb3AgY29ubmVjdGlvbiAtLT4KICA8cmVjdCB4PSIxMC41IiB5PSI5IiB3aWR0aD0iMyIgaGVpZ2h0PSI3IiByeD0iMSIgZmlsbD0idXJsKCNrZXR0bGViZWxsR3JhZCkiIHN0cm9rZT0iIzMwMzAzMCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIEJvdHRvbSBoaWdobGlnaHQgLS0+CiAgPGVsbGlwc2UgY3g9IjEyIiBjeT0iMTgiIHJ4PSIzIiByeT0iMS41IiBmaWxsPSIjNTA1MDUwIiBvcGFjaXR5PSIwLjYiLz4KICAKICA8IS0tIFdlaWdodCBpbmRpY2F0b3IgLS0+CiAgPHRleHQgeD0iMTIiIHk9IjE3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iNiIgZmlsbD0iI2EwYTBhMCIgZm9udC13ZWlnaHQ9ImJvbGQiPktCPC90ZXh0Pgo8L3N2Zz4K" alt="kettlebell" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;"> kettlebell 6 kg</span></div>
                      </td>
                 </tr>
@@ -842,49 +947,46 @@
                          <span class="mobile-step-label">Step 1:</span>
                          <div class="exercise-cell-wrapper">
                              <span class="exercise-with-video">
-            <span class="exercise-name" onclick="toggleVideo('split_stance_kb_rotation')">Split stance KB rotation</span>
-            <div id="video_split_stance_kb_rotation" class="video-popup">
-                <iframe src="https://www.youtube.com/embed/WB93lYdkDt4?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
-                <button class="close-video" onclick="toggleVideo('split_stance_kb_rotation')">&times;</button>
+            <span class="exercise-name" onclick="toggleVideo('knee_tuck_2_pike')">Knee Tuck 2 Pike</span>
+            <div id="video_knee_tuck_2_pike" class="video-popup">
+                <iframe src="https://www.youtube.com/embed/YEUI8d-PQM4?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
+                <button class="close-video" onclick="toggleVideo('knee_tuck_2_pike')">&times;</button>
             </div>
-        </span>
-                             <span class="exercise-id-badge">104</span>
+            <button class="picture-button" onclick="togglePicture('knee_tuck_2_pike')" title="View exercise image">
+                👁
+            </button>
+            <div id="picture_knee_tuck_2_pike" class="picture-popup">
+                <img src="config/pictures/108.png" alt="Knee Tuck 2 Pike" />
+                <button class="close-picture" onclick="togglePicture('knee_tuck_2_pike')">&times;</button>
+            </div></span>
+                             <span class="exercise-id-badge">108</span>
                          </div>
-                         
-                         <div class="equipment-tags"><span class="equipment-tag tag-kettlebells"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ia2V0dGxlYmVsbEdyYWQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNjA2MDYwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3R5bGU9InN0b3AtY29sb3I6IzQwNDA0MDtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMjAyMDIwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iaGFuZGxlR3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM5MDkwOTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNzA3MDcwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM1MDUwNTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICAKICA8IS0tIEhhbmRsZSBhcmMgLS0+CiAgPHBhdGggZD0iTSA4IDggUSAxMiA0IDE2IDgiIHN0cm9rZT0idXJsKCNoYW5kbGVHcmFkKSIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICAKICA8IS0tIEhhbmRsZSBjb25uZWN0aW9uIHBvaW50cyAtLT4KICA8Y2lyY2xlIGN4PSI4IiBjeT0iOCIgcj0iMS41IiBmaWxsPSJ1cmwoI2hhbmRsZUdyYWQpIiBzdHJva2U9IiM0MDQwNDAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGNpcmNsZSBjeD0iMTYiIGN5PSI4IiByPSIxLjUiIGZpbGw9InVybCgjaGFuZGxlR3JhZCkiIHN0cm9rZT0iIzQwNDA0MCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIE1haW4gYmVsbCBib2R5IC0tPgogIDxlbGxpcHNlIGN4PSIxMiIgY3k9IjE2IiByeD0iNiIgcnk9IjUiIGZpbGw9InVybCgja2V0dGxlYmVsbEdyYWQpIiBzdHJva2U9IiMzMDMwMzAiIHN0cm9rZS13aWR0aD0iMC41Ii8+CiAgCiAgPCEtLSBUb3AgY29ubmVjdGlvbiAtLT4KICA8cmVjdCB4PSIxMC41IiB5PSI5IiB3aWR0aD0iMyIgaGVpZ2h0PSI3IiByeD0iMSIgZmlsbD0idXJsKCNrZXR0bGViZWxsR3JhZCkiIHN0cm9rZT0iIzMwMzAzMCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIEJvdHRvbSBoaWdobGlnaHQgLS0+CiAgPGVsbGlwc2UgY3g9IjEyIiBjeT0iMTgiIHJ4PSIzIiByeT0iMS41IiBmaWxsPSIjNTA1MDUwIiBvcGFjaXR5PSIwLjYiLz4KICAKICA8IS0tIFdlaWdodCBpbmRpY2F0b3IgLS0+CiAgPHRleHQgeD0iMTIiIHk9IjE3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iNiIgZmlsbD0iI2EwYTBhMCIgZm9udC13ZWlnaHQ9ImJvbGQiPktCPC90ZXh0Pgo8L3N2Zz4K" alt="kettlebell" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;"> kettlebell 6 kg</span></div>
+                         <div class="muscle-tags"><span class="muscle-tag muscle-core">Core</span></div>
+                         <div class="equipment-tags"><span class="equipment-tag tag-default"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCA0OCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ic2thdGVib2FyZF9ncmFkIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6I2U4ZThlODtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSI1MCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM0NDQ0NDQ7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzIyMjtzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIDwhLS0gRGVjayAtLT4KICA8cmVjdCB4PSI0IiB5PSI4IiB3aWR0aD0iNDAiIGhlaWdodD0iOCIgcng9IjQiIGZpbGw9InVybCgjc2thdGVib2FyZF9ncmFkKSIgc3Ryb2tlPSIjMjIyIiBzdHJva2Utd2lkdGg9IjEuMiIvPgogIDwhLS0gV2hlZWxzIC0tPgogIDxlbGxpcHNlIGN4PSIxMCIgY3k9IjIwIiByeD0iMyIgcnk9IjMiIGZpbGw9IiM4ODgiIHN0cm9rZT0iIzQ0NCIgc3Ryb2tlLXdpZHRoPSIwLjciLz4KICA8ZWxsaXBzZSBjeD0iMzgiIGN5PSIyMCIgcng9IjMiIHJ5PSIzIiBmaWxsPSIjODg4IiBzdHJva2U9IiM0NDQiIHN0cm9rZS13aWR0aD0iMC43Ii8+CiAgPGVsbGlwc2UgY3g9IjEwIiBjeT0iNCIgcng9IjMiIHJ5PSIzIiBmaWxsPSIjODg4IiBzdHJva2U9IiM0NDQiIHN0cm9rZS13aWR0aD0iMC43Ii8+CiAgPGVsbGlwc2UgY3g9IjM4IiBjeT0iNCIgcng9IjMiIHJ5PSIzIiBmaWxsPSIjODg4IiBzdHJva2U9IiM0NDQiIHN0cm9rZS13aWR0aD0iMC43Ii8+Cjwvc3ZnPg==" alt="skateboard" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;"> skateboard</span></div>
                      </td>
                      <td data-label="Step 2" class="exercise">
                          <span class="mobile-step-label">Step 2:</span>
                          <div class="exercise-cell-wrapper">
                              <span class="exercise-with-video">
-            <span class="exercise-name" onclick="toggleVideo('renegade_row')">Renegade row</span>
-            <div id="video_renegade_row" class="video-popup">
-                <iframe src="https://www.youtube.com/embed/rTVRpI5WVnw?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
-                <button class="close-video" onclick="toggleVideo('renegade_row')">&times;</button>
+            <span class="exercise-name" onclick="toggleVideo('uppercut_kettlbell_rotations')">Uppercut kettlbell rotations</span>
+            <div id="video_uppercut_kettlbell_rotations" class="video-popup">
+                <iframe src="https://www.youtube.com/embed/e4gAbnf69_U?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
+                <button class="close-video" onclick="toggleVideo('uppercut_kettlbell_rotations')">&times;</button>
             </div>
-        </span>
-                             <span class="exercise-id-badge">21</span>
+            <button class="picture-button" onclick="togglePicture('uppercut_kettlbell_rotations')" title="View exercise image">
+                👁
+            </button>
+            <div id="picture_uppercut_kettlbell_rotations" class="picture-popup">
+                <img src="config/pictures/103.png" alt="Uppercut kettlbell rotations" />
+                <button class="close-picture" onclick="togglePicture('uppercut_kettlbell_rotations')">&times;</button>
+            </div></span>
+                             <span class="exercise-id-badge">103</span>
                          </div>
-                         <div class="muscle-tags"><span class="muscle-tag muscle-core">Core</span><span class="muscle-tag muscle-other">Latissimus Dorsi</span><span class="muscle-tag muscle-shoulders">Shoulders</span></div>
-                         <div class="equipment-tags"><span class="equipment-tag tag-dumbbells"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ibWV0YWxHcmFkIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6I2U4ZThlODtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSI1MCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNjMGMwYzA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6I2EwYTBhMDtzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIAogIDwhLS0gTGVmdCB3ZWlnaHQgLS0+CiAgPGVsbGlwc2UgY3g9IjQiIGN5PSIxMiIgcng9IjMiIHJ5PSI2IiBmaWxsPSJ1cmwoI21ldGFsR3JhZCkiIHN0cm9rZT0iIzgwODA4MCIgc3Ryb2tlLXdpZHRoPSIwLjUiLz4KICAKICA8IS0tIEhhbmRsZSAtLT4KICA8cmVjdCB4PSI3IiB5PSIxMC41IiB3aWR0aD0iMTAiIGhlaWdodD0iMyIgcng9IjEuNSIgZmlsbD0idXJsKCNtZXRhbEdyYWQpIiBzdHJva2U9IiM4MDgwODAiIHN0cm9rZS13aWR0aD0iMC41Ii8+CiAgCiAgPCEtLSBSaWdodCB3ZWlnaHQgLS0+CiAgPGVsbGlwc2UgY3g9IjIwIiBjeT0iMTIiIHJ4PSIzIiByeT0iNiIgZmlsbD0idXJsKCNtZXRhbEdyYWQpIiBzdHJva2U9IiM4MDgwODAiIHN0cm9rZS13aWR0aD0iMC41Ii8+CiAgCiAgPCEtLSBIYW5kbGUgZ3JpcCBsaW5lcyAtLT4KICA8bGluZSB4MT0iOSIgeTE9IjExIiB4Mj0iOSIgeTI9IjEzIiBzdHJva2U9IiM5MDkwOTAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGxpbmUgeDE9IjExIiB5MT0iMTEiIHgyPSIxMSIgeTI9IjEzIiBzdHJva2U9IiM5MDkwOTAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGxpbmUgeDE9IjEzIiB5MT0iMTEiIHgyPSIxMyIgeTI9IjEzIiBzdHJva2U9IiM5MDkwOTAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGxpbmUgeDE9IjE1IiB5MT0iMTEiIHgyPSIxNSIgeTI9IjEzIiBzdHJva2U9IiM5MDkwOTAiIHN0cm9rZS13aWR0aD0iMC4zIi8+Cjwvc3ZnPg==" alt="dumbbell" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;"> dumbbell 3 kg x2</span></div>
+                         
+                         <div class="equipment-tags"><span class="equipment-tag tag-kettlebells"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ia2V0dGxlYmVsbEdyYWQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNjA2MDYwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3R5bGU9InN0b3AtY29sb3I6IzQwNDA0MDtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMjAyMDIwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iaGFuZGxlR3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM5MDkwOTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNzA3MDcwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM1MDUwNTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICAKICA8IS0tIEhhbmRsZSBhcmMgLS0+CiAgPHBhdGggZD0iTSA4IDggUSAxMiA0IDE2IDgiIHN0cm9rZT0idXJsKCNoYW5kbGVHcmFkKSIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICAKICA8IS0tIEhhbmRsZSBjb25uZWN0aW9uIHBvaW50cyAtLT4KICA8Y2lyY2xlIGN4PSI4IiBjeT0iOCIgcj0iMS41IiBmaWxsPSJ1cmwoI2hhbmRsZUdyYWQpIiBzdHJva2U9IiM0MDQwNDAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGNpcmNsZSBjeD0iMTYiIGN5PSI4IiByPSIxLjUiIGZpbGw9InVybCgjaGFuZGxlR3JhZCkiIHN0cm9rZT0iIzQwNDA0MCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIE1haW4gYmVsbCBib2R5IC0tPgogIDxlbGxpcHNlIGN4PSIxMiIgY3k9IjE2IiByeD0iNiIgcnk9IjUiIGZpbGw9InVybCgja2V0dGxlYmVsbEdyYWQpIiBzdHJva2U9IiMzMDMwMzAiIHN0cm9rZS13aWR0aD0iMC41Ii8+CiAgCiAgPCEtLSBUb3AgY29ubmVjdGlvbiAtLT4KICA8cmVjdCB4PSIxMC41IiB5PSI5IiB3aWR0aD0iMyIgaGVpZ2h0PSI3IiByeD0iMSIgZmlsbD0idXJsKCNrZXR0bGViZWxsR3JhZCkiIHN0cm9rZT0iIzMwMzAzMCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIEJvdHRvbSBoaWdobGlnaHQgLS0+CiAgPGVsbGlwc2UgY3g9IjEyIiBjeT0iMTgiIHJ4PSIzIiByeT0iMS41IiBmaWxsPSIjNTA1MDUwIiBvcGFjaXR5PSIwLjYiLz4KICAKICA8IS0tIFdlaWdodCBpbmRpY2F0b3IgLS0+CiAgPHRleHQgeD0iMTIiIHk9IjE3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iNiIgZmlsbD0iI2EwYTBhMCIgZm9udC13ZWlnaHQ9ImJvbGQiPktCPC90ZXh0Pgo8L3N2Zz4K" alt="kettlebell" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;"> kettlebell 6 kg</span></div>
                      </td>
                      <td data-label="Step 3" class="exercise">
                          <span class="mobile-step-label">Step 3:</span>
-                         <div class="exercise-cell-wrapper">
-                             <span class="exercise-with-video">
-            <span class="exercise-name" onclick="toggleVideo('slam_ball_thruster')">Slam-ball thruster</span>
-            <div id="video_slam_ball_thruster" class="video-popup">
-                <iframe src="https://www.youtube.com/embed/6gFhwWhQJ5s?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
-                <button class="close-video" onclick="toggleVideo('slam_ball_thruster')">&times;</button>
-            </div>
-        </span>
-                             <span class="exercise-id-badge">93</span>
-                         </div>
-                         <div class="muscle-tags"><span class="muscle-tag muscle-shoulders">Shoulders</span><span class="muscle-tag muscle-legs">Quadriceps</span><span class="muscle-tag muscle-legs">Glutes</span><span class="muscle-tag muscle-core">Core</span></div>
-                         <div class="equipment-tags"><span class="equipment-tag tag-slam"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxyYWRpYWxHcmFkaWVudCBpZD0iYmFsbEdyYWQiIGN4PSI0MCUiIGN5PSIzMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNEE0QTRBO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjcwJSIgc3R5bGU9InN0b3AtY29sb3I6IzJBMkEyQTtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMUExQTFBO3N0b3Atb3BhY2l0eToxIiAvPgogICAgPC9yYWRpYWxHcmFkaWVudD4KICAgIDxyYWRpYWxHcmFkaWVudCBpZD0iaGlnaGxpZ2h0R3JhZCIgY3g9IjMwJSIgY3k9IjIwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNGRkZGRkY7c3RvcC1vcGFjaXR5OjAuNiIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSI1MCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNDQ0NDQ0M7c3RvcC1vcGFjaXR5OjAuMyIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojOTk5OTk5O3N0b3Atb3BhY2l0eTowIiAvPgogICAgPC9yYWRpYWxHcmFkaWVudD4KICA8L2RlZnM+CiAgCiAgPCEtLSBNYWluIGJhbGwgLS0+CiAgPGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iOSIgZmlsbD0idXJsKCNiYWxsR3JhZCkiIHN0cm9rZT0iIzBBMEEwQSIgc3Ryb2tlLXdpZHRoPSIwLjUiLz4KICAKICA8IS0tIFRleHR1cmUgcGF0dGVybiAtLT4KICA8ZyBvcGFjaXR5PSIwLjQiPgogICAgPGNpcmNsZSBjeD0iOCIgY3k9IjgiIHI9IjAuOCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNjY2IiBzdHJva2Utd2lkdGg9IjAuMyIvPgogICAgPGNpcmNsZSBjeD0iMTYiIGN5PSI4IiByPSIwLjgiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzY2NiIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAgIDxjaXJjbGUgY3g9IjgiIGN5PSIxNiIgcj0iMC44IiBmaWxsPSJub25lIiBzdHJva2U9IiM2NjYiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgICA8Y2lyY2xlIGN4PSIxNiIgY3k9IjE2IiByPSIwLjgiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzY2NiIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAgIDxjaXJjbGUgY3g9IjEyIiBjeT0iMTIiIHI9IjAuOCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNjY2IiBzdHJva2Utd2lkdGg9IjAuMyIvPgogIDwvZz4KICAKICA8IS0tIENyb3NzaGF0Y2ggdGV4dHVyZSAtLT4KICA8ZyBvcGFjaXR5PSIwLjMiIHN0cm9rZT0iIzU1NSIgc3Ryb2tlLXdpZHRoPSIwLjIiPgogICAgPGxpbmUgeDE9IjYiIHkxPSI2IiB4Mj0iNyIgeTI9IjciLz4KICAgIDxsaW5lIHgxPSIxNyIgeTE9IjYiIHgyPSIxOCIgeTI9IjciLz4KICAgIDxsaW5lIHgxPSI2IiB5MT0iMTgiIHgyPSI3IiB5Mj0iMTciLz4KICAgIDxsaW5lIHgxPSIxNyIgeTE9IjE4IiB4Mj0iMTgiIHkyPSIxNyIvPgogICAgCiAgICA8bGluZSB4MT0iNyIgeTE9IjYiIHgyPSI2IiB5Mj0iNyIvPgogICAgPGxpbmUgeDE9IjE4IiB5MT0iNiIgeDI9IjE3IiB5Mj0iNyIvPgogICAgPGxpbmUgeDE9IjciIHkxPSIxOCIgeDI9IjYiIHkyPSIxNyIvPgogICAgPGxpbmUgeDE9IjE4IiB5MT0iMTgiIHgyPSIxNyIgeTI9IjE3Ii8+CiAgPC9nPgogIAogIDwhLS0gSGlnaGxpZ2h0IC0tPgogIDxlbGxpcHNlIGN4PSI5IiBjeT0iOCIgcng9IjIuNSIgcnk9IjMiIGZpbGw9InVybCgjaGlnaGxpZ2h0R3JhZCkiLz4KICAKICA8IS0tIFdlaWdodCBtYXJraW5nIC0tPgogIDx0ZXh0IHg9IjEyIiB5PSIxMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjUiIGZpbGw9IiM4ODgiIGZvbnQtd2VpZ2h0PSJib2xkIj5TQjwvdGV4dD4KPC9zdmc+Cg==" alt="slam_ball" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;"> slam ball 5 kg</span></div>
-                     </td>
-                     <td data-label="Step 4" class="exercise">
-                         <span class="mobile-step-label">Step 4:</span>
                          <div class="exercise-cell-wrapper">
                              <span class="exercise-with-video">
             <span class="exercise-name" onclick="toggleVideo('db_thruster')">DB thruster</span>
@@ -892,11 +994,38 @@
                 <iframe src="https://www.youtube.com/embed/UipBcISeiGU?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
                 <button class="close-video" onclick="toggleVideo('db_thruster')">&times;</button>
             </div>
-        </span>
+            <button class="picture-button" onclick="togglePicture('db_thruster')" title="View exercise image">
+                👁
+            </button>
+            <div id="picture_db_thruster" class="picture-popup">
+                <img src="config/pictures/22.png" alt="DB thruster" />
+                <button class="close-picture" onclick="togglePicture('db_thruster')">&times;</button>
+            </div></span>
                              <span class="exercise-id-badge">22</span>
                          </div>
                          <div class="muscle-tags"><span class="muscle-tag muscle-shoulders">Shoulders</span><span class="muscle-tag muscle-legs">Quadriceps</span><span class="muscle-tag muscle-legs">Glutes</span><span class="muscle-tag muscle-core">Core</span></div>
                          <div class="equipment-tags"><span class="equipment-tag tag-dumbbells"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ibWV0YWxHcmFkIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6I2U4ZThlODtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSI1MCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNjMGMwYzA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6I2EwYTBhMDtzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIAogIDwhLS0gTGVmdCB3ZWlnaHQgLS0+CiAgPGVsbGlwc2UgY3g9IjQiIGN5PSIxMiIgcng9IjMiIHJ5PSI2IiBmaWxsPSJ1cmwoI21ldGFsR3JhZCkiIHN0cm9rZT0iIzgwODA4MCIgc3Ryb2tlLXdpZHRoPSIwLjUiLz4KICAKICA8IS0tIEhhbmRsZSAtLT4KICA8cmVjdCB4PSI3IiB5PSIxMC41IiB3aWR0aD0iMTAiIGhlaWdodD0iMyIgcng9IjEuNSIgZmlsbD0idXJsKCNtZXRhbEdyYWQpIiBzdHJva2U9IiM4MDgwODAiIHN0cm9rZS13aWR0aD0iMC41Ii8+CiAgCiAgPCEtLSBSaWdodCB3ZWlnaHQgLS0+CiAgPGVsbGlwc2UgY3g9IjIwIiBjeT0iMTIiIHJ4PSIzIiByeT0iNiIgZmlsbD0idXJsKCNtZXRhbEdyYWQpIiBzdHJva2U9IiM4MDgwODAiIHN0cm9rZS13aWR0aD0iMC41Ii8+CiAgCiAgPCEtLSBIYW5kbGUgZ3JpcCBsaW5lcyAtLT4KICA8bGluZSB4MT0iOSIgeTE9IjExIiB4Mj0iOSIgeTI9IjEzIiBzdHJva2U9IiM5MDkwOTAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGxpbmUgeDE9IjExIiB5MT0iMTEiIHgyPSIxMSIgeTI9IjEzIiBzdHJva2U9IiM5MDkwOTAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGxpbmUgeDE9IjEzIiB5MT0iMTEiIHgyPSIxMyIgeTI9IjEzIiBzdHJva2U9IiM5MDkwOTAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGxpbmUgeDE9IjE1IiB5MT0iMTEiIHgyPSIxNSIgeTI9IjEzIiBzdHJva2U9IiM5MDkwOTAiIHN0cm9rZS13aWR0aD0iMC4zIi8+Cjwvc3ZnPg==" alt="dumbbell" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;"> dumbbell 3 kg x2</span><span class="equipment-tag tag-dumbbells"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ibWV0YWxHcmFkIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6I2U4ZThlODtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSI1MCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNjMGMwYzA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6I2EwYTBhMDtzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIAogIDwhLS0gTGVmdCB3ZWlnaHQgLS0+CiAgPGVsbGlwc2UgY3g9IjQiIGN5PSIxMiIgcng9IjMiIHJ5PSI2IiBmaWxsPSJ1cmwoI21ldGFsR3JhZCkiIHN0cm9rZT0iIzgwODA4MCIgc3Ryb2tlLXdpZHRoPSIwLjUiLz4KICAKICA8IS0tIEhhbmRsZSAtLT4KICA8cmVjdCB4PSI3IiB5PSIxMC41IiB3aWR0aD0iMTAiIGhlaWdodD0iMyIgcng9IjEuNSIgZmlsbD0idXJsKCNtZXRhbEdyYWQpIiBzdHJva2U9IiM4MDgwODAiIHN0cm9rZS13aWR0aD0iMC41Ii8+CiAgCiAgPCEtLSBSaWdodCB3ZWlnaHQgLS0+CiAgPGVsbGlwc2UgY3g9IjIwIiBjeT0iMTIiIHJ4PSIzIiByeT0iNiIgZmlsbD0idXJsKCNtZXRhbEdyYWQpIiBzdHJva2U9IiM4MDgwODAiIHN0cm9rZS13aWR0aD0iMC41Ii8+CiAgCiAgPCEtLSBIYW5kbGUgZ3JpcCBsaW5lcyAtLT4KICA8bGluZSB4MT0iOSIgeTE9IjExIiB4Mj0iOSIgeTI9IjEzIiBzdHJva2U9IiM5MDkwOTAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGxpbmUgeDE9IjExIiB5MT0iMTEiIHgyPSIxMSIgeTI9IjEzIiBzdHJva2U9IiM5MDkwOTAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGxpbmUgeDE9IjEzIiB5MT0iMTEiIHgyPSIxMyIgeTI9IjEzIiBzdHJva2U9IiM5MDkwOTAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGxpbmUgeDE9IjE1IiB5MT0iMTEiIHgyPSIxNSIgeTI9IjEzIiBzdHJva2U9IiM5MDkwOTAiIHN0cm9rZS13aWR0aD0iMC4zIi8+Cjwvc3ZnPg==" alt="dumbbell" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;"> dumbbell 5 kg x2</span></div>
+                     </td>
+                     <td data-label="Step 4" class="exercise">
+                         <span class="mobile-step-label">Step 4:</span>
+                         <div class="exercise-cell-wrapper">
+                             <span class="exercise-with-video">
+            <span class="exercise-name" onclick="toggleVideo('around_the_world_waist')">Around-the-World waist</span>
+            <div id="video_around_the_world_waist" class="video-popup">
+                <iframe src="https://www.youtube.com/embed/SDqeQ9b67AM?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
+                <button class="close-video" onclick="toggleVideo('around_the_world_waist')">&times;</button>
+            </div>
+            <button class="picture-button" onclick="togglePicture('around_the_world_waist')" title="View exercise image">
+                👁
+            </button>
+            <div id="picture_around_the_world_waist" class="picture-popup">
+                <img src="config/pictures/59.png" alt="Around-the-World waist" />
+                <button class="close-picture" onclick="togglePicture('around_the_world_waist')">&times;</button>
+            </div></span>
+                             <span class="exercise-id-badge">59</span>
+                         </div>
+                         <div class="muscle-tags"><span class="muscle-tag muscle-core">Core</span><span class="muscle-tag muscle-shoulders">Shoulders</span><span class="muscle-tag muscle-core">Obliques</span></div>
+                         <div class="equipment-tags"><span class="equipment-tag tag-kettlebells"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ia2V0dGxlYmVsbEdyYWQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNjA2MDYwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3R5bGU9InN0b3AtY29sb3I6IzQwNDA0MDtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMjAyMDIwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iaGFuZGxlR3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM5MDkwOTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNzA3MDcwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM1MDUwNTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICAKICA8IS0tIEhhbmRsZSBhcmMgLS0+CiAgPHBhdGggZD0iTSA4IDggUSAxMiA0IDE2IDgiIHN0cm9rZT0idXJsKCNoYW5kbGVHcmFkKSIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICAKICA8IS0tIEhhbmRsZSBjb25uZWN0aW9uIHBvaW50cyAtLT4KICA8Y2lyY2xlIGN4PSI4IiBjeT0iOCIgcj0iMS41IiBmaWxsPSJ1cmwoI2hhbmRsZUdyYWQpIiBzdHJva2U9IiM0MDQwNDAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGNpcmNsZSBjeD0iMTYiIGN5PSI4IiByPSIxLjUiIGZpbGw9InVybCgjaGFuZGxlR3JhZCkiIHN0cm9rZT0iIzQwNDA0MCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIE1haW4gYmVsbCBib2R5IC0tPgogIDxlbGxpcHNlIGN4PSIxMiIgY3k9IjE2IiByeD0iNiIgcnk9IjUiIGZpbGw9InVybCgja2V0dGxlYmVsbEdyYWQpIiBzdHJva2U9IiMzMDMwMzAiIHN0cm9rZS13aWR0aD0iMC41Ii8+CiAgCiAgPCEtLSBUb3AgY29ubmVjdGlvbiAtLT4KICA8cmVjdCB4PSIxMC41IiB5PSI5IiB3aWR0aD0iMyIgaGVpZ2h0PSI3IiByeD0iMSIgZmlsbD0idXJsKCNrZXR0bGViZWxsR3JhZCkiIHN0cm9rZT0iIzMwMzAzMCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIEJvdHRvbSBoaWdobGlnaHQgLS0+CiAgPGVsbGlwc2UgY3g9IjEyIiBjeT0iMTgiIHJ4PSIzIiByeT0iMS41IiBmaWxsPSIjNTA1MDUwIiBvcGFjaXR5PSIwLjYiLz4KICAKICA8IS0tIFdlaWdodCBpbmRpY2F0b3IgLS0+CiAgPHRleHQgeD0iMTIiIHk9IjE3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iNiIgZmlsbD0iI2EwYTBhMCIgZm9udC13ZWlnaHQ9ImJvbGQiPktCPC90ZXh0Pgo8L3N2Zz4K" alt="kettlebell" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;"> kettlebell 6 kg</span></div>
                      </td>
                 </tr>
                 <tr>
@@ -908,31 +1037,223 @@
                          <span class="mobile-step-label">Step 1:</span>
                          <div class="exercise-cell-wrapper">
                              <span class="exercise-with-video">
-            <span class="exercise-name" onclick="toggleVideo('single_leg_rdl_(left)')">Single-leg RDL (Left)</span>
-            <div id="video_single_leg_rdl_(left)" class="video-popup">
-                <iframe src="https://www.youtube.com/embed/eHHsDJQN7z0?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
-                <button class="close-video" onclick="toggleVideo('single_leg_rdl_(left)')">&times;</button>
+            <span class="exercise-name" onclick="toggleVideo('split_lunge_(left)')">Split Lunge (Left)</span>
+            <div id="video_split_lunge_(left)" class="video-popup">
+                <iframe src="https://www.youtube.com/embed/1-GrS4y3Q6g?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
+                <button class="close-video" onclick="toggleVideo('split_lunge_(left)')">&times;</button>
             </div>
-        </span>
-                             <span class="exercise-id-badge">20</span>
+            <button class="picture-button" onclick="togglePicture('split_lunge_(left)')" title="View exercise image">
+                👁
+            </button>
+            <div id="picture_split_lunge_(left)" class="picture-popup">
+                <img src="config/pictures/109.png" alt="Split Lunge (Left)" />
+                <button class="close-picture" onclick="togglePicture('split_lunge_(left)')">&times;</button>
+            </div></span>
+                             <span class="exercise-id-badge">109</span>
                          </div>
-                         <div class="muscle-tags"><span class="muscle-tag muscle-legs">Hamstrings</span><span class="muscle-tag muscle-legs">Glutes</span><span class="muscle-tag muscle-core">Core</span></div>
-                         <div class="equipment-tags"><span class="equipment-tag tag-dumbbells"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ibWV0YWxHcmFkIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6I2U4ZThlODtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSI1MCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNjMGMwYzA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6I2EwYTBhMDtzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIAogIDwhLS0gTGVmdCB3ZWlnaHQgLS0+CiAgPGVsbGlwc2UgY3g9IjQiIGN5PSIxMiIgcng9IjMiIHJ5PSI2IiBmaWxsPSJ1cmwoI21ldGFsR3JhZCkiIHN0cm9rZT0iIzgwODA4MCIgc3Ryb2tlLXdpZHRoPSIwLjUiLz4KICAKICA8IS0tIEhhbmRsZSAtLT4KICA8cmVjdCB4PSI3IiB5PSIxMC41IiB3aWR0aD0iMTAiIGhlaWdodD0iMyIgcng9IjEuNSIgZmlsbD0idXJsKCNtZXRhbEdyYWQpIiBzdHJva2U9IiM4MDgwODAiIHN0cm9rZS13aWR0aD0iMC41Ii8+CiAgCiAgPCEtLSBSaWdodCB3ZWlnaHQgLS0+CiAgPGVsbGlwc2UgY3g9IjIwIiBjeT0iMTIiIHJ4PSIzIiByeT0iNiIgZmlsbD0idXJsKCNtZXRhbEdyYWQpIiBzdHJva2U9IiM4MDgwODAiIHN0cm9rZS13aWR0aD0iMC41Ii8+CiAgCiAgPCEtLSBIYW5kbGUgZ3JpcCBsaW5lcyAtLT4KICA8bGluZSB4MT0iOSIgeTE9IjExIiB4Mj0iOSIgeTI9IjEzIiBzdHJva2U9IiM5MDkwOTAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGxpbmUgeDE9IjExIiB5MT0iMTEiIHgyPSIxMSIgeTI9IjEzIiBzdHJva2U9IiM5MDkwOTAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGxpbmUgeDE9IjEzIiB5MT0iMTEiIHgyPSIxMyIgeTI9IjEzIiBzdHJva2U9IiM5MDkwOTAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGxpbmUgeDE9IjE1IiB5MT0iMTEiIHgyPSIxNSIgeTI9IjEzIiBzdHJva2U9IiM5MDkwOTAiIHN0cm9rZS13aWR0aD0iMC4zIi8+Cjwvc3ZnPg==" alt="dumbbell" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;"> dumbbell 10 kg</span></div>
+                         <div class="muscle-tags"><span class="muscle-tag muscle-core">Core</span><span class="muscle-tag muscle-legs">Hamstrings</span></div>
+                         <div class="equipment-tags"><span class="equipment-tag tag-default"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCA0OCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ic2thdGVib2FyZF9ncmFkIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6I2U4ZThlODtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSI1MCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM0NDQ0NDQ7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzIyMjtzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIDwhLS0gRGVjayAtLT4KICA8cmVjdCB4PSI0IiB5PSI4IiB3aWR0aD0iNDAiIGhlaWdodD0iOCIgcng9IjQiIGZpbGw9InVybCgjc2thdGVib2FyZF9ncmFkKSIgc3Ryb2tlPSIjMjIyIiBzdHJva2Utd2lkdGg9IjEuMiIvPgogIDwhLS0gV2hlZWxzIC0tPgogIDxlbGxpcHNlIGN4PSIxMCIgY3k9IjIwIiByeD0iMyIgcnk9IjMiIGZpbGw9IiM4ODgiIHN0cm9rZT0iIzQ0NCIgc3Ryb2tlLXdpZHRoPSIwLjciLz4KICA8ZWxsaXBzZSBjeD0iMzgiIGN5PSIyMCIgcng9IjMiIHJ5PSIzIiBmaWxsPSIjODg4IiBzdHJva2U9IiM0NDQiIHN0cm9rZS13aWR0aD0iMC43Ii8+CiAgPGVsbGlwc2UgY3g9IjEwIiBjeT0iNCIgcng9IjMiIHJ5PSIzIiBmaWxsPSIjODg4IiBzdHJva2U9IiM0NDQiIHN0cm9rZS13aWR0aD0iMC43Ii8+CiAgPGVsbGlwc2UgY3g9IjM4IiBjeT0iNCIgcng9IjMiIHJ5PSIzIiBmaWxsPSIjODg4IiBzdHJva2U9IiM0NDQiIHN0cm9rZS13aWR0aD0iMC43Ii8+Cjwvc3ZnPg==" alt="skateboard" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;"> skateboard</span></div>
                      </td>
                      <td data-label="Step 2" class="exercise">
                          <span class="mobile-step-label">Step 2:</span>
                          <div class="exercise-cell-wrapper">
                              <span class="exercise-with-video">
-            <span class="exercise-name" onclick="toggleVideo('single_leg_rdl_(right)')">Single-leg RDL (Right)</span>
-            <div id="video_single_leg_rdl_(right)" class="video-popup">
-                <iframe src="https://www.youtube.com/embed/eHHsDJQN7z0?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
-                <button class="close-video" onclick="toggleVideo('single_leg_rdl_(right)')">&times;</button>
+            <span class="exercise-name" onclick="toggleVideo('split_lunge_(right)')">Split Lunge (Right)</span>
+            <div id="video_split_lunge_(right)" class="video-popup">
+                <iframe src="https://www.youtube.com/embed/1-GrS4y3Q6g?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
+                <button class="close-video" onclick="toggleVideo('split_lunge_(right)')">&times;</button>
             </div>
-        </span>
-                             <span class="exercise-id-badge">20</span>
+            <button class="picture-button" onclick="togglePicture('split_lunge_(right)')" title="View exercise image">
+                👁
+            </button>
+            <div id="picture_split_lunge_(right)" class="picture-popup">
+                <img src="config/pictures/109.png" alt="Split Lunge (Right)" />
+                <button class="close-picture" onclick="togglePicture('split_lunge_(right)')">&times;</button>
+            </div></span>
+                             <span class="exercise-id-badge">109</span>
                          </div>
-                         <div class="muscle-tags"><span class="muscle-tag muscle-legs">Hamstrings</span><span class="muscle-tag muscle-legs">Glutes</span><span class="muscle-tag muscle-core">Core</span></div>
-                         <div class="equipment-tags"><span class="equipment-tag tag-dumbbells"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ibWV0YWxHcmFkIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6I2U4ZThlODtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSI1MCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNjMGMwYzA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6I2EwYTBhMDtzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIAogIDwhLS0gTGVmdCB3ZWlnaHQgLS0+CiAgPGVsbGlwc2UgY3g9IjQiIGN5PSIxMiIgcng9IjMiIHJ5PSI2IiBmaWxsPSJ1cmwoI21ldGFsR3JhZCkiIHN0cm9rZT0iIzgwODA4MCIgc3Ryb2tlLXdpZHRoPSIwLjUiLz4KICAKICA8IS0tIEhhbmRsZSAtLT4KICA8cmVjdCB4PSI3IiB5PSIxMC41IiB3aWR0aD0iMTAiIGhlaWdodD0iMyIgcng9IjEuNSIgZmlsbD0idXJsKCNtZXRhbEdyYWQpIiBzdHJva2U9IiM4MDgwODAiIHN0cm9rZS13aWR0aD0iMC41Ii8+CiAgCiAgPCEtLSBSaWdodCB3ZWlnaHQgLS0+CiAgPGVsbGlwc2UgY3g9IjIwIiBjeT0iMTIiIHJ4PSIzIiByeT0iNiIgZmlsbD0idXJsKCNtZXRhbEdyYWQpIiBzdHJva2U9IiM4MDgwODAiIHN0cm9rZS13aWR0aD0iMC41Ii8+CiAgCiAgPCEtLSBIYW5kbGUgZ3JpcCBsaW5lcyAtLT4KICA8bGluZSB4MT0iOSIgeTE9IjExIiB4Mj0iOSIgeTI9IjEzIiBzdHJva2U9IiM5MDkwOTAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGxpbmUgeDE9IjExIiB5MT0iMTEiIHgyPSIxMSIgeTI9IjEzIiBzdHJva2U9IiM5MDkwOTAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGxpbmUgeDE9IjEzIiB5MT0iMTEiIHgyPSIxMyIgeTI9IjEzIiBzdHJva2U9IiM5MDkwOTAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGxpbmUgeDE9IjE1IiB5MT0iMTEiIHgyPSIxNSIgeTI9IjEzIiBzdHJva2U9IiM5MDkwOTAiIHN0cm9rZS13aWR0aD0iMC4zIi8+Cjwvc3ZnPg==" alt="dumbbell" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;"> dumbbell 10 kg</span></div>
+                         <div class="muscle-tags"><span class="muscle-tag muscle-core">Core</span><span class="muscle-tag muscle-legs">Hamstrings</span></div>
+                         <div class="equipment-tags"><span class="equipment-tag tag-default"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCA0OCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ic2thdGVib2FyZF9ncmFkIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6I2U4ZThlODtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSI1MCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM0NDQ0NDQ7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzIyMjtzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIDwhLS0gRGVjayAtLT4KICA8cmVjdCB4PSI0IiB5PSI4IiB3aWR0aD0iNDAiIGhlaWdodD0iOCIgcng9IjQiIGZpbGw9InVybCgjc2thdGVib2FyZF9ncmFkKSIgc3Ryb2tlPSIjMjIyIiBzdHJva2Utd2lkdGg9IjEuMiIvPgogIDwhLS0gV2hlZWxzIC0tPgogIDxlbGxpcHNlIGN4PSIxMCIgY3k9IjIwIiByeD0iMyIgcnk9IjMiIGZpbGw9IiM4ODgiIHN0cm9rZT0iIzQ0NCIgc3Ryb2tlLXdpZHRoPSIwLjciLz4KICA8ZWxsaXBzZSBjeD0iMzgiIGN5PSIyMCIgcng9IjMiIHJ5PSIzIiBmaWxsPSIjODg4IiBzdHJva2U9IiM0NDQiIHN0cm9rZS13aWR0aD0iMC43Ii8+CiAgPGVsbGlwc2UgY3g9IjEwIiBjeT0iNCIgcng9IjMiIHJ5PSIzIiBmaWxsPSIjODg4IiBzdHJva2U9IiM0NDQiIHN0cm9rZS13aWR0aD0iMC43Ii8+CiAgPGVsbGlwc2UgY3g9IjM4IiBjeT0iNCIgcng9IjMiIHJ5PSIzIiBmaWxsPSIjODg4IiBzdHJva2U9IiM0NDQiIHN0cm9rZS13aWR0aD0iMC43Ii8+Cjwvc3ZnPg==" alt="skateboard" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;"> skateboard</span></div>
+                     </td>
+                     <td data-label="Step 3" class="exercise">
+                         <span class="mobile-step-label">Step 3:</span>
+                         <div class="exercise-cell-wrapper">
+                             <span class="exercise-with-video">
+            <span class="exercise-name" onclick="toggleVideo('box_jump')">Box jump</span>
+            <div id="video_box_jump" class="video-popup">
+                <iframe src="https://www.youtube.com/embed/hDiQD4xhVDw?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
+                <button class="close-video" onclick="toggleVideo('box_jump')">&times;</button>
+            </div>
+            <button class="picture-button" onclick="togglePicture('box_jump')" title="View exercise image">
+                👁
+            </button>
+            <div id="picture_box_jump" class="picture-popup">
+                <img src="config/pictures/79.png" alt="Box jump" />
+                <button class="close-picture" onclick="togglePicture('box_jump')">&times;</button>
+            </div></span>
+                             <span class="exercise-id-badge">79</span>
+                         </div>
+                         <div class="muscle-tags"><span class="muscle-tag muscle-legs">Quadriceps</span><span class="muscle-tag muscle-legs">Glutes</span><span class="muscle-tag muscle-legs">Calves</span></div>
+                         <div class="equipment-tags"><span class="equipment-tag tag-plyo"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYm94VG9wR3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNEMkI0OEM7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdHlsZT0ic3RvcC1jb2xvcjojQ0Q4NTNGO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNBMDUyMkQ7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJib3hTaWRlR3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNBMDUyMkQ7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdHlsZT0ic3RvcC1jb2xvcjojOEI0NTEzO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM2NTQzMjE7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJib3hSaWdodEdyYWQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojOEI0NTEzO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3R5bGU9InN0b3AtY29sb3I6IzY1NDMyMTtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNEEyQzE3O3N0b3Atb3BhY2l0eToxIiAvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgCiAgPCEtLSBCb3ggZnJvbnQgZmFjZSAtLT4KICA8cG9seWdvbiBwb2ludHM9IjMsMTAgMywyMCAxNSwyMCAxNSwxMCIgCiAgICAgICAgICAgZmlsbD0idXJsKCNib3hTaWRlR3JhZCkiIAogICAgICAgICAgIHN0cm9rZT0iIzNBMUYwQiIgCiAgICAgICAgICAgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIEJveCB0b3AgZmFjZSAtLT4KICA8cG9seWdvbiBwb2ludHM9IjMsMTAgNiw3IDE4LDcgMTUsMTAiIAogICAgICAgICAgIGZpbGw9InVybCgjYm94VG9wR3JhZCkiIAogICAgICAgICAgIHN0cm9rZT0iIzhCNDUxMyIgCiAgICAgICAgICAgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIEJveCByaWdodCBmYWNlIC0tPgogIDxwb2x5Z29uIHBvaW50cz0iMTUsMTAgMTgsNyAxOCwxNyAxNSwyMCIgCiAgICAgICAgICAgZmlsbD0idXJsKCNib3hSaWdodEdyYWQpIiAKICAgICAgICAgICBzdHJva2U9IiMzQTFGMEIiIAogICAgICAgICAgIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgCiAgPCEtLSBXb29kIGdyYWluIGxpbmVzIG9uIGZyb250IC0tPgogIDxnIG9wYWNpdHk9IjAuMyIgc3Ryb2tlPSIjNEEyQzE3IiBzdHJva2Utd2lkdGg9IjAuMiI+CiAgICA8bGluZSB4MT0iNCIgeTE9IjEyIiB4Mj0iMTQiIHkyPSIxMiIvPgogICAgPGxpbmUgeDE9IjQiIHkxPSIxNSIgeDI9IjE0IiB5Mj0iMTUiLz4KICAgIDxsaW5lIHgxPSI0IiB5MT0iMTgiIHgyPSIxNCIgeTI9IjE4Ii8+CiAgPC9nPgogIAogIDwhLS0gV29vZCBncmFpbiBsaW5lcyBvbiB0b3AgLS0+CiAgPGcgb3BhY2l0eT0iMC4zIiBzdHJva2U9IiM4QjQ1MTMiIHN0cm9rZS13aWR0aD0iMC4yIj4KICAgIDxsaW5lIHgxPSI1IiB5MT0iOC41IiB4Mj0iMTYiIHkyPSI4LjUiLz4KICA8L2c+CiAgCiAgPCEtLSBDb3JuZXIgZGV0YWlscyAtLT4KICA8Y2lyY2xlIGN4PSIzIiBjeT0iMTAiIHI9IjAuMyIgZmlsbD0iIzY1NDMyMSIvPgogIDxjaXJjbGUgY3g9IjE1IiBjeT0iMTAiIHI9IjAuMyIgZmlsbD0iIzY1NDMyMSIvPgogIDxjaXJjbGUgY3g9IjMiIGN5PSIyMCIgcj0iMC4zIiBmaWxsPSIjNEEyQzE3Ii8+CiAgPGNpcmNsZSBjeD0iMTUiIGN5PSIyMCIgcj0iMC4zIiBmaWxsPSIjNEEyQzE3Ii8+CiAgCiAgPCEtLSBIZWlnaHQgbWFya2luZyAtLT4KICA8dGV4dCB4PSI5IiB5PSIxNiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjQiIGZpbGw9IiM2NTQzMjEiIGZvbnQtd2VpZ2h0PSJib2xkIj5CT1g8L3RleHQ+Cjwvc3ZnPgo=" alt="plyo_box" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;"> plyo box</span></div>
+                     </td>
+                     <td data-label="Step 4" class="exercise">
+                         <span class="mobile-step-label">Step 4:</span>
+                         <div class="exercise-cell-wrapper">
+                             <span class="exercise-with-video">
+            <span class="exercise-name" onclick="toggleVideo('two_hand_russian_swing')">Two-hand Russian swing</span>
+            <div id="video_two_hand_russian_swing" class="video-popup">
+                <iframe src="https://www.youtube.com/embed/n1df4ASFeZU?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
+                <button class="close-video" onclick="toggleVideo('two_hand_russian_swing')">&times;</button>
+            </div>
+            <button class="picture-button" onclick="togglePicture('two_hand_russian_swing')" title="View exercise image">
+                👁
+            </button>
+            <div id="picture_two_hand_russian_swing" class="picture-popup">
+                <img src="config/pictures/33.png" alt="Two-hand Russian swing" />
+                <button class="close-picture" onclick="togglePicture('two_hand_russian_swing')">&times;</button>
+            </div></span>
+                             <span class="exercise-id-badge">33</span>
+                         </div>
+                         <div class="muscle-tags"><span class="muscle-tag muscle-legs">Glutes</span><span class="muscle-tag muscle-legs">Hamstrings</span><span class="muscle-tag muscle-shoulders">Shoulders</span></div>
+                         <div class="equipment-tags"><span class="equipment-tag tag-kettlebells"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ia2V0dGxlYmVsbEdyYWQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNjA2MDYwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3R5bGU9InN0b3AtY29sb3I6IzQwNDA0MDtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMjAyMDIwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iaGFuZGxlR3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM5MDkwOTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNzA3MDcwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM1MDUwNTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICAKICA8IS0tIEhhbmRsZSBhcmMgLS0+CiAgPHBhdGggZD0iTSA4IDggUSAxMiA0IDE2IDgiIHN0cm9rZT0idXJsKCNoYW5kbGVHcmFkKSIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICAKICA8IS0tIEhhbmRsZSBjb25uZWN0aW9uIHBvaW50cyAtLT4KICA8Y2lyY2xlIGN4PSI4IiBjeT0iOCIgcj0iMS41IiBmaWxsPSJ1cmwoI2hhbmRsZUdyYWQpIiBzdHJva2U9IiM0MDQwNDAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGNpcmNsZSBjeD0iMTYiIGN5PSI4IiByPSIxLjUiIGZpbGw9InVybCgjaGFuZGxlR3JhZCkiIHN0cm9rZT0iIzQwNDA0MCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIE1haW4gYmVsbCBib2R5IC0tPgogIDxlbGxpcHNlIGN4PSIxMiIgY3k9IjE2IiByeD0iNiIgcnk9IjUiIGZpbGw9InVybCgja2V0dGxlYmVsbEdyYWQpIiBzdHJva2U9IiMzMDMwMzAiIHN0cm9rZS13aWR0aD0iMC41Ii8+CiAgCiAgPCEtLSBUb3AgY29ubmVjdGlvbiAtLT4KICA8cmVjdCB4PSIxMC41IiB5PSI5IiB3aWR0aD0iMyIgaGVpZ2h0PSI3IiByeD0iMSIgZmlsbD0idXJsKCNrZXR0bGViZWxsR3JhZCkiIHN0cm9rZT0iIzMwMzAzMCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIEJvdHRvbSBoaWdobGlnaHQgLS0+CiAgPGVsbGlwc2UgY3g9IjEyIiBjeT0iMTgiIHJ4PSIzIiByeT0iMS41IiBmaWxsPSIjNTA1MDUwIiBvcGFjaXR5PSIwLjYiLz4KICAKICA8IS0tIFdlaWdodCBpbmRpY2F0b3IgLS0+CiAgPHRleHQgeD0iMTIiIHk9IjE3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iNiIgZmlsbD0iI2EwYTBhMCIgZm9udC13ZWlnaHQ9ImJvbGQiPktCPC90ZXh0Pgo8L3N2Zz4K" alt="kettlebell" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;"> kettlebell 16 kg</span></div>
+                     </td>
+                </tr>
+                <tr>
+                    <td data-label="Station">
+                        <span class="station-letter">D</span><br>
+                        <span class="area-badge upper">upper</span>
+                    </td>
+                     <td data-label="Step 1" class="exercise">
+                         <span class="mobile-step-label">Step 1:</span>
+                         <div class="exercise-cell-wrapper">
+                             <span class="exercise-with-video">
+            <span class="exercise-name" onclick="toggleVideo('bottoms_up_press_(left)')">Bottoms-Up Press (Left)</span>
+            <div id="video_bottoms_up_press_(left)" class="video-popup">
+                <iframe src="https://www.youtube.com/embed/PDVTbKBXAl4?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
+                <button class="close-video" onclick="toggleVideo('bottoms_up_press_(left)')">&times;</button>
+            </div>
+            <button class="picture-button" onclick="togglePicture('bottoms_up_press_(left)')" title="View exercise image">
+                👁
+            </button>
+            <div id="picture_bottoms_up_press_(left)" class="picture-popup">
+                <img src="config/pictures/55.png" alt="Bottoms-Up Press (Left)" />
+                <button class="close-picture" onclick="togglePicture('bottoms_up_press_(left)')">&times;</button>
+            </div></span>
+                             <span class="exercise-id-badge">55</span>
+                         </div>
+                         <div class="muscle-tags"><span class="muscle-tag muscle-shoulders">Shoulders</span><span class="muscle-tag muscle-triceps">Triceps</span><span class="muscle-tag muscle-core">Core</span><span class="muscle-tag muscle-other">Stabilizers</span></div>
+                         <div class="equipment-tags"><span class="equipment-tag tag-kettlebells"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ia2V0dGxlYmVsbEdyYWQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNjA2MDYwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3R5bGU9InN0b3AtY29sb3I6IzQwNDA0MDtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMjAyMDIwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iaGFuZGxlR3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM5MDkwOTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNzA3MDcwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM1MDUwNTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICAKICA8IS0tIEhhbmRsZSBhcmMgLS0+CiAgPHBhdGggZD0iTSA4IDggUSAxMiA0IDE2IDgiIHN0cm9rZT0idXJsKCNoYW5kbGVHcmFkKSIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICAKICA8IS0tIEhhbmRsZSBjb25uZWN0aW9uIHBvaW50cyAtLT4KICA8Y2lyY2xlIGN4PSI4IiBjeT0iOCIgcj0iMS41IiBmaWxsPSJ1cmwoI2hhbmRsZUdyYWQpIiBzdHJva2U9IiM0MDQwNDAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGNpcmNsZSBjeD0iMTYiIGN5PSI4IiByPSIxLjUiIGZpbGw9InVybCgjaGFuZGxlR3JhZCkiIHN0cm9rZT0iIzQwNDA0MCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIE1haW4gYmVsbCBib2R5IC0tPgogIDxlbGxpcHNlIGN4PSIxMiIgY3k9IjE2IiByeD0iNiIgcnk9IjUiIGZpbGw9InVybCgja2V0dGxlYmVsbEdyYWQpIiBzdHJva2U9IiMzMDMwMzAiIHN0cm9rZS13aWR0aD0iMC41Ii8+CiAgCiAgPCEtLSBUb3AgY29ubmVjdGlvbiAtLT4KICA8cmVjdCB4PSIxMC41IiB5PSI5IiB3aWR0aD0iMyIgaGVpZ2h0PSI3IiByeD0iMSIgZmlsbD0idXJsKCNrZXR0bGViZWxsR3JhZCkiIHN0cm9rZT0iIzMwMzAzMCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIEJvdHRvbSBoaWdobGlnaHQgLS0+CiAgPGVsbGlwc2UgY3g9IjEyIiBjeT0iMTgiIHJ4PSIzIiByeT0iMS41IiBmaWxsPSIjNTA1MDUwIiBvcGFjaXR5PSIwLjYiLz4KICAKICA8IS0tIFdlaWdodCBpbmRpY2F0b3IgLS0+CiAgPHRleHQgeD0iMTIiIHk9IjE3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iNiIgZmlsbD0iI2EwYTBhMCIgZm9udC13ZWlnaHQ9ImJvbGQiPktCPC90ZXh0Pgo8L3N2Zz4K" alt="kettlebell" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;"> kettlebell 4 kg</span><span class="equipment-tag tag-kettlebells"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ia2V0dGxlYmVsbEdyYWQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNjA2MDYwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3R5bGU9InN0b3AtY29sb3I6IzQwNDA0MDtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMjAyMDIwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iaGFuZGxlR3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM5MDkwOTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNzA3MDcwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM1MDUwNTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICAKICA8IS0tIEhhbmRsZSBhcmMgLS0+CiAgPHBhdGggZD0iTSA4IDggUSAxMiA0IDE2IDgiIHN0cm9rZT0idXJsKCNoYW5kbGVHcmFkKSIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICAKICA8IS0tIEhhbmRsZSBjb25uZWN0aW9uIHBvaW50cyAtLT4KICA8Y2lyY2xlIGN4PSI4IiBjeT0iOCIgcj0iMS41IiBmaWxsPSJ1cmwoI2hhbmRsZUdyYWQpIiBzdHJva2U9IiM0MDQwNDAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGNpcmNsZSBjeD0iMTYiIGN5PSI4IiByPSIxLjUiIGZpbGw9InVybCgjaGFuZGxlR3JhZCkiIHN0cm9rZT0iIzQwNDA0MCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIE1haW4gYmVsbCBib2R5IC0tPgogIDxlbGxpcHNlIGN4PSIxMiIgY3k9IjE2IiByeD0iNiIgcnk9IjUiIGZpbGw9InVybCgja2V0dGxlYmVsbEdyYWQpIiBzdHJva2U9IiMzMDMwMzAiIHN0cm9rZS13aWR0aD0iMC41Ii8+CiAgCiAgPCEtLSBUb3AgY29ubmVjdGlvbiAtLT4KICA8cmVjdCB4PSIxMC41IiB5PSI5IiB3aWR0aD0iMyIgaGVpZ2h0PSI3IiByeD0iMSIgZmlsbD0idXJsKCNrZXR0bGViZWxsR3JhZCkiIHN0cm9rZT0iIzMwMzAzMCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIEJvdHRvbSBoaWdobGlnaHQgLS0+CiAgPGVsbGlwc2UgY3g9IjEyIiBjeT0iMTgiIHJ4PSIzIiByeT0iMS41IiBmaWxsPSIjNTA1MDUwIiBvcGFjaXR5PSIwLjYiLz4KICAKICA8IS0tIFdlaWdodCBpbmRpY2F0b3IgLS0+CiAgPHRleHQgeD0iMTIiIHk9IjE3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iNiIgZmlsbD0iI2EwYTBhMCIgZm9udC13ZWlnaHQ9ImJvbGQiPktCPC90ZXh0Pgo8L3N2Zz4K" alt="kettlebell" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;"> kettlebell 6 kg</span></div>
+                     </td>
+                     <td data-label="Step 2" class="exercise">
+                         <span class="mobile-step-label">Step 2:</span>
+                         <div class="exercise-cell-wrapper">
+                             <span class="exercise-with-video">
+            <span class="exercise-name" onclick="toggleVideo('bottoms_up_press_(right)')">Bottoms-Up Press (Right)</span>
+            <div id="video_bottoms_up_press_(right)" class="video-popup">
+                <iframe src="https://www.youtube.com/embed/PDVTbKBXAl4?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
+                <button class="close-video" onclick="toggleVideo('bottoms_up_press_(right)')">&times;</button>
+            </div>
+            <button class="picture-button" onclick="togglePicture('bottoms_up_press_(right)')" title="View exercise image">
+                👁
+            </button>
+            <div id="picture_bottoms_up_press_(right)" class="picture-popup">
+                <img src="config/pictures/55.png" alt="Bottoms-Up Press (Right)" />
+                <button class="close-picture" onclick="togglePicture('bottoms_up_press_(right)')">&times;</button>
+            </div></span>
+                             <span class="exercise-id-badge">55</span>
+                         </div>
+                         <div class="muscle-tags"><span class="muscle-tag muscle-shoulders">Shoulders</span><span class="muscle-tag muscle-triceps">Triceps</span><span class="muscle-tag muscle-core">Core</span><span class="muscle-tag muscle-other">Stabilizers</span></div>
+                         <div class="equipment-tags"><span class="equipment-tag tag-kettlebells"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ia2V0dGxlYmVsbEdyYWQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNjA2MDYwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3R5bGU9InN0b3AtY29sb3I6IzQwNDA0MDtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMjAyMDIwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iaGFuZGxlR3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM5MDkwOTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNzA3MDcwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM1MDUwNTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICAKICA8IS0tIEhhbmRsZSBhcmMgLS0+CiAgPHBhdGggZD0iTSA4IDggUSAxMiA0IDE2IDgiIHN0cm9rZT0idXJsKCNoYW5kbGVHcmFkKSIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICAKICA8IS0tIEhhbmRsZSBjb25uZWN0aW9uIHBvaW50cyAtLT4KICA8Y2lyY2xlIGN4PSI4IiBjeT0iOCIgcj0iMS41IiBmaWxsPSJ1cmwoI2hhbmRsZUdyYWQpIiBzdHJva2U9IiM0MDQwNDAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGNpcmNsZSBjeD0iMTYiIGN5PSI4IiByPSIxLjUiIGZpbGw9InVybCgjaGFuZGxlR3JhZCkiIHN0cm9rZT0iIzQwNDA0MCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIE1haW4gYmVsbCBib2R5IC0tPgogIDxlbGxpcHNlIGN4PSIxMiIgY3k9IjE2IiByeD0iNiIgcnk9IjUiIGZpbGw9InVybCgja2V0dGxlYmVsbEdyYWQpIiBzdHJva2U9IiMzMDMwMzAiIHN0cm9rZS13aWR0aD0iMC41Ii8+CiAgCiAgPCEtLSBUb3AgY29ubmVjdGlvbiAtLT4KICA8cmVjdCB4PSIxMC41IiB5PSI5IiB3aWR0aD0iMyIgaGVpZ2h0PSI3IiByeD0iMSIgZmlsbD0idXJsKCNrZXR0bGViZWxsR3JhZCkiIHN0cm9rZT0iIzMwMzAzMCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIEJvdHRvbSBoaWdobGlnaHQgLS0+CiAgPGVsbGlwc2UgY3g9IjEyIiBjeT0iMTgiIHJ4PSIzIiByeT0iMS41IiBmaWxsPSIjNTA1MDUwIiBvcGFjaXR5PSIwLjYiLz4KICAKICA8IS0tIFdlaWdodCBpbmRpY2F0b3IgLS0+CiAgPHRleHQgeD0iMTIiIHk9IjE3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iNiIgZmlsbD0iI2EwYTBhMCIgZm9udC13ZWlnaHQ9ImJvbGQiPktCPC90ZXh0Pgo8L3N2Zz4K" alt="kettlebell" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;"> kettlebell 4 kg</span><span class="equipment-tag tag-kettlebells"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ia2V0dGxlYmVsbEdyYWQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNjA2MDYwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3R5bGU9InN0b3AtY29sb3I6IzQwNDA0MDtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMjAyMDIwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iaGFuZGxlR3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM5MDkwOTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNzA3MDcwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM1MDUwNTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICAKICA8IS0tIEhhbmRsZSBhcmMgLS0+CiAgPHBhdGggZD0iTSA4IDggUSAxMiA0IDE2IDgiIHN0cm9rZT0idXJsKCNoYW5kbGVHcmFkKSIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICAKICA8IS0tIEhhbmRsZSBjb25uZWN0aW9uIHBvaW50cyAtLT4KICA8Y2lyY2xlIGN4PSI4IiBjeT0iOCIgcj0iMS41IiBmaWxsPSJ1cmwoI2hhbmRsZUdyYWQpIiBzdHJva2U9IiM0MDQwNDAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGNpcmNsZSBjeD0iMTYiIGN5PSI4IiByPSIxLjUiIGZpbGw9InVybCgjaGFuZGxlR3JhZCkiIHN0cm9rZT0iIzQwNDA0MCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIE1haW4gYmVsbCBib2R5IC0tPgogIDxlbGxpcHNlIGN4PSIxMiIgY3k9IjE2IiByeD0iNiIgcnk9IjUiIGZpbGw9InVybCgja2V0dGxlYmVsbEdyYWQpIiBzdHJva2U9IiMzMDMwMzAiIHN0cm9rZS13aWR0aD0iMC41Ii8+CiAgCiAgPCEtLSBUb3AgY29ubmVjdGlvbiAtLT4KICA8cmVjdCB4PSIxMC41IiB5PSI5IiB3aWR0aD0iMyIgaGVpZ2h0PSI3IiByeD0iMSIgZmlsbD0idXJsKCNrZXR0bGViZWxsR3JhZCkiIHN0cm9rZT0iIzMwMzAzMCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIEJvdHRvbSBoaWdobGlnaHQgLS0+CiAgPGVsbGlwc2UgY3g9IjEyIiBjeT0iMTgiIHJ4PSIzIiByeT0iMS41IiBmaWxsPSIjNTA1MDUwIiBvcGFjaXR5PSIwLjYiLz4KICAKICA8IS0tIFdlaWdodCBpbmRpY2F0b3IgLS0+CiAgPHRleHQgeD0iMTIiIHk9IjE3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iNiIgZmlsbD0iI2EwYTBhMCIgZm9udC13ZWlnaHQ9ImJvbGQiPktCPC90ZXh0Pgo8L3N2Zz4K" alt="kettlebell" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;"> kettlebell 6 kg</span></div>
+                     </td>
+                     <td data-label="Step 3" class="exercise">
+                         <span class="mobile-step-label">Step 3:</span>
+                         <div class="exercise-cell-wrapper">
+                             <span class="exercise-with-video">
+            <span class="exercise-name" onclick="toggleVideo('single_arm_floor_press_(left)')">Single-arm floor press (Left)</span>
+            <div id="video_single_arm_floor_press_(left)" class="video-popup">
+                <iframe src="https://www.youtube.com/embed/rYVPIP9KMLQ?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
+                <button class="close-video" onclick="toggleVideo('single_arm_floor_press_(left)')">&times;</button>
+            </div>
+            <button class="picture-button" onclick="togglePicture('single_arm_floor_press_(left)')" title="View exercise image">
+                👁
+            </button>
+            <div id="picture_single_arm_floor_press_(left)" class="picture-popup">
+                <img src="config/pictures/45.png" alt="Single-arm floor press (Left)" />
+                <button class="close-picture" onclick="togglePicture('single_arm_floor_press_(left)')">&times;</button>
+            </div></span>
+                             <span class="exercise-id-badge">45</span>
+                         </div>
+                         <div class="muscle-tags"><span class="muscle-tag muscle-chest">Chest</span><span class="muscle-tag muscle-triceps">Triceps</span><span class="muscle-tag muscle-shoulders">Shoulders</span><span class="muscle-tag muscle-core">Core</span></div>
+                         <div class="equipment-tags"><span class="equipment-tag tag-kettlebells"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ia2V0dGxlYmVsbEdyYWQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNjA2MDYwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3R5bGU9InN0b3AtY29sb3I6IzQwNDA0MDtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMjAyMDIwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iaGFuZGxlR3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM5MDkwOTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNzA3MDcwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM1MDUwNTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICAKICA8IS0tIEhhbmRsZSBhcmMgLS0+CiAgPHBhdGggZD0iTSA4IDggUSAxMiA0IDE2IDgiIHN0cm9rZT0idXJsKCNoYW5kbGVHcmFkKSIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICAKICA8IS0tIEhhbmRsZSBjb25uZWN0aW9uIHBvaW50cyAtLT4KICA8Y2lyY2xlIGN4PSI4IiBjeT0iOCIgcj0iMS41IiBmaWxsPSJ1cmwoI2hhbmRsZUdyYWQpIiBzdHJva2U9IiM0MDQwNDAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGNpcmNsZSBjeD0iMTYiIGN5PSI4IiByPSIxLjUiIGZpbGw9InVybCgjaGFuZGxlR3JhZCkiIHN0cm9rZT0iIzQwNDA0MCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIE1haW4gYmVsbCBib2R5IC0tPgogIDxlbGxpcHNlIGN4PSIxMiIgY3k9IjE2IiByeD0iNiIgcnk9IjUiIGZpbGw9InVybCgja2V0dGxlYmVsbEdyYWQpIiBzdHJva2U9IiMzMDMwMzAiIHN0cm9rZS13aWR0aD0iMC41Ii8+CiAgCiAgPCEtLSBUb3AgY29ubmVjdGlvbiAtLT4KICA8cmVjdCB4PSIxMC41IiB5PSI5IiB3aWR0aD0iMyIgaGVpZ2h0PSI3IiByeD0iMSIgZmlsbD0idXJsKCNrZXR0bGViZWxsR3JhZCkiIHN0cm9rZT0iIzMwMzAzMCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIEJvdHRvbSBoaWdobGlnaHQgLS0+CiAgPGVsbGlwc2UgY3g9IjEyIiBjeT0iMTgiIHJ4PSIzIiByeT0iMS41IiBmaWxsPSIjNTA1MDUwIiBvcGFjaXR5PSIwLjYiLz4KICAKICA8IS0tIFdlaWdodCBpbmRpY2F0b3IgLS0+CiAgPHRleHQgeD0iMTIiIHk9IjE3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iNiIgZmlsbD0iI2EwYTBhMCIgZm9udC13ZWlnaHQ9ImJvbGQiPktCPC90ZXh0Pgo8L3N2Zz4K" alt="kettlebell" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;"> kettlebell 6 kg</span><span class="equipment-tag tag-kettlebells"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ia2V0dGxlYmVsbEdyYWQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNjA2MDYwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3R5bGU9InN0b3AtY29sb3I6IzQwNDA0MDtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMjAyMDIwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iaGFuZGxlR3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM5MDkwOTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNzA3MDcwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM1MDUwNTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICAKICA8IS0tIEhhbmRsZSBhcmMgLS0+CiAgPHBhdGggZD0iTSA4IDggUSAxMiA0IDE2IDgiIHN0cm9rZT0idXJsKCNoYW5kbGVHcmFkKSIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICAKICA8IS0tIEhhbmRsZSBjb25uZWN0aW9uIHBvaW50cyAtLT4KICA8Y2lyY2xlIGN4PSI4IiBjeT0iOCIgcj0iMS41IiBmaWxsPSJ1cmwoI2hhbmRsZUdyYWQpIiBzdHJva2U9IiM0MDQwNDAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGNpcmNsZSBjeD0iMTYiIGN5PSI4IiByPSIxLjUiIGZpbGw9InVybCgjaGFuZGxlR3JhZCkiIHN0cm9rZT0iIzQwNDA0MCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIE1haW4gYmVsbCBib2R5IC0tPgogIDxlbGxpcHNlIGN4PSIxMiIgY3k9IjE2IiByeD0iNiIgcnk9IjUiIGZpbGw9InVybCgja2V0dGxlYmVsbEdyYWQpIiBzdHJva2U9IiMzMDMwMzAiIHN0cm9rZS13aWR0aD0iMC41Ii8+CiAgCiAgPCEtLSBUb3AgY29ubmVjdGlvbiAtLT4KICA8cmVjdCB4PSIxMC41IiB5PSI5IiB3aWR0aD0iMyIgaGVpZ2h0PSI3IiByeD0iMSIgZmlsbD0idXJsKCNrZXR0bGViZWxsR3JhZCkiIHN0cm9rZT0iIzMwMzAzMCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIEJvdHRvbSBoaWdobGlnaHQgLS0+CiAgPGVsbGlwc2UgY3g9IjEyIiBjeT0iMTgiIHJ4PSIzIiByeT0iMS41IiBmaWxsPSIjNTA1MDUwIiBvcGFjaXR5PSIwLjYiLz4KICAKICA8IS0tIFdlaWdodCBpbmRpY2F0b3IgLS0+CiAgPHRleHQgeD0iMTIiIHk9IjE3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iNiIgZmlsbD0iI2EwYTBhMCIgZm9udC13ZWlnaHQ9ImJvbGQiPktCPC90ZXh0Pgo8L3N2Zz4K" alt="kettlebell" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;"> kettlebell 16 kg</span></div>
+                     </td>
+                     <td data-label="Step 4" class="exercise">
+                         <span class="mobile-step-label">Step 4:</span>
+                         <div class="exercise-cell-wrapper">
+                             <span class="exercise-with-video">
+            <span class="exercise-name" onclick="toggleVideo('single_arm_floor_press_(right)')">Single-arm floor press (Right)</span>
+            <div id="video_single_arm_floor_press_(right)" class="video-popup">
+                <iframe src="https://www.youtube.com/embed/rYVPIP9KMLQ?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
+                <button class="close-video" onclick="toggleVideo('single_arm_floor_press_(right)')">&times;</button>
+            </div>
+            <button class="picture-button" onclick="togglePicture('single_arm_floor_press_(right)')" title="View exercise image">
+                👁
+            </button>
+            <div id="picture_single_arm_floor_press_(right)" class="picture-popup">
+                <img src="config/pictures/45.png" alt="Single-arm floor press (Right)" />
+                <button class="close-picture" onclick="togglePicture('single_arm_floor_press_(right)')">&times;</button>
+            </div></span>
+                             <span class="exercise-id-badge">45</span>
+                         </div>
+                         <div class="muscle-tags"><span class="muscle-tag muscle-chest">Chest</span><span class="muscle-tag muscle-triceps">Triceps</span><span class="muscle-tag muscle-shoulders">Shoulders</span><span class="muscle-tag muscle-core">Core</span></div>
+                         <div class="equipment-tags"><span class="equipment-tag tag-kettlebells"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ia2V0dGxlYmVsbEdyYWQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNjA2MDYwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3R5bGU9InN0b3AtY29sb3I6IzQwNDA0MDtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMjAyMDIwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iaGFuZGxlR3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM5MDkwOTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNzA3MDcwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM1MDUwNTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICAKICA8IS0tIEhhbmRsZSBhcmMgLS0+CiAgPHBhdGggZD0iTSA4IDggUSAxMiA0IDE2IDgiIHN0cm9rZT0idXJsKCNoYW5kbGVHcmFkKSIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICAKICA8IS0tIEhhbmRsZSBjb25uZWN0aW9uIHBvaW50cyAtLT4KICA8Y2lyY2xlIGN4PSI4IiBjeT0iOCIgcj0iMS41IiBmaWxsPSJ1cmwoI2hhbmRsZUdyYWQpIiBzdHJva2U9IiM0MDQwNDAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGNpcmNsZSBjeD0iMTYiIGN5PSI4IiByPSIxLjUiIGZpbGw9InVybCgjaGFuZGxlR3JhZCkiIHN0cm9rZT0iIzQwNDA0MCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIE1haW4gYmVsbCBib2R5IC0tPgogIDxlbGxpcHNlIGN4PSIxMiIgY3k9IjE2IiByeD0iNiIgcnk9IjUiIGZpbGw9InVybCgja2V0dGxlYmVsbEdyYWQpIiBzdHJva2U9IiMzMDMwMzAiIHN0cm9rZS13aWR0aD0iMC41Ii8+CiAgCiAgPCEtLSBUb3AgY29ubmVjdGlvbiAtLT4KICA8cmVjdCB4PSIxMC41IiB5PSI5IiB3aWR0aD0iMyIgaGVpZ2h0PSI3IiByeD0iMSIgZmlsbD0idXJsKCNrZXR0bGViZWxsR3JhZCkiIHN0cm9rZT0iIzMwMzAzMCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIEJvdHRvbSBoaWdobGlnaHQgLS0+CiAgPGVsbGlwc2UgY3g9IjEyIiBjeT0iMTgiIHJ4PSIzIiByeT0iMS41IiBmaWxsPSIjNTA1MDUwIiBvcGFjaXR5PSIwLjYiLz4KICAKICA8IS0tIFdlaWdodCBpbmRpY2F0b3IgLS0+CiAgPHRleHQgeD0iMTIiIHk9IjE3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iNiIgZmlsbD0iI2EwYTBhMCIgZm9udC13ZWlnaHQ9ImJvbGQiPktCPC90ZXh0Pgo8L3N2Zz4K" alt="kettlebell" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;"> kettlebell 6 kg</span><span class="equipment-tag tag-kettlebells"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ia2V0dGxlYmVsbEdyYWQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNjA2MDYwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3R5bGU9InN0b3AtY29sb3I6IzQwNDA0MDtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMjAyMDIwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iaGFuZGxlR3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM5MDkwOTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNzA3MDcwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM1MDUwNTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICAKICA8IS0tIEhhbmRsZSBhcmMgLS0+CiAgPHBhdGggZD0iTSA4IDggUSAxMiA0IDE2IDgiIHN0cm9rZT0idXJsKCNoYW5kbGVHcmFkKSIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICAKICA8IS0tIEhhbmRsZSBjb25uZWN0aW9uIHBvaW50cyAtLT4KICA8Y2lyY2xlIGN4PSI4IiBjeT0iOCIgcj0iMS41IiBmaWxsPSJ1cmwoI2hhbmRsZUdyYWQpIiBzdHJva2U9IiM0MDQwNDAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGNpcmNsZSBjeD0iMTYiIGN5PSI4IiByPSIxLjUiIGZpbGw9InVybCgjaGFuZGxlR3JhZCkiIHN0cm9rZT0iIzQwNDA0MCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIE1haW4gYmVsbCBib2R5IC0tPgogIDxlbGxpcHNlIGN4PSIxMiIgY3k9IjE2IiByeD0iNiIgcnk9IjUiIGZpbGw9InVybCgja2V0dGxlYmVsbEdyYWQpIiBzdHJva2U9IiMzMDMwMzAiIHN0cm9rZS13aWR0aD0iMC41Ii8+CiAgCiAgPCEtLSBUb3AgY29ubmVjdGlvbiAtLT4KICA8cmVjdCB4PSIxMC41IiB5PSI5IiB3aWR0aD0iMyIgaGVpZ2h0PSI3IiByeD0iMSIgZmlsbD0idXJsKCNrZXR0bGViZWxsR3JhZCkiIHN0cm9rZT0iIzMwMzAzMCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIEJvdHRvbSBoaWdobGlnaHQgLS0+CiAgPGVsbGlwc2UgY3g9IjEyIiBjeT0iMTgiIHJ4PSIzIiByeT0iMS41IiBmaWxsPSIjNTA1MDUwIiBvcGFjaXR5PSIwLjYiLz4KICAKICA8IS0tIFdlaWdodCBpbmRpY2F0b3IgLS0+CiAgPHRleHQgeD0iMTIiIHk9IjE3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iNiIgZmlsbD0iI2EwYTBhMCIgZm9udC13ZWlnaHQ9ImJvbGQiPktCPC90ZXh0Pgo8L3N2Zz4K" alt="kettlebell" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;"> kettlebell 16 kg</span></div>
+                     </td>
+                </tr>
+                <tr>
+                    <td data-label="Station">
+                        <span class="station-letter">E</span><br>
+                        <span class="area-badge lower">lower</span>
+                    </td>
+                     <td data-label="Step 1" class="exercise">
+                         <span class="mobile-step-label">Step 1:</span>
+                         <div class="exercise-cell-wrapper">
+                             <span class="exercise-with-video">
+            <span class="exercise-name" onclick="toggleVideo('romanian_deadlift')">Romanian deadlift</span>
+            <div id="video_romanian_deadlift" class="video-popup">
+                <iframe src="https://www.youtube.com/embed/up0sPrYCTkI?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
+                <button class="close-video" onclick="toggleVideo('romanian_deadlift')">&times;</button>
+            </div>
+            <button class="picture-button" onclick="togglePicture('romanian_deadlift')" title="View exercise image">
+                👁
+            </button>
+            <div id="picture_romanian_deadlift" class="picture-popup">
+                <img src="config/pictures/0.png" alt="Romanian deadlift" />
+                <button class="close-picture" onclick="togglePicture('romanian_deadlift')">&times;</button>
+            </div></span>
+                             <span class="exercise-id-badge">0</span>
+                         </div>
+                         <div class="muscle-tags"><span class="muscle-tag muscle-legs">Hamstrings</span><span class="muscle-tag muscle-legs">Glutes</span><span class="muscle-tag muscle-other">Erector Spinae</span></div>
+                         <div class="equipment-tags"><span class="equipment-tag tag-barbells"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ibWV0YWxHcmFkIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6I2U4ZThlODtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSI1MCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNjMGMwYzA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6I2EwYTBhMDtzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9InBsYXRlR3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNkMGQwZDA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdHlsZT0ic3RvcC1jb2xvcjojOTA5MDkwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM3MDcwNzA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICAKICA8IS0tIExlZnQgd2VpZ2h0IHBsYXRlcyAtLT4KICA8cmVjdCB4PSIxIiB5PSI4IiB3aWR0aD0iNCIgaGVpZ2h0PSI4IiByeD0iMSIgZmlsbD0idXJsKCNwbGF0ZUdyYWQpIiBzdHJva2U9IiM2MDYwNjAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPHJlY3QgeD0iMiIgeT0iOSIgd2lkdGg9IjIiIGhlaWdodD0iNiIgcng9IjAuNSIgZmlsbD0idXJsKCNtZXRhbEdyYWQpIiBzdHJva2U9IiM4MDgwODAiIHN0cm9rZS13aWR0aD0iMC4yIi8+CiAgCiAgPCEtLSBMZWZ0IGNvbGxhciAtLT4KICA8cmVjdCB4PSI1IiB5PSIxMC41IiB3aWR0aD0iMS41IiBoZWlnaHQ9IjMiIHJ4PSIwLjUiIGZpbGw9InVybCgjbWV0YWxHcmFkKSIgc3Ryb2tlPSIjODA4MDgwIiBzdHJva2Utd2lkdGg9IjAuMiIvPgogIAogIDwhLS0gQmFyYmVsbCBiYXIgLS0+CiAgPHJlY3QgeD0iNi41IiB5PSIxMS4yIiB3aWR0aD0iMTEiIGhlaWdodD0iMS42IiByeD0iMC44IiBmaWxsPSJ1cmwoI21ldGFsR3JhZCkiIHN0cm9rZT0iIzgwODA4MCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIEdyaXAgbWFya3MgLS0+CiAgPGxpbmUgeDE9IjgiIHkxPSIxMS41IiB4Mj0iOCIgeTI9IjEyLjUiIHN0cm9rZT0iIzYwNjA2MCIgc3Ryb2tlLXdpZHRoPSIwLjIiLz4KICA8bGluZSB4MT0iOSIgeTE9IjExLjUiIHgyPSI5IiB5Mj0iMTIuNSIgc3Ryb2tlPSIjNjA2MDYwIiBzdHJva2Utd2lkdGg9IjAuMiIvPgogIDxsaW5lIHgxPSIxNSIgeTE9IjExLjUiIHgyPSIxNSIgeTI9IjEyLjUiIHN0cm9rZT0iIzYwNjA2MCIgc3Ryb2tlLXdpZHRoPSIwLjIiLz4KICA8bGluZSB4MT0iMTYiIHkxPSIxMS41IiB4Mj0iMTYiIHkyPSIxMi41IiBzdHJva2U9IiM2MDYwNjAiIHN0cm9rZS13aWR0aD0iMC4yIi8+CiAgCiAgPCEtLSBSaWdodCBjb2xsYXIgLS0+CiAgPHJlY3QgeD0iMTcuNSIgeT0iMTAuNSIgd2lkdGg9IjEuNSIgaGVpZ2h0PSIzIiByeD0iMC41IiBmaWxsPSJ1cmwoI21ldGFsR3JhZCkiIHN0cm9rZT0iIzgwODA4MCIgc3Ryb2tlLXdpZHRoPSIwLjIiLz4KICAKICA8IS0tIFJpZ2h0IHdlaWdodCBwbGF0ZXMgLS0+CiAgPHJlY3QgeD0iMTkiIHk9IjgiIHdpZHRoPSI0IiBoZWlnaHQ9IjgiIHJ4PSIxIiBmaWxsPSJ1cmwoI3BsYXRlR3JhZCkiIHN0cm9rZT0iIzYwNjA2MCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICA8cmVjdCB4PSIyMCIgeT0iOSIgd2lkdGg9IjIiIGhlaWdodD0iNiIgcng9IjAuNSIgZmlsbD0idXJsKCNtZXRhbEdyYWQpIiBzdHJva2U9IiM4MDgwODAiIHN0cm9rZS13aWR0aD0iMC4yIi8+Cjwvc3ZnPgo=" alt="barbell" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;"> barbells</span></div>
+                     </td>
+                     <td data-label="Step 2" class="exercise">
+                         <span class="mobile-step-label">Step 2:</span>
+                         <div class="exercise-cell-wrapper">
+                             <span class="exercise-with-video">
+            <span class="exercise-name" onclick="toggleVideo('cossack_shift')">Cossack Shift</span>
+            <div id="video_cossack_shift" class="video-popup">
+                <iframe src="https://www.youtube.com/embed/DkeFVmqy0ys?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
+                <button class="close-video" onclick="toggleVideo('cossack_shift')">&times;</button>
+            </div>
+            <button class="picture-button" onclick="togglePicture('cossack_shift')" title="View exercise image">
+                👁
+            </button>
+            <div id="picture_cossack_shift" class="picture-popup">
+                <img src="config/pictures/102.png" alt="Cossack Shift" />
+                <button class="close-picture" onclick="togglePicture('cossack_shift')">&times;</button>
+            </div></span>
+                             <span class="exercise-id-badge">102</span>
+                         </div>
+                         <div class="muscle-tags"><span class="muscle-tag muscle-legs">Quadriceps</span></div>
+                         
                      </td>
                      <td data-label="Step 3" class="exercise">
                          <span class="mobile-step-label">Step 3:</span>
@@ -943,7 +1264,13 @@
                 <iframe src="https://www.youtube.com/embed/I0Ie12QVlKU?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
                 <button class="close-video" onclick="toggleVideo('reverse_lunge_(suitcase_or_rack)_(left)')">&times;</button>
             </div>
-        </span>
+            <button class="picture-button" onclick="togglePicture('reverse_lunge_(suitcase_or_rack)_(left)')" title="View exercise image">
+                👁
+            </button>
+            <div id="picture_reverse_lunge_(suitcase_or_rack)_(left)" class="picture-popup">
+                <img src="config/pictures/42.png" alt="Reverse lunge (suitcase or rack) (Left)" />
+                <button class="close-picture" onclick="togglePicture('reverse_lunge_(suitcase_or_rack)_(left)')">&times;</button>
+            </div></span>
                              <span class="exercise-id-badge">42</span>
                          </div>
                          <div class="muscle-tags"><span class="muscle-tag muscle-legs">Quadriceps</span><span class="muscle-tag muscle-legs">Glutes</span><span class="muscle-tag muscle-legs">Hamstrings</span></div>
@@ -958,143 +1285,17 @@
                 <iframe src="https://www.youtube.com/embed/I0Ie12QVlKU?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
                 <button class="close-video" onclick="toggleVideo('reverse_lunge_(suitcase_or_rack)_(right)')">&times;</button>
             </div>
-        </span>
+            <button class="picture-button" onclick="togglePicture('reverse_lunge_(suitcase_or_rack)_(right)')" title="View exercise image">
+                👁
+            </button>
+            <div id="picture_reverse_lunge_(suitcase_or_rack)_(right)" class="picture-popup">
+                <img src="config/pictures/42.png" alt="Reverse lunge (suitcase or rack) (Right)" />
+                <button class="close-picture" onclick="togglePicture('reverse_lunge_(suitcase_or_rack)_(right)')">&times;</button>
+            </div></span>
                              <span class="exercise-id-badge">42</span>
                          </div>
                          <div class="muscle-tags"><span class="muscle-tag muscle-legs">Quadriceps</span><span class="muscle-tag muscle-legs">Glutes</span><span class="muscle-tag muscle-legs">Hamstrings</span></div>
                          <div class="equipment-tags"><span class="equipment-tag tag-kettlebells"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ia2V0dGxlYmVsbEdyYWQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNjA2MDYwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3R5bGU9InN0b3AtY29sb3I6IzQwNDA0MDtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMjAyMDIwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iaGFuZGxlR3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM5MDkwOTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNzA3MDcwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM1MDUwNTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICAKICA8IS0tIEhhbmRsZSBhcmMgLS0+CiAgPHBhdGggZD0iTSA4IDggUSAxMiA0IDE2IDgiIHN0cm9rZT0idXJsKCNoYW5kbGVHcmFkKSIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICAKICA8IS0tIEhhbmRsZSBjb25uZWN0aW9uIHBvaW50cyAtLT4KICA8Y2lyY2xlIGN4PSI4IiBjeT0iOCIgcj0iMS41IiBmaWxsPSJ1cmwoI2hhbmRsZUdyYWQpIiBzdHJva2U9IiM0MDQwNDAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGNpcmNsZSBjeD0iMTYiIGN5PSI4IiByPSIxLjUiIGZpbGw9InVybCgjaGFuZGxlR3JhZCkiIHN0cm9rZT0iIzQwNDA0MCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIE1haW4gYmVsbCBib2R5IC0tPgogIDxlbGxpcHNlIGN4PSIxMiIgY3k9IjE2IiByeD0iNiIgcnk9IjUiIGZpbGw9InVybCgja2V0dGxlYmVsbEdyYWQpIiBzdHJva2U9IiMzMDMwMzAiIHN0cm9rZS13aWR0aD0iMC41Ii8+CiAgCiAgPCEtLSBUb3AgY29ubmVjdGlvbiAtLT4KICA8cmVjdCB4PSIxMC41IiB5PSI5IiB3aWR0aD0iMyIgaGVpZ2h0PSI3IiByeD0iMSIgZmlsbD0idXJsKCNrZXR0bGViZWxsR3JhZCkiIHN0cm9rZT0iIzMwMzAzMCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIEJvdHRvbSBoaWdobGlnaHQgLS0+CiAgPGVsbGlwc2UgY3g9IjEyIiBjeT0iMTgiIHJ4PSIzIiByeT0iMS41IiBmaWxsPSIjNTA1MDUwIiBvcGFjaXR5PSIwLjYiLz4KICAKICA8IS0tIFdlaWdodCBpbmRpY2F0b3IgLS0+CiAgPHRleHQgeD0iMTIiIHk9IjE3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iNiIgZmlsbD0iI2EwYTBhMCIgZm9udC13ZWlnaHQ9ImJvbGQiPktCPC90ZXh0Pgo8L3N2Zz4K" alt="kettlebell" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;"> kettlebell 6 kg</span></div>
-                     </td>
-                </tr>
-                <tr>
-                    <td data-label="Station">
-                        <span class="station-letter">D</span><br>
-                        <span class="area-badge core">core</span>
-                    </td>
-                     <td data-label="Step 1" class="exercise">
-                         <span class="mobile-step-label">Step 1:</span>
-                         <div class="exercise-cell-wrapper">
-                             <span class="exercise-with-video">
-            <span class="exercise-name" onclick="toggleVideo('clean_plus_jerk_(left)')">Clean + jerk (Left)</span>
-            <div id="video_clean_plus_jerk_(left)" class="video-popup">
-                <iframe src="https://www.youtube.com/embed/oyz20GR9KEg?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
-                <button class="close-video" onclick="toggleVideo('clean_plus_jerk_(left)')">&times;</button>
-            </div>
-        </span>
-                             <span class="exercise-id-badge">36</span>
-                         </div>
-                         <div class="muscle-tags"><span class="muscle-tag muscle-other">Full Body</span><span class="muscle-tag muscle-shoulders">Shoulders</span><span class="muscle-tag muscle-legs">Legs</span><span class="muscle-tag muscle-core">Core</span></div>
-                         <div class="equipment-tags"><span class="equipment-tag tag-kettlebells"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ia2V0dGxlYmVsbEdyYWQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNjA2MDYwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3R5bGU9InN0b3AtY29sb3I6IzQwNDA0MDtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMjAyMDIwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iaGFuZGxlR3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM5MDkwOTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNzA3MDcwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM1MDUwNTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICAKICA8IS0tIEhhbmRsZSBhcmMgLS0+CiAgPHBhdGggZD0iTSA4IDggUSAxMiA0IDE2IDgiIHN0cm9rZT0idXJsKCNoYW5kbGVHcmFkKSIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICAKICA8IS0tIEhhbmRsZSBjb25uZWN0aW9uIHBvaW50cyAtLT4KICA8Y2lyY2xlIGN4PSI4IiBjeT0iOCIgcj0iMS41IiBmaWxsPSJ1cmwoI2hhbmRsZUdyYWQpIiBzdHJva2U9IiM0MDQwNDAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGNpcmNsZSBjeD0iMTYiIGN5PSI4IiByPSIxLjUiIGZpbGw9InVybCgjaGFuZGxlR3JhZCkiIHN0cm9rZT0iIzQwNDA0MCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIE1haW4gYmVsbCBib2R5IC0tPgogIDxlbGxpcHNlIGN4PSIxMiIgY3k9IjE2IiByeD0iNiIgcnk9IjUiIGZpbGw9InVybCgja2V0dGxlYmVsbEdyYWQpIiBzdHJva2U9IiMzMDMwMzAiIHN0cm9rZS13aWR0aD0iMC41Ii8+CiAgCiAgPCEtLSBUb3AgY29ubmVjdGlvbiAtLT4KICA8cmVjdCB4PSIxMC41IiB5PSI5IiB3aWR0aD0iMyIgaGVpZ2h0PSI3IiByeD0iMSIgZmlsbD0idXJsKCNrZXR0bGViZWxsR3JhZCkiIHN0cm9rZT0iIzMwMzAzMCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIEJvdHRvbSBoaWdobGlnaHQgLS0+CiAgPGVsbGlwc2UgY3g9IjEyIiBjeT0iMTgiIHJ4PSIzIiByeT0iMS41IiBmaWxsPSIjNTA1MDUwIiBvcGFjaXR5PSIwLjYiLz4KICAKICA8IS0tIFdlaWdodCBpbmRpY2F0b3IgLS0+CiAgPHRleHQgeD0iMTIiIHk9IjE3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iNiIgZmlsbD0iI2EwYTBhMCIgZm9udC13ZWlnaHQ9ImJvbGQiPktCPC90ZXh0Pgo8L3N2Zz4K" alt="kettlebell" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;"> kettlebell 6 kg</span></div>
-                     </td>
-                     <td data-label="Step 2" class="exercise">
-                         <span class="mobile-step-label">Step 2:</span>
-                         <div class="exercise-cell-wrapper">
-                             <span class="exercise-with-video">
-            <span class="exercise-name" onclick="toggleVideo('clean_plus_jerk_(right)')">Clean + jerk (Right)</span>
-            <div id="video_clean_plus_jerk_(right)" class="video-popup">
-                <iframe src="https://www.youtube.com/embed/oyz20GR9KEg?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
-                <button class="close-video" onclick="toggleVideo('clean_plus_jerk_(right)')">&times;</button>
-            </div>
-        </span>
-                             <span class="exercise-id-badge">36</span>
-                         </div>
-                         <div class="muscle-tags"><span class="muscle-tag muscle-other">Full Body</span><span class="muscle-tag muscle-shoulders">Shoulders</span><span class="muscle-tag muscle-legs">Legs</span><span class="muscle-tag muscle-core">Core</span></div>
-                         <div class="equipment-tags"><span class="equipment-tag tag-kettlebells"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ia2V0dGxlYmVsbEdyYWQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNjA2MDYwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3R5bGU9InN0b3AtY29sb3I6IzQwNDA0MDtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMjAyMDIwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iaGFuZGxlR3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM5MDkwOTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNzA3MDcwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM1MDUwNTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICAKICA8IS0tIEhhbmRsZSBhcmMgLS0+CiAgPHBhdGggZD0iTSA4IDggUSAxMiA0IDE2IDgiIHN0cm9rZT0idXJsKCNoYW5kbGVHcmFkKSIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICAKICA8IS0tIEhhbmRsZSBjb25uZWN0aW9uIHBvaW50cyAtLT4KICA8Y2lyY2xlIGN4PSI4IiBjeT0iOCIgcj0iMS41IiBmaWxsPSJ1cmwoI2hhbmRsZUdyYWQpIiBzdHJva2U9IiM0MDQwNDAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGNpcmNsZSBjeD0iMTYiIGN5PSI4IiByPSIxLjUiIGZpbGw9InVybCgjaGFuZGxlR3JhZCkiIHN0cm9rZT0iIzQwNDA0MCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIE1haW4gYmVsbCBib2R5IC0tPgogIDxlbGxpcHNlIGN4PSIxMiIgY3k9IjE2IiByeD0iNiIgcnk9IjUiIGZpbGw9InVybCgja2V0dGxlYmVsbEdyYWQpIiBzdHJva2U9IiMzMDMwMzAiIHN0cm9rZS13aWR0aD0iMC41Ii8+CiAgCiAgPCEtLSBUb3AgY29ubmVjdGlvbiAtLT4KICA8cmVjdCB4PSIxMC41IiB5PSI5IiB3aWR0aD0iMyIgaGVpZ2h0PSI3IiByeD0iMSIgZmlsbD0idXJsKCNrZXR0bGViZWxsR3JhZCkiIHN0cm9rZT0iIzMwMzAzMCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIEJvdHRvbSBoaWdobGlnaHQgLS0+CiAgPGVsbGlwc2UgY3g9IjEyIiBjeT0iMTgiIHJ4PSIzIiByeT0iMS41IiBmaWxsPSIjNTA1MDUwIiBvcGFjaXR5PSIwLjYiLz4KICAKICA8IS0tIFdlaWdodCBpbmRpY2F0b3IgLS0+CiAgPHRleHQgeD0iMTIiIHk9IjE3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iNiIgZmlsbD0iI2EwYTBhMCIgZm9udC13ZWlnaHQ9ImJvbGQiPktCPC90ZXh0Pgo8L3N2Zz4K" alt="kettlebell" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;"> kettlebell 6 kg</span></div>
-                     </td>
-                     <td data-label="Step 3" class="exercise">
-                         <span class="mobile-step-label">Step 3:</span>
-                         <div class="exercise-cell-wrapper">
-                             <span class="exercise-with-video">
-            <span class="exercise-name" onclick="toggleVideo('barbell_complex:_dl_to_row_to_clean_pull_to_front_squat_to_press_to_lunge')">Barbell complex: DL → row → clean-pull → front squat → press → lunge</span>
-            <div id="video_barbell_complex:_dl_to_row_to_clean_pull_to_front_squat_to_press_to_lunge" class="video-popup">
-                <iframe src="https://www.youtube.com/embed/DO3jxj5KQc4?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
-                <button class="close-video" onclick="toggleVideo('barbell_complex:_dl_to_row_to_clean_pull_to_front_squat_to_press_to_lunge')">&times;</button>
-            </div>
-        </span>
-                             <span class="exercise-id-badge">4</span>
-                         </div>
-                         <div class="muscle-tags"><span class="muscle-tag muscle-other">Full Body</span><span class="muscle-tag muscle-core">Core</span><span class="muscle-tag muscle-legs">Legs</span><span class="muscle-tag muscle-shoulders">Shoulders</span></div>
-                         <div class="equipment-tags"><span class="equipment-tag tag-barbells"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ibWV0YWxHcmFkIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6I2U4ZThlODtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSI1MCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNjMGMwYzA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6I2EwYTBhMDtzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9InBsYXRlR3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNkMGQwZDA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdHlsZT0ic3RvcC1jb2xvcjojOTA5MDkwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM3MDcwNzA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICAKICA8IS0tIExlZnQgd2VpZ2h0IHBsYXRlcyAtLT4KICA8cmVjdCB4PSIxIiB5PSI4IiB3aWR0aD0iNCIgaGVpZ2h0PSI4IiByeD0iMSIgZmlsbD0idXJsKCNwbGF0ZUdyYWQpIiBzdHJva2U9IiM2MDYwNjAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPHJlY3QgeD0iMiIgeT0iOSIgd2lkdGg9IjIiIGhlaWdodD0iNiIgcng9IjAuNSIgZmlsbD0idXJsKCNtZXRhbEdyYWQpIiBzdHJva2U9IiM4MDgwODAiIHN0cm9rZS13aWR0aD0iMC4yIi8+CiAgCiAgPCEtLSBMZWZ0IGNvbGxhciAtLT4KICA8cmVjdCB4PSI1IiB5PSIxMC41IiB3aWR0aD0iMS41IiBoZWlnaHQ9IjMiIHJ4PSIwLjUiIGZpbGw9InVybCgjbWV0YWxHcmFkKSIgc3Ryb2tlPSIjODA4MDgwIiBzdHJva2Utd2lkdGg9IjAuMiIvPgogIAogIDwhLS0gQmFyYmVsbCBiYXIgLS0+CiAgPHJlY3QgeD0iNi41IiB5PSIxMS4yIiB3aWR0aD0iMTEiIGhlaWdodD0iMS42IiByeD0iMC44IiBmaWxsPSJ1cmwoI21ldGFsR3JhZCkiIHN0cm9rZT0iIzgwODA4MCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIEdyaXAgbWFya3MgLS0+CiAgPGxpbmUgeDE9IjgiIHkxPSIxMS41IiB4Mj0iOCIgeTI9IjEyLjUiIHN0cm9rZT0iIzYwNjA2MCIgc3Ryb2tlLXdpZHRoPSIwLjIiLz4KICA8bGluZSB4MT0iOSIgeTE9IjExLjUiIHgyPSI5IiB5Mj0iMTIuNSIgc3Ryb2tlPSIjNjA2MDYwIiBzdHJva2Utd2lkdGg9IjAuMiIvPgogIDxsaW5lIHgxPSIxNSIgeTE9IjExLjUiIHgyPSIxNSIgeTI9IjEyLjUiIHN0cm9rZT0iIzYwNjA2MCIgc3Ryb2tlLXdpZHRoPSIwLjIiLz4KICA8bGluZSB4MT0iMTYiIHkxPSIxMS41IiB4Mj0iMTYiIHkyPSIxMi41IiBzdHJva2U9IiM2MDYwNjAiIHN0cm9rZS13aWR0aD0iMC4yIi8+CiAgCiAgPCEtLSBSaWdodCBjb2xsYXIgLS0+CiAgPHJlY3QgeD0iMTcuNSIgeT0iMTAuNSIgd2lkdGg9IjEuNSIgaGVpZ2h0PSIzIiByeD0iMC41IiBmaWxsPSJ1cmwoI21ldGFsR3JhZCkiIHN0cm9rZT0iIzgwODA4MCIgc3Ryb2tlLXdpZHRoPSIwLjIiLz4KICAKICA8IS0tIFJpZ2h0IHdlaWdodCBwbGF0ZXMgLS0+CiAgPHJlY3QgeD0iMTkiIHk9IjgiIHdpZHRoPSI0IiBoZWlnaHQ9IjgiIHJ4PSIxIiBmaWxsPSJ1cmwoI3BsYXRlR3JhZCkiIHN0cm9rZT0iIzYwNjA2MCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICA8cmVjdCB4PSIyMCIgeT0iOSIgd2lkdGg9IjIiIGhlaWdodD0iNiIgcng9IjAuNSIgZmlsbD0idXJsKCNtZXRhbEdyYWQpIiBzdHJva2U9IiM4MDgwODAiIHN0cm9rZS13aWR0aD0iMC4yIi8+Cjwvc3ZnPgo=" alt="barbell" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;"> barbells</span></div>
-                     </td>
-                     <td data-label="Step 4" class="exercise">
-                         <span class="mobile-step-label">Step 4:</span>
-                         <div class="exercise-cell-wrapper">
-                             <span class="exercise-with-video">
-            <span class="exercise-name" onclick="toggleVideo('devil's_press')">Devil's press</span>
-            <div id="video_devil's_press" class="video-popup">
-                <iframe src="https://www.youtube.com/embed/oH3uUqTRaGI?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
-                <button class="close-video" onclick="toggleVideo('devil's_press')">&times;</button>
-            </div>
-        </span>
-                             <span class="exercise-id-badge">23</span>
-                         </div>
-                         <div class="muscle-tags"><span class="muscle-tag muscle-shoulders">Shoulders</span><span class="muscle-tag muscle-chest">Chest</span><span class="muscle-tag muscle-legs">Quadriceps</span><span class="muscle-tag muscle-legs">Glutes</span><span class="muscle-tag muscle-core">Core</span></div>
-                         <div class="equipment-tags"><span class="equipment-tag tag-dumbbells"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ibWV0YWxHcmFkIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6I2U4ZThlODtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSI1MCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNjMGMwYzA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6I2EwYTBhMDtzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIAogIDwhLS0gTGVmdCB3ZWlnaHQgLS0+CiAgPGVsbGlwc2UgY3g9IjQiIGN5PSIxMiIgcng9IjMiIHJ5PSI2IiBmaWxsPSJ1cmwoI21ldGFsR3JhZCkiIHN0cm9rZT0iIzgwODA4MCIgc3Ryb2tlLXdpZHRoPSIwLjUiLz4KICAKICA8IS0tIEhhbmRsZSAtLT4KICA8cmVjdCB4PSI3IiB5PSIxMC41IiB3aWR0aD0iMTAiIGhlaWdodD0iMyIgcng9IjEuNSIgZmlsbD0idXJsKCNtZXRhbEdyYWQpIiBzdHJva2U9IiM4MDgwODAiIHN0cm9rZS13aWR0aD0iMC41Ii8+CiAgCiAgPCEtLSBSaWdodCB3ZWlnaHQgLS0+CiAgPGVsbGlwc2UgY3g9IjIwIiBjeT0iMTIiIHJ4PSIzIiByeT0iNiIgZmlsbD0idXJsKCNtZXRhbEdyYWQpIiBzdHJva2U9IiM4MDgwODAiIHN0cm9rZS13aWR0aD0iMC41Ii8+CiAgCiAgPCEtLSBIYW5kbGUgZ3JpcCBsaW5lcyAtLT4KICA8bGluZSB4MT0iOSIgeTE9IjExIiB4Mj0iOSIgeTI9IjEzIiBzdHJva2U9IiM5MDkwOTAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGxpbmUgeDE9IjExIiB5MT0iMTEiIHgyPSIxMSIgeTI9IjEzIiBzdHJva2U9IiM5MDkwOTAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGxpbmUgeDE9IjEzIiB5MT0iMTEiIHgyPSIxMyIgeTI9IjEzIiBzdHJva2U9IiM5MDkwOTAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGxpbmUgeDE9IjE1IiB5MT0iMTEiIHgyPSIxNSIgeTI9IjEzIiBzdHJva2U9IiM5MDkwOTAiIHN0cm9rZS13aWR0aD0iMC4zIi8+Cjwvc3ZnPg==" alt="dumbbell" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;"> dumbbell 5 kg x2</span></div>
-                     </td>
-                </tr>
-                <tr>
-                    <td data-label="Station">
-                        <span class="station-letter">E</span><br>
-                        <span class="area-badge lower">lower</span>
-                    </td>
-                     <td data-label="Step 1" class="exercise">
-                         <span class="mobile-step-label">Step 1:</span>
-                         <div class="exercise-cell-wrapper">
-                             <span class="exercise-with-video">
-            <span class="exercise-name" onclick="toggleVideo('front_loaded_squat')">Front-loaded squat</span>
-            <div id="video_front_loaded_squat" class="video-popup">
-                <iframe src="https://www.youtube.com/embed/6JisOxv6Gts?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
-                <button class="close-video" onclick="toggleVideo('front_loaded_squat')">&times;</button>
-            </div>
-        </span>
-                             <span class="exercise-id-badge">92</span>
-                         </div>
-                         <div class="muscle-tags"><span class="muscle-tag muscle-legs">Quadriceps</span><span class="muscle-tag muscle-legs">Glutes</span><span class="muscle-tag muscle-core">Core</span></div>
-                         <div class="equipment-tags"><span class="equipment-tag tag-slam"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxyYWRpYWxHcmFkaWVudCBpZD0iYmFsbEdyYWQiIGN4PSI0MCUiIGN5PSIzMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNEE0QTRBO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjcwJSIgc3R5bGU9InN0b3AtY29sb3I6IzJBMkEyQTtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMUExQTFBO3N0b3Atb3BhY2l0eToxIiAvPgogICAgPC9yYWRpYWxHcmFkaWVudD4KICAgIDxyYWRpYWxHcmFkaWVudCBpZD0iaGlnaGxpZ2h0R3JhZCIgY3g9IjMwJSIgY3k9IjIwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNGRkZGRkY7c3RvcC1vcGFjaXR5OjAuNiIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSI1MCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNDQ0NDQ0M7c3RvcC1vcGFjaXR5OjAuMyIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojOTk5OTk5O3N0b3Atb3BhY2l0eTowIiAvPgogICAgPC9yYWRpYWxHcmFkaWVudD4KICA8L2RlZnM+CiAgCiAgPCEtLSBNYWluIGJhbGwgLS0+CiAgPGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iOSIgZmlsbD0idXJsKCNiYWxsR3JhZCkiIHN0cm9rZT0iIzBBMEEwQSIgc3Ryb2tlLXdpZHRoPSIwLjUiLz4KICAKICA8IS0tIFRleHR1cmUgcGF0dGVybiAtLT4KICA8ZyBvcGFjaXR5PSIwLjQiPgogICAgPGNpcmNsZSBjeD0iOCIgY3k9IjgiIHI9IjAuOCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNjY2IiBzdHJva2Utd2lkdGg9IjAuMyIvPgogICAgPGNpcmNsZSBjeD0iMTYiIGN5PSI4IiByPSIwLjgiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzY2NiIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAgIDxjaXJjbGUgY3g9IjgiIGN5PSIxNiIgcj0iMC44IiBmaWxsPSJub25lIiBzdHJva2U9IiM2NjYiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgICA8Y2lyY2xlIGN4PSIxNiIgY3k9IjE2IiByPSIwLjgiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzY2NiIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAgIDxjaXJjbGUgY3g9IjEyIiBjeT0iMTIiIHI9IjAuOCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNjY2IiBzdHJva2Utd2lkdGg9IjAuMyIvPgogIDwvZz4KICAKICA8IS0tIENyb3NzaGF0Y2ggdGV4dHVyZSAtLT4KICA8ZyBvcGFjaXR5PSIwLjMiIHN0cm9rZT0iIzU1NSIgc3Ryb2tlLXdpZHRoPSIwLjIiPgogICAgPGxpbmUgeDE9IjYiIHkxPSI2IiB4Mj0iNyIgeTI9IjciLz4KICAgIDxsaW5lIHgxPSIxNyIgeTE9IjYiIHgyPSIxOCIgeTI9IjciLz4KICAgIDxsaW5lIHgxPSI2IiB5MT0iMTgiIHgyPSI3IiB5Mj0iMTciLz4KICAgIDxsaW5lIHgxPSIxNyIgeTE9IjE4IiB4Mj0iMTgiIHkyPSIxNyIvPgogICAgCiAgICA8bGluZSB4MT0iNyIgeTE9IjYiIHgyPSI2IiB5Mj0iNyIvPgogICAgPGxpbmUgeDE9IjE4IiB5MT0iNiIgeDI9IjE3IiB5Mj0iNyIvPgogICAgPGxpbmUgeDE9IjciIHkxPSIxOCIgeDI9IjYiIHkyPSIxNyIvPgogICAgPGxpbmUgeDE9IjE4IiB5MT0iMTgiIHgyPSIxNyIgeTI9IjE3Ii8+CiAgPC9nPgogIAogIDwhLS0gSGlnaGxpZ2h0IC0tPgogIDxlbGxpcHNlIGN4PSI5IiBjeT0iOCIgcng9IjIuNSIgcnk9IjMiIGZpbGw9InVybCgjaGlnaGxpZ2h0R3JhZCkiLz4KICAKICA8IS0tIFdlaWdodCBtYXJraW5nIC0tPgogIDx0ZXh0IHg9IjEyIiB5PSIxMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjUiIGZpbGw9IiM4ODgiIGZvbnQtd2VpZ2h0PSJib2xkIj5TQjwvdGV4dD4KPC9zdmc+Cg==" alt="slam_ball" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;"> slam ball 5 kg</span></div>
-                     </td>
-                     <td data-label="Step 2" class="exercise">
-                         <span class="mobile-step-label">Step 2:</span>
-                         <div class="exercise-cell-wrapper">
-                             <span class="exercise-with-video">
-            <span class="exercise-name" onclick="toggleVideo('skater_hops')">Skater hops</span>
-            <div id="video_skater_hops" class="video-popup">
-                <iframe src="https://www.youtube.com/embed/PSVySCGbGp0?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
-                <button class="close-video" onclick="toggleVideo('skater_hops')">&times;</button>
-            </div>
-        </span>
-                             <span class="exercise-id-badge">99</span>
-                         </div>
-                         <div class="muscle-tags"><span class="muscle-tag muscle-legs">Quadriceps</span></div>
-                         
-                     </td>
-                     <td data-label="Step 3" class="exercise">
-                         <span class="mobile-step-label">Step 3:</span>
-                         <div class="exercise-cell-wrapper">
-                             <span class="exercise-with-video">
-            <span class="exercise-name" onclick="toggleVideo('two_hand_russian_swing')">Two-hand Russian swing</span>
-            <div id="video_two_hand_russian_swing" class="video-popup">
-                <iframe src="https://www.youtube.com/embed/n1df4ASFeZU?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
-                <button class="close-video" onclick="toggleVideo('two_hand_russian_swing')">&times;</button>
-            </div>
-        </span>
-                             <span class="exercise-id-badge">33</span>
-                         </div>
-                         <div class="muscle-tags"><span class="muscle-tag muscle-legs">Glutes</span><span class="muscle-tag muscle-legs">Hamstrings</span><span class="muscle-tag muscle-shoulders">Shoulders</span></div>
-                         <div class="equipment-tags"><span class="equipment-tag tag-kettlebells"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ia2V0dGxlYmVsbEdyYWQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNjA2MDYwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3R5bGU9InN0b3AtY29sb3I6IzQwNDA0MDtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMjAyMDIwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iaGFuZGxlR3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM5MDkwOTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNzA3MDcwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM1MDUwNTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICAKICA8IS0tIEhhbmRsZSBhcmMgLS0+CiAgPHBhdGggZD0iTSA4IDggUSAxMiA0IDE2IDgiIHN0cm9rZT0idXJsKCNoYW5kbGVHcmFkKSIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICAKICA8IS0tIEhhbmRsZSBjb25uZWN0aW9uIHBvaW50cyAtLT4KICA8Y2lyY2xlIGN4PSI4IiBjeT0iOCIgcj0iMS41IiBmaWxsPSJ1cmwoI2hhbmRsZUdyYWQpIiBzdHJva2U9IiM0MDQwNDAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGNpcmNsZSBjeD0iMTYiIGN5PSI4IiByPSIxLjUiIGZpbGw9InVybCgjaGFuZGxlR3JhZCkiIHN0cm9rZT0iIzQwNDA0MCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIE1haW4gYmVsbCBib2R5IC0tPgogIDxlbGxpcHNlIGN4PSIxMiIgY3k9IjE2IiByeD0iNiIgcnk9IjUiIGZpbGw9InVybCgja2V0dGxlYmVsbEdyYWQpIiBzdHJva2U9IiMzMDMwMzAiIHN0cm9rZS13aWR0aD0iMC41Ii8+CiAgCiAgPCEtLSBUb3AgY29ubmVjdGlvbiAtLT4KICA8cmVjdCB4PSIxMC41IiB5PSI5IiB3aWR0aD0iMyIgaGVpZ2h0PSI3IiByeD0iMSIgZmlsbD0idXJsKCNrZXR0bGViZWxsR3JhZCkiIHN0cm9rZT0iIzMwMzAzMCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIEJvdHRvbSBoaWdobGlnaHQgLS0+CiAgPGVsbGlwc2UgY3g9IjEyIiBjeT0iMTgiIHJ4PSIzIiByeT0iMS41IiBmaWxsPSIjNTA1MDUwIiBvcGFjaXR5PSIwLjYiLz4KICAKICA8IS0tIFdlaWdodCBpbmRpY2F0b3IgLS0+CiAgPHRleHQgeD0iMTIiIHk9IjE3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iNiIgZmlsbD0iI2EwYTBhMCIgZm9udC13ZWlnaHQ9ImJvbGQiPktCPC90ZXh0Pgo8L3N2Zz4K" alt="kettlebell" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;"> kettlebell 16 kg</span></div>
-                     </td>
-                     <td data-label="Step 4" class="exercise">
-                         <span class="mobile-step-label">Step 4:</span>
-                         <div class="exercise-cell-wrapper">
-                             <span class="exercise-with-video">
-            <span class="exercise-name" onclick="toggleVideo('cossack_shift')">Cossack Shift</span>
-            <div id="video_cossack_shift" class="video-popup">
-                <iframe src="https://www.youtube.com/embed/DkeFVmqy0ys?autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0" frameborder="0" allowfullscreen></iframe>
-                <button class="close-video" onclick="toggleVideo('cossack_shift')">&times;</button>
-            </div>
-        </span>
-                             <span class="exercise-id-badge">102</span>
-                         </div>
-                         <div class="muscle-tags"><span class="muscle-tag muscle-legs">Quadriceps</span></div>
-                         
                      </td>
                 </tr>
             </tbody>
@@ -1107,10 +1308,6 @@
                     <span class="equipment-count">1x</span>
                 </div>
                 <div class="equipment-item">
-                    <span class="equipment-name"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ibWV0YWxHcmFkIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6I2U4ZThlODtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSI1MCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNjMGMwYzA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6I2EwYTBhMDtzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIAogIDwhLS0gTGVmdCB3ZWlnaHQgLS0+CiAgPGVsbGlwc2UgY3g9IjQiIGN5PSIxMiIgcng9IjMiIHJ5PSI2IiBmaWxsPSJ1cmwoI21ldGFsR3JhZCkiIHN0cm9rZT0iIzgwODA4MCIgc3Ryb2tlLXdpZHRoPSIwLjUiLz4KICAKICA8IS0tIEhhbmRsZSAtLT4KICA8cmVjdCB4PSI3IiB5PSIxMC41IiB3aWR0aD0iMTAiIGhlaWdodD0iMyIgcng9IjEuNSIgZmlsbD0idXJsKCNtZXRhbEdyYWQpIiBzdHJva2U9IiM4MDgwODAiIHN0cm9rZS13aWR0aD0iMC41Ii8+CiAgCiAgPCEtLSBSaWdodCB3ZWlnaHQgLS0+CiAgPGVsbGlwc2UgY3g9IjIwIiBjeT0iMTIiIHJ4PSIzIiByeT0iNiIgZmlsbD0idXJsKCNtZXRhbEdyYWQpIiBzdHJva2U9IiM4MDgwODAiIHN0cm9rZS13aWR0aD0iMC41Ii8+CiAgCiAgPCEtLSBIYW5kbGUgZ3JpcCBsaW5lcyAtLT4KICA8bGluZSB4MT0iOSIgeTE9IjExIiB4Mj0iOSIgeTI9IjEzIiBzdHJva2U9IiM5MDkwOTAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGxpbmUgeDE9IjExIiB5MT0iMTEiIHgyPSIxMSIgeTI9IjEzIiBzdHJva2U9IiM5MDkwOTAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGxpbmUgeDE9IjEzIiB5MT0iMTEiIHgyPSIxMyIgeTI9IjEzIiBzdHJva2U9IiM5MDkwOTAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGxpbmUgeDE9IjE1IiB5MT0iMTEiIHgyPSIxNSIgeTI9IjEzIiBzdHJva2U9IiM5MDkwOTAiIHN0cm9rZS13aWR0aD0iMC4zIi8+Cjwvc3ZnPg==" alt="dumbbell" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;"> Dumbbell 10 Kg</span>
-                    <span class="equipment-count">1x</span>
-                </div>
-                <div class="equipment-item">
                     <span class="equipment-name"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ibWV0YWxHcmFkIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6I2U4ZThlODtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSI1MCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNjMGMwYzA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6I2EwYTBhMDtzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIAogIDwhLS0gTGVmdCB3ZWlnaHQgLS0+CiAgPGVsbGlwc2UgY3g9IjQiIGN5PSIxMiIgcng9IjMiIHJ5PSI2IiBmaWxsPSJ1cmwoI21ldGFsR3JhZCkiIHN0cm9rZT0iIzgwODA4MCIgc3Ryb2tlLXdpZHRoPSIwLjUiLz4KICAKICA8IS0tIEhhbmRsZSAtLT4KICA8cmVjdCB4PSI3IiB5PSIxMC41IiB3aWR0aD0iMTAiIGhlaWdodD0iMyIgcng9IjEuNSIgZmlsbD0idXJsKCNtZXRhbEdyYWQpIiBzdHJva2U9IiM4MDgwODAiIHN0cm9rZS13aWR0aD0iMC41Ii8+CiAgCiAgPCEtLSBSaWdodCB3ZWlnaHQgLS0+CiAgPGVsbGlwc2UgY3g9IjIwIiBjeT0iMTIiIHJ4PSIzIiByeT0iNiIgZmlsbD0idXJsKCNtZXRhbEdyYWQpIiBzdHJva2U9IiM4MDgwODAiIHN0cm9rZS13aWR0aD0iMC41Ii8+CiAgCiAgPCEtLSBIYW5kbGUgZ3JpcCBsaW5lcyAtLT4KICA8bGluZSB4MT0iOSIgeTE9IjExIiB4Mj0iOSIgeTI9IjEzIiBzdHJva2U9IiM5MDkwOTAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGxpbmUgeDE9IjExIiB5MT0iMTEiIHgyPSIxMSIgeTI9IjEzIiBzdHJva2U9IiM5MDkwOTAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGxpbmUgeDE9IjEzIiB5MT0iMTEiIHgyPSIxMyIgeTI9IjEzIiBzdHJva2U9IiM5MDkwOTAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGxpbmUgeDE9IjE1IiB5MT0iMTEiIHgyPSIxNSIgeTI9IjEzIiBzdHJva2U9IiM5MDkwOTAiIHN0cm9rZS13aWR0aD0iMC4zIi8+Cjwvc3ZnPg==" alt="dumbbell" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;"> Dumbbell 3 Kg</span>
                     <span class="equipment-count">2x</span>
                 </div>
@@ -1120,22 +1317,22 @@
                 </div>
                 <div class="equipment-item">
                     <span class="equipment-name"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ia2V0dGxlYmVsbEdyYWQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNjA2MDYwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3R5bGU9InN0b3AtY29sb3I6IzQwNDA0MDtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMjAyMDIwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iaGFuZGxlR3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM5MDkwOTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNzA3MDcwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM1MDUwNTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICAKICA8IS0tIEhhbmRsZSBhcmMgLS0+CiAgPHBhdGggZD0iTSA4IDggUSAxMiA0IDE2IDgiIHN0cm9rZT0idXJsKCNoYW5kbGVHcmFkKSIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICAKICA8IS0tIEhhbmRsZSBjb25uZWN0aW9uIHBvaW50cyAtLT4KICA8Y2lyY2xlIGN4PSI4IiBjeT0iOCIgcj0iMS41IiBmaWxsPSJ1cmwoI2hhbmRsZUdyYWQpIiBzdHJva2U9IiM0MDQwNDAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGNpcmNsZSBjeD0iMTYiIGN5PSI4IiByPSIxLjUiIGZpbGw9InVybCgjaGFuZGxlR3JhZCkiIHN0cm9rZT0iIzQwNDA0MCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIE1haW4gYmVsbCBib2R5IC0tPgogIDxlbGxpcHNlIGN4PSIxMiIgY3k9IjE2IiByeD0iNiIgcnk9IjUiIGZpbGw9InVybCgja2V0dGxlYmVsbEdyYWQpIiBzdHJva2U9IiMzMDMwMzAiIHN0cm9rZS13aWR0aD0iMC41Ii8+CiAgCiAgPCEtLSBUb3AgY29ubmVjdGlvbiAtLT4KICA8cmVjdCB4PSIxMC41IiB5PSI5IiB3aWR0aD0iMyIgaGVpZ2h0PSI3IiByeD0iMSIgZmlsbD0idXJsKCNrZXR0bGViZWxsR3JhZCkiIHN0cm9rZT0iIzMwMzAzMCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIEJvdHRvbSBoaWdobGlnaHQgLS0+CiAgPGVsbGlwc2UgY3g9IjEyIiBjeT0iMTgiIHJ4PSIzIiByeT0iMS41IiBmaWxsPSIjNTA1MDUwIiBvcGFjaXR5PSIwLjYiLz4KICAKICA8IS0tIFdlaWdodCBpbmRpY2F0b3IgLS0+CiAgPHRleHQgeD0iMTIiIHk9IjE3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iNiIgZmlsbD0iI2EwYTBhMCIgZm9udC13ZWlnaHQ9ImJvbGQiPktCPC90ZXh0Pgo8L3N2Zz4K" alt="kettlebell" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;"> Kettlebell 16 Kg</span>
-                    <span class="equipment-count">1x</span>
+                    <span class="equipment-count">2x</span>
                 </div>
                 <div class="equipment-item">
                     <span class="equipment-name"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ia2V0dGxlYmVsbEdyYWQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNjA2MDYwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3R5bGU9InN0b3AtY29sb3I6IzQwNDA0MDtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMjAyMDIwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iaGFuZGxlR3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM5MDkwOTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNzA3MDcwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM1MDUwNTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICAKICA8IS0tIEhhbmRsZSBhcmMgLS0+CiAgPHBhdGggZD0iTSA4IDggUSAxMiA0IDE2IDgiIHN0cm9rZT0idXJsKCNoYW5kbGVHcmFkKSIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICAKICA8IS0tIEhhbmRsZSBjb25uZWN0aW9uIHBvaW50cyAtLT4KICA8Y2lyY2xlIGN4PSI4IiBjeT0iOCIgcj0iMS41IiBmaWxsPSJ1cmwoI2hhbmRsZUdyYWQpIiBzdHJva2U9IiM0MDQwNDAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGNpcmNsZSBjeD0iMTYiIGN5PSI4IiByPSIxLjUiIGZpbGw9InVybCgjaGFuZGxlR3JhZCkiIHN0cm9rZT0iIzQwNDA0MCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIE1haW4gYmVsbCBib2R5IC0tPgogIDxlbGxpcHNlIGN4PSIxMiIgY3k9IjE2IiByeD0iNiIgcnk9IjUiIGZpbGw9InVybCgja2V0dGxlYmVsbEdyYWQpIiBzdHJva2U9IiMzMDMwMzAiIHN0cm9rZS13aWR0aD0iMC41Ii8+CiAgCiAgPCEtLSBUb3AgY29ubmVjdGlvbiAtLT4KICA8cmVjdCB4PSIxMC41IiB5PSI5IiB3aWR0aD0iMyIgaGVpZ2h0PSI3IiByeD0iMSIgZmlsbD0idXJsKCNrZXR0bGViZWxsR3JhZCkiIHN0cm9rZT0iIzMwMzAzMCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIEJvdHRvbSBoaWdobGlnaHQgLS0+CiAgPGVsbGlwc2UgY3g9IjEyIiBjeT0iMTgiIHJ4PSIzIiByeT0iMS41IiBmaWxsPSIjNTA1MDUwIiBvcGFjaXR5PSIwLjYiLz4KICAKICA8IS0tIFdlaWdodCBpbmRpY2F0b3IgLS0+CiAgPHRleHQgeD0iMTIiIHk9IjE3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iNiIgZmlsbD0iI2EwYTBhMCIgZm9udC13ZWlnaHQ9ImJvbGQiPktCPC90ZXh0Pgo8L3N2Zz4K" alt="kettlebell" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;"> Kettlebell 4 Kg</span>
-                    <span class="equipment-count">1x</span>
+                    <span class="equipment-count">2x</span>
                 </div>
                 <div class="equipment-item">
                     <span class="equipment-name"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ia2V0dGxlYmVsbEdyYWQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNjA2MDYwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3R5bGU9InN0b3AtY29sb3I6IzQwNDA0MDtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMjAyMDIwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iaGFuZGxlR3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM5MDkwOTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNzA3MDcwO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM1MDUwNTA7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KICAKICA8IS0tIEhhbmRsZSBhcmMgLS0+CiAgPHBhdGggZD0iTSA4IDggUSAxMiA0IDE2IDgiIHN0cm9rZT0idXJsKCNoYW5kbGVHcmFkKSIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICAKICA8IS0tIEhhbmRsZSBjb25uZWN0aW9uIHBvaW50cyAtLT4KICA8Y2lyY2xlIGN4PSI4IiBjeT0iOCIgcj0iMS41IiBmaWxsPSJ1cmwoI2hhbmRsZUdyYWQpIiBzdHJva2U9IiM0MDQwNDAiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgPGNpcmNsZSBjeD0iMTYiIGN5PSI4IiByPSIxLjUiIGZpbGw9InVybCgjaGFuZGxlR3JhZCkiIHN0cm9rZT0iIzQwNDA0MCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIE1haW4gYmVsbCBib2R5IC0tPgogIDxlbGxpcHNlIGN4PSIxMiIgY3k9IjE2IiByeD0iNiIgcnk9IjUiIGZpbGw9InVybCgja2V0dGxlYmVsbEdyYWQpIiBzdHJva2U9IiMzMDMwMzAiIHN0cm9rZS13aWR0aD0iMC41Ii8+CiAgCiAgPCEtLSBUb3AgY29ubmVjdGlvbiAtLT4KICA8cmVjdCB4PSIxMC41IiB5PSI5IiB3aWR0aD0iMyIgaGVpZ2h0PSI3IiByeD0iMSIgZmlsbD0idXJsKCNrZXR0bGViZWxsR3JhZCkiIHN0cm9rZT0iIzMwMzAzMCIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIEJvdHRvbSBoaWdobGlnaHQgLS0+CiAgPGVsbGlwc2UgY3g9IjEyIiBjeT0iMTgiIHJ4PSIzIiByeT0iMS41IiBmaWxsPSIjNTA1MDUwIiBvcGFjaXR5PSIwLjYiLz4KICAKICA8IS0tIFdlaWdodCBpbmRpY2F0b3IgLS0+CiAgPHRleHQgeD0iMTIiIHk9IjE3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iNiIgZmlsbD0iI2EwYTBhMCIgZm9udC13ZWlnaHQ9ImJvbGQiPktCPC90ZXh0Pgo8L3N2Zz4K" alt="kettlebell" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;"> Kettlebell 6 Kg</span>
                     <span class="equipment-count">4x</span>
                 </div>
                 <div class="equipment-item">
-                    <span class="equipment-name"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCA0OCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ic2thdGVib2FyZF9ncmFkIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6I2U4ZThlODtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSI1MCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM0NDQ0NDQ7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzIyMjtzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIDwhLS0gRGVjayAtLT4KICA8cmVjdCB4PSI0IiB5PSI4IiB3aWR0aD0iNDAiIGhlaWdodD0iOCIgcng9IjQiIGZpbGw9InVybCgjc2thdGVib2FyZF9ncmFkKSIgc3Ryb2tlPSIjMjIyIiBzdHJva2Utd2lkdGg9IjEuMiIvPgogIDwhLS0gV2hlZWxzIC0tPgogIDxlbGxpcHNlIGN4PSIxMCIgY3k9IjIwIiByeD0iMyIgcnk9IjMiIGZpbGw9IiM4ODgiIHN0cm9rZT0iIzQ0NCIgc3Ryb2tlLXdpZHRoPSIwLjciLz4KICA8ZWxsaXBzZSBjeD0iMzgiIGN5PSIyMCIgcng9IjMiIHJ5PSIzIiBmaWxsPSIjODg4IiBzdHJva2U9IiM0NDQiIHN0cm9rZS13aWR0aD0iMC43Ii8+CiAgPGVsbGlwc2UgY3g9IjEwIiBjeT0iNCIgcng9IjMiIHJ5PSIzIiBmaWxsPSIjODg4IiBzdHJva2U9IiM0NDQiIHN0cm9rZS13aWR0aD0iMC43Ii8+CiAgPGVsbGlwc2UgY3g9IjM4IiBjeT0iNCIgcng9IjMiIHJ5PSIzIiBmaWxsPSIjODg4IiBzdHJva2U9IiM0NDQiIHN0cm9rZS13aWR0aD0iMC43Ii8+Cjwvc3ZnPg==" alt="skateboard" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;"> Skateboard</span>
-                    <span class="equipment-count">1x</span>
+                    <span class="equipment-name"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iYm94VG9wR3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNEMkI0OEM7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdHlsZT0ic3RvcC1jb2xvcjojQ0Q4NTNGO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNBMDUyMkQ7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJib3hTaWRlR3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNBMDUyMkQ7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdHlsZT0ic3RvcC1jb2xvcjojOEI0NTEzO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM2NTQzMjE7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJib3hSaWdodEdyYWQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojOEI0NTEzO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3R5bGU9InN0b3AtY29sb3I6IzY1NDMyMTtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNEEyQzE3O3N0b3Atb3BhY2l0eToxIiAvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgCiAgPCEtLSBCb3ggZnJvbnQgZmFjZSAtLT4KICA8cG9seWdvbiBwb2ludHM9IjMsMTAgMywyMCAxNSwyMCAxNSwxMCIgCiAgICAgICAgICAgZmlsbD0idXJsKCNib3hTaWRlR3JhZCkiIAogICAgICAgICAgIHN0cm9rZT0iIzNBMUYwQiIgCiAgICAgICAgICAgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIEJveCB0b3AgZmFjZSAtLT4KICA8cG9seWdvbiBwb2ludHM9IjMsMTAgNiw3IDE4LDcgMTUsMTAiIAogICAgICAgICAgIGZpbGw9InVybCgjYm94VG9wR3JhZCkiIAogICAgICAgICAgIHN0cm9rZT0iIzhCNDUxMyIgCiAgICAgICAgICAgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAKICA8IS0tIEJveCByaWdodCBmYWNlIC0tPgogIDxwb2x5Z29uIHBvaW50cz0iMTUsMTAgMTgsNyAxOCwxNyAxNSwyMCIgCiAgICAgICAgICAgZmlsbD0idXJsKCNib3hSaWdodEdyYWQpIiAKICAgICAgICAgICBzdHJva2U9IiMzQTFGMEIiIAogICAgICAgICAgIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgCiAgPCEtLSBXb29kIGdyYWluIGxpbmVzIG9uIGZyb250IC0tPgogIDxnIG9wYWNpdHk9IjAuMyIgc3Ryb2tlPSIjNEEyQzE3IiBzdHJva2Utd2lkdGg9IjAuMiI+CiAgICA8bGluZSB4MT0iNCIgeTE9IjEyIiB4Mj0iMTQiIHkyPSIxMiIvPgogICAgPGxpbmUgeDE9IjQiIHkxPSIxNSIgeDI9IjE0IiB5Mj0iMTUiLz4KICAgIDxsaW5lIHgxPSI0IiB5MT0iMTgiIHgyPSIxNCIgeTI9IjE4Ii8+CiAgPC9nPgogIAogIDwhLS0gV29vZCBncmFpbiBsaW5lcyBvbiB0b3AgLS0+CiAgPGcgb3BhY2l0eT0iMC4zIiBzdHJva2U9IiM4QjQ1MTMiIHN0cm9rZS13aWR0aD0iMC4yIj4KICAgIDxsaW5lIHgxPSI1IiB5MT0iOC41IiB4Mj0iMTYiIHkyPSI4LjUiLz4KICA8L2c+CiAgCiAgPCEtLSBDb3JuZXIgZGV0YWlscyAtLT4KICA8Y2lyY2xlIGN4PSIzIiBjeT0iMTAiIHI9IjAuMyIgZmlsbD0iIzY1NDMyMSIvPgogIDxjaXJjbGUgY3g9IjE1IiBjeT0iMTAiIHI9IjAuMyIgZmlsbD0iIzY1NDMyMSIvPgogIDxjaXJjbGUgY3g9IjMiIGN5PSIyMCIgcj0iMC4zIiBmaWxsPSIjNEEyQzE3Ii8+CiAgPGNpcmNsZSBjeD0iMTUiIGN5PSIyMCIgcj0iMC4zIiBmaWxsPSIjNEEyQzE3Ii8+CiAgCiAgPCEtLSBIZWlnaHQgbWFya2luZyAtLT4KICA8dGV4dCB4PSI5IiB5PSIxNiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjQiIGZpbGw9IiM2NTQzMjEiIGZvbnQtd2VpZ2h0PSJib2xkIj5CT1g8L3RleHQ+Cjwvc3ZnPgo=" alt="plyo_box" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;"> Plyo Box</span>
+                    <span class="equipment-count">2x</span>
                 </div>
                 <div class="equipment-item">
-                    <span class="equipment-name"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxyYWRpYWxHcmFkaWVudCBpZD0iYmFsbEdyYWQiIGN4PSI0MCUiIGN5PSIzMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNEE0QTRBO3N0b3Atb3BhY2l0eToxIiAvPgogICAgICA8c3RvcCBvZmZzZXQ9IjcwJSIgc3R5bGU9InN0b3AtY29sb3I6IzJBMkEyQTtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMUExQTFBO3N0b3Atb3BhY2l0eToxIiAvPgogICAgPC9yYWRpYWxHcmFkaWVudD4KICAgIDxyYWRpYWxHcmFkaWVudCBpZD0iaGlnaGxpZ2h0R3JhZCIgY3g9IjMwJSIgY3k9IjIwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNGRkZGRkY7c3RvcC1vcGFjaXR5OjAuNiIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSI1MCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNDQ0NDQ0M7c3RvcC1vcGFjaXR5OjAuMyIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojOTk5OTk5O3N0b3Atb3BhY2l0eTowIiAvPgogICAgPC9yYWRpYWxHcmFkaWVudD4KICA8L2RlZnM+CiAgCiAgPCEtLSBNYWluIGJhbGwgLS0+CiAgPGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iOSIgZmlsbD0idXJsKCNiYWxsR3JhZCkiIHN0cm9rZT0iIzBBMEEwQSIgc3Ryb2tlLXdpZHRoPSIwLjUiLz4KICAKICA8IS0tIFRleHR1cmUgcGF0dGVybiAtLT4KICA8ZyBvcGFjaXR5PSIwLjQiPgogICAgPGNpcmNsZSBjeD0iOCIgY3k9IjgiIHI9IjAuOCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNjY2IiBzdHJva2Utd2lkdGg9IjAuMyIvPgogICAgPGNpcmNsZSBjeD0iMTYiIGN5PSI4IiByPSIwLjgiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzY2NiIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAgIDxjaXJjbGUgY3g9IjgiIGN5PSIxNiIgcj0iMC44IiBmaWxsPSJub25lIiBzdHJva2U9IiM2NjYiIHN0cm9rZS13aWR0aD0iMC4zIi8+CiAgICA8Y2lyY2xlIGN4PSIxNiIgY3k9IjE2IiByPSIwLjgiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzY2NiIgc3Ryb2tlLXdpZHRoPSIwLjMiLz4KICAgIDxjaXJjbGUgY3g9IjEyIiBjeT0iMTIiIHI9IjAuOCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNjY2IiBzdHJva2Utd2lkdGg9IjAuMyIvPgogIDwvZz4KICAKICA8IS0tIENyb3NzaGF0Y2ggdGV4dHVyZSAtLT4KICA8ZyBvcGFjaXR5PSIwLjMiIHN0cm9rZT0iIzU1NSIgc3Ryb2tlLXdpZHRoPSIwLjIiPgogICAgPGxpbmUgeDE9IjYiIHkxPSI2IiB4Mj0iNyIgeTI9IjciLz4KICAgIDxsaW5lIHgxPSIxNyIgeTE9IjYiIHgyPSIxOCIgeTI9IjciLz4KICAgIDxsaW5lIHgxPSI2IiB5MT0iMTgiIHgyPSI3IiB5Mj0iMTciLz4KICAgIDxsaW5lIHgxPSIxNyIgeTE9IjE4IiB4Mj0iMTgiIHkyPSIxNyIvPgogICAgCiAgICA8bGluZSB4MT0iNyIgeTE9IjYiIHgyPSI2IiB5Mj0iNyIvPgogICAgPGxpbmUgeDE9IjE4IiB5MT0iNiIgeDI9IjE3IiB5Mj0iNyIvPgogICAgPGxpbmUgeDE9IjciIHkxPSIxOCIgeDI9IjYiIHkyPSIxNyIvPgogICAgPGxpbmUgeDE9IjE4IiB5MT0iMTgiIHgyPSIxNyIgeTI9IjE3Ii8+CiAgPC9nPgogIAogIDwhLS0gSGlnaGxpZ2h0IC0tPgogIDxlbGxpcHNlIGN4PSI5IiBjeT0iOCIgcng9IjIuNSIgcnk9IjMiIGZpbGw9InVybCgjaGlnaGxpZ2h0R3JhZCkiLz4KICAKICA8IS0tIFdlaWdodCBtYXJraW5nIC0tPgogIDx0ZXh0IHg9IjEyIiB5PSIxMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjUiIGZpbGw9IiM4ODgiIGZvbnQtd2VpZ2h0PSJib2xkIj5TQjwvdGV4dD4KPC9zdmc+Cg==" alt="slam_ball" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;"> Slam Ball 5 Kg</span>
+                    <span class="equipment-name"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCA0OCAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ic2thdGVib2FyZF9ncmFkIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6I2U4ZThlODtzdG9wLW9wYWNpdHk6MSIgLz4KICAgICAgPHN0b3Agb2Zmc2V0PSI1MCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM0NDQ0NDQ7c3RvcC1vcGFjaXR5OjEiIC8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzIyMjtzdG9wLW9wYWNpdHk6MSIgLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIDwhLS0gRGVjayAtLT4KICA8cmVjdCB4PSI0IiB5PSI4IiB3aWR0aD0iNDAiIGhlaWdodD0iOCIgcng9IjQiIGZpbGw9InVybCgjc2thdGVib2FyZF9ncmFkKSIgc3Ryb2tlPSIjMjIyIiBzdHJva2Utd2lkdGg9IjEuMiIvPgogIDwhLS0gV2hlZWxzIC0tPgogIDxlbGxpcHNlIGN4PSIxMCIgY3k9IjIwIiByeD0iMyIgcnk9IjMiIGZpbGw9IiM4ODgiIHN0cm9rZT0iIzQ0NCIgc3Ryb2tlLXdpZHRoPSIwLjciLz4KICA8ZWxsaXBzZSBjeD0iMzgiIGN5PSIyMCIgcng9IjMiIHJ5PSIzIiBmaWxsPSIjODg4IiBzdHJva2U9IiM0NDQiIHN0cm9rZS13aWR0aD0iMC43Ii8+CiAgPGVsbGlwc2UgY3g9IjEwIiBjeT0iNCIgcng9IjMiIHJ5PSIzIiBmaWxsPSIjODg4IiBzdHJva2U9IiM0NDQiIHN0cm9rZS13aWR0aD0iMC43Ii8+CiAgPGVsbGlwc2UgY3g9IjM4IiBjeT0iNCIgcng9IjMiIHJ5PSIzIiBmaWxsPSIjODg4IiBzdHJva2U9IiM0NDQiIHN0cm9rZS13aWR0aD0iMC43Ii8+Cjwvc3ZnPg==" alt="skateboard" style="width:20px;height:20px;vertical-align:middle;margin-right:4px;"> Skateboard</span>
                     <span class="equipment-count">2x</span>
                 </div>
             </div>
@@ -1147,15 +1344,22 @@
             <div class="analysis-section">
                 <h3 class="section-title">🎯 Station Area Targeting</h3>
                 <div class="distribution-grid">
-                <div class="distribution-item" style="border-left: 4px solid #27ae60">
-                    <div class="distribution-type">🦵 Lower</div>
+                <div class="distribution-item" style="border-left: 4px solid #3498db">
+                    <div class="distribution-type">💪 Upper</div>
                     <div class="distribution-stats">
-                        <span class="stat-item">3 stations (60%)</span>
-                        <span class="stat-item">12 exercises (60%)</span>
+                        <span class="stat-item">2 stations (40%)</span>
+                        <span class="stat-item">8 exercises (40%)</span>
                     </div>
                 </div>
                 <div class="distribution-item" style="border-left: 4px solid #e74c3c">
                     <div class="distribution-type">🔥 Core</div>
+                    <div class="distribution-stats">
+                        <span class="stat-item">1 stations (20%)</span>
+                        <span class="stat-item">4 exercises (20%)</span>
+                    </div>
+                </div>
+                <div class="distribution-item" style="border-left: 4px solid #27ae60">
+                    <div class="distribution-type">🦵 Lower</div>
                     <div class="distribution-stats">
                         <span class="stat-item">2 stations (40%)</span>
                         <span class="stat-item">8 exercises (40%)</span>
@@ -1168,67 +1372,67 @@
             <div class="analysis-section">
                 <h3 class="section-title">🎯 Muscle Group Distribution</h3>
                 <div class="muscle-distribution-grid">
-                    <div class="muscle-item" style="background: linear-gradient(90deg, #79554822 0%, #79554844 45.76271186440678%, transparent 45.76271186440678%)">
+                    <div class="muscle-item" style="background: linear-gradient(90deg, #79554822 0%, #79554844 33.33333333333333%, transparent 33.33333333333333%)">
                         <div class="muscle-info">
                             <span class="muscle-name">🦵 Legs</span>
-                            <span class="muscle-stats">27 exercises • 45.8%</span>
+                            <span class="muscle-stats">18 exercises • 33.3%</span>
                         </div>
                         <div class="muscle-bar">
-                            <div class="muscle-fill" style="width: 45.76271186440678%; background: #795548"></div>
+                            <div class="muscle-fill" style="width: 33.33333333333333%; background: #795548"></div>
                         </div>
                     </div>
-                    <div class="muscle-item" style="background: linear-gradient(90deg, #f4433622 0%, #f4433644 22.033898305084744%, transparent 22.033898305084744%)">
-                        <div class="muscle-info">
-                            <span class="muscle-name">⚡ Core</span>
-                            <span class="muscle-stats">13 exercises • 22.0%</span>
-                        </div>
-                        <div class="muscle-bar">
-                            <div class="muscle-fill" style="width: 22.033898305084744%; background: #f44336"></div>
-                        </div>
-                    </div>
-                    <div class="muscle-item" style="background: linear-gradient(90deg, #ff980022 0%, #ff980044 18.64406779661017%, transparent 18.64406779661017%)">
-                        <div class="muscle-info">
-                            <span class="muscle-name">🌟 Shoulders</span>
-                            <span class="muscle-stats">11 exercises • 18.6%</span>
-                        </div>
-                        <div class="muscle-bar">
-                            <div class="muscle-fill" style="width: 18.64406779661017%; background: #ff9800"></div>
-                        </div>
-                    </div>
-                    <div class="muscle-item" style="background: linear-gradient(90deg, #607d8b22 0%, #607d8b44 6.779661016949152%, transparent 6.779661016949152%)">
-                        <div class="muscle-info">
-                            <span class="muscle-name">🏋️ Other</span>
-                            <span class="muscle-stats">4 exercises • 6.8%</span>
-                        </div>
-                        <div class="muscle-bar">
-                            <div class="muscle-fill" style="width: 6.779661016949152%; background: #607d8b"></div>
-                        </div>
-                    </div>
-                    <div class="muscle-item" style="background: linear-gradient(90deg, #4caf5022 0%, #4caf5044 5.084745762711865%, transparent 5.084745762711865%)">
+                    <div class="muscle-item" style="background: linear-gradient(90deg, #4caf5022 0%, #4caf5044 18.51851851851852%, transparent 18.51851851851852%)">
                         <div class="muscle-info">
                             <span class="muscle-name">💥 Arms</span>
-                            <span class="muscle-stats">3 exercises • 5.1%</span>
+                            <span class="muscle-stats">10 exercises • 18.5%</span>
                         </div>
                         <div class="muscle-bar">
-                            <div class="muscle-fill" style="width: 5.084745762711865%; background: #4caf50"></div>
+                            <div class="muscle-fill" style="width: 18.51851851851852%; background: #4caf50"></div>
                         </div>
                     </div>
-                    <div class="muscle-item" style="background: linear-gradient(90deg, #e91e6322 0%, #e91e6344 1.694915254237288%, transparent 1.694915254237288%)">
+                    <div class="muscle-item" style="background: linear-gradient(90deg, #f4433622 0%, #f4433644 18.51851851851852%, transparent 18.51851851851852%)">
                         <div class="muscle-info">
-                            <span class="muscle-name">🔥 Chest</span>
-                            <span class="muscle-stats">1 exercises • 1.7%</span>
+                            <span class="muscle-name">⚡ Core</span>
+                            <span class="muscle-stats">10 exercises • 18.5%</span>
                         </div>
                         <div class="muscle-bar">
-                            <div class="muscle-fill" style="width: 1.694915254237288%; background: #e91e63"></div>
+                            <div class="muscle-fill" style="width: 18.51851851851852%; background: #f44336"></div>
+                        </div>
+                    </div>
+                    <div class="muscle-item" style="background: linear-gradient(90deg, #ff980022 0%, #ff980044 16.666666666666664%, transparent 16.666666666666664%)">
+                        <div class="muscle-info">
+                            <span class="muscle-name">🌟 Shoulders</span>
+                            <span class="muscle-stats">9 exercises • 16.7%</span>
+                        </div>
+                        <div class="muscle-bar">
+                            <div class="muscle-fill" style="width: 16.666666666666664%; background: #ff9800"></div>
+                        </div>
+                    </div>
+                    <div class="muscle-item" style="background: linear-gradient(90deg, #607d8b22 0%, #607d8b44 7.4074074074074066%, transparent 7.4074074074074066%)">
+                        <div class="muscle-info">
+                            <span class="muscle-name">🏋️ Other</span>
+                            <span class="muscle-stats">4 exercises • 7.4%</span>
+                        </div>
+                        <div class="muscle-bar">
+                            <div class="muscle-fill" style="width: 7.4074074074074066%; background: #607d8b"></div>
+                        </div>
+                    </div>
+                    <div class="muscle-item" style="background: linear-gradient(90deg, #e91e6322 0%, #e91e6344 5.555555555555555%, transparent 5.555555555555555%)">
+                        <div class="muscle-info">
+                            <span class="muscle-name">🔥 Chest</span>
+                            <span class="muscle-stats">3 exercises • 5.6%</span>
+                        </div>
+                        <div class="muscle-bar">
+                            <div class="muscle-fill" style="width: 5.555555555555555%; background: #e91e63"></div>
                         </div>
                     </div>
                 </div>
                 
                 <div class="workout-balance">
                     <div>Total Exercises: <strong>20</strong></div>
-                    <div class="balance-indicator lower-heavy">
-                        <span class="balance-icon">🦵</span>
-                        <span class="balance-text">Lower body focused workout</span>
+                    <div class="balance-indicator balanced">
+                        <span class="balance-icon">⚖️</span>
+                        <span class="balance-text">Well-balanced workout</span>
                     </div>
                 </div>
             </div>
@@ -1380,11 +1584,53 @@
             }
         }
         
+        // Picture popup functions
+        function togglePicture(exerciseId) {
+            const picture = document.getElementById('picture_' + exerciseId);
+            const allPictures = document.querySelectorAll('.picture-popup');
+            
+            // Hide all other pictures first
+            allPictures.forEach(p => {
+                if (p.id !== 'picture_' + exerciseId) {
+                    p.style.display = 'none';
+                }
+            });
+            
+            // Toggle the selected picture
+            if (picture.style.display === 'none' || picture.style.display === '') {
+                picture.style.display = 'block';
+                positionPictureSmart(picture);
+            } else {
+                picture.style.display = 'none';
+            }
+        }
+        
+        function positionPictureSmart(pictureElement) {
+            // Check if picture is in active rest section
+            const activeRestSection = pictureElement.closest('.active-rest-section');
+            if (activeRestSection) {
+                // For active rest pictures, use fixed centering
+                pictureElement.style.position = 'fixed';
+                pictureElement.style.top = '50%';
+                pictureElement.style.left = '50%';
+                pictureElement.style.transform = 'translate(-50%, -50%)';
+                pictureElement.style.zIndex = '10000';
+                return;
+            }
+            
+            // For regular workout pictures, use normal positioning (already handled by CSS)
+        }
+        
         // Close video when clicking outside
         document.addEventListener('click', function(e) {
             if (!e.target.closest('.exercise-with-video') && !e.target.closest('.video-popup')) {
                 document.querySelectorAll('.video-popup').forEach(video => {
                     stopVideo(video);
+                });
+            }
+            if (!e.target.closest('.exercise-with-picture') && !e.target.closest('.picture-popup') && !e.target.closest('.picture-button')) {
+                document.querySelectorAll('.picture-popup').forEach(picture => {
+                    picture.style.display = 'none';
                 });
             }
         });

@@ -7,9 +7,18 @@ from typing import Dict, List, Optional
 
 def format_exercise_link(exercise_name: str, exercise_link: str, exercise_id: int = None) -> str:
     """Format exercise with embedded video popup if valid URL provided, otherwise return plain name. Show ID if provided."""
+    from pathlib import Path
+    
     display_name = exercise_name
+    
+    # Check if picture exists (using exercise ID)
+    has_picture = False
+    picture_path = ""
     if exercise_id is not None and exercise_id != -1:
-        display_name = f"{exercise_name} ({exercise_id})"
+        picture_path = Path("config/pictures") / f"{exercise_id}.png"
+        has_picture = picture_path.exists()
+    
+    # Original video functionality - keep exactly the same
     if exercise_link and exercise_link != "some url" and exercise_link.strip():
         # Convert YouTube URLs to embed format with autoplay (muted to bypass browser restrictions)
         embed_url = exercise_link
@@ -27,15 +36,43 @@ def format_exercise_link(exercise_name: str, exercise_link: str, exercise_id: in
         # Create unique ID for this exercise
         html_id = exercise_name.lower().replace(" ", "_").replace("-", "_").replace("+", "plus").replace("→", "to")
         
-        return f'''<span class="exercise-with-video">
+        # Original video HTML + new picture button if available
+        video_html = f'''<span class="exercise-with-video">
             <span class="exercise-name" onclick="toggleVideo('{html_id}')">{display_name}</span>
             <div id="video_{html_id}" class="video-popup">
                 <iframe src="{embed_url}" frameborder="0" allowfullscreen></iframe>
                 <button class="close-video" onclick="toggleVideo('{html_id}')">&times;</button>
-            </div>
-        </span>'''
+            </div>'''
+        
+        # Add picture button if picture exists
+        if has_picture:
+            video_html += f'''
+            <button class="picture-button" onclick="togglePicture('{html_id}')" title="View exercise image">
+                👁
+            </button>
+            <div id="picture_{html_id}" class="picture-popup">
+                <img src="{picture_path}" alt="{exercise_name}" />
+                <button class="close-picture" onclick="togglePicture('{html_id}')">&times;</button>
+            </div>'''
+        
+        video_html += '</span>'
+        return video_html
     else:
-        return display_name
+        # No video, but check if there's a picture
+        if has_picture:
+            html_id = exercise_name.lower().replace(" ", "_").replace("-", "_").replace("+", "plus").replace("→", "to")
+            return f'''<span class="exercise-with-picture">
+                {display_name}
+                <button class="picture-button" onclick="togglePicture('{html_id}')" title="View exercise image">
+                    👁
+                </button>
+                <div id="picture_{html_id}" class="picture-popup">
+                    <img src="{picture_path}" alt="{exercise_name}" />
+                    <button class="close-picture" onclick="togglePicture('{html_id}')">&times;</button>
+                </div>
+            </span>'''
+        else:
+            return display_name
 
 
 def format_exercise_id_badge(exercise_id: int) -> str:
@@ -398,6 +435,76 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
         }
         .close-video:hover {
             background: #c0392b;
+        }
+        
+        /* Picture button and popup styles */
+        .picture-button {
+            margin-left: 8px;
+            background: #2ecc71;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            width: 24px;
+            height: 24px;
+            font-size: 14px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            vertical-align: middle;
+        }
+        .picture-button:hover {
+            background: #27ae60;
+        }
+        .picture-popup {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 100%;
+            margin-left: 20px;
+            max-width: 400px;
+            max-height: 500px;
+            background: white;
+            border: 2px solid #2ecc71;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            z-index: 1000;
+            overflow: hidden;
+        }
+        .picture-popup img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .close-picture {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        .close-picture:hover {
+            background: #c0392b;
+        }
+        
+        /* Fix picture positioning in Global Active Rest section */
+        .active-rest-section .picture-popup {
+            position: fixed !important;
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%) !important;
+            margin: 0 !important;
+            z-index: 10000 !important;
         }
         .rest-activity {
             font-style: italic;
@@ -952,6 +1059,17 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
                 max-height: 400px !important;
                 z-index: 9999 !important;
             }
+            .picture-popup {
+                position: fixed !important;
+                top: 50% !important;
+                left: 50% !important;
+                transform: translate(-50%, -50%) !important;
+                margin: 0 !important;
+                width: 90vw !important;
+                max-width: 350px !important;
+                max-height: 70vh !important;
+                z-index: 9999 !important;
+            }
             .exercise-with-video {
                 position: static !important;
             }
@@ -1033,7 +1151,7 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
                      <td data-label="Step {step_num}" class="exercise">
                          <span class="mobile-step-label">Step {step_num}:</span>
                          <div class="exercise-cell-wrapper">
-                             {format_exercise_link(st.get(step_key, ''), st.get(step_link_key, ''), None)}
+                             {format_exercise_link(st.get(step_key, ''), st.get(step_link_key, ''), st.get(step_id_key, None))}
                              {format_exercise_id_badge(st.get(step_id_key, None))}
                          </div>
                          {format_muscle_tags(st.get(step_muscles_key, ''))}
@@ -1509,11 +1627,53 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
             }}
         }}
         
+        // Picture popup functions
+        function togglePicture(exerciseId) {{
+            const picture = document.getElementById('picture_' + exerciseId);
+            const allPictures = document.querySelectorAll('.picture-popup');
+            
+            // Hide all other pictures first
+            allPictures.forEach(p => {{
+                if (p.id !== 'picture_' + exerciseId) {{
+                    p.style.display = 'none';
+                }}
+            }});
+            
+            // Toggle the selected picture
+            if (picture.style.display === 'none' || picture.style.display === '') {{
+                picture.style.display = 'block';
+                positionPictureSmart(picture);
+            }} else {{
+                picture.style.display = 'none';
+            }}
+        }}
+        
+        function positionPictureSmart(pictureElement) {{
+            // Check if picture is in active rest section
+            const activeRestSection = pictureElement.closest('.active-rest-section');
+            if (activeRestSection) {{
+                // For active rest pictures, use fixed centering
+                pictureElement.style.position = 'fixed';
+                pictureElement.style.top = '50%';
+                pictureElement.style.left = '50%';
+                pictureElement.style.transform = 'translate(-50%, -50%)';
+                pictureElement.style.zIndex = '10000';
+                return;
+            }}
+            
+            // For regular workout pictures, use normal positioning (already handled by CSS)
+        }}
+        
         // Close video when clicking outside
         document.addEventListener('click', function(e) {{
             if (!e.target.closest('.exercise-with-video') && !e.target.closest('.video-popup')) {{
                 document.querySelectorAll('.video-popup').forEach(video => {{
                     stopVideo(video);
+                }});
+            }}
+            if (!e.target.closest('.exercise-with-picture') && !e.target.closest('.picture-popup') && !e.target.closest('.picture-button')) {{
+                document.querySelectorAll('.picture-popup').forEach(picture => {{
+                    picture.style.display = 'none';
                 }});
             }}
         }});
