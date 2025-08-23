@@ -683,7 +683,7 @@ def find_compatible_exercise_pair(station_pool: List[Tuple[str, str, str, str, d
     return None, None
 
 
-def build_plan(plan: dict, station_pool: List[Tuple[str, str, str, str, dict]], rest_pool: List[dict]) -> dict:
+def build_plan(plan: dict, station_pool: List[Tuple[str, str, str, str, dict]], rest_pool: List[dict], include_ids: List[int] = None) -> dict:
     """Build workout plan with corrected station-based equipment tracking."""
     stations_needed = plan["stations"]
     people_count = plan.get("people", stations_needed)  # Default to 1 person per station if not specified
@@ -703,6 +703,25 @@ def build_plan(plan: dict, station_pool: List[Tuple[str, str, str, str, dict]], 
     
     # Add people_per_station to plan for use in other functions
     plan["people_per_station"] = people_per_station
+    
+    # Handle include_ids - exercises that must be included in the workout
+    include_exercises = []
+    if include_ids:
+        print(f"🎯 Processing include requirements: {include_ids}")
+        for include_id in include_ids:
+            # Find the exercise with this ID in the station pool
+            for exercise_tuple in station_pool:
+                # exercise_tuple is (area, equip_name, exercise_name, exercise_link, equipment_data, muscles, unilateral, exercise_id)
+                if exercise_tuple[7] == include_id:
+                    include_exercises.append(exercise_tuple)
+                    print(f"   ✅ Found exercise ID {include_id}: {exercise_tuple[2]}")
+                    break
+            else:
+                print(f"   ⚠️ Exercise ID {include_id} not found in station pool")
+        
+        if include_exercises:
+            print(f"📋 Will guarantee inclusion of {len(include_exercises)} exercises")
+        print()
     
     # Create global active rest schedule - everyone does the same exercise at the same time
     active_rest_count = plan.get("active_rest_count", 4)  # Default to 4 active rest exercises
@@ -788,6 +807,20 @@ def build_plan(plan: dict, station_pool: List[Tuple[str, str, str, str, dict]], 
     
     exercise_name_to_id = build_exercise_name_to_id_map()
     
+    # Reserve slots for include exercises first (highest priority)
+    reserved_include_slots = []
+    if include_exercises:
+        print(f"🎯 Reserving slots for {len(include_exercises)} include exercises...")
+        
+        for include_exercise in include_exercises:
+            # Reserve a slot for this exercise - we'll place it in the appropriate station later
+            reserved_include_slots.append(include_exercise)
+            print(f"   📌 Reserved slot for: {include_exercise[2]} (area: {include_exercise[0]})")
+        
+        print(f"✅ Reserved {len(reserved_include_slots)} slots for include exercises")
+        print()
+    
+    # Continue with regular station building for remaining stations
     while len(stations) < stations_needed:
         if not station_pool:
             from config import die
@@ -797,35 +830,92 @@ def build_plan(plan: dict, station_pool: List[Tuple[str, str, str, str, dict]], 
         
         print(f"🎯 Building Station {len(stations)+1} (targeting {area_target})...")
         
-        # Get must-use equipment that hasn't been used yet
-        must_use_equipment = plan.get("must_use", [])
-        unused_must_use = prioritize_must_use_exercises(station_pool, must_use_equipment, cumulative_station_usage, available_inventory)
+        # Check if we have any include exercises that match this area
+        matching_include_exercises = [ex for ex in reserved_include_slots if ex[0] == area_target]
         
-        # Try each unused must-use equipment type until one works
+        # Create a modified station pool that prioritizes ALL include exercises for this area
+        modified_station_pool = station_pool.copy()
+        if matching_include_exercises:
+            print(f"   🎯 Prioritizing {len(matching_include_exercises)} include exercises for area {area_target}")
+            # Remove include exercises from their current position and add them ALL to the front
+            for include_ex in matching_include_exercises:
+                if include_ex in modified_station_pool:
+                    modified_station_pool.remove(include_ex)
+            # Add all matching include exercises to the front (highest priority)
+            for i, include_ex in enumerate(matching_include_exercises):
+                modified_station_pool.insert(i, include_ex)
+        
         station_exercises = None
-        for priority_equipment in unused_must_use:
-            print(f"   🎯 Trying to prioritize must-use equipment: {priority_equipment}")
-            
-            station_exercises = find_compatible_exercises_for_station(
-                station_pool, area_target, steps_per_station, cumulative_station_usage, 
-                available_inventory, plan["people_per_station"], used_names, [priority_equipment],
-                plan.get("use_workout_history", True)
-            )
-            
-            if station_exercises:
-                print(f"   ✅ Successfully prioritized must-use equipment: {priority_equipment}")
-                break
-            else:
-                print(f"   ⚠️ Could not build complete station with {priority_equipment}, trying next...")
         
-        # If no must-use equipment worked, try without prioritization
-        if not station_exercises:
-            print(f"   🔄 No must-use equipment could build complete station, trying without prioritization...")
-            station_exercises = find_compatible_exercises_for_station(
-                station_pool, area_target, steps_per_station, cumulative_station_usage, 
-                available_inventory, plan["people_per_station"], used_names, [],
-                plan.get("use_workout_history", True)
-            )
+        # If we have include exercises for this area, force them to be included first
+        if matching_include_exercises:
+            print(f"   🎯 Building station with include exercises GUARANTEED, skipping must-use equipment logic")
+            print(f"   📋 Include exercises for this area: {[ex[2] for ex in matching_include_exercises]}")
+            
+            # Start with include exercises as the base
+            station_exercises = []
+            remaining_steps = steps_per_station
+            
+            # Add all include exercises first
+            for include_ex in matching_include_exercises:
+                if include_ex[2] not in used_names:  # Avoid duplicates
+                    station_exercises.append(include_ex)
+                    steps_consumed = 2 if include_ex[6] else 1  # unilateral flag is at index 6
+                    remaining_steps -= steps_consumed
+                    print(f"   ✅ GUARANTEED include exercise: {include_ex[2]} (ID: {include_ex[7]})")
+            
+            # Fill remaining slots with compatible exercises if needed
+            if remaining_steps > 0:
+                # Remove include exercises from the pool to avoid duplicates
+                remaining_pool = [ex for ex in modified_station_pool if ex not in station_exercises]
+                
+                # Find compatible exercises for remaining slots
+                additional_exercises = find_compatible_exercises_for_station(
+                    remaining_pool, area_target, remaining_steps, cumulative_station_usage, 
+                    available_inventory, plan["people_per_station"], used_names, [],
+                    plan.get("use_workout_history", True)
+                )
+                
+                if additional_exercises:
+                    station_exercises.extend(additional_exercises)
+                    print(f"   📋 Added {len(additional_exercises)} additional exercises to fill remaining {remaining_steps} steps")
+                else:
+                    print(f"   ⚠️ Could not find additional exercises for remaining {remaining_steps} steps")
+            
+            # If we couldn't build a complete station, fall back to normal logic
+            if not station_exercises or len(station_exercises) == 0:
+                print(f"   ❌ Failed to build station with include exercises, falling back to normal logic")
+                station_exercises = None
+        else:
+            # No include exercises for this area, use normal must-use equipment logic
+            # Get must-use equipment that hasn't been used yet
+            must_use_equipment = plan.get("must_use", [])
+            unused_must_use = prioritize_must_use_exercises(modified_station_pool, must_use_equipment, cumulative_station_usage, available_inventory)
+            
+            # Try each unused must-use equipment type until one works
+            for priority_equipment in unused_must_use:
+                print(f"   🎯 Trying to prioritize must-use equipment: {priority_equipment}")
+                
+                station_exercises = find_compatible_exercises_for_station(
+                    modified_station_pool, area_target, steps_per_station, cumulative_station_usage, 
+                    available_inventory, plan["people_per_station"], used_names, [priority_equipment],
+                    plan.get("use_workout_history", True)
+                )
+                
+                if station_exercises:
+                    print(f"   ✅ Successfully prioritized must-use equipment: {priority_equipment}")
+                    break
+                else:
+                    print(f"   ⚠️ Could not build complete station with {priority_equipment}, trying next...")
+            
+            # If no must-use equipment worked, try without prioritization
+            if not station_exercises:
+                print(f"   🔄 No must-use equipment could build complete station, trying without prioritization...")
+                station_exercises = find_compatible_exercises_for_station(
+                    modified_station_pool, area_target, steps_per_station, cumulative_station_usage, 
+                    available_inventory, plan["people_per_station"], used_names, [],
+                    plan.get("use_workout_history", True)
+                )
             
         if not station_exercises:
             from config import die
@@ -912,6 +1002,20 @@ def build_plan(plan: dict, station_pool: List[Tuple[str, str, str, str, dict]], 
         
         stations.append(station_data)
         
+        # Remove any include exercises that were successfully placed in this station (regardless of area)
+        placed_include_exercises = []
+        for include_ex in reserved_include_slots[:]:  # Use slice copy to avoid modification during iteration
+            # Check if this include exercise was used in the station
+            for exercise in station_exercises:
+                if exercise[7] == include_ex[7]:  # Same exercise ID
+                    reserved_include_slots.remove(include_ex)
+                    placed_include_exercises.append(include_ex)
+                    print(f"   ✅ Successfully placed include exercise: {include_ex[2]} (ID: {include_ex[7]})")
+                    break
+        
+        if placed_include_exercises:
+            print(f"   🎯 Placed {len(placed_include_exercises)} include exercises in this station")
+        
         # Report station equipment status
         report_station_equipment_status(len(stations), step_names, step_equipments,
                                        cumulative_station_usage, available_inventory, plan["people_per_station"])
@@ -969,6 +1073,37 @@ def build_plan(plan: dict, station_pool: List[Tuple[str, str, str, str, dict]], 
     final_equipment_requirements = {}
     for equipment_type, equipment_info in cumulative_station_usage.items():
         final_equipment_requirements[equipment_type] = {"count": equipment_info["count"]}
+    
+    # Show include summary if there were include requirements
+    if include_ids:
+        # Check which include exercises were actually included by looking at used_exercise_ids
+        actually_included = []
+        not_included = []
+        
+        for include_id in include_ids:
+            if include_id in used_exercise_ids:
+                actually_included.append(include_id)
+            else:
+                not_included.append(include_id)
+        
+        if actually_included:
+            print(f"✅ Include Summary: {len(actually_included)}/{len(include_ids)} required exercises successfully included")
+            print(f"   Successfully included IDs: {actually_included}")
+        
+        if not_included:
+            print(f"⚠️ Could not include {len(not_included)} exercises due to area/equipment constraints:")
+            # Find the exercise details for not included IDs
+            for not_included_id in not_included:
+                # Look up the exercise details from the original include_exercises or station_pool
+                found = False
+                for ex in include_exercises:
+                    if len(ex) > 7 and ex[7] == not_included_id:
+                        print(f"   • ID {ex[7]}: {ex[2]} (area: {ex[0]})")
+                        found = True
+                        break
+                if not found:
+                    print(f"   • ID {not_included_id}: Exercise details not found")
+        print()
     
     return {
         "stations": stations,

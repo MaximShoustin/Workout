@@ -65,12 +65,13 @@ def setup_active_rest(plan: dict) -> tuple:
     return rest_pool, plan
 
 
-def generate_workout_with_retries(max_retries=15):
+def generate_workout_with_retries(max_retries=15, include_ids=None):
     """
     Generate a workout with retry logic for equipment conflicts.
     
     Args:
         max_retries: Maximum number of attempts before giving up
+        include_ids: List of exercise IDs that must be included in the workout
         
     Returns:
         Tuple of (plan_result, validation_summary, seed_used)
@@ -143,7 +144,7 @@ def generate_workout_with_retries(max_retries=15):
             rest_pool, plan_with_active_rest = setup_active_rest(plan_copy)
             
             # Try to build the plan (pass the plan with active_rest_mode set)
-            plan_result = build_plan(plan_with_active_rest, station_pool_copy, rest_pool)
+            plan_result = build_plan(plan_with_active_rest, station_pool_copy, rest_pool, include_ids)
             
             # If we get here, the plan was successful
             print(f"🎉 Success on attempt {attempt}!")
@@ -283,6 +284,7 @@ def reconstruct_stations_from_ids(stations_ids, pool, steps_per_station):
 
 def main():
     """Main entry point for workout generation."""
+    global edit_ids, include_ids
     plan = load_plan()
     if edit_ids is not None:
         if not plan.get('edit_mode', False):
@@ -611,8 +613,39 @@ def main():
         filename = save_workout_html(plan, stations_to_use, equipment_requirements=equipment_requirements, global_active_rest_schedule=global_active_rest_schedule, selected_active_rest_exercises=selected_active_rest_exercises, update_index_html=True, seed=new_seed)
         print(f'✅ HTML report regenerated: {filename}')
         return
+    
+    # Handle include IDs validation
+    validated_include_ids = []
+    if include_ids is not None:
+        print(f"🎯 Validating include IDs: {include_ids}")
+        # Load all exercises to validate IDs
+        equipment_data = parse_equipment()
+        station_pool = build_station_pool(equipment_data)
+        
+        # Build a map of all valid exercise IDs
+        valid_ids = set()
+        for exercise_tuple in station_pool:
+            # exercise_tuple is (area, equip_name, exercise_name, exercise_link, equipment_data, muscles, unilateral, exercise_id)
+            exercise_id = exercise_tuple[7]
+            if exercise_id != -1:  # Only add valid IDs (not -1 which means no ID)
+                valid_ids.add(exercise_id)
+        
+        # Validate each include ID
+        for include_id in include_ids:
+            if include_id in valid_ids:
+                validated_include_ids.append(include_id)
+                print(f"   ✅ ID {include_id}: Valid")
+            else:
+                print(f"   ⚠️ ID {include_id}: Not found in exercise database, skipping")
+        
+        if not validated_include_ids:
+            print("❌ Error: No valid exercise IDs provided in -include list.")
+            sys.exit(1)
+        
+        print(f"📋 Will include {len(validated_include_ids)} exercises: {validated_include_ids}")
+    
     try:
-        plan_result, validation_summary, seed_used, plan, history_manager = generate_workout_with_retries()
+        plan_result, validation_summary, seed_used, plan, history_manager = generate_workout_with_retries(include_ids=validated_include_ids if include_ids is not None else None)
         
         # Print validation status
         if validation_summary["is_valid"]:
@@ -648,9 +681,12 @@ def main():
         sys.exit(1)
 
 
-def parse_edit_args():
+def parse_cli_args():
     import sys
     edit_ids = None
+    include_ids = None
+    
+    # Parse -edit flag
     if '-edit' in sys.argv:
         idx = sys.argv.index('-edit')
         if idx + 1 >= len(sys.argv):
@@ -668,9 +704,34 @@ def parse_edit_args():
         except Exception:
             print('❌ Error: -edit flag provided but list is malformed. Use comma-separated integers, e.g. -edit 1,2,3')
             sys.exit(1)
-    return edit_ids
+    
+    # Parse -include flag
+    if '-include' in sys.argv:
+        idx = sys.argv.index('-include')
+        if idx + 1 >= len(sys.argv):
+            print('❌ Error: -include flag provided but no list of IDs given.')
+            sys.exit(1)
+        id_str = sys.argv[idx + 1]
+        if not id_str.strip():
+            print('❌ Error: -include flag provided but list is empty.')
+            sys.exit(1)
+        try:
+            include_ids = [int(x) for x in id_str.split(',') if x.strip()]
+            if not include_ids:
+                print('❌ Error: -include flag provided but list is empty.')
+                sys.exit(1)
+        except Exception:
+            print('❌ Error: -include flag provided but list is malformed. Use comma-separated integers, e.g. -include 1,2,3')
+            sys.exit(1)
+    
+    # Validate that -edit and -include are not used together
+    if edit_ids is not None and include_ids is not None:
+        print('❌ Error: Cannot use -edit and -include flags together.')
+        sys.exit(1)
+    
+    return edit_ids, include_ids
 
 
 if __name__ == "__main__":
-    edit_ids = parse_edit_args()
+    edit_ids, include_ids = parse_cli_args()
     main() 

@@ -34,8 +34,6 @@ def load_svg_icons() -> Dict[str, str]:
         _icon_cache = icons
         return icons
     
-    print(f"📁 Loading {len(svg_files)} SVG icons from {ICONS_DIR}")
-    
     for svg_file in svg_files:
         try:
             # Use filename without extension as the equipment type
@@ -49,12 +47,8 @@ def load_svg_icons() -> Dict[str, str]:
             base64_string = base64.b64encode(svg_content.encode('utf-8')).decode('utf-8')
             icons[equipment_type] = base64_string
             
-            print(f"   ✅ {equipment_type}: {svg_file.name}")
-            
         except Exception as e:
             print(f"   ❌ Failed to load {svg_file.name}: {e}")
-    
-    print(f"📋 Loaded {len(icons)} icons: {', '.join(icons.keys())}")
     
     # Cache the loaded icons
     _icon_cache = icons
