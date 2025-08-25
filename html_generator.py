@@ -5,7 +5,7 @@ from datetime import datetime
 from typing import Dict, List, Optional
 
 
-def format_exercise_link(exercise_name: str, exercise_link: str, exercise_id: int = None) -> str:
+def format_exercise_link(exercise_name: str, exercise_link: str, exercise_id: int = None, pictures_path: str = "config/pictures") -> str:
     """Format exercise with embedded video popup if valid URL provided, otherwise return plain name. Show ID if provided."""
     from pathlib import Path
     
@@ -15,8 +15,11 @@ def format_exercise_link(exercise_name: str, exercise_link: str, exercise_id: in
     has_picture = False
     picture_path = ""
     if exercise_id is not None and exercise_id != -1:
-        picture_path = Path("config/pictures") / f"{exercise_id}.png"
-        has_picture = picture_path.exists()
+        # Use absolute path for file existence check
+        absolute_picture_path = Path("config/pictures") / f"{exercise_id}.png"
+        has_picture = absolute_picture_path.exists()
+        # Use relative path for HTML src attribute
+        picture_path = f"{pictures_path}/{exercise_id}.png"
     
     # Original video functionality - keep exactly the same
     if exercise_link and exercise_link != "some url" and exercise_link.strip():
@@ -51,7 +54,7 @@ def format_exercise_link(exercise_name: str, exercise_link: str, exercise_id: in
                 👁
             </button>
             <div id="picture_{html_id}" class="picture-popup">
-                <img src="{picture_path}" alt="{exercise_name}" />
+                <img src="{picture_path}" alt="{exercise_name}" onerror="handleImageError(this)" />
                 <button class="close-picture" onclick="togglePicture('{html_id}')">&times;</button>
             </div>'''
         
@@ -67,7 +70,7 @@ def format_exercise_link(exercise_name: str, exercise_link: str, exercise_id: in
                     👁
                 </button>
                 <div id="picture_{html_id}" class="picture-popup">
-                    <img src="{picture_path}" alt="{exercise_name}" />
+                    <img src="{picture_path}" alt="{exercise_name}" onerror="handleImageError(this)" />
                     <button class="close-picture" onclick="togglePicture('{html_id}')">&times;</button>
                 </div>
             </span>'''
@@ -263,7 +266,7 @@ def analyze_workout_distribution(stations: List[Dict]) -> Dict[str, any]:
     }
 
 
-def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requirements: Optional[Dict] = None, validation_summary: Optional[Dict] = None, global_active_rest_schedule: Optional[List[Dict]] = None, selected_active_rest_exercises: Optional[List[Dict]] = None) -> str:
+def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requirements: Optional[Dict] = None, validation_summary: Optional[Dict] = None, global_active_rest_schedule: Optional[List[Dict]] = None, selected_active_rest_exercises: Optional[List[Dict]] = None, is_workout_store: bool = False) -> str:
     """Generate a styled HTML workout plan."""
     title = plan.get("title", "Station Map")
     notes = plan.get("notes", "")
@@ -452,9 +455,22 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
             align-items: center;
             justify-content: center;
             vertical-align: middle;
+            position: relative;
+            z-index: 10;
+            flex-shrink: 0;
         }
         .picture-button:hover {
             background: #27ae60;
+        }
+
+        
+        /* Exercise cell wrapper for better layout */
+        .exercise-cell-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-wrap: wrap;
+            min-height: 28px;
         }
         .picture-popup {
             display: none;
@@ -462,8 +478,12 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
             top: 0;
             left: 100%;
             margin-left: 20px;
+            width: 400px;
+            height: 300px;
             max-width: 400px;
             max-height: 500px;
+            min-width: 200px;
+            min-height: 150px;
             background: white;
             border: 2px solid #2ecc71;
             border-radius: 8px;
@@ -473,7 +493,8 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
         }
         .picture-popup img {
             width: 100%;
-            height: auto;
+            height: 100%;
+            object-fit: contain;
             display: block;
         }
         .close-picture {
@@ -1066,8 +1087,11 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
                 transform: translate(-50%, -50%) !important;
                 margin: 0 !important;
                 width: 90vw !important;
+                height: 60vh !important;
                 max-width: 350px !important;
                 max-height: 70vh !important;
+                min-width: 200px !important;
+                min-height: 200px !important;
                 z-index: 9999 !important;
             }
             .exercise-with-video {
@@ -1079,21 +1103,67 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
         }
         .exercise-cell-wrapper {
             position: relative;
-            display: block;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
             min-height: 28px;
+            padding-top: 5px;
         }
+        
+        /* Mobile-specific layout for exercise content */
+        @media (max-width: 768px) {
+            .exercise-cell-wrapper {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 8px;
+                padding: 10px 5px;
+                position: relative;
+            }
+            
+            .exercise-id-badge {
+                position: static !important;
+                display: inline-block !important;
+                background: #9b59b6 !important;
+                color: white !important;
+                font-size: 0.75em !important;
+                padding: 3px 8px !important;
+                border-radius: 12px !important;
+                font-weight: 600 !important;
+                margin-top: 5px !important;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+                z-index: 1 !important;
+            }
+            
+            .picture-button {
+                position: static !important;
+                margin: 5px 0 !important;
+                display: inline-block !important;
+            }
+            
+            .exercise-with-video,
+            .exercise-with-picture {
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                gap: 5px !important;
+                text-align: center !important;
+            }
+        }
+        
+        /* Default desktop positioning for exercise ID badge */
         .exercise-id-badge {
-            position: absolute;
-            top: 2px;
-            right: 4px;
-            background: #e0e0e0;
-            color: #444;
-            font-size: 0.75em;
-            padding: 2px 7px;
-            border-radius: 10px;
+            background: #9b59b6;
+            color: white;
+            font-size: 11px;
             font-weight: 600;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.04);
-            z-index: 2;
+            padding: 2px 6px;
+            border-radius: 10px;
+            margin-left: 6px;
+            display: inline-block;
+            vertical-align: middle;
+            line-height: 1.2;
         }
     </style>
     """
@@ -1151,7 +1221,7 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
                      <td data-label="Step {step_num}" class="exercise">
                          <span class="mobile-step-label">Step {step_num}:</span>
                          <div class="exercise-cell-wrapper">
-                             {format_exercise_link(st.get(step_key, ''), st.get(step_link_key, ''), st.get(step_id_key, None))}
+                             {format_exercise_link(st.get(step_key, ''), st.get(step_link_key, ''), st.get(step_id_key, None), "../config/pictures" if is_workout_store else "config/pictures")}
                              {format_exercise_id_badge(st.get(step_id_key, None))}
                          </div>
                          {format_muscle_tags(st.get(step_muscles_key, ''))}
@@ -1629,7 +1699,15 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
         
         // Picture popup functions
         function togglePicture(exerciseId) {{
+            console.log('togglePicture called with:', exerciseId);
             const picture = document.getElementById('picture_' + exerciseId);
+            console.log('Picture element found:', picture);
+            
+            if (!picture) {{
+                console.error('Picture element not found for ID:', 'picture_' + exerciseId);
+                return;
+            }}
+            
             const allPictures = document.querySelectorAll('.picture-popup');
             
             // Hide all other pictures first
@@ -1641,11 +1719,25 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
             
             // Toggle the selected picture
             if (picture.style.display === 'none' || picture.style.display === '') {{
+                console.log('Showing picture');
                 picture.style.display = 'block';
                 positionPictureSmart(picture);
             }} else {{
+                console.log('Hiding picture');
                 picture.style.display = 'none';
             }}
+        }}
+        
+        // Handle missing images
+        function handleImageError(img) {{
+            // Replace broken image with a message
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'image-error';
+            errorDiv.innerHTML = '📷 Image not available<br><small>Exercise ID: ' + img.src.split('/').pop().split('.')[0] + '</small>';
+            errorDiv.style.cssText = 'text-align: center; padding: 20px; color: #666; font-size: 14px; border: 2px dashed #ccc; border-radius: 8px; background: #f9f9f9;';
+            
+            // Replace the image with the error message
+            img.parentNode.replaceChild(errorDiv, img);
         }}
         
         function positionPictureSmart(pictureElement) {{
@@ -1657,11 +1749,64 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
                 pictureElement.style.top = '50%';
                 pictureElement.style.left = '50%';
                 pictureElement.style.transform = 'translate(-50%, -50%)';
+                pictureElement.style.margin = '0';
                 pictureElement.style.zIndex = '10000';
                 return;
             }}
             
-            // For regular workout pictures, use normal positioning (already handled by CSS)
+            // For regular workout pictures, apply smart positioning similar to videos
+            const viewportHeight = window.innerHeight;
+            const viewportWidth = window.innerWidth;
+            const pictureWidth = 400; // Default picture width from CSS
+            const pictureHeight = 300; // Estimated picture height
+            
+            // Get the exercise element (parent of picture popup)
+            const exerciseElement = pictureElement.parentElement;
+            const exerciseRect = exerciseElement.getBoundingClientRect();
+            
+            // Calculate available space on all sides
+            const spaceRight = viewportWidth - exerciseRect.right - 20;
+            const spaceLeft = exerciseRect.left - 20;
+            const spaceBelow = viewportHeight - exerciseRect.top - 20;
+            
+            // Reset all positioning styles first
+            pictureElement.style.position = 'absolute';
+            pictureElement.style.top = '0';
+            pictureElement.style.bottom = 'auto';
+            pictureElement.style.left = '100%';
+            pictureElement.style.right = 'auto';
+            pictureElement.style.marginLeft = '20px';
+            pictureElement.style.marginRight = '0';
+            pictureElement.style.marginTop = '0';
+            pictureElement.style.transform = 'none';
+            pictureElement.style.zIndex = '1000';
+            
+            // Check if we're in a right column (less than picture width + margin space)
+            if (spaceRight < pictureWidth + 20) {{
+                if (spaceLeft >= pictureWidth + 20) {{
+                    // Position to the left
+                    pictureElement.style.left = 'auto';
+                    pictureElement.style.right = '100%';
+                    pictureElement.style.marginLeft = '0';
+                    pictureElement.style.marginRight = '20px';
+                }} else {{
+                    // Not enough space on either side - use fixed centering
+                    pictureElement.style.position = 'fixed';
+                    pictureElement.style.left = '50%';
+                    pictureElement.style.top = '50%';
+                    pictureElement.style.transform = 'translate(-50%, -50%)';
+                    pictureElement.style.margin = '0';
+                    pictureElement.style.zIndex = '10000';
+                    return;
+                }}
+            }}
+            
+            // Handle vertical positioning for non-fixed elements
+            if (spaceBelow < pictureHeight) {{
+                // Position above the exercise
+                pictureElement.style.top = 'auto';
+                pictureElement.style.bottom = '0';
+            }}
         }}
         
         // Close video when clicking outside

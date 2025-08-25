@@ -22,8 +22,8 @@ def save_workout_html(plan: Dict, stations: List[Dict], equipment_requirements: 
     filename = f"WORKOUT_{timestamp}.html"
     filepath = WORKOUT_STORE_DIR / filename
     
-    # Generate HTML content once
-    html_content = generate_html_workout(plan, stations, equipment_requirements, validation_summary, global_active_rest_schedule, selected_active_rest_exercises)
+    # Generate HTML content for workout_store (with relative path to ../config/pictures)
+    html_content = generate_html_workout(plan, stations, equipment_requirements, validation_summary, global_active_rest_schedule, selected_active_rest_exercises, is_workout_store=True)
     
     # Save to timestamped file in workout_store directory
     with filepath.open('w', encoding='utf-8') as f:
@@ -57,9 +57,11 @@ def save_workout_html(plan: Dict, stations: List[Dict], equipment_requirements: 
     
     # Also save to index.html in project root for GitHub Pages if requested
     if update_index_html:
+        # Generate separate HTML content for index.html (with relative path to config/pictures)
+        index_html_content = generate_html_workout(plan, stations, equipment_requirements, validation_summary, global_active_rest_schedule, selected_active_rest_exercises, is_workout_store=False)
         index_path = Path("index.html")
         with index_path.open('w', encoding='utf-8') as f:
-            f.write(html_content)
+            f.write(index_html_content)
     
     return filepath
 
