@@ -65,9 +65,6 @@
         "equipment": {
           "kettlebells_6kg": {
             "count": 1
-          },
-          "kettlebells_16kg": {
-            "count": 1
           }
         },
         "skip": false,
@@ -80,9 +77,6 @@
         "area": "upper",
         "muscles": "shoulders, latissimus dorsi, trapezius",
         "equipment": {
-          "kettlebells_6kg": {
-            "count": 1
-          },
           "kettlebells_16kg": {
             "count": 1
           }
@@ -289,9 +283,7 @@
         "area": "upper",
         "muscles": "shoulders, triceps, core",
         "equipment": {
-          "kettlebells_4kg": {
-            "count": 1
-          },
+          
           "kettlebells_6kg": {
             "count": 1
           }
@@ -320,9 +312,7 @@
         "area": "upper",
         "muscles": "shoulders, triceps, core, stabilizers",
         "equipment": {
-          "kettlebells_4kg": {
-            "count": 1
-          },
+          
           "kettlebells_6kg": {
             "count": 1
           }
@@ -331,37 +321,7 @@
         "skip": false,
         "id": 55
       },
-      {
-        "name": "Arnold Press (rotation for front delts)",
-        "link": "https://www.youtube.com/shorts/Y_09W4XKDgY",
-        "area": "upper",
-        "muscles": "shoulders, triceps, core",
-        "equipment": {
-          "kettlebells_4kg": {
-            "count": 1
-          },
-          "kettlebells_6kg": {
-            "count": 1
-          }
-        },
-        "skip": false,
-        "unilateral": false,
-        "id": 56
-      },
-      {
-        "name": "Upright Row",
-        "link": "https://www.youtube.com/shorts/_E2wnqjBciE",
-        "area": "upper",
-        "muscles": "shoulders, trapezius, biceps",
-        "equipment": {
-          "kettlebells_6kg": {
-            "count": 1
-          }
-        },
-        "skip": false,
-        "unilateral": false,
-        "id": 57
-      },
+     
       {
         "name": "Figure-8 to Overhead Press",
         "link": "https://www.youtube.com/shorts/I7T_P5HnUr0",
@@ -376,20 +336,7 @@
         "unilateral": false,
         "id": 58
       },
-      {
-        "name": "Around-the-World waist",
-        "link": "https://www.youtube.com/shorts/SDqeQ9b67AM",
-        "area": "core",
-        "muscles": "core, shoulders, obliques",
-        "equipment": {
-          "kettlebells_6kg": {
-            "count": 1
-          }
-        },
-        "skip": false,
-        "unilateral": false,
-        "id": 59
-      },
+     
       {
         "name": "Around-the-World overhead",
         "link": "https://www.youtube.com/shorts/k3elhfyMI4k",
@@ -578,9 +525,6 @@
         "area": "upper",
         "muscles": "biceps, forearms, stabilizers",
         "equipment": {
-          "kettlebells_4kg": {
-            "count": 1
-          },
           "kettlebells_6kg": {
             "count": 1
           }
@@ -589,23 +533,7 @@
         "unilateral": false,
         "id": 71
       },
-      {
-        "name": "Concentration Curl",
-        "link": "https://www.youtube.com/shorts/LyI482x_HyM",
-        "area": "upper",
-        "muscles": "biceps, forearms",
-        "equipment": {
-          "kettlebells_6kg": {
-            "count": 1
-          },
-          "bench": {
-            "count": 1
-          }
-        },
-        "unilateral": false,
-        "skip": false,
-        "id": 72
-      },
+      
       {
         "name": "Preacher Curl (arm braced on bench)",
         "link": "https://www.youtube.com/shorts/mPiTdI_FcOY",
@@ -640,57 +568,8 @@
         "unilateral": false,
         "id": 74
       },
-      {
-        "name": "Spider Curl (incline bench, chest down)",
-        "link": "",
-        "area": "upper",
-        "muscles": "biceps, forearms",
-        "equipment": {
-          "kettlebells_4kg": {
-            "count": 1
-          },
-          "kettlebells_6kg": {
-            "count": 1
-          }
-        },
-        "skip": true,
-        "unilateral": false,
-        "id": 75
-      },
-      {
-        "name": "Incline Curl (leaned-back bench)",
-        "link": "",
-        "area": "upper",
-        "muscles": "biceps, forearms",
-        "equipment": {
-          "kettlebells_4kg": {
-            "count": 1
-          },
-          "kettlebells_6kg": {
-            "count": 1
-          }
-        },
-        "skip": true,
-        "unilateral": false,
-        "id": 76
-      },
-      {
-        "name": "Cross-Body Curl (diagonal)",
-        "link": "",
-        "area": "upper",
-        "muscles": "biceps, forearms, core",
-        "equipment": {
-          "kettlebells_4kg": {
-            "count": 1
-          },
-          "kettlebells_6kg": {
-            "count": 1
-          }
-        },
-        "skip": true,
-        "unilateral": false,
-        "id": 77
-      },
+      
+     
       {
         "name": "Waiter Curl (bell held upside-down like a tray)",
         "link": "https://www.youtube.com/shorts/c_fczYLIt2U",
@@ -733,6 +612,19 @@
         "id": 104
       },
       {
+        "name": "Split stance KB rotation pendulum",
+        "link": "https://www.youtube.com/shorts/WB93lYdkDt4",
+        "area": "core",
+        "equipment": {
+          "kettlebells_6kg": {
+            "count": 1
+          }
+        },
+        "skip": false,
+        "unilateral": false,
+        "id": 57
+      },
+      {
         "name": "Half-kneeling KB rotation lift",
         "link": "https://www.youtube.com/shorts/WB93lYdkDt4",
         "equipment": {
@@ -756,31 +648,8 @@
         "skip": false,
         "unilateral": false,
         "id": 106
-      },
-      {
-        "name": "One hand Swing with Press",
-        "link": "",
-        "equipment": {
-          "kettlebells_6kg": {
-            "count": 1
-          }
-        },
-        "skip": false,
-        "unilateral": true,
-        "id": 112
-      },
-      {
-        "name": "Squat with one hand Static Press",
-        "link": "",
-        "equipment": {
-          "kettlebells_6kg": {
-            "count": 1
-          }
-        },
-        "skip": false,
-        "unilateral": true,
-        "id": 113
       }
+      
     ]
   }
 }

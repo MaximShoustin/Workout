@@ -91,26 +91,6 @@
         "id": 18
       },
       {
-        "name": "Reverse or walking lunge",
-        "link": "https://www.youtube.com/shorts/mJilHWIBWO8",
-        "area": "lower",
-        "muscles": "quadriceps, glutes, hamstrings",
-        "equipment": {
-          "dumbbells_3kg": {
-            "count": 2
-          },
-          "dumbbells_5kg": {
-            "count": 2
-          },
-          "dumbbells_10kg": {
-            "count": 2
-          }
-        },
-        "skip": false,
-        "unilateral": false,
-        "id": 19
-      },
-      {
         "name": "Single-leg RDL",
         "link": "https://www.youtube.com/shorts/eHHsDJQN7z0",
         "area": "lower",
@@ -145,10 +125,7 @@
         "link": "https://www.youtube.com/shorts/UipBcISeiGU",
         "area": "core",
         "muscles": "shoulders, quadriceps, glutes, core",
-        "equipment": {
-          "dumbbells_3kg": {
-            "count": 2
-          },
+        "equipment": {         
           "dumbbells_5kg": {
             "count": 2
           }
@@ -159,7 +136,7 @@
       },
       {
         "name": "Devil's press",
-        "link": "https://www.youtube.com/shorts/oH3uUqTRaGI",
+        "link": "https://www.youtube.com/shorts/qUYqyPPvhIE",
         "area": "core",
         "muscles": "shoulders, chest, quadriceps, glutes, core",
         "equipment": {
@@ -206,16 +183,6 @@
         "id": 100
       },
        {
-        "name": "Calf Raises",
-        "link": "https://www.youtube.com/shorts/ADITZCcUyVo",
-        "equipment": {},
-        "area": "lower",
-        "muscles": "calves",
-        "skip": true,
-        "unilateral": false,
-        "id": 101
-      },
-      {
         "name": "Cossack Shift",
         "link": "https://www.youtube.com/shorts/DkeFVmqy0ys",
         "equipment": {},

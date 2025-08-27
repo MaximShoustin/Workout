@@ -36,8 +36,15 @@ def format_exercise_link(exercise_name: str, exercise_link: str, exercise_id: in
             video_id = exercise_link.split("youtu.be/")[1].split("?")[0]
             embed_url = f"https://www.youtube.com/embed/{video_id}?{autoplay_params}"
         
-        # Create unique ID for this exercise
-        html_id = exercise_name.lower().replace(" ", "_").replace("-", "_").replace("+", "plus").replace("→", "to")
+        # Create unique ID for this exercise - sanitize all special characters
+        import re
+        html_id = exercise_name.lower()
+        html_id = html_id.replace(" ", "_").replace("-", "_").replace("+", "plus").replace("→", "to")
+        html_id = html_id.replace("'", "").replace("(", "").replace(")", "").replace("/", "_")
+        html_id = html_id.replace(",", "").replace(".", "").replace(":", "").replace(";", "")
+        html_id = html_id.replace("&", "and").replace("#", "").replace("%", "").replace("@", "")
+        # Remove any remaining non-alphanumeric characters except underscores
+        html_id = re.sub(r'[^a-z0-9_]', '', html_id)
         
         # Original video HTML + new picture button if available
         video_html = f'''<span class="exercise-with-video">
@@ -63,7 +70,15 @@ def format_exercise_link(exercise_name: str, exercise_link: str, exercise_id: in
     else:
         # No video, but check if there's a picture
         if has_picture:
-            html_id = exercise_name.lower().replace(" ", "_").replace("-", "_").replace("+", "plus").replace("→", "to")
+            # Create unique ID for this exercise - sanitize all special characters
+            import re
+            html_id = exercise_name.lower()
+            html_id = html_id.replace(" ", "_").replace("-", "_").replace("+", "plus").replace("→", "to")
+            html_id = html_id.replace("'", "").replace("(", "").replace(")", "").replace("/", "_")
+            html_id = html_id.replace(",", "").replace(".", "").replace(":", "").replace(";", "")
+            html_id = html_id.replace("&", "and").replace("#", "").replace("%", "").replace("@", "")
+            # Remove any remaining non-alphanumeric characters except underscores
+            html_id = re.sub(r'[^a-z0-9_]', '', html_id)
             return f'''<span class="exercise-with-picture">
                 {display_name}
                 <button class="picture-button" onclick="togglePicture('{html_id}')" title="View exercise image">

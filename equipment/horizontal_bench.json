@@ -1,43 +1,8 @@
 {
   "lifts": {
     "upper_push": [
-      {
-        "name": "Dumbbell bench press (neutral/pronated)",
-        "link": "https://www.youtube.com/shorts/7TDjD45d860",
-        "area": "upper",
-        "muscles": "chest, triceps, shoulders",
-        "equipment": {
-          "bench": {
-            "count": 1
-          },
-          "dumbbells_5kg": {
-            "count": 2
-          },
-          "dumbbells_10kg": {
-            "count": 2
-          }
-        },
-        "skip": false,
-        "unilateral": false,
-        "id": 25
-      },
-      {
-        "name": "Barbell bench press (20 kg technique load)",
-        "link": "https://www.youtube.com/shorts/_FkbD0FhgVE",
-        "area": "upper",
-        "muscles": "chest, triceps, shoulders",
-        "equipment": {
-          "bench": {
-            "count": 1
-          },
-          "barbells": {
-            "count": 1
-          }
-        },
-        "skip": true,
-        "unilateral": false,
-        "id": 26
-      },
+      
+     
       {
         "name": "Close-grip dumbbell press",
         "link": "https://www.youtube.com/shorts/EvjftwN-nSY",
@@ -46,9 +11,6 @@
         "equipment": {
           "bench": {
             "count": 1
-          },
-          "dumbbells_5kg": {
-            "count": 2
           },
           "dumbbells_10kg": {
             "count": 2
@@ -67,7 +29,7 @@
           "bench": {
             "count": 1
           },
-          "dumbbells_5kg": {
+          "dumbbells_14kg": {
             "count": 1
           }
         },
@@ -77,20 +39,6 @@
       }
     ],
     "lower_core": [
-      {
-        "name": "Hip thrust / glute bridge (shoulders on bench)",
-        "link": "https://www.youtube.com/shorts/zx4KGEACh4o",
-        "area": "lower",
-        "muscles": "glutes, hamstrings, core",
-        "equipment": {
-          "bench": {
-            "count": 1
-          }
-        },
-        "skip": true,
-        "unilateral": false,
-        "id": 29
-      },
       {
         "name": "Bulgarian split-squat (rear foot on bench)",
         "link": "https://www.youtube.com/shorts/J1PEjNVe7po",

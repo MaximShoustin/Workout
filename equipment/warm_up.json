@@ -21,7 +21,12 @@
       "skip": false
     },
     {
-      "name": "Lunges",
+      "name": "Lunges - long steps",
+      "link": "",
+      "skip": false
+    },
+    {
+      "name": "Lunges - short steps",
       "link": "",
       "skip": false
     },
@@ -51,7 +56,7 @@
       "skip": false
     },
     {
-      "name": "Mountain climbers",
+      "name": "Mountain climbers + KB movement",
       "link": "",
       "skip": false
     },
@@ -86,7 +91,11 @@
       "link": "https://www.youtube.com/shorts/5n6E_Cs6amA",
       "skip": false
     },
-    
+    {
+      "name": "KB + walk 3 steps + 5 squats",
+      "link": "https://www.youtube.com/shorts/G3PJNtMeP0M",
+      "skip": false
+    },
     {
       "name": "Hollow hold (20s)",
       "link": "https://www.youtube.com/shorts/c6QTMYmou8A",
