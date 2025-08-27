@@ -18,20 +18,6 @@
     ],
     "static_support_core": [
       {
-        "name": "Top-of-dip support hold",
-        "link": "https://www.youtube.com/shorts/lYo8KZ0WcgQ",
-        "area": "core",
-        "muscles": "triceps, shoulders, core",
-        "equipment": {
-          "dip_parallel_bars": {
-            "count": 2
-          }
-        },
-        "skip": false,
-        "unilateral": false,
-        "id": 6
-      },
-      {
         "name": "L-sit hold",
         "link": "https://www.youtube.com/shorts/Jb5_jIiEl8E",
         "area": "core",
@@ -58,66 +44,6 @@
         "skip": false,
         "unilateral": false,
         "id": 8
-      },
-      {
-        "name": "Knee-raise support hold",
-        "link": "https://www.youtube.com/shorts/-a86XbaEL08",
-        "area": "core",
-        "muscles": "core, shoulders, hip flexors",
-        "equipment": {
-          "dip_parallel_bars": {
-            "count": 2
-          }
-        },
-        "skip": false,
-        "unilateral": false,
-        "id": 9
-      }
-    ],
-    "dynamic_core": [
-      {
-        "name": "Hanging leg raise (elbows locked)",
-        "link": "https://www.youtube.com/shorts/sTDKouREFh4",
-        "area": "core",
-        "muscles": "core, hip flexors, forearms",
-        "equipment": {
-          "dip_parallel_bars": {
-            "count": 2
-          }
-        },
-        "skip": false,
-        "unilateral": false,
-        "id": 10
-      }
-    ],
-    "accessory_mobility": [
-      {
-        "name": "Scapular depression shrug",
-        "link": "https://www.youtube.com/shorts/NArein7d6zs",
-        "area": "upper",
-        "muscles": "shoulders, latissimus dorsi, serratus",
-        "equipment": {
-          "dip_parallel_bars": {
-            "count": 2
-          }
-        },
-        "skip": false,
-        "unilateral": false,
-        "id": 11
-      },
-      {
-        "name": "Assisted dip eccentric (slow lower)",
-        "link": "https://www.youtube.com/shorts/36Yu_T35DUc",
-        "area": "upper",
-        "muscles": "triceps, chest, shoulders",
-        "equipment": {
-          "dip_parallel_bars": {
-            "count": 2
-          }
-        },
-        "skip": false,
-        "unilateral": false,
-        "id": 12
       }
     ]
   }

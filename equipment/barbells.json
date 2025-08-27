@@ -29,39 +29,6 @@
         "unilateral": false,
         "id": 1
       }
-    ],
-    
-    "upper_push": [
-      {
-        "name": "Strict overhead press",
-        "link": "https://www.youtube.com/shorts/1M6JMpgAtS0",
-        "area": "upper",
-        "muscles": "shoulders, triceps, core",
-        "equipment": {
-          "barbells": {
-            "count": 1
-          }
-        },
-        "skip": false,
-        "unilateral": false,
-        "id": 3
-      }
-    ],
-    "complex": [
-      {
-        "name": "Barbell complex: DL \u2192 row \u2192 clean-pull \u2192 front squat \u2192 press \u2192 lunge",
-        "link": "https://www.youtube.com/watch?v=DO3jxj5KQc4",
-        "area": "core",
-        "muscles": "full body, core, legs, shoulders",
-        "equipment": {
-          "barbells": {
-            "count": 1
-          }
-        },
-        "skip": false,
-        "unilateral": false,
-        "id": 4
-      }
     ]
   }
 }

@@ -26,9 +26,6 @@
         "equipment": {
           "dumbbells_5kg": {
             "count": 2
-          },
-          "dumbbells_10kg": {
-            "count": 2
           }
         },
         "skip": false,
@@ -40,14 +37,8 @@
         "link": "https://www.youtube.com/shorts/b132W5N8Jrg",
         "area": "upper",
         "muscles": "shoulders, triceps, core",
-        "equipment": {
-          "dumbbells_3kg": {
-            "count": 2
-          },
+        "equipment": {          
           "dumbbells_5kg": {
-            "count": 2
-          },
-          "dumbbells_10kg": {
             "count": 2
           }
         },
@@ -60,14 +51,8 @@
         "link": "https://www.youtube.com/shorts/mejtlcieNvc",
         "area": "upper",
         "muscles": "deltoids, shoulders",
-        "equipment": {
-          "dumbbells_3kg": {
-            "count": 2
-          },
+        "equipment": {          
           "dumbbells_5kg": {
-            "count": 2
-          },
-          "dumbbells_10kg": {
             "count": 2
           }
         },

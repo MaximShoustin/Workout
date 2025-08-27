@@ -266,7 +266,7 @@ def analyze_workout_distribution(stations: List[Dict]) -> Dict[str, any]:
     }
 
 
-def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requirements: Optional[Dict] = None, validation_summary: Optional[Dict] = None, global_active_rest_schedule: Optional[List[Dict]] = None, selected_active_rest_exercises: Optional[List[Dict]] = None, is_workout_store: bool = False) -> str:
+def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requirements: Optional[Dict] = None, validation_summary: Optional[Dict] = None, global_active_rest_schedule: Optional[List[Dict]] = None, selected_active_rest_exercises: Optional[List[Dict]] = None, selected_warm_up_exercises: Optional[List[Dict]] = None, is_workout_store: bool = False) -> str:
     """Generate a styled HTML workout plan."""
     title = plan.get("title", "Station Map")
     notes = plan.get("notes", "")
@@ -962,6 +962,89 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
             transition: all 0.3s ease;
         }
         
+        /* Warm Up Section Styles */
+        .warm-up-section {
+            margin-top: 40px;
+            background: linear-gradient(135deg, #fff8e1, #ffe0b2);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 2px solid #ff9800;
+        }
+        .warm-up-title {
+            font-size: 1.8em;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            text-align: center;
+            border-bottom: 3px solid #ff9800;
+            padding-bottom: 15px;
+            background: linear-gradient(135deg, #ff9800, #f57c00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .warm-up-description {
+            text-align: center;
+            color: #6c757d;
+            font-style: italic;
+            margin-bottom: 25px;
+            font-size: 1.1em;
+        }
+        .warm-up-section table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .warm-up-section table th {
+            background: linear-gradient(135deg, #ff9800, #f57c00);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .warm-up-section table td {
+            padding: 15px;
+            border-bottom: 1px solid #ecf0f1;
+            vertical-align: top;
+        }
+        .warm-up-section table tr:nth-child(even) {
+            background: #fff8e1;
+        }
+        .warm-up-section table tr:hover {
+            background: #ffecb3;
+            transition: all 0.3s ease;
+        }
+        .warm-up-exercise {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .warm-up-number {
+            background: #ff9800;
+            color: white;
+            font-weight: bold;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8em;
+            flex-shrink: 0;
+        }
+        .warm-up-instructions {
+            color: #666;
+            font-style: italic;
+        }
+        
         /* Mobile step labels - hidden on desktop */
         .mobile-step-label,
         .mobile-rest-label {
@@ -1182,7 +1265,43 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
         <div class="subtitle">Generated on {timestamp}</div>
         
         {f'<div class="notes">{notes}</div>' if notes else ''}
+        """
+    
+    # Add Warm Up section if provided
+    if selected_warm_up_exercises:
+        html += f"""
+        <div class="warm-up-section">
+            <h2 class="warm-up-title">🔥 Warm Up Exercises</h2>
+            <p class="warm-up-description">Complete these exercises before starting the workout</p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Exercise</th>
+                        <th>Instructions</th>
+                    </tr>
+                </thead>
+                <tbody>"""
         
+        for idx, exercise in enumerate(selected_warm_up_exercises, 1):
+            html += f"""
+                    <tr>
+                        <td class="warm-up-exercise">
+                            <span class="warm-up-number">{idx}</span>
+                            {format_exercise_link(exercise["name"], exercise.get("link", ""), exercise.get("id", -1))}
+                        </td>
+                        <td class="warm-up-instructions">
+                            Perform for 30-60 seconds
+                        </td>
+                    </tr>"""
+        
+        html += """
+                </tbody>
+            </table>
+        </div>
+        """
+    
+    html += """
         <table>
             <thead>
                 <tr>

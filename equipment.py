@@ -94,7 +94,7 @@ def parse_equipment() -> Dict[str, dict]:
     """Parse all equipment JSON files."""
     gear: Dict[str, dict] = {}
     for f in EQUIP_DIR.glob("*.json"):
-        if f.name == "active_rest.json":
+        if f.name in ["active_rest.json", "warm_up.json"]:
             continue
         data = load_json(f)
         # Use filename (without .json) as equipment name since we removed root-level equipment field
