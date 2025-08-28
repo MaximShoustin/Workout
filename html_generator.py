@@ -1420,6 +1420,36 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
     </div>
     
     <script>
+        // Fix image paths based on current location
+        function fixImagePaths() {
+            const currentPath = window.location.pathname;
+            const isInWorkoutStore = currentPath.includes('/workout_store/') || currentPath.includes('\\\\workout_store\\\\');
+            
+            // Find all crossfit-path-inline-image elements
+            const images = document.querySelectorAll('.crossfit-path-inline-image');
+            
+            images.forEach(img => {
+                let src = img.getAttribute('src');
+                
+                if (isInWorkoutStore) {
+                    // If in workout_store/, ensure path starts with ../
+                    if (!src.startsWith('../config/pictures/')) {
+                        src = src.replace('config/pictures/', '../config/pictures/');
+                        img.setAttribute('src', src);
+                    }
+                } else {
+                    // If in root (index.html), ensure path doesn't start with ../
+                    if (src.startsWith('../config/pictures/')) {
+                        src = src.replace('../config/pictures/', 'config/pictures/');
+                        img.setAttribute('src', src);
+                    }
+                }
+            });
+        }
+        
+        // Call fixImagePaths when page loads
+        document.addEventListener('DOMContentLoaded', fixImagePaths);
+        
         function toggleVideo(exerciseId) {
             const video = document.getElementById('video_' + exerciseId);
             const iframe = video.querySelector('iframe');
@@ -1975,6 +2005,36 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
     
     html += """
     <script>
+        // Fix image paths based on current location
+        function fixImagePaths() {{
+            const currentPath = window.location.pathname;
+            const isInWorkoutStore = currentPath.includes('/workout_store/') || currentPath.includes('\\\\workout_store\\\\');
+            
+            // Find all crossfit-path-inline-image elements
+            const images = document.querySelectorAll('.crossfit-path-inline-image');
+            
+            images.forEach(img => {{
+                let src = img.getAttribute('src');
+                
+                if (isInWorkoutStore) {{
+                    // If in workout_store/, ensure path starts with ../
+                    if (!src.startsWith('../config/pictures/')) {{
+                        src = src.replace('config/pictures/', '../config/pictures/');
+                        img.setAttribute('src', src);
+                    }}
+                }} else {{
+                    // If in root (index.html), ensure path doesn't start with ../
+                    if (src.startsWith('../config/pictures/')) {{
+                        src = src.replace('../config/pictures/', 'config/pictures/');
+                        img.setAttribute('src', src);
+                    }}
+                }}
+            }});
+        }}
+        
+        // Call fixImagePaths when page loads
+        document.addEventListener('DOMContentLoaded', fixImagePaths);
+        
         function toggleVideo(exerciseId) {{
             const video = document.getElementById('video_' + exerciseId);
             const iframe = video.querySelector('iframe');

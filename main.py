@@ -121,57 +121,38 @@ def generate_crossfit_path_workout(plan: dict, crossfit_path_pool: list) -> dict
         print(f"   {i}. {exercise['name']}")
     print()
     
-    # Create stations using exercises in order
-    stations_needed = plan["stations"]
-    steps_per_station = plan.get("steps_per_station", 2)
+    # For CrossFit Path, use exercises in exact sequential order (not distributed across stations)
+    # Use only the number of exercises specified by crossfit_path_count
+    crossfit_path_count = plan.get("crossfit_path_count", len(available_exercises))
+    exercises_to_use = available_exercises[:crossfit_path_count]
     
+    print(f"📋 Using first {len(exercises_to_use)} exercises in exact order from CrossFit Path JSON")
+    
+    # Create a single station with all exercises as sequential steps
     stations = []
-    exercise_index = 0
     used_exercise_ids = []
     
-    for station_num in range(1, stations_needed + 1):
-        station = {
-            "letter": chr(64 + station_num),  # A, B, C, etc.
-            "area": "crossfit_path",
-            "used_exercise_ids": []
-        }
+    station = {
+        "letter": "A",  # Single station for sequential workout
+        "area": "crossfit_path",
+        "used_exercise_ids": []
+    }
+    
+    # Add all exercises as sequential steps
+    for step_num, exercise in enumerate(exercises_to_use, 1):
+        station[f"step{step_num}"] = exercise["name"]
+        station[f"step{step_num}_link"] = exercise.get("link", "")
+        station[f"step{step_num}_id"] = exercise.get("id", -1)
+        station[f"step{step_num}_equipment"] = {}
+        station[f"step{step_num}_muscles"] = ""
+        station[f"step{step_num}_area"] = "crossfit_path"
+        station[f"step{step_num}_equip"] = "crossfit_path"
         
-        # Add steps to this station
-        for step_num in range(1, steps_per_station + 1):
-            if exercise_index < len(available_exercises):
-                exercise = available_exercises[exercise_index]
-                station[f"step{step_num}"] = exercise["name"]
-                station[f"step{step_num}_link"] = exercise.get("link", "")
-                station[f"step{step_num}_id"] = exercise.get("id", -1)
-                station[f"step{step_num}_equipment"] = {}
-                station[f"step{step_num}_muscles"] = ""
-                station[f"step{step_num}_area"] = "crossfit_path"
-                station[f"step{step_num}_equip"] = "crossfit_path"
-                
-                if exercise.get("id", -1) != -1:
-                    station["used_exercise_ids"].append(exercise["id"])
-                    used_exercise_ids.append(exercise["id"])
-                
-                exercise_index += 1
-            else:
-                # If we run out of exercises, cycle back to the beginning
-                exercise_index = exercise_index % len(available_exercises)
-                exercise = available_exercises[exercise_index]
-                station[f"step{step_num}"] = exercise["name"]
-                station[f"step{step_num}_link"] = exercise.get("link", "")
-                station[f"step{step_num}_id"] = exercise.get("id", -1)
-                station[f"step{step_num}_equipment"] = {}
-                station[f"step{step_num}_muscles"] = ""
-                station[f"step{step_num}_area"] = "crossfit_path"
-                station[f"step{step_num}_equip"] = "crossfit_path"
-                
-                if exercise.get("id", -1) != -1:
-                    station["used_exercise_ids"].append(exercise["id"])
-                    used_exercise_ids.append(exercise["id"])
-                
-                exercise_index += 1
-        
-        stations.append(station)
+        if exercise.get("id", -1) != -1:
+            station["used_exercise_ids"].append(exercise["id"])
+            used_exercise_ids.append(exercise["id"])
+    
+    stations.append(station)
     
     print(f"✅ Generated {len(stations)} stations using CrossFit path exercises")
     
