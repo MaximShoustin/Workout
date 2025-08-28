@@ -1,0 +1,121 @@
+{
+  "lifts": {
+    "power": [
+      {
+        "name": "side-steps + biceps press",
+        "link": "",
+        "area": "upper",
+        "muscles": "core, biceps, quadriceps",
+        "equipment": {
+          "dumbbells_3kg": {
+            "count": 2
+          },
+          "dumbbells_5kg": {
+            "count": 2
+          }
+        },
+        "skip": false,
+        "unilateral": false,
+        "id": 112
+      },
+      {
+        "name": "launges + hang clean & jerk",
+        "link": "",
+        "area": "core",
+        "muscles": "core, biceps, quadriceps",
+        "equipment": {
+          "dumbbells_5kg": {
+            "count": 2
+          }
+        },
+        "skip": false,
+        "unilateral": false,
+        "id": 113
+      },
+      
+      {
+        "name": "Duck walk + half squat",
+        "link": "https://www.youtube.com/shorts/VgGVBcdS7TE",
+        "skip": false,
+        "id": 88
+      },
+     
+      {
+        "name": "Lunges - long steps",
+        "link": "",
+        "skip": false,
+        "id": 90
+      },
+      
+      
+      {
+        "name": "Inch worm + push ups",
+        "link": "https://www.youtube.com/shorts/fm6vx3zO5Yg",
+        "skip": false,
+        "id": 94
+      },
+      
+      {
+        "name": "Burpees broad jumps",
+        "link": "https://www.youtube.com/shorts/L6JeEFvDlW8",
+        "skip": false,
+        "id": 96
+      },
+      {
+        "name": "Mountain climbers + KB movement",
+        "link": "",
+        "skip": false,
+        "id": 97
+      },
+      
+     
+     
+      {
+        "name": "Overhead walk + lunges",
+        "link": "https://www.youtube.com/shorts/5n6E_Cs6amA",
+        "skip": false,
+        "id": 103
+      },
+      {
+        "name": "KB + walk 3 steps + 5 squats",
+        "link": "https://www.youtube.com/shorts/G3PJNtMeP0M",
+        "skip": false,
+        "id": 104
+      },
+      {
+        "name": "Bear crawl",
+        "link": "https://www.youtube.com/shorts/-KrgfooRE3I",
+        "skip": false,
+        "id": 106
+      },
+      {
+        "name": "Slam-ball burpee",
+        "link": "https://www.youtube.com/shorts/tfeKK4r0qbc",
+        "area": "core",
+        "muscles": "full body, core, legs, shoulders",
+        "equipment": {
+          "slam_balls_5kg": {
+            "count": 1
+          }
+        },
+        "skip": false,
+        "unilateral": false,
+        "id": 81
+      },
+      {
+        "name": "Slam-wall Ball",
+        "link": "https://www.youtube.com/shorts/6gFhwWhQJ5s",
+        "area": "core",
+        "muscles": "shoulders, quadriceps, glutes, core",
+        "equipment": {
+          "slam_balls_5kg": {
+            "count": 1
+          }
+        },
+        "skip": false,
+        "unilateral": false,
+        "id": 114
+      }
+    ]
+  }
+}
