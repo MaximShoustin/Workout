@@ -90,9 +90,9 @@ def setup_warm_up(plan: dict) -> tuple:
                 skipped_warm_up_exercises.append(activity["name"])
                 continue  # Skip this exercise
             
-            warm_up_pool.append({"name": activity["name"], "link": activity.get("link", "")})
+            warm_up_pool.append({"name": activity["name"], "link": activity.get("link", ""), "id": activity.get("id", -1)})
         else:
-            warm_up_pool.append({"name": activity, "link": ""})
+            warm_up_pool.append({"name": activity, "link": "", "id": -1})
     
     # Report skipped warm up exercises if any
     if skipped_warm_up_exercises:

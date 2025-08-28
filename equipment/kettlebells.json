@@ -13,7 +13,7 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 33
+        "id": 16
       },
       {
         "name": "Single-arm swing",
@@ -27,7 +27,7 @@
         },
         "unilateral": true,
         "skip": false,
-        "id": 34
+        "id": 17
       },
       {
         "name": "Kettlebell clean",
@@ -41,7 +41,7 @@
         },
         "skip": false,
         "unilateral": true,
-        "id": 35
+        "id": 18
       },
       {
         "name": "Clean + jerk",
@@ -55,7 +55,7 @@
         },
         "skip": false,
         "unilateral": true,
-        "id": 36
+        "id": 19
       },
       {
         "name": "Snatch",
@@ -69,7 +69,7 @@
         },
         "skip": false,
         "unilateral": true,
-        "id": 37
+        "id": 20
       },
       {
         "name": "High pull",
@@ -83,11 +83,24 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 38
+        "id": 21
+      },
+      {
+        "name": "Gorilla row",
+        "link": "https://www.youtube.com/shorts/ZuhSSlKBAcI",
+        "area": "upper",
+        "muscles": "shoulders, back",
+        "equipment": {
+          "kettlebells_6kg": {
+            "count": 1
+          }
+        },
+        "skip": false,
+        "unilateral": false,
+        "id": 106
       }
     ],
     "squat_lunge": [
-      
       {
         "name": "Double-KB front squat",
         "link": "https://www.youtube.com/shorts/8Wc7Y179inM",
@@ -100,7 +113,7 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 40
+        "id": 22
       },
       {
         "name": "Split squat (rack)",
@@ -114,7 +127,7 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 41
+        "id": 23
       },
       {
         "name": "Reverse lunge (suitcase or rack)",
@@ -128,7 +141,35 @@
         },
         "skip": false,
         "unilateral": true,
-        "id": 42
+        "id": 24
+      },
+      {
+        "name": "Goblet lunges",
+        "link": "https://www.youtube.com/shorts/cAR8efBsDdw",
+        "area": "lower",
+        "muscles": "quadriceps, glutes, hamstrings",
+        "equipment": {
+          "kettlebells_6kg": {
+            "count": 1
+          }
+        },
+        "skip": false,
+        "unilateral": false,
+        "id": 109
+      },
+      {
+        "name": "Curtsy squat",
+        "link": "",
+        "area": "lower",
+        "muscles": "quadriceps, glutes, hamstrings",
+        "equipment": {
+          "kettlebells_6kg": {
+            "count": 1
+          }
+        },
+        "skip": false,
+        "unilateral": false,
+        "id": 110
       }
     ],
     "upper_body": [
@@ -144,7 +185,7 @@
         },
         "skip": false,
         "unilateral": true,
-        "id": 43
+        "id": 25
       },
       {
         "name": "Push-press",
@@ -158,7 +199,7 @@
         },
         "skip": false,
         "unilateral": true,
-        "id": 44
+        "id": 26
       },
       {
         "name": "Single-arm floor press",
@@ -175,7 +216,7 @@
         },
         "unilateral": true,
         "skip": false,
-        "id": 45
+        "id": 27
       },
       {
         "name": "Bent-over row",
@@ -189,7 +230,7 @@
         },
         "skip": false,
         "unilateral": true,
-        "id": 46
+        "id": 28
       }
     ],
     "core_carry": [
@@ -208,7 +249,7 @@
         },
         "skip": false,
         "unilateral": true,
-        "id": 48
+        "id": 29
       },
       {
         "name": "Windmill",
@@ -222,7 +263,7 @@
         },
         "skip": false,
         "unilateral": true,
-        "id": 49
+        "id": 30
       },
       {
         "name": "Halo",
@@ -239,7 +280,7 @@
         },
         "skip": false,
         "unilateral": true,
-        "id": 50
+        "id": 31
       },
       {
         "name": "reverse flies k",
@@ -256,7 +297,7 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 51
+        "id": 32
       }
     ],
     "shoulders": [
@@ -275,7 +316,7 @@
         },
         "unilateral": true,
         "skip": false,
-        "id": 52
+        "id": 33
       },
       {
         "name": "Z-Press (seated on floor)",
@@ -283,14 +324,13 @@
         "area": "upper",
         "muscles": "shoulders, triceps, core",
         "equipment": {
-          
           "kettlebells_6kg": {
             "count": 1
           }
         },
         "skip": false,
         "unilateral": false,
-        "id": 53
+        "id": 34
       },
       {
         "name": "Double See-Saw Press",
@@ -304,7 +344,7 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 54
+        "id": 35
       },
       {
         "name": "Bottoms-Up Press",
@@ -312,16 +352,14 @@
         "area": "upper",
         "muscles": "shoulders, triceps, core, stabilizers",
         "equipment": {
-          
           "kettlebells_6kg": {
             "count": 1
           }
         },
         "unilateral": true,
         "skip": false,
-        "id": 55
+        "id": 36
       },
-     
       {
         "name": "Figure-8 to Overhead Press",
         "link": "https://www.youtube.com/shorts/I7T_P5HnUr0",
@@ -334,9 +372,8 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 58
+        "id": 37
       },
-     
       {
         "name": "Around-the-World overhead",
         "link": "https://www.youtube.com/shorts/k3elhfyMI4k",
@@ -349,7 +386,7 @@
         },
         "skip": false,
         "unilateral": true,
-        "id": 60
+        "id": 38
       },
       {
         "name": "Sotts Press (overhead squat press)",
@@ -366,7 +403,7 @@
         },
         "skip": false,
         "unilateral": true,
-        "id": 61
+        "id": 39
       }
     ],
     "triceps": [
@@ -385,7 +422,7 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 62
+        "id": 40
       },
       {
         "name": "Lying Skull Crusher (floor or bench)",
@@ -402,7 +439,7 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 63
+        "id": 41
       },
       {
         "name": "Close-Grip Floor Press",
@@ -416,7 +453,7 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 64
+        "id": 42
       },
       {
         "name": "Tate Press",
@@ -433,7 +470,7 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 65
+        "id": 43
       },
       {
         "name": "Kickback standing",
@@ -450,7 +487,7 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 66
+        "id": 44
       },
       {
         "name": "Crush-Grip Push-Up",
@@ -464,7 +501,7 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 67
+        "id": 45
       },
       {
         "name": "Tall-Kneeling Overhead Extension",
@@ -481,7 +518,7 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 68
+        "id": 46
       }
     ],
     "biceps": [
@@ -500,7 +537,7 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 69
+        "id": 47
       },
       {
         "name": "Alternating Curl",
@@ -517,7 +554,7 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 70
+        "id": 48
       },
       {
         "name": "Bottoms-Up Curl (huge grip challenge)",
@@ -531,9 +568,8 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 71
+        "id": 49
       },
-      
       {
         "name": "Preacher Curl (arm braced on bench)",
         "link": "https://www.youtube.com/shorts/mPiTdI_FcOY",
@@ -549,7 +585,7 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 73
+        "id": 50
       },
       {
         "name": "Drag Curl (elbows drift back)",
@@ -566,10 +602,8 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 74
+        "id": 51
       },
-      
-     
       {
         "name": "Waiter Curl (bell held upside-down like a tray)",
         "link": "https://www.youtube.com/shorts/c_fczYLIt2U",
@@ -583,10 +617,8 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 78
+        "id": 52
       },
-
-
       {
         "name": "Uppercut kettlbell rotations",
         "link": "https://www.youtube.com/shorts/e4gAbnf69_U",
@@ -597,7 +629,7 @@
         },
         "skip": false,
         "unilateral": true,
-        "id": 103
+        "id": 53
       },
       {
         "name": "Split stance KB rotation",
@@ -609,7 +641,7 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 104
+        "id": 54
       },
       {
         "name": "Split stance KB rotation pendulum",
@@ -622,7 +654,7 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 57
+        "id": 55
       },
       {
         "name": "Half-kneeling KB rotation lift",
@@ -634,9 +666,8 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 105
+        "id": 56
       },
-
       {
         "name": "Reverse lunge KB Rotational lift",
         "link": "https://www.youtube.com/shorts/WB93lYdkDt4",
@@ -647,9 +678,8 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 106
+        "id": 57
       }
-      
     ]
   }
 }

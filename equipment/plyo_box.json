@@ -13,7 +13,7 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 79
+        "id": 66
       },
       {
         "name": "Step-up + knee-drive",
@@ -27,7 +27,7 @@
         },
         "skip": false,
         "unilateral": true,
-        "id": 80
+        "id": 67
       },
       {
         "name": "Lateral step-over",
@@ -41,7 +41,7 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 81
+        "id": 68
       },
       {
         "name": "Depth drop \u2192 jump",
@@ -55,7 +55,7 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 82
+        "id": 69
       }
     ],
     "upper_core": [
@@ -71,7 +71,7 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 83
+        "id": 70
       },
       {
         "name": "Box dip",
@@ -85,7 +85,7 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 84
+        "id": 71
       },
       {
         "name": "Incline plank shoulder-tap",
@@ -99,7 +99,7 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 85
+        "id": 72
       }
     ]
   }

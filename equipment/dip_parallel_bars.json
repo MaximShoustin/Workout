@@ -13,7 +13,7 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 5
+        "id": 63
       }
     ],
     "static_support_core": [
@@ -29,7 +29,7 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 7
+        "id": 64
       },
       {
         "name": "Tuck hold",
@@ -43,7 +43,7 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 8
+        "id": 65
       }
     ]
   }

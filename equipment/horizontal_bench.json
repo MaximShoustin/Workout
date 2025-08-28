@@ -1,8 +1,6 @@
 {
   "lifts": {
     "upper_push": [
-      
-     
       {
         "name": "Close-grip dumbbell press",
         "link": "https://www.youtube.com/shorts/EvjftwN-nSY",
@@ -18,7 +16,7 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 27
+        "id": 58
       },
       {
         "name": "Dumbbell pullover",
@@ -35,7 +33,7 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 28
+        "id": 59
       }
     ],
     "lower_core": [
@@ -51,7 +49,7 @@
         },
         "skip": false,
         "unilateral": true,
-        "id": 30
+        "id": 60
       }
     ],
     "accessory": [
@@ -67,7 +65,7 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 31
+        "id": 61
       },
       {
         "name": "Feet-elevated push-ups",
@@ -81,7 +79,7 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 32
+        "id": 62
       }
     ]
   }

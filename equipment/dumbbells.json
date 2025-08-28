@@ -16,7 +16,7 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 13
+        "id": 2
       },
       {
         "name": "Alternating curl / hammer curl",
@@ -30,35 +30,35 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 14
+        "id": 3
       },
       {
         "name": "Overhead press",
         "link": "https://www.youtube.com/shorts/b132W5N8Jrg",
         "area": "upper",
         "muscles": "shoulders, triceps, core",
-        "equipment": {          
+        "equipment": {
           "dumbbells_5kg": {
             "count": 2
           }
         },
         "skip": false,
         "unilateral": false,
-        "id": 15
+        "id": 4
       },
       {
         "name": "Lateral / front raise",
         "link": "https://www.youtube.com/shorts/mejtlcieNvc",
         "area": "upper",
         "muscles": "deltoids, shoulders",
-        "equipment": {          
+        "equipment": {
           "dumbbells_5kg": {
             "count": 2
           }
         },
         "skip": false,
         "unilateral": false,
-        "id": 16
+        "id": 5
       },
       {
         "name": "Rear-delt fly",
@@ -72,7 +72,7 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 17
+        "id": 6
       }
     ],
     "lower_body": [
@@ -88,7 +88,7 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 18
+        "id": 7
       },
       {
         "name": "Single-leg RDL",
@@ -102,7 +102,7 @@
         },
         "unilateral": true,
         "skip": false,
-        "id": 20
+        "id": 8
       }
     ],
     "full_core": [
@@ -118,21 +118,21 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 21
+        "id": 9
       },
       {
         "name": "DB thruster",
         "link": "https://www.youtube.com/shorts/UipBcISeiGU",
         "area": "core",
         "muscles": "shoulders, quadriceps, glutes, core",
-        "equipment": {         
+        "equipment": {
           "dumbbells_5kg": {
             "count": 2
           }
         },
         "skip": false,
         "unilateral": false,
-        "id": 22
+        "id": 10
       },
       {
         "name": "Devil's press",
@@ -146,7 +146,7 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 23
+        "id": 11
       },
       {
         "name": "Zottman Curl (supinate up, pronate down)",
@@ -160,7 +160,7 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 24
+        "id": 12
       },
       {
         "name": "Skater hops",
@@ -170,7 +170,7 @@
         "muscles": "quadriceps",
         "skip": false,
         "unilateral": false,
-        "id": 99
+        "id": 13
       },
       {
         "name": "Mountain climbers",
@@ -180,9 +180,9 @@
         "muscles": "core",
         "skip": false,
         "unilateral": false,
-        "id": 100
+        "id": 14
       },
-       {
+      {
         "name": "Cossack Shift",
         "link": "https://www.youtube.com/shorts/DkeFVmqy0ys",
         "equipment": {},
@@ -190,7 +190,32 @@
         "muscles": "quadriceps",
         "skip": false,
         "unilateral": false,
-        "id": 102
+        "id": 15
+      }
+      ,
+      {
+        "name": "Dumbbell/Kettlebell hang clean & jerk",
+        "link": "https://www.youtube.com/shorts/p-GBOGjTYz8",
+        "equipment": {},
+        "area": "core",
+        "muscles": "shoulders, core",
+        "skip": false,
+        "unilateral": true,
+        "id": 107
+      },
+      {
+        "name": "Dumbbell snatch (alt DB snatch, DB snatch AMRAP)",
+        "link": "https://www.youtube.com/shorts/rCVmr5bgI7c",
+        "equipment": {
+          "dumbbells_10kg": {
+            "count": 1
+          }
+        },
+        "area": "core",
+        "muscles": "shoulders, core",
+        "skip": false,
+        "unilateral": true,
+        "id": 111
       }
     ]
   }

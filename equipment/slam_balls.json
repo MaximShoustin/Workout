@@ -13,7 +13,7 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 86
+        "id": 78
       },
       {
         "name": "Rotational slam",
@@ -27,7 +27,7 @@
         },
         "skip": true,
         "unilateral": false,
-        "id": 87
+        "id": 79
       },
       {
         "name": "Half-kneel rainbow slam",
@@ -41,7 +41,7 @@
         },
         "skip": false,
         "unilateral": true,
-        "id": 88
+        "id": 80
       },
       {
         "name": "Slam-ball burpee",
@@ -55,7 +55,7 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 89
+        "id": 81
       }
     ],
     "core_accessory": [
@@ -71,7 +71,7 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 90
+        "id": 82
       },
       {
         "name": "Bear-crawl drag",
@@ -85,7 +85,7 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 91
+        "id": 83
       },
       {
         "name": "Front-loaded squat",
@@ -99,7 +99,7 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 92
+        "id": 84
       },
       {
         "name": "Slam-ball thruster",
@@ -113,7 +113,7 @@
         },
         "skip": false,
         "unilateral": false,
-        "id": 93
+        "id": 85
       }
     ]
   }
