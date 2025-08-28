@@ -7,7 +7,7 @@ import random
 from pathlib import Path
 import json
 
-from config import load_plan, die, load_json, ACTIVE_REST_FILE, WARM_UP_FILE
+from config import load_plan, die, load_json, ACTIVE_REST_FILE, CROSSFIT_PATH_FILE
 from equipment import parse_equipment, build_station_pool, get_equipment_validation_summary
 from workout_planner import build_plan
 from file_utils import save_workout_html
@@ -65,46 +65,124 @@ def setup_active_rest(plan: dict) -> tuple:
     return rest_pool, plan
 
 
-def setup_warm_up(plan: dict) -> tuple:
-    """Set up warm up exercises and return warm up pool and modified plan."""
-    warm_up_enabled = plan.get("warm_up", False)
+def setup_crossfit_path(plan: dict) -> tuple:
+    """Set up CrossFit path exercises and return crossfit path pool and modified plan."""
+    crossfit_path_enabled = plan.get("crossfit_path", False)
     
-    if not warm_up_enabled:
+    if not crossfit_path_enabled:
         return [], plan
     
-    # Check if warm up file exists
-    if not WARM_UP_FILE.exists():
-        sys.stderr.write("⚠ warm_up.json not found; skipping warm up.\n")
-        plan["warm_up"] = False
+    # Check if crossfit path file exists
+    if not CROSSFIT_PATH_FILE.exists():
+        sys.stderr.write("⚠ crossfit_path.json not found; skipping crossfit path.\n")
+        plan["crossfit_path"] = False
         return [], plan
     
-    # Load warm up data
-    warm_up_data = load_json(WARM_UP_FILE)["rest"]
-    warm_up_pool = []
-    skipped_warm_up_exercises = []
+    # Load crossfit path data
+    crossfit_path_data = load_json(CROSSFIT_PATH_FILE)["lifts"]["power"]
+    crossfit_path_pool = []
+    skipped_crossfit_path_exercises = []
     
-    for activity in warm_up_data:
+    for activity in crossfit_path_data:
         if isinstance(activity, dict):
             # Check if exercise should be skipped
             if activity.get("skip", False):
-                skipped_warm_up_exercises.append(activity["name"])
+                skipped_crossfit_path_exercises.append(activity["name"])
                 continue  # Skip this exercise
             
-            warm_up_pool.append({"name": activity["name"], "link": activity.get("link", ""), "id": activity.get("id", -1)})
+            crossfit_path_pool.append({"name": activity["name"], "link": activity.get("link", ""), "id": activity.get("id", -1)})
         else:
-            warm_up_pool.append({"name": activity, "link": "", "id": -1})
+            crossfit_path_pool.append({"name": activity, "link": "", "id": -1})
     
-    # Report skipped warm up exercises if any
-    if skipped_warm_up_exercises:
-        print(f"⏭️  Skipped {len(skipped_warm_up_exercises)} warm up exercises marked with skip=true:")
-        for ex in skipped_warm_up_exercises:
+    # Report skipped crossfit path exercises if any
+    if skipped_crossfit_path_exercises:
+        print(f"⏭️  Skipped {len(skipped_crossfit_path_exercises)} crossfit path exercises marked with skip=true:")
+        for ex in skipped_crossfit_path_exercises:
             print(f"   • {ex}")
         print()
     
-    # Shuffle the warm up pool for variety
-    random.shuffle(warm_up_pool)
+    # Keep crossfit path pool in original order (don't shuffle)
     
-    return warm_up_pool, plan
+    return crossfit_path_pool, plan
+
+
+def generate_crossfit_path_workout(plan: dict, crossfit_path_pool: list) -> dict:
+    """Generate workout using only CrossFit path exercises in order."""
+    print("🔥 CrossFit Path Mode: Generating workout from crossfit_path.json in order")
+    
+    # Filter out skipped exercises (already done in setup_crossfit_path)
+    available_exercises = crossfit_path_pool.copy()
+    
+    if not available_exercises:
+        die("No CrossFit path exercises available after filtering")
+    
+    print(f"📋 Using {len(available_exercises)} CrossFit path exercises in order:")
+    for i, exercise in enumerate(available_exercises, 1):
+        print(f"   {i}. {exercise['name']}")
+    print()
+    
+    # Create stations using exercises in order
+    stations_needed = plan["stations"]
+    steps_per_station = plan.get("steps_per_station", 2)
+    
+    stations = []
+    exercise_index = 0
+    used_exercise_ids = []
+    
+    for station_num in range(1, stations_needed + 1):
+        station = {
+            "letter": chr(64 + station_num),  # A, B, C, etc.
+            "area": "crossfit_path",
+            "used_exercise_ids": []
+        }
+        
+        # Add steps to this station
+        for step_num in range(1, steps_per_station + 1):
+            if exercise_index < len(available_exercises):
+                exercise = available_exercises[exercise_index]
+                station[f"step{step_num}"] = exercise["name"]
+                station[f"step{step_num}_link"] = exercise.get("link", "")
+                station[f"step{step_num}_id"] = exercise.get("id", -1)
+                station[f"step{step_num}_equipment"] = {}
+                station[f"step{step_num}_muscles"] = ""
+                station[f"step{step_num}_area"] = "crossfit_path"
+                station[f"step{step_num}_equip"] = "crossfit_path"
+                
+                if exercise.get("id", -1) != -1:
+                    station["used_exercise_ids"].append(exercise["id"])
+                    used_exercise_ids.append(exercise["id"])
+                
+                exercise_index += 1
+            else:
+                # If we run out of exercises, cycle back to the beginning
+                exercise_index = exercise_index % len(available_exercises)
+                exercise = available_exercises[exercise_index]
+                station[f"step{step_num}"] = exercise["name"]
+                station[f"step{step_num}_link"] = exercise.get("link", "")
+                station[f"step{step_num}_id"] = exercise.get("id", -1)
+                station[f"step{step_num}_equipment"] = {}
+                station[f"step{step_num}_muscles"] = ""
+                station[f"step{step_num}_area"] = "crossfit_path"
+                station[f"step{step_num}_equip"] = "crossfit_path"
+                
+                if exercise.get("id", -1) != -1:
+                    station["used_exercise_ids"].append(exercise["id"])
+                    used_exercise_ids.append(exercise["id"])
+                
+                exercise_index += 1
+        
+        stations.append(station)
+    
+    print(f"✅ Generated {len(stations)} stations using CrossFit path exercises")
+    
+    return {
+        "stations": stations,
+        "equipment_requirements": {},  # No equipment requirements for CrossFit path
+        "global_active_rest_schedule": [],  # No active rest in CrossFit path mode
+        "selected_active_rest_exercises": [],
+        "selected_crossfit_path_exercises": available_exercises,
+        "used_exercise_ids": used_exercise_ids
+    }
 
 
 def generate_workout_with_retries(max_retries=15, include_ids=None):
@@ -184,10 +262,17 @@ def generate_workout_with_retries(max_retries=15, include_ids=None):
             station_pool_copy = station_pool.copy()
             plan_copy = plan.copy()  # Create fresh plan copy for each attempt
             rest_pool, plan_with_active_rest = setup_active_rest(plan_copy)
-            warm_up_pool, plan_with_warm_up = setup_warm_up(plan_with_active_rest)
+            crossfit_path_pool, plan_with_crossfit_path = setup_crossfit_path(plan_with_active_rest)
             
-            # Try to build the plan (pass the plan with active_rest_mode and warm_up set)
-            plan_result = build_plan(plan_with_warm_up, station_pool_copy, rest_pool, include_ids, warm_up_pool)
+            # Check if we're in CrossFit path mode
+            if plan_with_crossfit_path.get("crossfit_path", False):
+                # CrossFit path mode: use only crossfit_path.json exercises in order
+                if include_ids:
+                    print("⚠️  Warning: -include flag is ignored in CrossFit path mode (exercises follow predefined order)")
+                plan_result = generate_crossfit_path_workout(plan_with_crossfit_path, crossfit_path_pool)
+            else:
+                # Regular mode: use normal workout generation
+                plan_result = build_plan(plan_with_crossfit_path, station_pool_copy, rest_pool, include_ids, crossfit_path_pool)
             
             # If we get here, the plan was successful
             print(f"🎉 Success on attempt {attempt}!")
@@ -199,7 +284,7 @@ def generate_workout_with_retries(max_retries=15, include_ids=None):
                 equipment_inventory
             )
             
-            return plan_result, validation_summary, seed, plan_with_warm_up, history_manager, warm_up_pool
+            return plan_result, validation_summary, seed, plan_with_crossfit_path, history_manager, crossfit_path_pool
             
         except SystemExit as e:
             # Catch the die() call from build_plan when equipment is insufficient
@@ -617,8 +702,8 @@ def main():
             global_active_rest_schedule = last_plan_data.get('global_active_rest_schedule')
             selected_active_rest_exercises = last_plan_data.get('selected_active_rest_exercises')
             # Use the existing seed from LAST_WORKOUT_PLAN.json for HTML
-            selected_warm_up_exercises = last_plan_data.get('selected_warm_up_exercises')
-            filename = save_workout_html(plan, rebuilt_stations, equipment_requirements=equipment_requirements, global_active_rest_schedule=global_active_rest_schedule, selected_active_rest_exercises=selected_active_rest_exercises, selected_warm_up_exercises=selected_warm_up_exercises, update_index_html=True, seed=last_plan_data.get('seed'))
+            selected_crossfit_path_exercises = last_plan_data.get('selected_crossfit_path_exercises')
+            filename = save_workout_html(plan, rebuilt_stations, equipment_requirements=equipment_requirements, global_active_rest_schedule=global_active_rest_schedule, selected_active_rest_exercises=selected_active_rest_exercises, selected_crossfit_path_exercises=selected_crossfit_path_exercises, update_index_html=True, seed=last_plan_data.get('seed'))
             print(f'✅ HTML report regenerated: {filename}')
             return  # Prevent further execution and overwriting in normal workflow
         except Exception as e:
@@ -650,14 +735,14 @@ def main():
         # Try to reconstruct global_active_rest_schedule and selected_active_rest_exercises from plan if possible
         global_active_rest_schedule = None
         selected_active_rest_exercises = None
-        selected_warm_up_exercises = None
+        selected_crossfit_path_exercises = None
         if 'global_active_rest_schedule' in last_plan_data:
             global_active_rest_schedule = last_plan_data['global_active_rest_schedule']
         if 'selected_active_rest_exercises' in last_plan_data:
             selected_active_rest_exercises = last_plan_data['selected_active_rest_exercises']
-        if 'selected_warm_up_exercises' in last_plan_data:
-            selected_warm_up_exercises = last_plan_data['selected_warm_up_exercises']
-        filename = save_workout_html(plan, stations_to_use, equipment_requirements=equipment_requirements, global_active_rest_schedule=global_active_rest_schedule, selected_active_rest_exercises=selected_active_rest_exercises, selected_warm_up_exercises=selected_warm_up_exercises, update_index_html=True, seed=new_seed)
+        if 'selected_crossfit_path_exercises' in last_plan_data:
+            selected_crossfit_path_exercises = last_plan_data['selected_crossfit_path_exercises']
+        filename = save_workout_html(plan, stations_to_use, equipment_requirements=equipment_requirements, global_active_rest_schedule=global_active_rest_schedule, selected_active_rest_exercises=selected_active_rest_exercises, selected_crossfit_path_exercises=selected_crossfit_path_exercises, update_index_html=True, seed=new_seed)
         print(f'✅ HTML report regenerated: {filename}')
         return
     
@@ -692,7 +777,7 @@ def main():
         print(f"📋 Will include {len(validated_include_ids)} exercises: {validated_include_ids}")
     
     try:
-        plan_result, validation_summary, seed_used, plan, history_manager, warm_up_pool = generate_workout_with_retries(include_ids=validated_include_ids if include_ids is not None else None)
+        plan_result, validation_summary, seed_used, plan, history_manager, crossfit_path_pool = generate_workout_with_retries(include_ids=validated_include_ids if include_ids is not None else None)
         
         # Print validation status
         if validation_summary["is_valid"]:
@@ -705,7 +790,7 @@ def main():
         # Save the HTML file  
         update_index_html = plan.get("use_workout_history", True)
         used_exercise_ids = plan_result.get("used_exercise_ids", [])
-        filename = save_workout_html(plan, plan_result["stations"], plan_result["equipment_requirements"], validation_summary, plan_result["global_active_rest_schedule"], plan_result["selected_active_rest_exercises"], plan_result["selected_warm_up_exercises"], update_index_html=update_index_html, used_exercise_ids=used_exercise_ids, seed=seed_used)
+        filename = save_workout_html(plan, plan_result["stations"], plan_result["equipment_requirements"], validation_summary, plan_result["global_active_rest_schedule"], plan_result["selected_active_rest_exercises"], plan_result["selected_crossfit_path_exercises"], update_index_html=update_index_html, used_exercise_ids=used_exercise_ids, seed=seed_used)
         print(f"✅ Workout saved to: {filename}")
         print(f"🌐 Open in browser: file://{filename.absolute()}")
         print(f"🎲 Final seed used: {seed_used}")

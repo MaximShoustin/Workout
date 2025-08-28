@@ -683,7 +683,7 @@ def find_compatible_exercise_pair(station_pool: List[Tuple[str, str, str, str, d
     return None, None
 
 
-def build_plan(plan: dict, station_pool: List[Tuple[str, str, str, str, dict]], rest_pool: List[dict], include_ids: List[int] = None, warm_up_pool: List[dict] = None) -> dict:
+def build_plan(plan: dict, station_pool: List[Tuple[str, str, str, str, dict]], rest_pool: List[dict], include_ids: List[int] = None, crossfit_path_pool: List[dict] = None) -> dict:
     """Build workout plan with corrected station-based equipment tracking."""
     stations_needed = plan["stations"]
     people_count = plan.get("people", stations_needed)  # Default to 1 person per station if not specified
@@ -767,20 +767,20 @@ def build_plan(plan: dict, station_pool: List[Tuple[str, str, str, str, dict]], 
         for step_idx in range(steps_per_station):
             global_active_rest_schedule.append({"name": "Rest", "link": ""})
     
-    # Create warm up schedule - select exercises for warm up section
-    warm_up_count = plan.get("warm_up_count", 6)  # Default to 6 warm up exercises
-    selected_warm_up_exercises = []
+    # Create crossfit path schedule - select exercises for crossfit path section
+    crossfit_path_count = plan.get("crossfit_path_count", 6)  # Default to 6 crossfit path exercises
+    selected_crossfit_path_exercises = []
     
-    if plan.get("warm_up", False) and warm_up_pool:
-        # Select the specified number of exercises from the warm up pool
-        if len(warm_up_pool) >= warm_up_count:
-            selected_warm_up_exercises = random.sample(warm_up_pool, warm_up_count)
+    if plan.get("crossfit_path", False) and crossfit_path_pool:
+        # Select the specified number of exercises from the crossfit path pool
+        if len(crossfit_path_pool) >= crossfit_path_count:
+            selected_crossfit_path_exercises = random.sample(crossfit_path_pool, crossfit_path_count)
         else:
             # If fewer exercises available than requested, use all of them
-            selected_warm_up_exercises = warm_up_pool.copy()
+            selected_crossfit_path_exercises = crossfit_path_pool.copy()
         
-        print(f"🔥 Selected {len(selected_warm_up_exercises)} Warm Up Exercises:")
-        for i, exercise in enumerate(selected_warm_up_exercises, 1):
+        print(f"🔥 Selected {len(selected_crossfit_path_exercises)} CrossFit Path Exercises:")
+        for i, exercise in enumerate(selected_crossfit_path_exercises, 1):
             print(f"   {i}. {exercise['name']}")
         print()
     
@@ -1127,6 +1127,6 @@ def build_plan(plan: dict, station_pool: List[Tuple[str, str, str, str, dict]], 
         "equipment_requirements": final_equipment_requirements,  # Use clean copy for validation
         "global_active_rest_schedule": global_active_rest_schedule,  # Global rest schedule for all stations
         "selected_active_rest_exercises": selected_exercises,  # All selected active rest exercises (for display)
-        "selected_warm_up_exercises": selected_warm_up_exercises,  # All selected warm up exercises (for display)
+        "selected_crossfit_path_exercises": selected_crossfit_path_exercises,  # All selected crossfit path exercises (for display)
         "used_exercise_ids": used_exercise_ids  # Exercise IDs used in this workout (for history tracking)
     } 

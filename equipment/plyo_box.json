@@ -100,6 +100,22 @@
         "skip": false,
         "unilateral": false,
         "id": 72
+      },
+      {
+        "name": "Yoga Push Ups",
+        "link": "https://www.youtube.com/shorts/zPZR0bGL8vA",
+        "skip": false,
+        "unilateral": false,
+        "equipment": {},
+        "id": 86
+      },
+      {
+        "name": "Scapula Push Ups",
+        "link": "https://www.youtube.com/shorts/yETYYimA7yI",
+        "skip": false,
+        "unilateral": false,
+        "equipment": {},
+        "id": 87
       }
     ]
   }

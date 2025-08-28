@@ -14,7 +14,7 @@ EQUIP_DIR = Path("equipment")
 CONFIG_DIR = Path("config")
 WORKOUT_STORE_DIR = Path("workout_store")
 ACTIVE_REST_FILE = EQUIP_DIR / "active_rest.json"
-WARM_UP_FILE = EQUIP_DIR / "warm_up.json"
+CROSSFIT_PATH_FILE = EQUIP_DIR / "crossfit_path.json"
 
 DEFAULT_PLAN = {
     "stations": 6,
@@ -27,8 +27,8 @@ DEFAULT_PLAN = {
     "title": "40‑Minute Swim‑Strength Block",
     "notes": "Auto‑generated plan.",
     "active_rest": "auto",  # true | false | "auto" | "mix"
-    "warm_up": False,  # true | false
-    "warm_up_count": 6,
+    "crossfit_path": False,  # true | false
+    "crossfit_path_count": 6,
 }
 
 AREA_MAP = {
@@ -67,8 +67,8 @@ def load_plan() -> Dict[str, Any]:
             w, r = merged["timing"].split("/")
             merged["timing"] = {"work": int(w), "rest": int(r)}
         merged.setdefault("active_rest", "auto")
-        merged.setdefault("warm_up", False)
-        merged.setdefault("warm_up_count", 6)
+        merged.setdefault("crossfit_path", False)
+        merged.setdefault("crossfit_path_count", 6)
         return merged
     else:
         sys.stderr.write("⚠ plan.json not found; using defaults.\n")

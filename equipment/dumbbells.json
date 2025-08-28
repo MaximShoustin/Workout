@@ -18,6 +18,7 @@
         "unilateral": false,
         "id": 2
       },
+     
       {
         "name": "Alternating curl / hammer curl",
         "link": "https://www.youtube.com/shorts/oB-RyX8AdO4",
@@ -216,6 +217,34 @@
         "skip": false,
         "unilateral": true,
         "id": 111
+      },
+      {
+        "name": "Kettlebell clean + press",
+        "link": "https://www.youtube.com/shorts/h4KafmF7Xwc",
+        "equipment": {
+          "dumbbells_10kg": {
+            "count": 1
+          }
+        },
+        "area": "core",
+        "muscles": "shoulders, core",
+        "skip": false,
+        "unilateral": true,
+        "id": 89
+      },
+      {
+        "name": "Thrusters (light, warm-up)",
+        "link": "https://www.youtube.com/shorts/UipBcISeiGU",
+       "equipment": {
+          "dumbbells_10kg": {
+            "count": 1
+          }
+        },
+        "area": "core",
+        "muscles": "shoulders, core",
+        "skip": false,
+        "unilateral": false,
+        "id": 102
       }
     ]
   }

@@ -11,7 +11,7 @@ from config import WORKOUT_STORE_DIR
 from html_generator import generate_html_workout
 
 
-def save_workout_html(plan: Dict, stations: List[Dict], equipment_requirements: Optional[Dict] = None, validation_summary: Optional[Dict] = None, global_active_rest_schedule: Optional[List[Dict]] = None, selected_active_rest_exercises: Optional[List[Dict]] = None, selected_warm_up_exercises: Optional[List[Dict]] = None, update_index_html: bool = True, used_exercise_ids: Optional[List[int]] = None, seed: Optional[int] = None) -> Path:
+def save_workout_html(plan: Dict, stations: List[Dict], equipment_requirements: Optional[Dict] = None, validation_summary: Optional[Dict] = None, global_active_rest_schedule: Optional[List[Dict]] = None, selected_active_rest_exercises: Optional[List[Dict]] = None, selected_crossfit_path_exercises: Optional[List[Dict]] = None, update_index_html: bool = True, used_exercise_ids: Optional[List[int]] = None, seed: Optional[int] = None) -> Path:
     """Generate HTML workout and save to timestamped file in workout_store directory.
     Also updates index.html in project root for GitHub Pages if update_index_html is True."""
     # Create workout_store directory if it doesn't exist
@@ -23,7 +23,7 @@ def save_workout_html(plan: Dict, stations: List[Dict], equipment_requirements: 
     filepath = WORKOUT_STORE_DIR / filename
     
     # Generate HTML content for workout_store (with relative path to ../config/pictures)
-    html_content = generate_html_workout(plan, stations, equipment_requirements, validation_summary, global_active_rest_schedule, selected_active_rest_exercises, selected_warm_up_exercises, is_workout_store=True)
+    html_content = generate_html_workout(plan, stations, equipment_requirements, validation_summary, global_active_rest_schedule, selected_active_rest_exercises, selected_crossfit_path_exercises, is_workout_store=True)
     
     # Save to timestamped file in workout_store directory
     with filepath.open('w', encoding='utf-8') as f:
@@ -56,15 +56,15 @@ def save_workout_html(plan: Dict, stations: List[Dict], equipment_requirements: 
             last_plan_data["global_active_rest_schedule"] = global_active_rest_schedule
         if selected_active_rest_exercises is not None:
             last_plan_data["selected_active_rest_exercises"] = selected_active_rest_exercises
-        if selected_warm_up_exercises is not None:
-            last_plan_data["selected_warm_up_exercises"] = selected_warm_up_exercises
+        if selected_crossfit_path_exercises is not None:
+            last_plan_data["selected_crossfit_path_exercises"] = selected_crossfit_path_exercises
         with last_plan_path.open('w', encoding='utf-8') as f:
             json.dump(last_plan_data, f, indent=2)
     
     # Also save to index.html in project root for GitHub Pages if requested
     if update_index_html:
         # Generate separate HTML content for index.html (with relative path to config/pictures)
-        index_html_content = generate_html_workout(plan, stations, equipment_requirements, validation_summary, global_active_rest_schedule, selected_active_rest_exercises, selected_warm_up_exercises, is_workout_store=False)
+        index_html_content = generate_html_workout(plan, stations, equipment_requirements, validation_summary, global_active_rest_schedule, selected_active_rest_exercises, selected_crossfit_path_exercises, is_workout_store=False)
         index_path = Path("index.html")
         with index_path.open('w', encoding='utf-8') as f:
             f.write(index_html_content)

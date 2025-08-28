@@ -281,7 +281,7 @@ def analyze_workout_distribution(stations: List[Dict]) -> Dict[str, any]:
     }
 
 
-def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requirements: Optional[Dict] = None, validation_summary: Optional[Dict] = None, global_active_rest_schedule: Optional[List[Dict]] = None, selected_active_rest_exercises: Optional[List[Dict]] = None, selected_warm_up_exercises: Optional[List[Dict]] = None, is_workout_store: bool = False) -> str:
+def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requirements: Optional[Dict] = None, validation_summary: Optional[Dict] = None, global_active_rest_schedule: Optional[List[Dict]] = None, selected_active_rest_exercises: Optional[List[Dict]] = None, selected_crossfit_path_exercises: Optional[List[Dict]] = None, is_workout_store: bool = False) -> str:
     """Generate a styled HTML workout plan."""
     title = plan.get("title", "Station Map")
     notes = plan.get("notes", "")
@@ -977,8 +977,8 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
             transition: all 0.3s ease;
         }
         
-        /* Warm Up Section Styles */
-        .warm-up-section {
+        /* CrossFit Path Section Styles */
+        .crossfit-path-section {
             margin-top: 40px;
             background: linear-gradient(135deg, #fff8e1, #ffe0b2);
             border-radius: 15px;
@@ -986,7 +986,7 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             border: 2px solid #ff9800;
         }
-        .warm-up-title {
+        .crossfit-path-title {
             font-size: 1.8em;
             font-weight: 600;
             color: #2c3e50;
@@ -999,14 +999,24 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        .warm-up-description {
+        .crossfit-path-description {
             text-align: center;
             color: #6c757d;
             font-style: italic;
             margin-bottom: 25px;
             font-size: 1.1em;
         }
-        .warm-up-section table {
+        .crossfit-path-inline-image {
+            max-width: 200px;
+            max-height: 150px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-top: 10px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .crossfit-path-section table {
             width: 100%;
             border-collapse: collapse;
             margin: 20px 0;
@@ -1015,7 +1025,7 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
-        .warm-up-section table th {
+        .crossfit-path-section table th {
             background: linear-gradient(135deg, #ff9800, #f57c00);
             color: white;
             padding: 15px;
@@ -1025,24 +1035,24 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-        .warm-up-section table td {
+        .crossfit-path-section table td {
             padding: 15px;
             border-bottom: 1px solid #ecf0f1;
             vertical-align: top;
         }
-        .warm-up-section table tr:nth-child(even) {
+        .crossfit-path-section table tr:nth-child(even) {
             background: #fff8e1;
         }
-        .warm-up-section table tr:hover {
+        .crossfit-path-section table tr:hover {
             background: #ffecb3;
             transition: all 0.3s ease;
         }
-        .warm-up-exercise {
+        .crossfit-path-exercise {
             display: flex;
             align-items: center;
             gap: 10px;
         }
-        .warm-up-number {
+        .crossfit-path-number {
             background: #ff9800;
             color: white;
             font-weight: bold;
@@ -1055,7 +1065,7 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
             font-size: 0.8em;
             flex-shrink: 0;
         }
-        .warm-up-instructions {
+        .crossfit-path-instructions {
             color: #666;
             font-style: italic;
         }
@@ -1266,6 +1276,10 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
     </style>
     """
     
+    # Check if we're in CrossFit path mode for minimal layout
+    is_crossfit_path_mode = plan.get("crossfit_path", False)
+    
+    # Always show the same header (title + subtitle + notes)
     html = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1282,76 +1296,335 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
         {f'<div class="notes">{notes}</div>' if notes else ''}
         """
     
-    # Add Warm Up section if provided
-    if selected_warm_up_exercises:
-        html += f"""
-        <div class="warm-up-section">
-            <h2 class="warm-up-title">🔥 Warm Up Exercises</h2>
-            <p class="warm-up-description">Complete these exercises before starting the workout</p>
-            
-            <table>
-                <thead>
-                    <tr>
-                        <th>Exercise</th>
-                        <th>Instructions</th>
-                    </tr>
-                </thead>
-                <tbody>"""
-        
-        for idx, exercise in enumerate(selected_warm_up_exercises, 1):
-            html += f"""
-                    <tr>
-                        <td class="warm-up-exercise">
-                            <span class="warm-up-number">{idx}</span>
-                            {format_exercise_link(exercise["name"], exercise.get("link", ""), exercise.get("id", -1))}
-                        </td>
-                        <td class="warm-up-instructions">
-                            Perform for 30-60 seconds
-                        </td>
-                    </tr>"""
-        
-        html += """
-                </tbody>
-            </table>
-        </div>
-        """
+    # (is_crossfit_path_mode already defined above)
     
-    html += """
+    # Add CrossFit Path section if provided
+    if selected_crossfit_path_exercises:
+        if is_crossfit_path_mode:
+            # CrossFit path mode: simplified layout without instructions column
+            html += f"""
+            <div class="crossfit-path-section">
+                <h2 class="crossfit-path-title">🔥 CrossFit Path Exercises</h2>
+                <p class="crossfit-path-description">Complete these exercises in order</p>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Exercise</th>
+                        </tr>
+                    </thead>
+                    <tbody>"""
+            
+            for idx, exercise in enumerate(selected_crossfit_path_exercises, 1):
+                # Create exercise link without picture functionality
+                exercise_name = exercise["name"]
+                exercise_link = exercise.get("link", "")
+                exercise_id = exercise.get("id", -1)
+                
+                # Format exercise with video only (no pictures)
+                if exercise_link and exercise_link != "some url" and exercise_link.strip():
+                    # Convert YouTube URLs to embed format
+                    embed_url = exercise_link
+                    autoplay_params = "autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0"
+                    if "youtube.com/watch?v=" in exercise_link:
+                        video_id = exercise_link.split("watch?v=")[1].split("&")[0]
+                        embed_url = f"https://www.youtube.com/embed/{video_id}?{autoplay_params}"
+                    elif "youtube.com/shorts/" in exercise_link:
+                        video_id = exercise_link.split("/shorts/")[1].split("?")[0]
+                        embed_url = f"https://www.youtube.com/embed/{video_id}?{autoplay_params}"
+                    elif "youtu.be/" in exercise_link:
+                        video_id = exercise_link.split("youtu.be/")[1].split("?")[0]
+                        embed_url = f"https://www.youtube.com/embed/{video_id}?{autoplay_params}"
+                    
+                    # Create unique ID for this exercise
+                    import re
+                    html_id = exercise_name.lower()
+                    html_id = html_id.replace(" ", "_").replace("-", "_").replace("+", "plus").replace("→", "to")
+                    html_id = html_id.replace("'", "").replace("(", "").replace(")", "").replace("/", "_")
+                    html_id = html_id.replace(",", "").replace(".", "").replace(":", "").replace(";", "")
+                    html_id = html_id.replace("&", "and").replace("#", "").replace("%", "").replace("@", "")
+                    html_id = re.sub(r'[^a-z0-9_]', '', html_id)
+                    
+                    exercise_html = f'''<span class="exercise-with-video">
+            <span class="exercise-name" onclick="toggleVideo('{html_id}')">{exercise_name}</span>
+            <div id="video_{html_id}" class="video-popup">
+                <iframe src="{embed_url}" frameborder="0" allowfullscreen></iframe>
+                <button class="close-video" onclick="toggleVideo('{html_id}')">&times;</button>
+            </div></span>'''
+                else:
+                    exercise_html = f'<span class="exercise-name">{exercise_name}</span>'
+                
+                # Check if picture exists and add inline image
+                picture_html = ""
+                if exercise_id is not None and exercise_id != -1:
+                    from pathlib import Path
+                    absolute_picture_path = Path("config/pictures") / f"{exercise_id}.png"
+                    if absolute_picture_path.exists():
+                        picture_path = f"../config/pictures/{exercise_id}.png" if is_workout_store else f"config/pictures/{exercise_id}.png"
+                        picture_html = f'<br><img src="{picture_path}" alt="{exercise_name}" class="crossfit-path-inline-image" onerror="this.style.display=\'none\'" />'
+                
+                html += f"""
+                        <tr>
+                            <td class="crossfit-path-exercise">
+                                <span class="crossfit-path-number">{idx}</span>
+                                <div class="exercise-cell-wrapper">
+                                    {exercise_html}
+                                    {format_exercise_id_badge(exercise.get("id", None))}
+                                </div>
+                                {picture_html}
+                            </td>
+                        </tr>"""
+            
+            html += """
+                    </tbody>
+                </table>
+            </div>
+            """
+        else:
+            # Regular mode: keep instructions column
+            html += f"""
+            <div class="crossfit-path-section">
+                <h2 class="crossfit-path-title">🔥 CrossFit Path Exercises</h2>
+                <p class="crossfit-path-description">Complete these exercises before starting the workout</p>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Exercise</th>
+                            <th>Instructions</th>
+                        </tr>
+                    </thead>
+                    <tbody>"""
+            
+            for idx, exercise in enumerate(selected_crossfit_path_exercises, 1):
+                html += f"""
+                        <tr>
+                            <td class="crossfit-path-exercise">
+                                <span class="crossfit-path-number">{idx}</span>
+                                {format_exercise_link(exercise["name"], exercise.get("link", ""), exercise.get("id", -1))}
+                            </td>
+                            <td class="crossfit-path-instructions">
+                                Perform for 30-60 seconds
+                            </td>
+                        </tr>"""
+            
+            html += """
+                    </tbody>
+                </table>
+            </div>
+            """
+        
+        # In CrossFit path mode, skip all other sections and go straight to closing
+        if is_crossfit_path_mode:
+            html += """
+    </div>
+    
+    <script>
+        function toggleVideo(exerciseId) {
+            const video = document.getElementById('video_' + exerciseId);
+            const iframe = video.querySelector('iframe');
+            const allVideos = document.querySelectorAll('.video-popup');
+            
+            // Stop and hide all other videos first
+            allVideos.forEach(v => {
+                if (v.id !== 'video_' + exerciseId) {
+                    stopVideo(v);
+                }
+            });
+            
+            if (video.style.display === 'none' || video.style.display === '') {
+                // Position video relative to the exercise
+                const exerciseElement = video.parentElement;
+                positionVideo(video, exerciseElement);
+                video.style.display = 'block';
+                
+                // Start playing
+                const src = iframe.src;
+                iframe.src = src;
+            } else {
+                stopVideo(video);
+            }
+        }
+        
+        function stopVideo(video) {
+            const iframe = video.querySelector('iframe');
+            iframe.src = iframe.src; // This stops the video
+            video.style.display = 'none';
+        }
+        
+        function togglePicture(exerciseId) {
+            const picture = document.getElementById('picture_' + exerciseId);
+            const allPictures = document.querySelectorAll('.picture-popup');
+            
+            // Hide all other pictures first
+            allPictures.forEach(p => {
+                if (p.id !== 'picture_' + exerciseId) {
+                    p.style.display = 'none';
+                }
+            });
+            
+            if (picture.style.display === 'none' || picture.style.display === '') {
+                // Position picture relative to the exercise
+                const exerciseElement = picture.parentElement;
+                positionPicture(picture, exerciseElement);
+                picture.style.display = 'block';
+            } else {
+                picture.style.display = 'none';
+            }
+        }
+        
+        function positionVideo(videoElement, exerciseElement) {
+            const rect = exerciseElement.getBoundingClientRect();
+            const spaceRight = window.innerWidth - rect.right;
+            const spaceLeft = rect.left;
+            const spaceBelow = window.innerHeight - rect.bottom;
+            
+            const videoWidth = 240;
+            const videoHeight = 360;
+            
+            // Reset positioning
+            videoElement.style.position = 'absolute';
+            videoElement.style.left = '100%';
+            videoElement.style.right = 'auto';
+            videoElement.style.top = '0';
+            videoElement.style.bottom = 'auto';
+            videoElement.style.marginLeft = '20px';
+            videoElement.style.marginRight = '0';
+            videoElement.style.marginTop = '0';
+            videoElement.style.zIndex = '1000';
+            
+            // Check if we're in a right column (less than video width + margin space)
+            if (spaceRight < videoWidth + 20) {
+                if (spaceLeft >= videoWidth + 20) {
+                    // Position to the left
+                    videoElement.style.left = 'auto';
+                    videoElement.style.right = '100%';
+                    videoElement.style.marginLeft = '0';
+                    videoElement.style.marginRight = '20px';
+                } else {
+                    // Not enough space on either side - use fixed centering
+                    videoElement.style.position = 'fixed';
+                    videoElement.style.left = '50%';
+                    videoElement.style.top = '50%';
+                    videoElement.style.transform = 'translate(-50%, -50%)';
+                    videoElement.style.margin = '0';
+                    videoElement.style.zIndex = '10000';
+                    return;
+                }
+            }
+            
+            // Handle vertical positioning for non-fixed elements
+            if (spaceBelow < videoHeight) {
+                // Position above the exercise
+                videoElement.style.top = 'auto';
+                videoElement.style.bottom = '0';
+            }
+        }
+        
+        function positionPicture(pictureElement, exerciseElement) {
+            const rect = exerciseElement.getBoundingClientRect();
+            const spaceRight = window.innerWidth - rect.right;
+            const spaceLeft = rect.left;
+            const spaceBelow = window.innerHeight - rect.bottom;
+            
+            const pictureWidth = 400;
+            const pictureHeight = 300;
+            
+            // Reset positioning
+            pictureElement.style.position = 'absolute';
+            pictureElement.style.left = '100%';
+            pictureElement.style.right = 'auto';
+            pictureElement.style.top = '0';
+            pictureElement.style.bottom = 'auto';
+            pictureElement.style.marginLeft = '20px';
+            pictureElement.style.marginRight = '0';
+            pictureElement.style.marginTop = '0';
+            pictureElement.style.zIndex = '1000';
+            
+            // Check if we're in a right column (less than picture width + margin space)
+            if (spaceRight < pictureWidth + 20) {
+                if (spaceLeft >= pictureWidth + 20) {
+                    // Position to the left
+                    pictureElement.style.left = 'auto';
+                    pictureElement.style.right = '100%';
+                    pictureElement.style.marginLeft = '0';
+                    pictureElement.style.marginRight = '20px';
+                } else {
+                    // Not enough space on either side - use fixed centering
+                    pictureElement.style.position = 'fixed';
+                    pictureElement.style.left = '50%';
+                    pictureElement.style.top = '50%';
+                    pictureElement.style.transform = 'translate(-50%, -50%)';
+                    pictureElement.style.margin = '0';
+                    pictureElement.style.zIndex = '10000';
+                    return;
+                }
+            }
+            
+            // Handle vertical positioning for non-fixed elements
+            if (spaceBelow < pictureHeight) {
+                // Position above the exercise
+                pictureElement.style.top = 'auto';
+                pictureElement.style.bottom = '0';
+            }
+        }
+        
+        // Close video when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.exercise-with-video') && !e.target.closest('.video-popup')) {
+                document.querySelectorAll('.video-popup').forEach(video => {
+                    stopVideo(video);
+                });
+            }
+            if (!e.target.closest('.exercise-with-picture') && !e.target.closest('.picture-popup') && !e.target.closest('.picture-button')) {
+                document.querySelectorAll('.picture-popup').forEach(picture => {
+                    picture.style.display = 'none';
+                });
+            }
+        });
+    </script>
+</body>
+</html>"""
+            return html
+    
+    # Only show stations table and analysis in regular mode, not in CrossFit path mode
+    if not (is_crossfit_path_mode and selected_crossfit_path_exercises):
+        html += """
         <table>
             <thead>
                 <tr>
                     <th>Station</th>"""
     
-    # Generate dynamic headers based on steps_per_station (without rest columns)
-    for step_num in range(1, steps_per_station + 1):
-        html += f"""
-                    <th>{work}s Step {step_num}</th>"""
-    
-    html += """
-                </tr>
-            </thead>
-            <tbody>"""
-    
-    letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    for idx, st in enumerate(stations):
-        letter = letters[idx]
-        area_class = st['area'].lower()
-        html += f"""
-                <tr>
-                    <td data-label="Station">
-                        <span class="station-letter">{letter}</span><br>
-                        <span class="area-badge {area_class}">{st['area']}</span>
-                    </td>"""
-        
-        # Generate dynamic step columns (without rest columns)
+        # Generate dynamic headers based on steps_per_station (without rest columns)
         for step_num in range(1, steps_per_station + 1):
-            step_key = f'step{step_num}'
-            step_link_key = f'step{step_num}_link'
-            step_equipment_key = f'step{step_num}_equipment'
-            step_muscles_key = f'step{step_num}_muscles'
-            step_id_key = f'step{step_num}_id'
-            
             html += f"""
+                        <th>{work}s Step {step_num}</th>"""
+        
+        html += """
+                    </tr>
+                </thead>
+                <tbody>"""
+        
+        letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        for idx, st in enumerate(stations):
+            letter = letters[idx]
+            area_class = st['area'].lower()
+            html += f"""
+                    <tr>
+                        <td data-label="Station">
+                            <span class="station-letter">{letter}</span><br>
+                            <span class="area-badge {area_class}">{st['area']}</span>
+                        </td>"""
+            
+            # Generate dynamic step columns (without rest columns)
+            for step_num in range(1, steps_per_station + 1):
+                step_key = f'step{step_num}'
+                step_link_key = f'step{step_num}_link'
+                step_equipment_key = f'step{step_num}_equipment'
+                step_muscles_key = f'step{step_num}_muscles'
+                step_id_key = f'step{step_num}_id'
+                
+                html += f"""
                      <td data-label="Step {step_num}" class="exercise">
                          <span class="mobile-step-label">Step {step_num}:</span>
                          <div class="exercise-cell-wrapper">
@@ -1361,11 +1634,11 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
                          {format_muscle_tags(st.get(step_muscles_key, ''))}
                          {format_equipment_tags(st.get(step_equipment_key, {}))}
                      </td>"""
-        
-        html += """
+            
+            html += """
                 </tr>"""
     
-    html += f"""
+        html += f"""
             </tbody>
         </table>"""
         
@@ -1683,13 +1956,24 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
         html += """
         </div>"""
     
-    html += f"""
+    # Close the conditional for regular mode sections
+    # (This closes the if not is_crossfit_path_mode: block that started before the stations table)
+    
+    # Add closing elements based on mode
+    if is_crossfit_path_mode and selected_crossfit_path_exercises:
+        # CrossFit path mode: no timestamp, just close container
+        html += """
+    </div>"""
+    else:
+        # Regular mode: include timestamp
+        html += f"""
         
         <div class="timestamp">
             Workout generated with Workout Station Generator based on Annya's plan
         </div>
-    </div>
+    </div>"""
     
+    html += """
     <script>
         function toggleVideo(exerciseId) {{
             const video = document.getElementById('video_' + exerciseId);

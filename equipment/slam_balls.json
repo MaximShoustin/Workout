@@ -42,21 +42,8 @@
         "skip": false,
         "unilateral": true,
         "id": 80
-      },
-      {
-        "name": "Slam-ball burpee",
-        "link": "https://www.youtube.com/shorts/tfeKK4r0qbc",
-        "area": "core",
-        "muscles": "full body, core, legs, shoulders",
-        "equipment": {
-          "slam_balls_5kg": {
-            "count": 1
-          }
-        },
-        "skip": false,
-        "unilateral": false,
-        "id": 81
       }
+      
     ],
     "core_accessory": [
       {

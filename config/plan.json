@@ -1,43 +1,42 @@
 {
+  "crossfit_path": true,
+  
     "title": "Strength Block – Week 5",
-    "max_id":111,
+    "max_id":113,
     "notes": "Dont' crash the second week, you're getting stronger",
     "edit_mode": false,
     "active_rest": false,
     "active_rest_count": 4,
-    "warm_up": true,
-    "warm_up_count": 6,
+  
+    "crossfit_path_count": 11,
     "use_workout_history": false,
     "steps_per_station": 4,
     "stations": 5,               
-    "people": 5,
-    "rounds": 1,                 
+    "people": 10,
+    "rounds": 2,                 
     "timing": {                  
-      "work": 40,
-      "rest": 20
+      "work": 30,
+      "rest": 30
     },
     "balance_order_old": [           
-      "upper",                   
-      "lower",
-      "core"
-    ],
-    "balance_order": [
       "upper",
       "core",
       "lower",
       "upper",
       "lower"
     ],
+    "balance_order": ["upper", "lower", "core"],
     "must_use_old": [
       "plyo_box",
       "barbells", 
       "bench",
-      "slam_balls_5kg"
+      "slam_balls_5kg",
+       "plyo_box",
+     "skateboard"
       
     ],
     "must_use": [
-     "plyo_box",
-     "skateboard"
+    
     ],
     "equipment": {
       "bench": {
