@@ -104,6 +104,8 @@
       {
         "name": "Yoga Push Ups",
         "link": "https://www.youtube.com/shorts/zPZR0bGL8vA",
+        "area": "upper",
+        "muscles": "chest, triceps, shoulders, core",
         "skip": false,
         "unilateral": false,
         "equipment": {},
@@ -112,6 +114,8 @@
       {
         "name": "Scapula Push Ups",
         "link": "https://www.youtube.com/shorts/yETYYimA7yI",
+        "area": "upper",
+        "muscles": "shoulders, chest, stabilizers",
         "skip": false,
         "unilateral": false,
         "equipment": {},

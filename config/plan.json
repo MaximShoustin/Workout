@@ -1,8 +1,8 @@
 {
-  "crossfit_path": true,
+  "crossfit_path": false,
   
     "title": "Strength Block – Week 5",
-    "max_id":113,
+    "max_id":117,
     "notes": "Dont' crash the second week, you're getting stronger",
     "edit_mode": false,
     "active_rest": false,

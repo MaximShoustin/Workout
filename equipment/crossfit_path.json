@@ -4,7 +4,10 @@
       {
         "name": "Matching Duck",
         "link": "https://www.youtube.com/shorts/VgGVBcdS7TE",
+        "area": "core",
+        "muscles": "core, quadriceps, glutes",
         "skip": false,
+        "unilateral": false,
         "id": 88
       },
       {
@@ -27,49 +30,67 @@
       {
         "name": "Bear crawl",
         "link": "https://www.youtube.com/shorts/-KrgfooRE3I",
+        "area": "core",
+        "muscles": "core, shoulders, quadriceps",
         "skip": false,
+        "unilateral": false,
         "id": 106
       },
       {
         "name": "Overhead walk + lunges",
         "link": "https://www.youtube.com/shorts/5n6E_Cs6amA",
+        "area": "core",
+        "muscles": "shoulders, quadriceps, glutes, core",
         "skip": false,
+        "unilateral": false,
         "id": 103
       },
       {
         "name": "Burpees broad jumps",
         "link": "https://www.youtube.com/shorts/L6JeEFvDlW8",
+        "area": "core",
+        "muscles": "full body, core, quadriceps, shoulders",
         "skip": false,
+        "unilateral": false,
         "id": 96
       },
       {
         "name": "long Lunge step + KB",
         "link": "https://www.youtube.com/shorts/urHQNDaH1cI",
-        "skip": false,
+        "area": "lower",
+        "muscles": "quadriceps, glutes, shoulders, core",
         "equipment": {
           "kettlebells_6kg": {
             "count": 2
           }
         },
+        "skip": false,
+        "unilateral": false,
         "id": 90
       },
       {
         "name": "Inch worm + push ups",
         "link": "https://www.youtube.com/shorts/fm6vx3zO5Yg",
+        "area": "core",
+        "muscles": "core, shoulders, chest",
         "skip": false,
+        "unilateral": false,
         "id": 94
       },
       {
         "name": "KB + walk 3 steps + 5 squats",
         "link": "https://www.youtube.com/shorts/G3PJNtMeP0M",
+        "area": "core",
+        "muscles": "quadriceps, glutes, shoulders, core",
         "skip": false,
+        "unilateral": false,
         "id": 104
       },
       {
         "name": "Slam-ball burpee (x20)",
         "link": "https://www.youtube.com/shorts/tfeKK4r0qbc",
         "area": "core",
-        "muscles": "full body, core, legs, shoulders",
+        "muscles": "full body, core, quadriceps, hamstrings, shoulders",
         "equipment": {
           "slam_balls_5kg": {
             "count": 1
@@ -110,7 +131,10 @@
       {
         "name": "Swan Walk",
         "link": "https://www.youtube.com/shorts/VgGVBcdS7TE",
+        "area": "lower",
+        "muscles": "core, glutes, hamstrings",
         "skip": false,
+        "unilateral": false,
         "id": 116
       },
       {

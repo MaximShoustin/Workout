@@ -89,7 +89,7 @@
         "name": "Gorilla row",
         "link": "https://www.youtube.com/shorts/ZuhSSlKBAcI",
         "area": "upper",
-        "muscles": "shoulders, back",
+        "muscles": "shoulders, latissimus dorsi, rhomboids",
         "equipment": {
           "kettlebells_6kg": {
             "count": 1
@@ -286,7 +286,7 @@
         "name": "reverse flies k",
         "link": "https://www.youtube.com/shorts/55aZ3C8xYtI",
         "area": "upper",
-        "muscles": "rear deltoids, rhomboids",
+        "muscles": "shoulders, rhomboids",
         "equipment": {
           "kettlebells_4kg": {
             "count": 1
@@ -607,6 +607,8 @@
       {
         "name": "Waiter Curl (bell held upside-down like a tray)",
         "link": "https://www.youtube.com/shorts/c_fczYLIt2U",
+        "area": "upper",
+        "muscles": "biceps, forearms, stabilizers",
         "equipment": {
           "kettlebells_4kg": {
             "count": 1
@@ -622,6 +624,8 @@
       {
         "name": "Uppercut kettlbell rotations",
         "link": "https://www.youtube.com/shorts/e4gAbnf69_U",
+        "area": "core",
+        "muscles": "core, shoulders, obliques",
         "equipment": {
           "kettlebells_6kg": {
             "count": 1
@@ -634,6 +638,8 @@
       {
         "name": "Split stance KB rotation",
         "link": "https://www.youtube.com/shorts/WB93lYdkDt4",
+        "area": "core",
+        "muscles": "core, obliques, shoulders",
         "equipment": {
           "kettlebells_6kg": {
             "count": 1
@@ -647,6 +653,7 @@
         "name": "Split stance KB rotation pendulum",
         "link": "https://www.youtube.com/shorts/WB93lYdkDt4",
         "area": "core",
+        "muscles": "core, obliques, shoulders",
         "equipment": {
           "kettlebells_6kg": {
             "count": 1
@@ -659,6 +666,8 @@
       {
         "name": "Half-kneeling KB rotation lift",
         "link": "https://www.youtube.com/shorts/WB93lYdkDt4",
+        "area": "core",
+        "muscles": "core, shoulders, obliques",
         "equipment": {
           "kettlebells_6kg": {
             "count": 1
@@ -671,6 +680,8 @@
       {
         "name": "Reverse lunge KB Rotational lift",
         "link": "https://www.youtube.com/shorts/WB93lYdkDt4",
+        "area": "core",
+        "muscles": "quadriceps, glutes, core, obliques",
         "equipment": {
           "kettlebells_6kg": {
             "count": 1

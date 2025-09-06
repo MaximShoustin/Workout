@@ -51,7 +51,7 @@
         "name": "Lateral / front raise",
         "link": "https://www.youtube.com/shorts/mejtlcieNvc",
         "area": "upper",
-        "muscles": "deltoids, shoulders",
+        "muscles": "shoulders",
         "equipment": {
           "dumbbells_5kg": {
             "count": 2
@@ -65,7 +65,7 @@
         "name": "Rear-delt fly",
         "link": "https://www.youtube.com/shorts/apcNuGp97sY",
         "area": "upper",
-        "muscles": "rear deltoids, rhomboids",
+        "muscles": "shoulders, rhomboids",
         "equipment": {
           "dumbbells_5kg": {
             "count": 2
@@ -104,6 +104,20 @@
         "unilateral": true,
         "skip": false,
         "id": 8
+      },
+      {
+        "name": "squat leg by leg",
+        "link": "",
+       "equipment": {
+          "dumbbells_10kg": {
+            "count": 1
+          }
+        },
+        "area": "lower",
+        "muscles": "quadriceps, glutes",
+        "skip": false,
+        "unilateral": false,
+        "id": 117
       }
     ],
     "full_core": [
@@ -246,6 +260,7 @@
         "unilateral": false,
         "id": 102
       }
+      
     ]
   }
 }

@@ -1,0 +1,136 @@
+{
+  "muscle_groups": {
+    "upper_body": {
+      "chest": {
+        "muscles": ["chest", "serratus"],
+        "primary_function": "Pushing movements, shoulder stability"
+      },
+      "shoulders": {
+        "muscles": ["shoulders", "deltoids", "rear deltoids"],
+        "primary_function": "Overhead pressing, lateral movements, posture"
+      },
+      "arms_biceps": {
+        "muscles": ["biceps"],
+        "primary_function": "Pulling movements, elbow flexion"
+      },
+      "arms_triceps": {
+        "muscles": ["triceps"],
+        "primary_function": "Pushing movements, elbow extension"
+      },
+      "arms_forearms": {
+        "muscles": ["forearms"],
+        "primary_function": "Grip strength, wrist stability"
+      },
+      "back_lats": {
+        "muscles": ["latissimus dorsi"],
+        "primary_function": "Pulling movements, shoulder adduction"
+      },
+      "back_mid_upper": {
+        "muscles": ["rhomboids", "trapezius"],
+        "primary_function": "Posture, shoulder blade stability"
+      },
+      "back_lower": {
+        "muscles": ["erector spinae"],
+        "primary_function": "Spinal extension, posture"
+      },
+      "stabilizers": {
+        "muscles": ["stabilizers"],
+        "primary_function": "Joint stability, movement control"
+      }
+    },
+    "core": {
+      "core_general": {
+        "muscles": ["core"],
+        "primary_function": "Trunk stability, spinal support"
+      },
+      "obliques": {
+        "muscles": ["obliques"],
+        "primary_function": "Lateral flexion, rotation"
+      },
+      "hip_flexors": {
+        "muscles": ["hip flexors"],
+        "primary_function": "Hip flexion, leg lifting"
+      }
+    },
+    "lower_body": {
+      "thigh_front": {
+        "muscles": ["quadriceps"],
+        "primary_function": "Knee extension, hip flexion"
+      },
+      "thigh_back": {
+        "muscles": ["hamstrings"],
+        "primary_function": "Knee flexion, hip extension"
+      },
+      "thigh_inner": {
+        "muscles": ["adductors"],
+        "primary_function": "Hip adduction, leg stability"
+      },
+      "glutes": {
+        "muscles": ["glutes"],
+        "primary_function": "Hip extension, stabilization"
+      },
+      "lower_leg": {
+        "muscles": ["calves"],
+        "primary_function": "Plantar flexion, jumping"
+      }
+    },
+    "full_body": {
+      "compound": {
+        "muscles": ["full body"],
+        "primary_function": "Exercises targeting multiple muscle groups simultaneously",
+        "examples": ["Thrusters", "Burpees", "Turkish Get-ups"]
+      }
+    }
+  },
+  "standardized_muscle_names": [
+    "chest",
+    "serratus", 
+    "shoulders",
+    "biceps",
+    "triceps",
+    "forearms",
+    "latissimus dorsi",
+    "rhomboids",
+    "trapezius",
+    "erector spinae",
+    "stabilizers",
+    "core",
+    "obliques",
+    "hip flexors",
+    "quadriceps",
+    "hamstrings",
+    "adductors",
+    "glutes",
+    "calves",
+    "full body"
+  ],
+  "muscle_mappings": {
+    "deltoids": "shoulders",
+    "rear deltoids": "shoulders", 
+    "legs": "quadriceps, hamstrings",
+    "back": "latissimus dorsi, rhomboids"
+  },
+  "exercise_distribution": {
+    "most_frequent": [
+      "core",
+      "shoulders", 
+      "quadriceps",
+      "glutes",
+      "triceps"
+    ],
+    "compound_patterns": [
+      {
+        "pattern": "upper_core",
+        "muscles": ["shoulders", "core", "triceps"]
+      },
+      {
+        "pattern": "lower_core", 
+        "muscles": ["quadriceps", "glutes", "core"]
+      },
+      {
+        "pattern": "full_body",
+        "muscles": ["shoulders", "quadriceps", "glutes", "core"]
+      }
+    ]
+  }
+}
