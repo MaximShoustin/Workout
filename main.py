@@ -798,6 +798,13 @@ def parse_cli_args():
     import sys
     edit_ids = None
     include_ids = None
+    add_exercise = False
+    
+    # Parse -add flag
+    if '-add' in sys.argv:
+        add_exercise = True
+        # Remove the -add flag from argv to prevent interference with other flags
+        sys.argv.remove('-add')
     
     # Parse -edit flag
     if '-edit' in sys.argv:
@@ -837,14 +844,19 @@ def parse_cli_args():
             print('❌ Error: -include flag provided but list is malformed. Use comma-separated integers, e.g. -include 1,2,3')
             sys.exit(1)
     
-    # Validate that -edit and -include are not used together
-    if edit_ids is not None and include_ids is not None:
-        print('❌ Error: Cannot use -edit and -include flags together.')
+    # Validate that flags are not used together
+    flag_count = sum([bool(edit_ids), bool(include_ids), add_exercise])
+    if flag_count > 1:
+        print('❌ Error: Cannot use -edit, -include, and -add flags together.')
         sys.exit(1)
     
-    return edit_ids, include_ids
+    return edit_ids, include_ids, add_exercise
 
 
 if __name__ == "__main__":
-    edit_ids, include_ids = parse_cli_args()
-    main() 
+    edit_ids, include_ids, add_exercise = parse_cli_args()
+    if add_exercise:
+        from exercise_manager import add_exercise_cli
+        add_exercise_cli()
+    else:
+        main() 
