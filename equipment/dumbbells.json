@@ -182,7 +182,7 @@
         "link": "https://www.youtube.com/shorts/PSVySCGbGp0",
         "equipment": {},
         "area": "lower",
-        "muscles": "quadriceps",
+        "muscles": "quadriceps, glutes, calves",
         "skip": false,
         "unilateral": false,
         "id": 13
@@ -192,7 +192,7 @@
         "link": "https://www.youtube.com/shorts/3ans8fNL1Z8",
         "equipment": {},
         "area": "core",
-        "muscles": "core",
+        "muscles": "core, shoulders, hip flexors",
         "skip": false,
         "unilateral": false,
         "id": 14
@@ -202,7 +202,7 @@
         "link": "https://www.youtube.com/shorts/DkeFVmqy0ys",
         "equipment": {},
         "area": "lower",
-        "muscles": "quadriceps",
+        "muscles": "quadriceps, glutes, adductors",
         "skip": false,
         "unilateral": false,
         "id": 15
@@ -213,7 +213,7 @@
         "link": "https://www.youtube.com/shorts/p-GBOGjTYz8",
         "equipment": {},
         "area": "core",
-        "muscles": "shoulders, core",
+        "muscles": "shoulders, triceps, quadriceps, glutes, core",
         "skip": false,
         "unilateral": true,
         "id": 107
@@ -227,7 +227,7 @@
           }
         },
         "area": "core",
-        "muscles": "shoulders, core",
+        "muscles": "shoulders, triceps, trapezius, quadriceps, glutes, core",
         "skip": false,
         "unilateral": true,
         "id": 111
@@ -255,7 +255,7 @@
           }
         },
         "area": "core",
-        "muscles": "shoulders, core",
+        "muscles": "shoulders, quadriceps, glutes, core",
         "skip": false,
         "unilateral": false,
         "id": 102

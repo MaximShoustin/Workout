@@ -47,7 +47,7 @@
         "name": "Clean + jerk",
         "link": "https://www.youtube.com/shorts/oyz20GR9KEg",
         "area": "core",
-        "muscles": "full body, shoulders, legs, core",
+        "muscles": "full body, shoulders, triceps, quadriceps, hamstrings, core",
         "equipment": {
           "kettlebells_6kg": {
             "count": 1
@@ -61,7 +61,7 @@
         "name": "Snatch",
         "link": "https://www.youtube.com/shorts/9IptF07Ugh4",
         "area": "core",
-        "muscles": "full body, shoulders, legs, core",
+        "muscles": "full body, shoulders, triceps, trapezius, quadriceps, hamstrings, core",
         "equipment": {
           "kettlebells_6kg": {
             "count": 1
@@ -238,7 +238,7 @@
         "name": "Turkish get-up",
         "link": "https://www.youtube.com/shorts/TcxzzyBziYA",
         "area": "core",
-        "muscles": "full body, core, shoulders, legs",
+        "muscles": "full body, core, shoulders, quadriceps, hamstrings",
         "equipment": {
           "kettlebells_4kg": {
             "count": 1
