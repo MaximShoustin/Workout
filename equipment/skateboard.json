@@ -5,7 +5,9 @@
         "name": "AB roll out",
         "link": "https://www.youtube.com/shorts/JCIr7-0La80",
         "area": "core",
-        "muscles": "core",
+        "muscles": [
+          "core"
+        ],
         "equipment": {
           "skateboard": {
             "count": 1
@@ -19,7 +21,9 @@
         "name": "Knee Tuck 2 Pike",
         "link": "https://www.youtube.com/shorts/YEUI8d-PQM4",
         "area": "core",
-        "muscles": "core",
+        "muscles": [
+          "core"
+        ],
         "equipment": {
           "skateboard": {
             "count": 1
@@ -33,7 +37,12 @@
         "name": "Split Lunge",
         "link": "https://www.youtube.com/shorts/1-GrS4y3Q6g",
         "area": "lower",
-        "muscles": "quadriceps, glutes, hamstrings, core",
+        "muscles": [
+          "quadriceps",
+          "glutes",
+          "hamstrings",
+          "core"
+        ],
         "equipment": {
           "skateboard": {
             "count": 1
@@ -47,7 +56,12 @@
         "name": "Lateral Lunge",
         "link": "https://www.youtube.com/shorts/R5JQW8qD8k0",
         "area": "lower",
-        "muscles": "quadriceps, glutes, adductors, core",
+        "muscles": [
+          "quadriceps",
+          "glutes",
+          "adductors",
+          "core"
+        ],
         "equipment": {
           "skateboard": {
             "count": 1
@@ -61,7 +75,10 @@
         "name": "Single Leg Hamstring Curl",
         "link": "https://www.youtube.com/shorts/DRceLY_h_gY",
         "area": "lower",
-        "muscles": "hamstrings, core",
+        "muscles": [
+          "hamstrings",
+          "core"
+        ],
         "equipment": {
           "skateboard": {
             "count": 1

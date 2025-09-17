@@ -5,7 +5,11 @@
         "name": "Romanian deadlift",
         "link": "https://www.youtube.com/shorts/up0sPrYCTkI",
         "area": "lower",
-        "muscles": "hamstrings, glutes, erector spinae",
+        "muscles": [
+          "hamstrings",
+          "glutes",
+          "erector spinae"
+        ],
         "equipment": {
           "barbells": {
             "count": 1
@@ -19,7 +23,11 @@
         "name": "Good-morning",
         "link": "https://www.youtube.com/shorts/tCoZ6tZBnbE",
         "area": "lower",
-        "muscles": "hamstrings, glutes, erector spinae",
+        "muscles": [
+          "hamstrings",
+          "glutes",
+          "erector spinae"
+        ],
         "equipment": {
           "barbells": {
             "count": 1

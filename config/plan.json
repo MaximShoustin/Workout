@@ -1,104 +1,103 @@
 {
   "crossfit_path": false,
-  
-    "title": "Strength Block – Week 5",
-    "max_id":117,
-    "notes": "Dont' crash the second week, you're getting stronger",
-    "edit_mode": false,
-    "active_rest": false,
-    "active_rest_count": 4,
-  
-    "crossfit_path_count": 11,
-    "use_workout_history": false,
-    "steps_per_station": 4,
-    "stations": 5,               
-    "people": 10,
-    "rounds": 2,                 
-    "timing": {                  
-      "work": 30,
-      "rest": 30
+  "title": "Strength Block – Week 5",
+  "max_id": 117,
+  "notes": "Dont' crash the second week, you're getting stronger",
+  "edit_mode": false,
+  "active_rest": false,
+  "active_rest_count": 4,
+  "crossfit_path_count": 11,
+  "use_workout_history": false,
+  "steps_per_station": 4,
+  "stations": 5,
+  "people": 10,
+  "rounds": 2,
+  "timing": {
+    "work": 30,
+    "rest": 30
+  },
+  "balance_order_old": [
+    "upper",
+    "core",
+    "lower",
+    "upper",
+    "lower"
+  ],
+  "balance_order": [
+    "upper",
+    "lower",
+    "core"
+  ],
+  "must_use_old": [
+    "plyo_box",
+    "barbells",
+    "bench",
+    "slam_balls_5kg",
+    "plyo_box",
+    "skateboard"
+  ],
+  "must_use": [],
+  "equipment": {
+    "bench": {
+      "count": 2
     },
-    "balance_order_old": [           
-      "upper",
-      "core",
-      "lower",
-      "upper",
-      "lower"
-    ],
-    "balance_order": ["upper", "lower", "core"],
-    "must_use_old": [
-      "plyo_box",
-      "barbells", 
-      "bench",
-      "slam_balls_5kg",
-       "plyo_box",
-     "skateboard"
-      
-    ],
-    "must_use": [
-    
-    ],
-    "equipment": {
-      "bench": {
-        "count": 1
-      },
-      "plyo_box": {
-        "count": 1
-      },
-      "kettlebells_2kg": {
-        "count": 10
-      },
-      "kettlebells_4kg": {
-        "count": 9
-      },
-      "kettlebells_6kg": {
-        "count": 7
-      },
-      "kettlebells_16kg": {
-        "count": 2
-      },
-      "kettlebells_24kg": {
-        "count": 2
-      },
-      "kettlebells_32kg": {
-        "count": 2
-      },
-      "barbells": {
-        "count": 2
-      },
-      "slam_balls_5kg": {
-        "count": 14
-      },
-      "dumbbells_6kg": {
-        "count": 1
-      },
-      "dumbbells_7kg": {
-        "count": 1
-      },
-      "dumbbells_3kg": {
-        "count": 7
-      },
-      "dumbbells_5kg": {
-        "count": 4
-      },
-      "dumbbells_10kg": {
-        "count": 2
-      },
-      "dumbbells_22kg": {
-        "count": 2
-      },
-      "dumbbells_14kg": {
-        "count": 1
-      },
-      "dumbbells_15kg": {
-        "count": 1
-      },
-      "dip_parallel_bars": {
-        "count": 2
-      },
-      "skateboard": {
-        "count": 3,
-        "exs":"https://www.youtube.com/watch?v=SZWuk39LUw0"
-      }
+    "plyo_box": {
+      "count": 1
+    },
+    "kettlebells_2kg": {
+      "count": 10
+    },
+    "kettlebells_4kg": {
+      "count": 9
+    },
+    "kettlebells_6kg": {
+      "count": 7
+    },
+    "kettlebells_16kg": {
+      "count": 2
+    },
+    "kettlebells_24kg": {
+      "count": 2
+    },
+    "kettlebells_32kg": {
+      "count": 2
+    },
+    "barbells": {
+      "count": 2
+    },
+    "slam_balls_5kg": {
+      "count": 14
+    },
+    "dumbbells_6kg": {
+      "count": 1
+    },
+    "dumbbells_7kg": {
+      "count": 1
+    },
+    "dumbbells_3kg": {
+      "count": 7
+    },
+    "dumbbells_5kg": {
+      "count": 4
+    },
+    "dumbbells_10kg": {
+      "count": 2
+    },
+    "dumbbells_22kg": {
+      "count": 2
+    },
+    "dumbbells_14kg": {
+      "count": 1
+    },
+    "dumbbells_15kg": {
+      "count": 1
+    },
+    "dip_parallel_bars": {
+      "count": 2
+    },
+    "skateboard": {
+      "count": 3,
+      "exs": "https://www.youtube.com/watch?v=SZWuk39LUw0"
     }
   }
+}

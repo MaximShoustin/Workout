@@ -5,7 +5,11 @@
         "name": "Floor press",
         "link": "https://www.youtube.com/shorts/TvPviMnKg6s",
         "area": "upper",
-        "muscles": "chest, triceps, shoulders",
+        "muscles": [
+          "chest",
+          "triceps",
+          "shoulders"
+        ],
         "equipment": {
           "dumbbells_3kg": {
             "count": 2
@@ -18,12 +22,14 @@
         "unilateral": false,
         "id": 2
       },
-     
       {
         "name": "Alternating curl / hammer curl",
         "link": "https://www.youtube.com/shorts/oB-RyX8AdO4",
         "area": "upper",
-        "muscles": "biceps, forearms",
+        "muscles": [
+          "biceps",
+          "forearms"
+        ],
         "equipment": {
           "dumbbells_5kg": {
             "count": 2
@@ -37,7 +43,11 @@
         "name": "Overhead press",
         "link": "https://www.youtube.com/shorts/b132W5N8Jrg",
         "area": "upper",
-        "muscles": "shoulders, triceps, core",
+        "muscles": [
+          "shoulders",
+          "triceps",
+          "core"
+        ],
         "equipment": {
           "dumbbells_5kg": {
             "count": 2
@@ -51,7 +61,9 @@
         "name": "Lateral / front raise",
         "link": "https://www.youtube.com/shorts/mejtlcieNvc",
         "area": "upper",
-        "muscles": "shoulders",
+        "muscles": [
+          "shoulders"
+        ],
         "equipment": {
           "dumbbells_5kg": {
             "count": 2
@@ -65,7 +77,10 @@
         "name": "Rear-delt fly",
         "link": "https://www.youtube.com/shorts/apcNuGp97sY",
         "area": "upper",
-        "muscles": "shoulders, rhomboids",
+        "muscles": [
+          "shoulders",
+          "rhomboids"
+        ],
         "equipment": {
           "dumbbells_5kg": {
             "count": 2
@@ -81,7 +96,11 @@
         "name": "Goblet squat",
         "link": "https://www.youtube.com/shorts/lRYBbchqxtI",
         "area": "lower",
-        "muscles": "quadriceps, glutes, core",
+        "muscles": [
+          "quadriceps",
+          "glutes",
+          "core"
+        ],
         "equipment": {
           "dumbbells_15kg": {
             "count": 1
@@ -95,7 +114,11 @@
         "name": "Single-leg RDL",
         "link": "https://www.youtube.com/shorts/eHHsDJQN7z0",
         "area": "lower",
-        "muscles": "hamstrings, glutes, core",
+        "muscles": [
+          "hamstrings",
+          "glutes",
+          "core"
+        ],
         "equipment": {
           "dumbbells_10kg": {
             "count": 1
@@ -108,13 +131,16 @@
       {
         "name": "squat leg by leg",
         "link": "",
-       "equipment": {
+        "equipment": {
           "dumbbells_10kg": {
             "count": 1
           }
         },
         "area": "lower",
-        "muscles": "quadriceps, glutes",
+        "muscles": [
+          "quadriceps",
+          "glutes"
+        ],
         "skip": false,
         "unilateral": false,
         "id": 117
@@ -125,7 +151,11 @@
         "name": "Renegade row",
         "link": "https://www.youtube.com/shorts/rTVRpI5WVnw",
         "area": "core",
-        "muscles": "core, latissimus dorsi, shoulders",
+        "muscles": [
+          "core",
+          "latissimus dorsi",
+          "shoulders"
+        ],
         "equipment": {
           "dumbbells_3kg": {
             "count": 2
@@ -139,7 +169,12 @@
         "name": "DB thruster",
         "link": "https://www.youtube.com/shorts/UipBcISeiGU",
         "area": "core",
-        "muscles": "shoulders, quadriceps, glutes, core",
+        "muscles": [
+          "shoulders",
+          "quadriceps",
+          "glutes",
+          "core"
+        ],
         "equipment": {
           "dumbbells_5kg": {
             "count": 2
@@ -153,7 +188,13 @@
         "name": "Devil's press",
         "link": "https://www.youtube.com/shorts/qUYqyPPvhIE",
         "area": "core",
-        "muscles": "shoulders, chest, quadriceps, glutes, core",
+        "muscles": [
+          "shoulders",
+          "chest",
+          "quadriceps",
+          "glutes",
+          "core"
+        ],
         "equipment": {
           "dumbbells_5kg": {
             "count": 2
@@ -167,7 +208,10 @@
         "name": "Zottman Curl (supinate up, pronate down)",
         "link": "https://www.youtube.com/shorts/oIn50xSx_8s",
         "area": "upper",
-        "muscles": "biceps, forearms",
+        "muscles": [
+          "biceps",
+          "forearms"
+        ],
         "equipment": {
           "dumbbells_5kg": {
             "count": 2
@@ -182,7 +226,11 @@
         "link": "https://www.youtube.com/shorts/PSVySCGbGp0",
         "equipment": {},
         "area": "lower",
-        "muscles": "quadriceps, glutes, calves",
+        "muscles": [
+          "quadriceps",
+          "glutes",
+          "calves"
+        ],
         "skip": false,
         "unilateral": false,
         "id": 13
@@ -192,7 +240,11 @@
         "link": "https://www.youtube.com/shorts/3ans8fNL1Z8",
         "equipment": {},
         "area": "core",
-        "muscles": "core, shoulders, hip flexors",
+        "muscles": [
+          "core",
+          "shoulders",
+          "hip flexors"
+        ],
         "skip": false,
         "unilateral": false,
         "id": 14
@@ -202,18 +254,27 @@
         "link": "https://www.youtube.com/shorts/DkeFVmqy0ys",
         "equipment": {},
         "area": "lower",
-        "muscles": "quadriceps, glutes, adductors",
+        "muscles": [
+          "quadriceps",
+          "glutes",
+          "adductors"
+        ],
         "skip": false,
         "unilateral": false,
         "id": 15
-      }
-      ,
+      },
       {
         "name": "Dumbbell/Kettlebell hang clean & jerk",
         "link": "https://www.youtube.com/shorts/p-GBOGjTYz8",
         "equipment": {},
         "area": "core",
-        "muscles": "shoulders, triceps, quadriceps, glutes, core",
+        "muscles": [
+          "shoulders",
+          "triceps",
+          "quadriceps",
+          "glutes",
+          "core"
+        ],
         "skip": false,
         "unilateral": true,
         "id": 107
@@ -227,7 +288,14 @@
           }
         },
         "area": "core",
-        "muscles": "shoulders, triceps, trapezius, quadriceps, glutes, core",
+        "muscles": [
+          "shoulders",
+          "triceps",
+          "trapezius",
+          "quadriceps",
+          "glutes",
+          "core"
+        ],
         "skip": false,
         "unilateral": true,
         "id": 111
@@ -241,7 +309,10 @@
           }
         },
         "area": "core",
-        "muscles": "shoulders, core",
+        "muscles": [
+          "shoulders",
+          "core"
+        ],
         "skip": false,
         "unilateral": true,
         "id": 89
@@ -249,18 +320,22 @@
       {
         "name": "Thrusters (light, warm-up)",
         "link": "https://www.youtube.com/shorts/UipBcISeiGU",
-       "equipment": {
+        "equipment": {
           "dumbbells_10kg": {
             "count": 1
           }
         },
         "area": "core",
-        "muscles": "shoulders, quadriceps, glutes, core",
+        "muscles": [
+          "shoulders",
+          "quadriceps",
+          "glutes",
+          "core"
+        ],
         "skip": false,
         "unilateral": false,
         "id": 102
       }
-      
     ]
   }
 }

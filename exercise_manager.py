@@ -14,7 +14,7 @@ import sys
 import re
 from pathlib import Path
 from typing import Dict, List, Optional, Set
-from config import EQUIP_DIR, load_json
+from config import EQUIP_DIR, load_json, load_plan
 
 
 class ExerciseManager:
@@ -45,19 +45,27 @@ class ExerciseManager:
         return files
     
     def _get_next_exercise_id(self) -> int:
-        """Generate the next available exercise ID across all equipment files."""
-        max_id = -1
-        
-        for equipment_name, equipment_info in self.equipment_files.items():
-            data = equipment_info['data']
-            for category, exercises in data.get('lifts', {}).items():
-                for exercise in exercises:
-                    if isinstance(exercise, dict):
-                        exercise_id = exercise.get('id', -1)
-                        if exercise_id > max_id:
-                            max_id = exercise_id
-        
-        return max_id + 1
+        """Generate the next available exercise ID using max_id from plan.json."""
+        try:
+            plan = load_plan()
+            max_id = plan.get('max_id', 117)  # Default to 117 if not found
+            return max_id + 1
+        except Exception as e:
+            print(f"⚠️  Warning: Could not read max_id from plan.json: {e}")
+            print("   Falling back to scanning all exercise files...")
+            
+            # Fallback to old method
+            max_id = -1
+            for equipment_name, equipment_info in self.equipment_files.items():
+                data = equipment_info['data']
+                for category, exercises in data.get('lifts', {}).items():
+                    for exercise in exercises:
+                        if isinstance(exercise, dict):
+                            exercise_id = exercise.get('id', -1)
+                            if exercise_id > max_id:
+                                max_id = exercise_id
+            
+            return max_id + 1
     
     def _validate_url(self, url: str) -> bool:
         """Validate if the URL is properly formatted."""
@@ -74,16 +82,17 @@ class ExerciseManager:
         
         return url_pattern.match(url) is not None
     
-    def _validate_muscles(self, muscles: str) -> bool:
+    def _validate_muscles(self, muscles_list: List[str]) -> bool:
         """Validate muscle groups against known muscle groups."""
-        if not muscles.strip():
+        if not muscles_list:
             return False
         
         # Load muscle groups from classification file
         muscle_file = Path('muscle_groups_classification.json')
         if muscle_file.exists():
             try:
-                muscle_data = load_json(muscle_file)
+                with open(muscle_file, 'r', encoding='utf-8') as f:
+                    muscle_data = json.load(f)
                 valid_muscles = set()
                 
                 # Extract all muscle names from the classification
@@ -92,17 +101,16 @@ class ExerciseManager:
                         valid_muscles.update(info.get('muscles', []))
                 
                 # Check if all provided muscles are valid
-                provided_muscles = [m.strip().lower() for m in muscles.split(',')]
-                for muscle in provided_muscles:
-                    if muscle and muscle not in valid_muscles:
+                for muscle in muscles_list:
+                    if muscle and muscle.lower() not in valid_muscles:
                         print(f"   ⚠️  Unknown muscle: '{muscle}'. Consider adding it to muscle_groups_classification.json")
                         return False
                 return True
             except Exception:
                 pass
         
-        # Fallback validation - just check format
-        return bool(re.match(r'^[a-zA-Z\s,]+$', muscles))
+        # Fallback validation - just check that all entries are non-empty strings
+        return all(isinstance(m, str) and m.strip() for m in muscles_list)
     
     def _collect_exercise_data(self) -> Dict:
         """Collect exercise data through interactive prompts."""
@@ -138,13 +146,29 @@ class ExerciseManager:
             print(f"   ❌ Please choose from: {', '.join(self.valid_areas)}")
         
         # Muscles
-        print("💪 Muscle groups (comma-separated, e.g., 'chest, triceps, shoulders')")
+        print("💪 Muscle groups (enter one at a time, type 'done' when finished)")
+        print("   Examples: chest, triceps, shoulders, biceps, quadriceps, etc.")
+        muscles_list = []
         while True:
-            muscles = input("💪 Muscles: ").strip()
-            if self._validate_muscles(muscles):
-                exercise_data['muscles'] = muscles
-                break
-            print("   ❌ Please enter valid muscle groups separated by commas.")
+            muscle = input(f"💪 Muscle {len(muscles_list) + 1} (or 'done'): ").strip()
+            if muscle.lower() in ['done', 'finish', 'complete']:
+                if muscles_list:
+                    if self._validate_muscles(muscles_list):
+                        # Save as JSON array
+                        exercise_data['muscles'] = muscles_list
+                        break
+                    else:
+                        print("   ❌ Some muscle groups are invalid. Please check and try again.")
+                        muscles_list = []  # Reset and start over
+                        continue
+                else:
+                    print("   ❌ Please enter at least one muscle group.")
+                    continue
+            elif muscle:
+                muscles_list.append(muscle)
+                print(f"   ✅ Added: {muscle}")
+            else:
+                print("   ❌ Please enter a muscle group or 'done'.")
         
         # Unilateral flag
         print("🔄 Is this a unilateral exercise? (requires separate left/right execution)")
@@ -169,30 +193,82 @@ class ExerciseManager:
         
         return exercise_data
     
+    def _get_available_equipment(self) -> Dict[str, int]:
+        """Get all available equipment from plan.json."""
+        try:
+            plan = load_plan()
+            equipment_inventory = plan.get('equipment', {})
+            
+            # Extract equipment names and their available counts
+            available_equipment = {}
+            for eq_name, eq_info in equipment_inventory.items():
+                if isinstance(eq_info, dict) and 'count' in eq_info:
+                    available_equipment[eq_name] = eq_info['count']
+                elif isinstance(eq_info, int):
+                    available_equipment[eq_name] = eq_info
+            
+            return available_equipment
+        except Exception as e:
+            print(f"⚠️  Warning: Could not load equipment from plan.json: {e}")
+            return {}
+    
     def _collect_equipment_data(self) -> Dict:
         """Collect equipment requirements for the exercise."""
         print("\n🛠️  Equipment Requirements")
         print("Enter equipment needed for this exercise.")
-        print("Format: equipment_name (e.g., 'dumbbells_5kg', 'barbells', 'kettlebells_16kg')")
+        print()
+        
+        # Show available equipment options
+        available_equipment = self._get_available_equipment()
+        if available_equipment:
+            print("📋 Available Equipment (from plan.json):")
+            print("=" * 50)
+            
+            # Sort equipment by type for better organization
+            sorted_equipment = sorted(available_equipment.items())
+            for i, (eq_name, available_count) in enumerate(sorted_equipment, 1):
+                print(f"{i:2d}. {eq_name:<25} ({available_count}x available)")
+            
+            print()
+            print("💡 You can enter equipment names from the list above, or type custom names.")
+        else:
+            print("⚠️  Could not load equipment list from plan.json")
+            print("Format: equipment_name (e.g., 'dumbbells_5kg', 'barbells', 'kettlebells_16kg')")
+        
         print("Enter 'done' when finished, or 'none' if no equipment needed.")
         print()
         
         equipment = {}
         
         while True:
-            eq_name = input("🛠️  Equipment name (or 'done'/'none'): ").strip()
+            if available_equipment:
+                eq_name = input("🛠️  Equipment name (from list above, custom name, or 'done'/'none'): ").strip()
+            else:
+                eq_name = input("🛠️  Equipment name (or 'done'/'none'): ").strip()
             
             if eq_name.lower() in ['done', 'finish', 'complete']:
                 break
             elif eq_name.lower() in ['none', 'no', 'nothing']:
                 break
             elif eq_name:
+                # Check if it's a valid equipment name from plan.json
+                if eq_name in available_equipment:
+                    max_available = available_equipment[eq_name]
+                    print(f"   📋 {eq_name}: {max_available}x available in inventory")
+                
                 # Get count for this equipment
                 while True:
                     try:
-                        count_input = input(f"   📊 Count for {eq_name}: ").strip()
+                        count_input = input(f"   📊 Count needed for {eq_name}: ").strip()
                         count = int(count_input)
                         if count > 0:
+                            # Warn if requesting more than available
+                            if eq_name in available_equipment and count > available_equipment[eq_name]:
+                                print(f"   ⚠️  Warning: Requesting {count}x but only {available_equipment[eq_name]}x available in inventory")
+                                confirm = input("   Continue anyway? (y/n): ").strip().lower()
+                                if confirm not in ['y', 'yes']:
+                                    continue
+                            
                             equipment[eq_name] = {"count": count}
                             print(f"   ✅ Added: {eq_name} × {count}")
                             break
@@ -257,7 +333,11 @@ class ExerciseManager:
         print(f"Name:       {exercise_data['name']}")
         print(f"Link:       {exercise_data['link'] or '(none)'}")
         print(f"Area:       {exercise_data['area']}")
-        print(f"Muscles:    {exercise_data['muscles']}")
+        muscles = exercise_data['muscles']
+        if isinstance(muscles, list):
+            print(f"Muscles:    {', '.join(muscles)}")
+        else:
+            print(f"Muscles:    {muscles}")
         print(f"Unilateral: {'Yes' if exercise_data['unilateral'] else 'No'}")
         print(f"Equipment:  {json.dumps(exercise_data['equipment'], indent=12) if exercise_data['equipment'] else '(none)'}")
         print(f"ID:         {exercise_data['id']}")
@@ -272,6 +352,29 @@ class ExerciseManager:
             elif confirm in ['n', 'no']:
                 return False
             print("   ❌ Please enter 'y' to save or 'n' to cancel.")
+    
+    def _update_max_id_in_plan(self, new_max_id: int) -> bool:
+        """Update the max_id in plan.json."""
+        try:
+            plan_path = Path('config/plan.json')
+            
+            # Read current plan
+            with open(plan_path, 'r', encoding='utf-8') as f:
+                plan_data = json.load(f)
+            
+            # Update max_id
+            plan_data['max_id'] = new_max_id
+            
+            # Save updated plan
+            with open(plan_path, 'w', encoding='utf-8') as f:
+                json.dump(plan_data, f, indent=2, ensure_ascii=False)
+            
+            print(f"📝 Updated max_id in plan.json to {new_max_id}")
+            return True
+            
+        except Exception as e:
+            print(f"⚠️  Warning: Could not update max_id in plan.json: {e}")
+            return False
     
     def _save_exercise(self, exercise_data: Dict, equipment_file: str, category: str) -> bool:
         """Save the exercise to the appropriate equipment file."""
@@ -294,6 +397,10 @@ class ExerciseManager:
             
             print(f"✅ Exercise '{exercise_data['name']}' saved to {file_path.name}")
             print(f"🆔 Assigned ID: {exercise_data['id']}")
+            
+            # Update max_id in plan.json
+            self._update_max_id_in_plan(exercise_data['id'])
+            
             return True
             
         except Exception as e:

@@ -5,7 +5,11 @@
         "name": "Standard body-weight dip",
         "link": "https://www.youtube.com/shorts/cbW_T2cbS9E",
         "area": "upper",
-        "muscles": "triceps, chest, shoulders",
+        "muscles": [
+          "triceps",
+          "chest",
+          "shoulders"
+        ],
         "equipment": {
           "dip_parallel_bars": {
             "count": 2
@@ -21,7 +25,11 @@
         "name": "L-sit hold",
         "link": "https://www.youtube.com/shorts/Jb5_jIiEl8E",
         "area": "core",
-        "muscles": "core, hip flexors, shoulders",
+        "muscles": [
+          "core",
+          "hip flexors",
+          "shoulders"
+        ],
         "equipment": {
           "dip_parallel_bars": {
             "count": 2
@@ -35,7 +43,11 @@
         "name": "Tuck hold",
         "link": "https://www.youtube.com/shorts/y1_graezMbo",
         "area": "core",
-        "muscles": "core, shoulders, stabilizers",
+        "muscles": [
+          "core",
+          "shoulders",
+          "stabilizers"
+        ],
         "equipment": {
           "dip_parallel_bars": {
             "count": 2

@@ -5,7 +5,11 @@
         "name": "Close-grip dumbbell press",
         "link": "https://www.youtube.com/shorts/EvjftwN-nSY",
         "area": "upper",
-        "muscles": "triceps, chest, shoulders",
+        "muscles": [
+          "triceps",
+          "chest",
+          "shoulders"
+        ],
         "equipment": {
           "bench": {
             "count": 1
@@ -22,7 +26,11 @@
         "name": "Dumbbell pullover",
         "link": "https://www.youtube.com/shorts/Datv2L6t3-4",
         "area": "upper",
-        "muscles": "latissimus dorsi, chest, serratus",
+        "muscles": [
+          "latissimus dorsi",
+          "chest",
+          "serratus"
+        ],
         "equipment": {
           "bench": {
             "count": 1
@@ -41,7 +49,11 @@
         "name": "Bulgarian split-squat (rear foot on bench)",
         "link": "https://www.youtube.com/shorts/J1PEjNVe7po",
         "area": "lower",
-        "muscles": "quadriceps, glutes, hamstrings",
+        "muscles": [
+          "quadriceps",
+          "glutes",
+          "hamstrings"
+        ],
         "equipment": {
           "bench": {
             "count": 1
@@ -57,7 +69,11 @@
         "name": "Bench dips",
         "link": "https://www.youtube.com/shorts/4ua3MzaU0QU",
         "area": "upper",
-        "muscles": "triceps, shoulders, chest",
+        "muscles": [
+          "triceps",
+          "shoulders",
+          "chest"
+        ],
         "equipment": {
           "bench": {
             "count": 1
@@ -71,7 +87,11 @@
         "name": "Feet-elevated push-ups",
         "link": "https://www.youtube.com/shorts/MjnJWRwbSYE",
         "area": "upper",
-        "muscles": "chest, triceps, shoulders",
+        "muscles": [
+          "chest",
+          "triceps",
+          "shoulders"
+        ],
         "equipment": {
           "bench": {
             "count": 1

@@ -177,15 +177,28 @@ def format_equipment_tags(equipment_data: Dict) -> str:
     return tags_html
 
 
-def format_muscle_tags(muscles_str: str) -> str:
-    """Format muscle groups as colored tags."""
-    if not muscles_str or not muscles_str.strip():
+def format_muscle_tags(muscles_data) -> str:
+    """Format muscle groups as colored tags.
+    
+    Args:
+        muscles_data: Either a string (comma-separated) or list of muscle names
+    """
+    if not muscles_data:
         return ""
     
     tags_html = '<div class="muscle-tags">'
     
-    # Split muscles by comma and clean up
-    muscles = [muscle.strip().lower() for muscle in muscles_str.split(",") if muscle.strip()]
+    # Handle both string and array formats
+    if isinstance(muscles_data, str):
+        if not muscles_data.strip():
+            return ""
+        # Split muscles by comma and clean up
+        muscles = [muscle.strip().lower() for muscle in muscles_data.split(",") if muscle.strip()]
+    elif isinstance(muscles_data, list):
+        # Already a list, just clean up
+        muscles = [muscle.strip().lower() for muscle in muscles_data if muscle and muscle.strip()]
+    else:
+        return ""
     
     for muscle in muscles:
         # Determine tag color class based on muscle group
@@ -241,10 +254,16 @@ def analyze_workout_distribution(stations: List[Dict]) -> Dict[str, any]:
                 total_exercises += 1
                 
                 # Get muscle data
-                muscles_str = station.get(step_muscles_key, '')
-                if muscles_str:
-                    # Parse individual muscles
-                    muscles = [muscle.strip().lower() for muscle in muscles_str.split(",") if muscle.strip()]
+                muscles_data = station.get(step_muscles_key, '')
+                if muscles_data:
+                    # Handle both string and array formats
+                    if isinstance(muscles_data, str):
+                        muscles = [muscle.strip().lower() for muscle in muscles_data.split(",") if muscle.strip()]
+                    elif isinstance(muscles_data, list):
+                        muscles = [muscle.strip().lower() for muscle in muscles_data if muscle and muscle.strip()]
+                    else:
+                        muscles = []
+                    
                     for muscle in muscles:
                         muscle_counts[muscle] += 1
             
