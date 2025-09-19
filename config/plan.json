@@ -2,7 +2,7 @@
   "crossfit_path": false,
   "title": "Strength Block – Week 5",
   "max_id": 121,
-  "notes": "Dont' crash the second week, you're getting stronger",
+  "notes": "Shoulders Training",
   "edit_mode": false,
   "active_rest": false,
   "active_rest_count": 4,
@@ -26,7 +26,7 @@
   "balance_order": [
     "upper",
     "lower",
-    "core"
+    "upper"
   ],
   "must_use_old": [
     "plyo_box",
