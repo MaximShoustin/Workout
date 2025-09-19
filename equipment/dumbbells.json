@@ -89,6 +89,54 @@
         "skip": false,
         "unilateral": false,
         "id": 6
+      },
+      {
+        "name": "rainbow press",
+        "link": "",
+        "area": "upper",
+        "muscles": [
+          "shoulders"
+        ],
+        "unilateral": false,
+        "equipment": {
+          "dumbbells_5kg": {
+            "count": 2
+          }
+        },
+        "skip": false,
+        "id": 118
+      },
+      {
+        "name": "Static Lateral Raises W/2X",
+        "link": "https://www.youtube.com/shorts/cllTB9D2Bz8",
+        "area": "upper",
+        "muscles": [
+          "shoulders"
+        ],
+        "unilateral": false,
+        "equipment": {
+          "dumbbells_5kg": {
+            "count": 2
+          }
+        },
+        "skip": false,
+        "id": 120
+      },
+      {
+        "name": "supinated alternating DB front Raises",
+        "link": "https://www.youtube.com/shorts/oYrZmUmQOXQ",
+        "area": "upper",
+        "muscles": [
+          "shoulders"
+        ],
+        "unilateral": false,
+        "equipment": {
+          "dumbbells_5kg": {
+            "count": 2
+          }
+        },
+        "skip": false,
+        "id": 121
       }
     ],
     "lower_body": [

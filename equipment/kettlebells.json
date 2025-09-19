@@ -525,6 +525,22 @@
         "skip": false,
         "unilateral": true,
         "id": 39
+      },
+      {
+        "name": "DB Front Raise into rotation",
+        "link": "https://www.youtube.com/shorts/PEDvm5mrQAM",
+        "area": "upper",
+        "muscles": [
+          "shoulders"
+        ],
+        "unilateral": false,
+        "equipment": {
+          "kettlebells_6kg": {
+            "count": 1
+          }
+        },
+        "skip": false,
+        "id": 119
       }
     ],
     "triceps": [
