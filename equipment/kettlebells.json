@@ -227,6 +227,23 @@
         "skip": false,
         "unilateral": false,
         "id": 110
+      },
+      {
+        "name": "Stretching Quadriceps (Sitting)",
+        "link": "config/videos/123.mp4",
+        "video_type": "mp4",
+        "area": "lower",
+        "muscles": [
+          "quadriceps"
+        ],
+        "unilateral": false,
+        "equipment": {
+          "kettlebells_24kg": {
+            "count": 1
+          }
+        },
+        "skip": false,
+        "id": 123
       }
     ],
     "upper_body": [

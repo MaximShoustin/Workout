@@ -331,7 +331,7 @@ def reconstruct_stations_from_ids(stations_ids, pool, steps_per_station):
                 print(f'⚠️  Warning: Exercise ID {ex_id} not found in equipment database. Using random exercise.')
                 ex = random.choice(pool)
             
-            area, equip, name, link, equipment, muscles, unilateral, _ = ex
+            area, equip, name, link, equipment, muscles, unilateral, _, video_type = ex
             base_name = get_base_exercise_name(name)
             canonical_id = base_name_to_id.get(base_name, ex_id)
             canonical_name = id_to_name.get(canonical_id, name)
@@ -769,7 +769,8 @@ def main():
                 print(f"   • {issue}")
         
         # Save the HTML file  
-        update_index_html = plan.get("use_workout_history", True)
+        # Always update index.html regardless of workout history setting
+        update_index_html = True
         used_exercise_ids = plan_result.get("used_exercise_ids", [])
         filename = save_workout_html(plan, plan_result["stations"], plan_result["equipment_requirements"], validation_summary, plan_result["global_active_rest_schedule"], plan_result["selected_active_rest_exercises"], plan_result["selected_crossfit_path_exercises"], update_index_html=update_index_html, used_exercise_ids=used_exercise_ids, seed=seed_used)
         print(f"✅ Workout saved to: {filename}")

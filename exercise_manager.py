@@ -128,13 +128,49 @@ class ExerciseManager:
                 break
             print("   ❌ Exercise name is required.")
         
-        # Exercise Link (optional)
+        # Video selection (optional)
+        print("🎥 Video options:")
+        print("   1. YouTube link")
+        print("   2. Local MP4 file")
+        print("   3. No video")
+        
         while True:
-            link = input("🔗 Video link (optional): ").strip()
-            if not link or self._validate_url(link):
-                exercise_data['link'] = link
+            video_choice = input("🎥 Choose video type (1/2/3): ").strip()
+            
+            if video_choice == '1':
+                # YouTube link
+                while True:
+                    link = input("🔗 YouTube video link: ").strip()
+                    if self._validate_url(link):
+                        exercise_data['link'] = link
+                        exercise_data['video_type'] = 'youtube'
+                        break
+                    print("   ❌ Please enter a valid URL (starting with http:// or https://)")
                 break
-            print("   ❌ Please enter a valid URL (starting with http:// or https://)")
+            
+            elif video_choice == '2':
+                # Local MP4 file
+                exercise_id = self._get_next_exercise_id()
+                mp4_path = f"config/videos/{exercise_id}.mp4"
+                print(f"📁 Please place your MP4 file at: {mp4_path}")
+                print("   The system will look for this file when displaying the exercise.")
+                
+                confirm = input("🎥 Confirm you will provide MP4 file (y/n): ").strip().lower()
+                if confirm in ['y', 'yes', '1', 'true']:
+                    exercise_data['link'] = mp4_path
+                    exercise_data['video_type'] = 'mp4'
+                    break
+                else:
+                    print("   ❌ MP4 option cancelled. Please choose again.")
+            
+            elif video_choice == '3':
+                # No video
+                exercise_data['link'] = ""
+                exercise_data['video_type'] = 'none'
+                break
+            
+            else:
+                print("   ❌ Please choose 1, 2, or 3.")
         
         # Exercise Area
         print(f"📍 Available areas: {', '.join(self.valid_areas)}")
@@ -325,6 +361,16 @@ class ExerciseManager:
             except ValueError:
                 print("   ❌ Please enter a valid number.")
     
+    def _validate_mp4_file(self, exercise_data: Dict) -> bool:
+        """Validate that MP4 file exists if video_type is mp4."""
+        if exercise_data.get('video_type') == 'mp4':
+            mp4_path = Path(exercise_data['link'])
+            if not mp4_path.exists():
+                print(f"⚠️  Warning: MP4 file not found at {mp4_path}")
+                print("   Please place the MP4 file in the correct location before using this exercise.")
+                return False
+        return True
+
     def _preview_exercise(self, exercise_data: Dict, equipment_file: str, category: str) -> bool:
         """Show exercise preview and confirm before saving."""
         print("\n" + "=" * 60)
@@ -332,6 +378,8 @@ class ExerciseManager:
         print("=" * 60)
         print(f"Name:       {exercise_data['name']}")
         print(f"Link:       {exercise_data['link'] or '(none)'}")
+        video_type = exercise_data.get('video_type', 'none')
+        print(f"Video Type: {video_type}")
         print(f"Area:       {exercise_data['area']}")
         muscles = exercise_data['muscles']
         if isinstance(muscles, list):
@@ -344,6 +392,11 @@ class ExerciseManager:
         print(f"File:       {equipment_file}.json")
         print(f"Category:   {category}")
         print("=" * 60)
+        
+        # Validate MP4 file if applicable
+        if not self._validate_mp4_file(exercise_data):
+            print("   ❌ MP4 validation failed. Please fix the issue and try again.")
+            return False
         
         while True:
             confirm = input("💾 Save this exercise? (y/n): ").strip().lower()

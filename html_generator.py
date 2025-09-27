@@ -5,7 +5,7 @@ from datetime import datetime
 from typing import Dict, List, Optional
 
 
-def format_exercise_link(exercise_name: str, exercise_link: str, exercise_id: int = None, pictures_path: str = "config/pictures") -> str:
+def format_exercise_link(exercise_name: str, exercise_link: str, exercise_id: int = None, pictures_path: str = "config/pictures", video_type: str = None) -> str:
     """Format exercise with embedded video popup if valid URL provided, otherwise return plain name. Show ID if provided."""
     from pathlib import Path
     
@@ -21,21 +21,8 @@ def format_exercise_link(exercise_name: str, exercise_link: str, exercise_id: in
         # Use relative path for HTML src attribute
         picture_path = f"{pictures_path}/{exercise_id}.png"
     
-    # Original video functionality - keep exactly the same
+    # Video functionality - support both YouTube and MP4
     if exercise_link and exercise_link != "some url" and exercise_link.strip():
-        # Convert YouTube URLs to embed format with autoplay (muted to bypass browser restrictions)
-        embed_url = exercise_link
-        autoplay_params = "autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0"
-        if "youtube.com/watch?v=" in exercise_link:
-            video_id = exercise_link.split("watch?v=")[1].split("&")[0]
-            embed_url = f"https://www.youtube.com/embed/{video_id}?{autoplay_params}"
-        elif "youtube.com/shorts/" in exercise_link:
-            video_id = exercise_link.split("/shorts/")[1].split("?")[0]
-            embed_url = f"https://www.youtube.com/embed/{video_id}?{autoplay_params}"
-        elif "youtu.be/" in exercise_link:
-            video_id = exercise_link.split("youtu.be/")[1].split("?")[0]
-            embed_url = f"https://www.youtube.com/embed/{video_id}?{autoplay_params}"
-        
         # Create unique ID for this exercise - sanitize all special characters
         import re
         html_id = exercise_name.lower()
@@ -46,8 +33,46 @@ def format_exercise_link(exercise_name: str, exercise_link: str, exercise_id: in
         # Remove any remaining non-alphanumeric characters except underscores
         html_id = re.sub(r'[^a-z0-9_]', '', html_id)
         
-        # Original video HTML + new picture button if available
-        video_html = f'''<span class="exercise-with-video">
+        # Determine video type if not explicitly provided
+        if video_type is None:
+            if any(youtube_domain in exercise_link for youtube_domain in ["youtube.com", "youtu.be"]):
+                video_type = 'youtube'
+            elif exercise_link.endswith('.mp4') or 'config/videos/' in exercise_link:
+                video_type = 'mp4'
+            else:
+                video_type = 'youtube'  # Default fallback
+        
+        if video_type == 'mp4':
+            # MP4 video support - use dynamic path like pictures
+            videos_path = pictures_path.replace("/pictures", "/videos")
+            # Extract just the filename from the exercise_link (e.g., "122.mp4" from "config/videos/122.mp4")
+            video_filename = exercise_link.split('/')[-1] if '/' in exercise_link else exercise_link
+            video_src = f"{videos_path}/{video_filename}"
+            
+            video_html = f'''<span class="exercise-with-video">
+            <span class="exercise-name" onclick="toggleVideo('{html_id}')">{display_name}</span>
+            <div id="video_{html_id}" class="video-popup">
+                <video controls muted preload="metadata">
+                    <source src="{video_src}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <button class="close-video" onclick="toggleVideo('{html_id}')">&times;</button>
+            </div>'''
+        else:
+            # YouTube video support (original functionality)
+            embed_url = exercise_link
+            autoplay_params = "autoplay=1&mute=1&enablejsapi=1&modestbranding=1&rel=0"
+            if "youtube.com/watch?v=" in exercise_link:
+                video_id = exercise_link.split("watch?v=")[1].split("&")[0]
+                embed_url = f"https://www.youtube.com/embed/{video_id}?{autoplay_params}"
+            elif "youtube.com/shorts/" in exercise_link:
+                video_id = exercise_link.split("/shorts/")[1].split("?")[0]
+                embed_url = f"https://www.youtube.com/embed/{video_id}?{autoplay_params}"
+            elif "youtu.be/" in exercise_link:
+                video_id = exercise_link.split("youtu.be/")[1].split("?")[0]
+                embed_url = f"https://www.youtube.com/embed/{video_id}?{autoplay_params}"
+            
+            video_html = f'''<span class="exercise-with-video">
             <span class="exercise-name" onclick="toggleVideo('{html_id}')">{display_name}</span>
             <div id="video_{html_id}" class="video-popup">
                 <iframe src="{embed_url}" frameborder="0" allowfullscreen></iframe>
@@ -450,7 +475,8 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
             margin: 0 !important;
             z-index: 10000 !important;
         }
-        .video-popup iframe {
+        .video-popup iframe,
+        .video-popup video {
             width: 100%;
             height: calc(100% - 35px);
             border: none;
@@ -1420,7 +1446,7 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
                         <tr>
                             <td class="crossfit-path-exercise">
                                 <span class="crossfit-path-number">{idx}</span>
-                                {format_exercise_link(exercise["name"], exercise.get("link", ""), exercise.get("id", -1))}
+                                {format_exercise_link(exercise["name"], exercise.get("link", ""), exercise.get("id", -1), "config/pictures", exercise.get("video_type"))}
                             </td>
                             <td class="crossfit-path-instructions">
                                 Perform for 30-60 seconds
@@ -1466,8 +1492,38 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
             });
         }
         
-        // Call fixImagePaths when page loads
-        document.addEventListener('DOMContentLoaded', fixImagePaths);
+        // Fix video paths based on current location
+        function fixVideoPaths() {
+            const currentPath = window.location.pathname;
+            const isInWorkoutStore = currentPath.includes('/workout_store/') || currentPath.includes('\\\\workout_store\\\\');
+            
+            // Find all video source elements
+            const videoSources = document.querySelectorAll('video source');
+            
+            videoSources.forEach(source => {
+                let src = source.getAttribute('src');
+                
+                if (isInWorkoutStore) {
+                    // If in workout_store/, ensure path starts with ../
+                    if (!src.startsWith('../config/videos/')) {
+                        src = src.replace('config/videos/', '../config/videos/');
+                        source.setAttribute('src', src);
+                    }
+                } else {
+                    // If in root (index.html), ensure path doesn't start with ../
+                    if (src.startsWith('../config/videos/')) {
+                        src = src.replace('../config/videos/', 'config/videos/');
+                        source.setAttribute('src', src);
+                    }
+                }
+            });
+        }
+        
+        // Call fixImagePaths and fixVideoPaths when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            fixImagePaths();
+            fixVideoPaths();
+        });
         
         function toggleVideo(exerciseId) {
             const video = document.getElementById('video_' + exerciseId);
@@ -1672,12 +1728,13 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
                 step_equipment_key = f'step{step_num}_equipment'
                 step_muscles_key = f'step{step_num}_muscles'
                 step_id_key = f'step{step_num}_id'
+                step_video_type_key = f'step{step_num}_video_type'
                 
                 html += f"""
                      <td data-label="Step {step_num}" class="exercise">
                          <span class="mobile-step-label">Step {step_num}:</span>
                          <div class="exercise-cell-wrapper">
-                             {format_exercise_link(st.get(step_key, ''), st.get(step_link_key, ''), st.get(step_id_key, None), "../config/pictures" if is_workout_store else "config/pictures")}
+                             {format_exercise_link(st.get(step_key, ''), st.get(step_link_key, ''), st.get(step_id_key, None), "../config/pictures" if is_workout_store else "config/pictures", st.get(step_video_type_key, None))}
                              {format_exercise_id_badge(st.get(step_id_key, None))}
                          </div>
                          {format_muscle_tags(st.get(step_muscles_key, ''))}
@@ -1730,7 +1787,7 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
                 html += f"""
                         <td data-label="Step {idx}" class="exercise">
                             <span class="mobile-step-label">Step {idx}:</span>
-                            {format_exercise_link(exercise["name"], exercise.get("link", ""), exercise.get("id", -1))}
+                            {format_exercise_link(exercise["name"], exercise.get("link", ""), exercise.get("id", -1), "config/pictures", exercise.get("video_type"))}
                         </td>"""
         
         html += """
@@ -2051,12 +2108,43 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
             }});
         }}
         
-        // Call fixImagePaths when page loads
-        document.addEventListener('DOMContentLoaded', fixImagePaths);
+        // Fix video paths based on current location
+        function fixVideoPaths() {{
+            const currentPath = window.location.pathname;
+            const isInWorkoutStore = currentPath.includes('/workout_store/') || currentPath.includes('\\\\workout_store\\\\');
+            
+            // Find all video source elements
+            const videoSources = document.querySelectorAll('video source');
+            
+            videoSources.forEach(source => {{
+                let src = source.getAttribute('src');
+                
+                if (isInWorkoutStore) {{
+                    // If in workout_store/, ensure path starts with ../
+                    if (!src.startsWith('../config/videos/')) {{
+                        src = src.replace('config/videos/', '../config/videos/');
+                        source.setAttribute('src', src);
+                    }}
+                }} else {{
+                    // If in root (index.html), ensure path doesn't start with ../
+                    if (src.startsWith('../config/videos/')) {{
+                        src = src.replace('../config/videos/', 'config/videos/');
+                        source.setAttribute('src', src);
+                    }}
+                }}
+            }});
+        }}
+        
+        // Call fixImagePaths and fixVideoPaths when page loads
+        document.addEventListener('DOMContentLoaded', function() {{
+            fixImagePaths();
+            fixVideoPaths();
+        }});
         
         function toggleVideo(exerciseId) {{
             const video = document.getElementById('video_' + exerciseId);
             const iframe = video.querySelector('iframe');
+            const videoElement = video.querySelector('video');
             const allVideos = document.querySelectorAll('.video-popup');
             
             // Stop and hide all other videos first
@@ -2073,10 +2161,16 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
                 // Smart positioning to avoid cutoff
                 positionVideoSmart(video);
                 
-                // Reload the iframe to start fresh
-                const originalSrc = iframe.getAttribute('data-src') || iframe.src;
-                iframe.setAttribute('data-src', originalSrc);
-                iframe.src = originalSrc;
+                if (iframe) {{
+                    // YouTube video - reload the iframe to start fresh
+                    const originalSrc = iframe.getAttribute('data-src') || iframe.src;
+                    iframe.setAttribute('data-src', originalSrc);
+                    iframe.src = originalSrc;
+                }} else if (videoElement) {{
+                    // MP4 video - start playing
+                    videoElement.currentTime = 0;
+                    videoElement.play().catch(e => console.log('Video autoplay prevented:', e));
+                }}
             }} else {{
                 stopVideo(video);
             }}
@@ -2181,10 +2275,19 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
         
         function stopVideo(videoElement) {{
             const iframe = videoElement.querySelector('iframe');
-            // Stop video by clearing and restoring src
-            const originalSrc = iframe.getAttribute('data-src') || iframe.src;
-            iframe.setAttribute('data-src', originalSrc);
-            iframe.src = '';
+            const video = videoElement.querySelector('video');
+            
+            if (iframe) {{
+                // YouTube video - stop by clearing and restoring src
+                const originalSrc = iframe.getAttribute('data-src') || iframe.src;
+                iframe.setAttribute('data-src', originalSrc);
+                iframe.src = '';
+            }} else if (video) {{
+                // MP4 video - pause and reset
+                video.pause();
+                video.currentTime = 0;
+            }}
+            
             videoElement.style.display = 'none';
             
             // Hide backdrop if it exists

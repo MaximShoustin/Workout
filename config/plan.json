@@ -1,9 +1,9 @@
 {
   "crossfit_path": false,
   "title": "Strength Block – Week 5",
-  "max_id": 121,
+  "max_id": 124,
   "notes": "Shoulders Training",
-  "edit_mode": true,
+  "edit_mode": false,
   "active_rest": false,
   "active_rest_count": 4,
   "crossfit_path_count": 11,
@@ -36,7 +36,9 @@
     "plyo_box",
     "skateboard"
   ],
-  "must_use": ["slam_balls_5kg"],
+  "must_use": [
+    "slam_balls_5kg"
+  ],
   "equipment": {
     "bench": {
       "count": 2
@@ -65,8 +67,17 @@
     "barbells": {
       "count": 2
     },
+    "slam_balls_4kg": {
+      "count": 14
+    },
     "slam_balls_5kg": {
       "count": 14
+    },
+    "slam_balls_6kg": {
+      "count": 14
+    },
+    "slam_balls_8kg": {
+      "count": 1
     },
     "dumbbells_6kg": {
       "count": 1

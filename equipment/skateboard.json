@@ -87,6 +87,25 @@
         "skip": false,
         "unilateral": false,
         "id": 77
+      },
+      {
+        "name": "Wipers skateboard",
+        "link": "config/videos/122.mp4",
+        "video_type": "mp4",
+        "area": "core",
+        "muscles": [
+          "chest",
+          "shoulders",
+          "obliques"
+        ],
+        "unilateral": false,
+        "equipment": {
+          "skateboard": {
+            "count": 1
+          }
+        },
+        "skip": false,
+        "id": 122
       }
     ]
   }

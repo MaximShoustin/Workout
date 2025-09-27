@@ -129,6 +129,28 @@
         "skip": false,
         "unilateral": false,
         "id": 85
+      },
+      {
+        "name": "Sit-Up with Ball Wall Throw",
+        "link": "config/videos/124.mp4",
+        "video_type": "mp4",
+        "area": "core",
+        "muscles": [
+          "shoulders",
+          "triceps",
+          "hip flexors",
+          "chest",
+          "glutes",
+          "hamstrings"
+        ],
+        "unilateral": false,
+        "equipment": {
+          "slam_balls_6kg": {
+            "count": 1
+          }
+        },
+        "skip": false,
+        "id": 124
       }
     ]
   }

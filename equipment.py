@@ -73,7 +73,7 @@ def filter_feasible_exercises(pool: List[Tuple[str, str, str, str, dict, str, bo
     excluded_exercises = []
     
     for exercise_tuple in pool:
-        area, equip_name, exercise_name, exercise_link, equipment_data, muscles, unilateral, exercise_id = exercise_tuple
+        area, equip_name, exercise_name, exercise_link, equipment_data, muscles, unilateral, exercise_id, video_type = exercise_tuple
         
         if can_exercise_be_performed(equipment_data, available_inventory):
             feasible_pool.append(exercise_tuple)
@@ -105,8 +105,8 @@ def parse_equipment() -> Dict[str, dict]:
     return gear
 
 
-def build_station_pool(gear: Dict[str, dict], available_inventory: Optional[dict] = None) -> List[Tuple[str, str, str, str, dict, str, bool, int]]:
-    """Return list of (area, equip_name, exercise_name, exercise_link, equipment_data, muscles, unilateral, exercise_id)"""
+def build_station_pool(gear: Dict[str, dict], available_inventory: Optional[dict] = None) -> List[Tuple[str, str, str, str, dict, str, bool, int, str]]:
+    """Return list of (area, equip_name, exercise_name, exercise_link, equipment_data, muscles, unilateral, exercise_id, video_type)"""
     pool = []
     skipped_exercises = []
     
@@ -128,6 +128,7 @@ def build_station_pool(gear: Dict[str, dict], available_inventory: Optional[dict
                     muscles = ex.get("muscles", "")  # Get muscles data
                     unilateral = ex.get("unilateral", False)  # Get unilateral flag
                     exercise_id = ex.get("id", -1)  # Get exercise ID, default to -1 if missing
+                    video_type = ex.get("video_type", "")  # Get video type
                 else:
                     # Fallback for old string format (shouldn't happen anymore)
                     exercise_name = ex
@@ -137,7 +138,8 @@ def build_station_pool(gear: Dict[str, dict], available_inventory: Optional[dict
                     muscles = ""  # No muscles data for old format
                     unilateral = False  # Default to bilateral for old format
                     exercise_id = -1  # No ID for old format
-                pool.append((area, equip_name, exercise_name, exercise_link, equipment_data, muscles, unilateral, exercise_id))
+                    video_type = ""  # No video type for old format
+                pool.append((area, equip_name, exercise_name, exercise_link, equipment_data, muscles, unilateral, exercise_id, video_type))
     
     # Report skipped exercises if any
     if skipped_exercises:
