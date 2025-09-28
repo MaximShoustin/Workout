@@ -54,6 +54,24 @@
         "skip": false,
         "unilateral": true,
         "id": 80
+      },
+      {
+        "name": "Ball Lying Chest Pass",
+        "link": "",
+        "video_type": "none",
+        "area": "upper",
+        "muscles": [
+          "triceps",
+          "shoulders"
+        ],
+        "unilateral": false,
+        "equipment": {
+          "slam_balls_8kg": {
+            "count": 1
+          }
+        },
+        "skip": false,
+        "id": 125
       }
     ],
     "core_accessory": [
