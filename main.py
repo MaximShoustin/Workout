@@ -291,7 +291,7 @@ def generate_workout_with_retries(max_retries=15, include_ids=None):
 
 def get_exercise_by_id(ex_id, pool):
     for ex in pool:
-        if ex[-1] == ex_id:
+        if ex[-2] == ex_id:  # exercise_id is at position -2, video_type is at -1
             return ex
     return None
 
@@ -308,7 +308,7 @@ def reconstruct_stations_from_ids(stations_ids, pool, steps_per_station):
     id_to_name = {}
     for ex in pool:
         name = ex[2]
-        ex_id = ex[-1]
+        ex_id = ex[-2]  # exercise_id is at position -2
         base_name = get_base_exercise_name(name)
         base_name_to_id[base_name] = ex_id
         id_to_name[ex_id] = name
@@ -431,7 +431,7 @@ def main():
         plan_equipment = plan.get('equipment', {})
         gear = parse_equipment()
         pool = build_station_pool(gear, plan_equipment if plan_equipment else None)
-        id_to_name = {ex[-1]: ex[2] for ex in pool if ex[-1] != -1}
+        id_to_name = {ex[-2]: ex[2] for ex in pool if ex[-2] != -1}  # exercise_id is at position -2
         # Expand edit_ids to include both sides for any unilateral exercise
         expanded_edit_ids = set(edit_ids)
         for sidx, st in enumerate(current_stations):
@@ -456,7 +456,7 @@ def main():
         gear = parse_equipment()
         pool = build_station_pool(gear, plan_equipment if plan_equipment else None)
         # Map: exercise_id -> pool tuple
-        pool_by_id = {ex[-1]: ex for ex in pool if ex[-1] != -1}
+        pool_by_id = {ex[-2]: ex for ex in pool if ex[-2] != -1}  # exercise_id is at position -2
         # 3. Group locations by exercise ID to handle unilateral exercises properly
         locations_by_id = {}  # {exercise_id: [(station_idx, step_idx), ...]}
         for sidx, st in enumerate(current_stations):
@@ -538,7 +538,7 @@ def main():
                 if unilateral_candidates:
                     # Option A: Replace with 1 unilateral exercise (fills both positions)
                     new_ex = random.choice(unilateral_candidates)
-                    new_id = new_ex[-1]
+                    new_id = new_ex[-2]  # exercise_id is at position -2
                     new_name = new_ex[2]
                     new_area = new_ex[0]
                     
@@ -567,7 +567,7 @@ def main():
                     
                     for i, (sidx, step_idx) in enumerate(positions):
                         new_ex = selected_exercises[i]
-                        new_id = new_ex[-1]
+                        new_id = new_ex[-2]  # exercise_id is at position -2
                         new_name = new_ex[2]
                         new_area = new_ex[0]
                         
@@ -596,7 +596,7 @@ def main():
                     sys.exit(1)
                 
                 new_ex = random.choice(bilateral_candidates)
-                new_id = new_ex[-1]
+                new_id = new_ex[-2]  # exercise_id is at position -2
                 new_name = new_ex[2]
                 new_area = new_ex[0]
                 
@@ -621,7 +621,7 @@ def main():
                     sys.exit(1)
                 
                 new_ex = random.choice(candidates)
-                new_id = new_ex[-1]
+                new_id = new_ex[-2]  # exercise_id is at position -2
                 new_name = new_ex[2]
                 new_area = new_ex[0]
                 

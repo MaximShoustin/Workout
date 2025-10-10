@@ -3,7 +3,7 @@
   "title": "Strength Block – Week 5",
   "max_id": 125,
   "notes": "Shoulders Training",
-  "edit_mode": false,
+  "edit_mode": true,
   "active_rest": false,
   "active_rest_count": 4,
   "crossfit_path_count": 11,
@@ -25,7 +25,9 @@
   ],
   "balance_order": [
     "upper",
+    "core",
     "lower",
+    "upper",
     "core"
   ],
   "must_use_old": [
