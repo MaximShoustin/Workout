@@ -394,11 +394,15 @@ def reconstruct_stations_from_ids(stations_ids, pool, steps_per_station):
 def main():
     """Main entry point for workout generation."""
     global edit_ids, include_ids
+    
+    # Initialize global variables if not already set
+    if 'edit_ids' not in globals():
+        edit_ids = None
+    if 'include_ids' not in globals():
+        include_ids = None
+        
     plan = load_plan()
     if edit_ids is not None:
-        if not plan.get('edit_mode', False):
-            print('❌ Error: -edit flag can only be used when "edit_mode": true in plan.json.')
-            sys.exit(1)
         # Validate edit_ids against LAST_WORKOUT_PLAN.json
         last_plan_path = Path('workout_store/LAST_WORKOUT_PLAN.json')
         if not last_plan_path.exists():
@@ -853,6 +857,10 @@ def parse_cli_args():
     
     return edit_ids, include_ids, add_exercise
 
+
+# Initialize global variables
+edit_ids = None
+include_ids = None
 
 if __name__ == "__main__":
     edit_ids, include_ids, add_exercise = parse_cli_args()

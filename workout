@@ -1,0 +1,327 @@
+#!/usr/bin/env python3
+"""
+Workout CLI - Command Line Interface for Workout Generation
+===========================================================
+
+A comprehensive CLI tool for generating, managing, and tracking workouts.
+
+Usage:
+    ./workout                    # Generate a new workout
+    ./workout -status           # List all existing exercises
+    ./workout -help             # Show this help message
+    ./workout -add              # Add a new exercise to the database
+    ./workout -edit <ids>       # Edit specific exercises by ID (comma-separated)
+    ./workout -include <ids>    # Include specific exercises by ID (comma-separated)
+
+Examples:
+    ./workout -status
+    ./workout -edit 101,102,103
+    ./workout -include 88,94,96
+    ./workout -add
+"""
+
+import sys
+import argparse
+import json
+from pathlib import Path
+from typing import List, Dict, Set
+
+# Add current directory to path for imports
+sys.path.insert(0, str(Path(__file__).parent))
+
+from config import load_json, EQUIP_DIR
+from equipment import parse_equipment, build_station_pool
+
+
+def show_help():
+    """Display comprehensive help information."""
+    help_text = """
+🏋️  WORKOUT CLI - Command Line Interface
+========================================
+
+USAGE:
+    ./workout [COMMAND] [OPTIONS]
+
+COMMANDS:
+    (no command)        Generate a new workout with current settings
+    -status            List all existing exercises in the database
+    -help              Show this help message
+    -add               Add a new exercise to the database (interactive)
+    -edit <ids>        Edit specific exercises in current workout by ID
+    -include <ids>     Force include specific exercises by ID in new workout
+
+OPTIONS for -edit and -include:
+    <ids>              Comma-separated list of exercise IDs (e.g., 101,102,103)
+
+EXAMPLES:
+    ./workout                     # Generate new workout
+    ./workout -status             # List all exercises
+    ./workout -help               # Show this help
+    ./workout -add                # Add new exercise (interactive)
+    ./workout -edit 101,102       # Replace exercises 101,102 in current workout
+    ./workout -include 88,94,96   # Force include exercises 88,94,96 in new workout
+
+CONFIGURATION:
+    Edit config/plan.json to customize:
+    - Number of stations and people
+    - Equipment inventory
+    - Active rest settings
+    - Balance order (upper/lower/core)
+    - Exercise history tracking
+
+FILES:
+    config/plan.json             Main configuration file
+    equipment/*.json             Exercise databases by equipment type
+    index.html                   Generated workout display
+    workout_store/               Workout history and data
+
+For more information, see README.md
+"""
+    print(help_text)
+
+
+def get_all_exercises() -> List[Dict]:
+    """Get all exercises from all equipment files."""
+    all_exercises = []
+    
+    # Parse equipment to get all exercises
+    try:
+        gear = parse_equipment()
+        station_pool = build_station_pool(gear)
+        
+        # Convert tuples to dictionaries for easier handling
+        for exercise_tuple in station_pool:
+            area, equip_name, exercise_name, exercise_link, equipment_data, muscles, unilateral, exercise_id, video_type = exercise_tuple
+            
+            exercise_dict = {
+                'id': exercise_id,
+                'name': exercise_name,
+                'area': area,
+                'equipment': equip_name,
+                'muscles': muscles,
+                'unilateral': unilateral,
+                'link': exercise_link,
+                'video_type': video_type,
+                'equipment_requirements': equipment_data
+            }
+            all_exercises.append(exercise_dict)
+    
+    except Exception as e:
+        print(f"❌ Error loading exercises: {e}")
+        return []
+    
+    return all_exercises
+
+
+def show_status():
+    """Display status of all existing exercises."""
+    print("📊 WORKOUT DATABASE STATUS")
+    print("=" * 50)
+    print()
+    
+    exercises = get_all_exercises()
+    
+    if not exercises:
+        print("❌ No exercises found in database.")
+        return
+    
+    # Group exercises by area and equipment
+    by_area = {}
+    by_equipment = {}
+    
+    for exercise in exercises:
+        area = exercise['area']
+        equipment = exercise['equipment']
+        
+        if area not in by_area:
+            by_area[area] = []
+        by_area[area].append(exercise)
+        
+        if equipment not in by_equipment:
+            by_equipment[equipment] = []
+        by_equipment[equipment].append(exercise)
+    
+    # Summary statistics
+    total_exercises = len(exercises)
+    valid_id_exercises = len([ex for ex in exercises if ex['id'] != -1])
+    unilateral_exercises = len([ex for ex in exercises if ex['unilateral']])
+    
+    print(f"📈 SUMMARY:")
+    print(f"   Total Exercises: {total_exercises}")
+    print(f"   With Valid IDs:  {valid_id_exercises}")
+    print(f"   Unilateral:      {unilateral_exercises}")
+    print(f"   Areas:           {len(by_area)}")
+    print(f"   Equipment Types: {len(by_equipment)}")
+    print()
+    
+    # Show exercises by area
+    print("🎯 BY AREA:")
+    print("-" * 30)
+    for area in sorted(by_area.keys()):
+        exercises_in_area = by_area[area]
+        print(f"  {area.upper()} ({len(exercises_in_area)} exercises):")
+        
+        # Sort by ID for consistent display
+        exercises_in_area.sort(key=lambda x: x['id'] if x['id'] != -1 else 9999)
+        
+        for exercise in exercises_in_area:
+            id_str = f"ID:{exercise['id']:3d}" if exercise['id'] != -1 else "ID: --"
+            unilateral_str = " [U]" if exercise['unilateral'] else "    "
+            equipment_str = f"({exercise['equipment']})"
+            print(f"    {id_str}{unilateral_str} {exercise['name']:<35} {equipment_str}")
+        print()
+    
+    # Show exercises by equipment
+    print("🛠️  BY EQUIPMENT:")
+    print("-" * 30)
+    for equipment in sorted(by_equipment.keys()):
+        exercises_with_equipment = by_equipment[equipment]
+        print(f"  {equipment.upper().replace('_', ' ')} ({len(exercises_with_equipment)} exercises):")
+        
+        # Sort by ID for consistent display
+        exercises_with_equipment.sort(key=lambda x: x['id'] if x['id'] != -1 else 9999)
+        
+        for exercise in exercises_with_equipment:
+            id_str = f"ID:{exercise['id']:3d}" if exercise['id'] != -1 else "ID: --"
+            unilateral_str = " [U]" if exercise['unilateral'] else "    "
+            area_str = f"({exercise['area']})"
+            print(f"    {id_str}{unilateral_str} {exercise['name']:<35} {area_str}")
+        print()
+    
+    # Show exercises with missing IDs
+    missing_id_exercises = [ex for ex in exercises if ex['id'] == -1]
+    if missing_id_exercises:
+        print("⚠️  EXERCISES WITHOUT IDs:")
+        print("-" * 30)
+        for exercise in missing_id_exercises:
+            unilateral_str = " [U]" if exercise['unilateral'] else "    "
+            print(f"    {unilateral_str} {exercise['name']:<35} ({exercise['equipment']}, {exercise['area']})")
+        print()
+    
+    print("💡 LEGEND:")
+    print("   [U] = Unilateral exercise (requires left/right execution)")
+    print("   ID  = Exercise ID for use with -edit and -include commands")
+    print()
+
+
+def parse_id_list(id_string: str) -> List[int]:
+    """Parse comma-separated list of exercise IDs."""
+    try:
+        ids = []
+        for id_str in id_string.split(','):
+            id_str = id_str.strip()
+            if id_str:
+                ids.append(int(id_str))
+        return ids
+    except ValueError:
+        print(f"❌ Error: Invalid ID format '{id_string}'. Use comma-separated integers (e.g., 101,102,103)")
+        sys.exit(1)
+
+
+def validate_exercise_ids(ids: List[int]) -> List[int]:
+    """Validate that exercise IDs exist in the database."""
+    exercises = get_all_exercises()
+    valid_ids = {ex['id'] for ex in exercises if ex['id'] != -1}
+    
+    validated_ids = []
+    invalid_ids = []
+    
+    for exercise_id in ids:
+        if exercise_id in valid_ids:
+            validated_ids.append(exercise_id)
+        else:
+            invalid_ids.append(exercise_id)
+    
+    if invalid_ids:
+        print(f"⚠️  Warning: The following exercise IDs were not found: {invalid_ids}")
+        print("   Use './workout -status' to see all available exercise IDs.")
+        
+        if not validated_ids:
+            print("❌ Error: No valid exercise IDs provided.")
+            sys.exit(1)
+        
+        print(f"✅ Proceeding with valid IDs: {validated_ids}")
+    
+    return validated_ids
+
+
+def main():
+    """Main CLI entry point."""
+    # Handle no arguments - generate workout
+    if len(sys.argv) == 1:
+        # Import and run main workout generation
+        from main import main as workout_main
+        workout_main()
+        return
+    
+    # Parse command line arguments
+    command = sys.argv[1].lower()
+    
+    if command in ['-h', '--help', '-help', 'help']:
+        show_help()
+    
+    elif command in ['-s', '--status', '-status', 'status']:
+        show_status()
+    
+    elif command in ['-a', '--add', '-add', 'add']:
+        # Import and run exercise addition
+        from exercise_manager import add_exercise_cli
+        add_exercise_cli()
+    
+    elif command in ['-e', '--edit', '-edit', 'edit']:
+        if len(sys.argv) < 3:
+            print("❌ Error: -edit command requires exercise IDs.")
+            print("   Usage: ./workout -edit <ids>")
+            print("   Example: ./workout -edit 101,102,103")
+            sys.exit(1)
+        
+        # Parse and validate IDs
+        id_string = sys.argv[2]
+        exercise_ids = parse_id_list(id_string)
+        validated_ids = validate_exercise_ids(exercise_ids)
+        
+        print(f"🔄 Editing exercises: {validated_ids}")
+        
+        # Set up arguments for main script
+        sys.argv = ['main.py', '-edit', ','.join(map(str, validated_ids))]
+        
+        # Import and run main with edit mode
+        from main import main as workout_main
+        workout_main()
+    
+    elif command in ['-i', '--include', '-include', 'include']:
+        if len(sys.argv) < 3:
+            print("❌ Error: -include command requires exercise IDs.")
+            print("   Usage: ./workout -include <ids>")
+            print("   Example: ./workout -include 88,94,96")
+            sys.exit(1)
+        
+        # Parse and validate IDs
+        id_string = sys.argv[2]
+        exercise_ids = parse_id_list(id_string)
+        validated_ids = validate_exercise_ids(exercise_ids)
+        
+        print(f"🎯 Including exercises: {validated_ids}")
+        
+        # Set up arguments for main script
+        sys.argv = ['main.py', '-include', ','.join(map(str, validated_ids))]
+        
+        # Import and run main with include mode
+        from main import main as workout_main
+        workout_main()
+    
+    else:
+        print(f"❌ Error: Unknown command '{command}'")
+        print("   Use './workout -help' to see available commands.")
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except KeyboardInterrupt:
+        print("\n🚫 Operation cancelled by user.")
+        sys.exit(0)
+    except Exception as e:
+        print(f"❌ Unexpected error: {e}")
+        sys.exit(1)
