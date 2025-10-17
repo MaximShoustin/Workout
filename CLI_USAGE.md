@@ -25,6 +25,17 @@ Shows a comprehensive list of all exercises in your database, organized by:
 - Equipment type
 - Exercise IDs for use with other commands
 
+### Generate Exercises HTML Table
+```bash
+./workout -view-all
+```
+Creates a beautiful HTML file with all exercises displayed in a responsive grid:
+- **Mobile view**: 2-3 exercises per row (responsive)
+- **Desktop view**: 4-6 exercises per row (responsive)
+- Same exercise display format as workout reports
+- Includes video links, exercise IDs, equipment, and muscle groups
+- Saves to both `exercises.html` and timestamped file in `workout_store/`
+
 ## Advanced Commands
 
 ### Add New Exercise
@@ -94,6 +105,9 @@ Edit `config/plan.json` to customize:
 ```bash
 # See what exercises are available
 ./workout -status
+
+# Generate a beautiful HTML table of all exercises
+./workout -view-all
 
 # Generate a workout
 ./workout

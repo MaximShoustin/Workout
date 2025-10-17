@@ -166,7 +166,7 @@ def generate_crossfit_path_workout(plan: dict, crossfit_path_pool: list) -> dict
     }
 
 
-def generate_workout_with_retries(max_retries=15, include_ids=None):
+def generate_workout_with_retries(max_retries=30, include_ids=None):
     """
     Generate a workout with retry logic for equipment conflicts.
     

@@ -384,7 +384,7 @@
             "count": 1
           }
         },
-        "skip": false,
+        "skip": true,
         "unilateral": true,
         "id": 31
       },
@@ -856,7 +856,7 @@
         "id": 54
       },
       {
-        "name": "Split stance KB rotation pendulum",
+        "name": "Split stance rotational KB Lift",
         "link": "https://www.youtube.com/shorts/WB93lYdkDt4",
         "area": "core",
         "muscles": [

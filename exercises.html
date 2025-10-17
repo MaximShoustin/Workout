@@ -1,0 +1,1818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Exercises - Workout Database</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            line-height: 1.6; 
+            color: #333; 
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 20px;
+        }
+        
+        .header h1 {
+            color: #2c3e50;
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: 300;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .stat {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            text-align: center;
+            min-width: 120px;
+        }
+        
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        
+        .area-section {
+            margin: 40px 0;
+        }
+        
+        .area-title {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px 8px 0 0;
+            margin: 0;
+            font-size: 1.5em;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .exercises-grid {
+            display: grid;
+            gap: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 0 0 8px 8px;
+        }
+        
+        /* Mobile: 2 columns for better spacing */
+        @media (max-width: 480px) {
+            .exercises-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+                padding: 15px;
+            }
+        }
+        
+        /* Small tablets: 3 columns */
+        @media (min-width: 481px) and (max-width: 768px) {
+            .exercises-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 18px;
+                padding: 18px;
+            }
+        }
+        
+        /* Large tablets and Desktop: 4 columns for better balance */
+        @media (min-width: 769px) and (max-width: 1200px) {
+            .exercises-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 20px;
+            }
+        }
+        
+        /* Large Desktop: 6 columns */
+        @media (min-width: 1201px) {
+            .exercises-grid {
+                grid-template-columns: repeat(6, 1fr);
+                gap: 20px;
+            }
+        }
+        
+        .exercise-card {
+            background: white;
+            border-radius: 12px;
+            padding: 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border-left: 4px solid #667eea;
+            display: flex;
+            flex-direction: column;
+            min-height: 270px;
+            max-height: 270px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .exercise-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border-left-color: #764ba2;
+        }
+        
+        .exercise-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+        
+        .exercise-images {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            display: flex;
+            flex-direction: row;
+            gap: 2px;
+        }
+        
+        .exercise-images img {
+            flex: 1;
+            width: 0;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .exercise-content {
+            position: relative;
+            z-index: 2;
+            background: linear-gradient(transparent 0%, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0.8) 100%);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 16px;
+        }
+        
+        .exercise-details {
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+        }
+        
+        .exercise-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+            flex-wrap: wrap;
+        }
+        
+        .exercise-id {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.75em;
+            font-weight: bold;
+            display: inline-block;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            flex-shrink: 0;
+        }
+        
+        .exercise-name {
+            font-weight: 600;
+            color: white;
+            font-size: 0.85em;
+            line-height: 1.2;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .exercise-link {
+            color: white;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        
+        .exercise-link:hover {
+            color: #ffd700;
+            text-shadow: 0 0 8px rgba(255,215,0,0.6);
+        }
+        
+        .exercise-card.no-image .exercise-link {
+            color: #667eea;
+        }
+        
+        .exercise-card.no-image .exercise-link:hover {
+            color: #764ba2;
+            text-shadow: none;
+            text-decoration: underline;
+        }
+        
+        .exercise-equipment {
+            background: rgba(255,255,255,0.9);
+            color: #2c5aa0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.7em;
+            margin-bottom: 3px;
+            display: inline-block;
+            font-weight: 500;
+        }
+        
+        .exercise-muscles {
+            color: rgba(255,255,255,0.9);
+            font-size: 0.65em;
+            font-style: italic;
+            line-height: 1.2;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+        }
+        
+        .exercise-card.no-image {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        }
+        
+        .exercise-card.no-image .exercise-content {
+            background: none;
+        }
+        
+        .exercise-card.no-image .exercise-details {
+            color: #333;
+            text-shadow: none;
+        }
+        
+        .exercise-card.no-image .exercise-name {
+            color: #2c3e50;
+            text-shadow: none;
+        }
+        
+        .exercise-card.no-image .exercise-muscles {
+            color: #666;
+            text-shadow: none;
+        }
+        
+        .unilateral-badge {
+            background: #ff6b6b;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.7em;
+            font-weight: bold;
+            margin-left: 5px;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #e9ecef;
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        /* Video popup styles */
+        .video-popup {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+        }
+        
+        .video-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 800px;
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        
+        .close-video {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close-video:hover {
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏋️ Exercise Database</h1>
+            <p>Complete collection of available exercises</p>
+            <div class="stats">
+                <div class="stat">
+                    <span class="stat-number">99</span>
+                    <span class="stat-label">Total Exercises</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">30</span>
+                    <span class="stat-label">🔥 Core</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">24</span>
+                    <span class="stat-label">🦵 Lower</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">45</span>
+                    <span class="stat-label">💪 Upper</span>
+                </div>
+            </div>
+            <p style="color: #666; margin-top: 15px;">Generated on 2025-10-17 12:11:19</p>
+        </div>
+
+        <div class="area-section">
+            <h2 class="area-title">🔥 CORE (30 exercises)</h2>
+            <div class="exercises-grid">
+                <div class="exercise-card">
+                    <div class="exercise-images"><img src="config/pictures/73_1.png" alt="AB roll out" onerror="this.style.display='none'"><img src="config/pictures/73_2.png" alt="AB roll out" onerror="this.style.display='none'"></div>
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">73</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/JCIr7-0La80" target="_blank" class="exercise-link">AB roll out</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">core</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <img src="config/pictures/38.png" alt="Around-the-World overhead" class="exercise-image" onerror="this.style.display='none'">
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">38</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/k3elhfyMI4k" target="_blank" class="exercise-link">Around-the-World overhead</a><span class="unilateral-badge">U</span>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">shoulders, core, stabilizers</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <img src="config/pictures/83.png" alt="Bear-crawl drag" class="exercise-image" onerror="this.style.display='none'">
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">83</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/hawiuyUYpRg" target="_blank" class="exercise-link">Bear-crawl drag</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">core, shoulders, quadriceps</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <div class="exercise-images"><img src="config/pictures/19_1.png" alt="Clean + jerk" onerror="this.style.display='none'"><img src="config/pictures/19_2.png" alt="Clean + jerk" onerror="this.style.display='none'"></div>
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">19</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/oyz20GR9KEg" target="_blank" class="exercise-link">Clean + jerk</a><span class="unilateral-badge">U</span>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">full body, shoulders, triceps, quadriceps, hams...</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <div class="exercise-images"><img src="config/pictures/10_1.png" alt="DB thruster" onerror="this.style.display='none'"><img src="config/pictures/10_2.png" alt="DB thruster" onerror="this.style.display='none'"></div>
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">10</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/UipBcISeiGU" target="_blank" class="exercise-link">DB thruster</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">shoulders, quadriceps, glutes, core</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <div class="exercise-images"><img src="config/pictures/11_1.png" alt="Devil's press" onerror="this.style.display='none'"><img src="config/pictures/11_2.png" alt="Devil's press" onerror="this.style.display='none'"></div>
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">11</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/qUYqyPPvhIE" target="_blank" class="exercise-link">Devil's press</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">shoulders, chest, quadriceps, glutes, core</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <div class="exercise-images"><img src="config/pictures/111_1.png" alt="Dumbbell snatch (alt DB snatch, DB snatch AMRAP)" onerror="this.style.display='none'"><img src="config/pictures/111_2.png" alt="Dumbbell snatch (alt DB snatch, DB snatch AMRAP)" onerror="this.style.display='none'"><img src="config/pictures/111_3.png" alt="Dumbbell snatch (alt DB snatch, DB snatch AMRAP)" onerror="this.style.display='none'"></div>
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">111</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/rCVmr5bgI7c" target="_blank" class="exercise-link">Dumbbell snatch (alt DB snatch, DB snatch AMRAP)</a><span class="unilateral-badge">U</span>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">shoulders, triceps, trapezius, quadriceps, glut...</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <div class="exercise-images"><img src="config/pictures/107_1.png" alt="Dumbbell/Kettlebell hang clean & jerk" onerror="this.style.display='none'"><img src="config/pictures/107_2.png" alt="Dumbbell/Kettlebell hang clean & jerk" onerror="this.style.display='none'"><img src="config/pictures/107_3.png" alt="Dumbbell/Kettlebell hang clean & jerk" onerror="this.style.display='none'"></div>
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">107</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/p-GBOGjTYz8" target="_blank" class="exercise-link">Dumbbell/Kettlebell hang clean & jerk</a><span class="unilateral-badge">U</span>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">shoulders, triceps, quadriceps, glutes, core</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <div class="exercise-images"><img src="config/pictures/80_1.png" alt="Half-kneel rainbow slam" onerror="this.style.display='none'"><img src="config/pictures/80_2.png" alt="Half-kneel rainbow slam" onerror="this.style.display='none'"></div>
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">80</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/MsZz_IIr8tA" target="_blank" class="exercise-link">Half-kneel rainbow slam</a><span class="unilateral-badge">U</span>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">core, obliques, shoulders</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <img src="config/pictures/56.png" alt="Half-kneeling KB rotation lift" class="exercise-image" onerror="this.style.display='none'">
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">56</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/WB93lYdkDt4" target="_blank" class="exercise-link">Half-kneeling KB rotation lift</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">core, shoulders, obliques</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <img src="config/pictures/72.png" alt="Incline plank shoulder-tap" class="exercise-image" onerror="this.style.display='none'">
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">72</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/SmvOGV0Z7wc" target="_blank" class="exercise-link">Incline plank shoulder-tap</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">core, shoulders, stabilizers</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <div class="exercise-images"><img src="config/pictures/18_1.png" alt="Kettlebell clean" onerror="this.style.display='none'"><img src="config/pictures/18_2.png" alt="Kettlebell clean" onerror="this.style.display='none'"><img src="config/pictures/18_3.png" alt="Kettlebell clean" onerror="this.style.display='none'"></div>
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">18</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/xQb9Tc3iQpI" target="_blank" class="exercise-link">Kettlebell clean</a><span class="unilateral-badge">U</span>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">shoulders, quadriceps, glutes, core</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <div class="exercise-images"><img src="config/pictures/74_1.png" alt="Knee Tuck 2 Pike" onerror="this.style.display='none'"><img src="config/pictures/74_2.png" alt="Knee Tuck 2 Pike" onerror="this.style.display='none'"></div>
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">74</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/YEUI8d-PQM4" target="_blank" class="exercise-link">Knee Tuck 2 Pike</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">core</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <img src="config/pictures/64.png" alt="L-sit hold" class="exercise-image" onerror="this.style.display='none'">
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">64</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/Jb5_jIiEl8E" target="_blank" class="exercise-link">L-sit hold</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">core, hip flexors, shoulders</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <img src="config/pictures/14.png" alt="Mountain climbers" class="exercise-image" onerror="this.style.display='none'">
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">14</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/3ans8fNL1Z8" target="_blank" class="exercise-link">Mountain climbers</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">core, shoulders, hip flexors</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <div class="exercise-images"><img src="config/pictures/78_1.png" alt="Overhead slam" onerror="this.style.display='none'"><img src="config/pictures/78_2.png" alt="Overhead slam" onerror="this.style.display='none'"></div>
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">78</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/watch?v=QxYhFwMd1Ks" target="_blank" class="exercise-link">Overhead slam</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">core, shoulders, latissimus dorsi</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <div class="exercise-images"><img src="config/pictures/9_1.png" alt="Renegade row" onerror="this.style.display='none'"><img src="config/pictures/9_2.png" alt="Renegade row" onerror="this.style.display='none'"></div>
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">9</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/rTVRpI5WVnw" target="_blank" class="exercise-link">Renegade row</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">core, latissimus dorsi, shoulders</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <div class="exercise-images"><img src="config/pictures/57_1.png" alt="Reverse lunge KB Rotational lift" onerror="this.style.display='none'"><img src="config/pictures/57_2.png" alt="Reverse lunge KB Rotational lift" onerror="this.style.display='none'"></div>
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">57</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/WB93lYdkDt4" target="_blank" class="exercise-link">Reverse lunge KB Rotational lift</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">quadriceps, glutes, core, obliques</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <img src="config/pictures/82.png" alt="Russian twist" class="exercise-image" onerror="this.style.display='none'">
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">82</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/KmKmztLiqAY" target="_blank" class="exercise-link">Russian twist</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">obliques, core, stabilizers</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <img src="config/pictures/124.png" alt="Sit-Up with Ball Wall Throw" class="exercise-image" onerror="this.style.display='none'">
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">124</div>
+                                <div class="exercise-name">
+                                    <a href="config/videos/124.mp4" target="_blank" class="exercise-link">Sit-Up with Ball Wall Throw</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">shoulders, triceps, hip flexors, chest, glutes,...</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <div class="exercise-images"><img src="config/pictures/85_1.png" alt="Slam-ball thruster" onerror="this.style.display='none'"><img src="config/pictures/85_2.png" alt="Slam-ball thruster" onerror="this.style.display='none'"></div>
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">85</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/6gFhwWhQJ5s" target="_blank" class="exercise-link">Slam-ball thruster</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">shoulders, quadriceps, glutes, core</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <div class="exercise-images"><img src="config/pictures/20_1.png" alt="Snatch" onerror="this.style.display='none'"><img src="config/pictures/20_2.png" alt="Snatch" onerror="this.style.display='none'"><img src="config/pictures/20_3.png" alt="Snatch" onerror="this.style.display='none'"></div>
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">20</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/9IptF07Ugh4" target="_blank" class="exercise-link">Snatch</a><span class="unilateral-badge">U</span>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">full body, shoulders, triceps, trapezius, quadr...</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <div class="exercise-images"><img src="config/pictures/39_1.png" alt="Sotts Press (overhead squat press)" onerror="this.style.display='none'"><img src="config/pictures/39_2.png" alt="Sotts Press (overhead squat press)" onerror="this.style.display='none'"></div>
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">39</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/MHNe9FcMYtA" target="_blank" class="exercise-link">Sotts Press (overhead squat press)</a><span class="unilateral-badge">U</span>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">shoulders, quadriceps, core</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <div class="exercise-images"><img src="config/pictures/54_1.png" alt="Split stance KB rotation" onerror="this.style.display='none'"><img src="config/pictures/54_2.png" alt="Split stance KB rotation" onerror="this.style.display='none'"></div>
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">54</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/WB93lYdkDt4" target="_blank" class="exercise-link">Split stance KB rotation</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">core, obliques, shoulders</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <div class="exercise-images"><img src="config/pictures/55_1.png" alt="Split stance rotational KB Lift" onerror="this.style.display='none'"><img src="config/pictures/55_2.png" alt="Split stance rotational KB Lift" onerror="this.style.display='none'"></div>
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">55</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/WB93lYdkDt4" target="_blank" class="exercise-link">Split stance rotational KB Lift</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">core, obliques, shoulders</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <div class="exercise-images"><img src="config/pictures/102_1.png" alt="Thrusters (light, warm-up)" onerror="this.style.display='none'"><img src="config/pictures/102_2.png" alt="Thrusters (light, warm-up)" onerror="this.style.display='none'"></div>
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">102</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/UipBcISeiGU" target="_blank" class="exercise-link">Thrusters (light, warm-up)</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">shoulders, quadriceps, glutes, core</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <div class="exercise-images"><img src="config/pictures/29_1.png" alt="Turkish get-up" onerror="this.style.display='none'"><img src="config/pictures/29_2.png" alt="Turkish get-up" onerror="this.style.display='none'"><img src="config/pictures/29_3.png" alt="Turkish get-up" onerror="this.style.display='none'"></div>
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">29</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/TcxzzyBziYA" target="_blank" class="exercise-link">Turkish get-up</a><span class="unilateral-badge">U</span>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">full body, core, shoulders, quadriceps, hamstrings</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <div class="exercise-images"><img src="config/pictures/53_1.png" alt="Uppercut kettlbell rotations" onerror="this.style.display='none'"><img src="config/pictures/53_2.png" alt="Uppercut kettlbell rotations" onerror="this.style.display='none'"></div>
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">53</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/e4gAbnf69_U" target="_blank" class="exercise-link">Uppercut kettlbell rotations</a><span class="unilateral-badge">U</span>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">core, shoulders, obliques</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <div class="exercise-images"><img src="config/pictures/30_1.png" alt="Windmill" onerror="this.style.display='none'"><img src="config/pictures/30_2.png" alt="Windmill" onerror="this.style.display='none'"></div>
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">30</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/EZWHnzAjctU" target="_blank" class="exercise-link">Windmill</a><span class="unilateral-badge">U</span>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">core, shoulders, hamstrings</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <img src="config/pictures/122.png" alt="Wipers skateboard" class="exercise-image" onerror="this.style.display='none'">
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">122</div>
+                                <div class="exercise-name">
+                                    <a href="config/videos/122.mp4" target="_blank" class="exercise-link">Wipers skateboard</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">chest, shoulders, obliques</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="area-section">
+            <h2 class="area-title">🦵 LOWER (24 exercises)</h2>
+            <div class="exercises-grid">
+                <div class="exercise-card">
+                    <img src="config/pictures/66.png" alt="Box jump" class="exercise-image" onerror="this.style.display='none'">
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">66</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/hDiQD4xhVDw" target="_blank" class="exercise-link">Box jump</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">quadriceps, glutes, calves</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <img src="config/pictures/60.png" alt="Bulgarian split-squat (rear foot on bench)" class="exercise-image" onerror="this.style.display='none'">
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">60</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/J1PEjNVe7po" target="_blank" class="exercise-link">Bulgarian split-squat (rear foot on bench)</a><span class="unilateral-badge">U</span>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">quadriceps, glutes, hamstrings</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <img src="config/pictures/15.png" alt="Cossack Shift" class="exercise-image" onerror="this.style.display='none'">
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">15</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/DkeFVmqy0ys" target="_blank" class="exercise-link">Cossack Shift</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">quadriceps, glutes, adductors</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <img src="config/pictures/110.png" alt="Curtsy squat" class="exercise-image" onerror="this.style.display='none'">
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">110</div>
+                                <div class="exercise-name">
+                                    Curtsy squat
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">quadriceps, glutes, hamstrings</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <div class="exercise-images"><img src="config/pictures/69_1.png" alt="Depth drop → jump" onerror="this.style.display='none'"><img src="config/pictures/69_2.png" alt="Depth drop → jump" onerror="this.style.display='none'"><img src="config/pictures/69_3.png" alt="Depth drop → jump" onerror="this.style.display='none'"></div>
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">69</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/gpXV2dzZ-oA" target="_blank" class="exercise-link">Depth drop → jump</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">quadriceps, glutes, calves</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <img src="config/pictures/22.png" alt="Double-KB front squat" class="exercise-image" onerror="this.style.display='none'">
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">22</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/8Wc7Y179inM" target="_blank" class="exercise-link">Double-KB front squat</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">quadriceps, glutes, core</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <div class="exercise-images"><img src="config/pictures/84_1.png" alt="Front-loaded squat" onerror="this.style.display='none'"><img src="config/pictures/84_2.png" alt="Front-loaded squat" onerror="this.style.display='none'"></div>
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">84</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/6JisOxv6Gts" target="_blank" class="exercise-link">Front-loaded squat</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">quadriceps, glutes, core</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <div class="exercise-images"><img src="config/pictures/109_1.png" alt="Goblet lunges" onerror="this.style.display='none'"><img src="config/pictures/109_2.png" alt="Goblet lunges" onerror="this.style.display='none'"></div>
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">109</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/cAR8efBsDdw" target="_blank" class="exercise-link">Goblet lunges</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">quadriceps, glutes, hamstrings</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <img src="config/pictures/7.png" alt="Goblet squat" class="exercise-image" onerror="this.style.display='none'">
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">7</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/lRYBbchqxtI" target="_blank" class="exercise-link">Goblet squat</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">quadriceps, glutes, core</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <img src="config/pictures/1.png" alt="Good-morning" class="exercise-image" onerror="this.style.display='none'">
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">1</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/tCoZ6tZBnbE" target="_blank" class="exercise-link">Good-morning</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">hamstrings, glutes, erector spinae</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <img src="config/pictures/76.png" alt="Lateral Lunge" class="exercise-image" onerror="this.style.display='none'">
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">76</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/R5JQW8qD8k0" target="_blank" class="exercise-link">Lateral Lunge</a><span class="unilateral-badge">U</span>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">quadriceps, glutes, adductors, core</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <img src="config/pictures/68.png" alt="Lateral step-over" class="exercise-image" onerror="this.style.display='none'">
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">68</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/XS_MGKL9zjU" target="_blank" class="exercise-link">Lateral step-over</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">glutes, quadriceps, adductors</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <div class="exercise-images"><img src="config/pictures/24_1.png" alt="Reverse lunge (suitcase or rack)" onerror="this.style.display='none'"><img src="config/pictures/24_2.png" alt="Reverse lunge (suitcase or rack)" onerror="this.style.display='none'"></div>
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">24</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/I0Ie12QVlKU" target="_blank" class="exercise-link">Reverse lunge (suitcase or rack)</a><span class="unilateral-badge">U</span>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">quadriceps, glutes, hamstrings</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <img src="config/pictures/0.png" alt="Romanian deadlift" class="exercise-image" onerror="this.style.display='none'">
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">0</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/up0sPrYCTkI" target="_blank" class="exercise-link">Romanian deadlift</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">hamstrings, glutes, erector spinae</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <img src="config/pictures/77.png" alt="Single Leg Hamstring Curl" class="exercise-image" onerror="this.style.display='none'">
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">77</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/DRceLY_h_gY" target="_blank" class="exercise-link">Single Leg Hamstring Curl</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">hamstrings, core</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <div class="exercise-images"><img src="config/pictures/17_1.png" alt="Single-arm swing" onerror="this.style.display='none'"><img src="config/pictures/17_2.png" alt="Single-arm swing" onerror="this.style.display='none'"></div>
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">17</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/jidchvotn6s" target="_blank" class="exercise-link">Single-arm swing</a><span class="unilateral-badge">U</span>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">glutes, hamstrings, shoulders, core</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <img src="config/pictures/8.png" alt="Single-leg RDL" class="exercise-image" onerror="this.style.display='none'">
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">8</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/eHHsDJQN7z0" target="_blank" class="exercise-link">Single-leg RDL</a><span class="unilateral-badge">U</span>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">hamstrings, glutes, core</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <img src="config/pictures/13.png" alt="Skater hops" class="exercise-image" onerror="this.style.display='none'">
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">13</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/PSVySCGbGp0" target="_blank" class="exercise-link">Skater hops</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">quadriceps, glutes, calves</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <img src="config/pictures/75.png" alt="Split Lunge" class="exercise-image" onerror="this.style.display='none'">
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">75</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/1-GrS4y3Q6g" target="_blank" class="exercise-link">Split Lunge</a><span class="unilateral-badge">U</span>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">quadriceps, glutes, hamstrings, core</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <img src="config/pictures/23.png" alt="Split squat (rack)" class="exercise-image" onerror="this.style.display='none'">
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">23</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/uGbwrBd9LL4" target="_blank" class="exercise-link">Split squat (rack)</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">quadriceps, glutes, hamstrings</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <div class="exercise-images"><img src="config/pictures/67_1.png" alt="Step-up + knee-drive" onerror="this.style.display='none'"><img src="config/pictures/67_2.png" alt="Step-up + knee-drive" onerror="this.style.display='none'"></div>
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">67</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/f-dL7VgbanE" target="_blank" class="exercise-link">Step-up + knee-drive</a><span class="unilateral-badge">U</span>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">quadriceps, glutes, hip flexors</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <img src="config/pictures/123.png" alt="Stretching Quadriceps (Sitting)" class="exercise-image" onerror="this.style.display='none'">
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">123</div>
+                                <div class="exercise-name">
+                                    <a href="config/videos/123.mp4" target="_blank" class="exercise-link">Stretching Quadriceps (Sitting)</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">quadriceps</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <img src="config/pictures/16.png" alt="Two-hand Russian swing" class="exercise-image" onerror="this.style.display='none'">
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">16</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/n1df4ASFeZU" target="_blank" class="exercise-link">Two-hand Russian swing</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">glutes, hamstrings, shoulders</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <img src="config/pictures/117.png" alt="squat leg by leg" class="exercise-image" onerror="this.style.display='none'">
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">117</div>
+                                <div class="exercise-name">
+                                    squat leg by leg
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">quadriceps, glutes</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="area-section">
+            <h2 class="area-title">💪 UPPER (45 exercises)</h2>
+            <div class="exercises-grid">
+                <div class="exercise-card no-image">
+                    
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">48</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/ugWGpcbcaeQ" target="_blank" class="exercise-link">Alternating Curl</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">biceps, forearms</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card no-image">
+                    
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">3</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/oB-RyX8AdO4" target="_blank" class="exercise-link">Alternating curl / hammer curl</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">biceps, forearms</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <img src="config/pictures/125.png" alt="Ball Lying Chest Pass" class="exercise-image" onerror="this.style.display='none'">
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">125</div>
+                                <div class="exercise-name">
+                                    Ball Lying Chest Pass
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">triceps, shoulders</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card no-image">
+                    
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">61</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/4ua3MzaU0QU" target="_blank" class="exercise-link">Bench dips</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">triceps, shoulders, chest</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card no-image">
+                    
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">28</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/PzvvvZmNdq0" target="_blank" class="exercise-link">Bent-over row</a><span class="unilateral-badge">U</span>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">latissimus dorsi, rhomboids, biceps</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card no-image">
+                    
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">49</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/XQbuJ5euemc" target="_blank" class="exercise-link">Bottoms-Up Curl (huge grip challenge)</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">biceps, forearms, stabilizers</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card no-image">
+                    
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">36</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/PDVTbKBXAl4" target="_blank" class="exercise-link">Bottoms-Up Press</a><span class="unilateral-badge">U</span>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">shoulders, triceps, core, stabilizers</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card no-image">
+                    
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">71</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/qi7ZkE2vOyk" target="_blank" class="exercise-link">Box dip</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">triceps, chest, shoulders</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card no-image">
+                    
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">42</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/kzH-UO2ppO0" target="_blank" class="exercise-link">Close-Grip Floor Press</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">triceps, chest, shoulders</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card no-image">
+                    
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">58</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/EvjftwN-nSY" target="_blank" class="exercise-link">Close-grip dumbbell press</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">triceps, chest, shoulders</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card no-image">
+                    
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">45</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/mNfBfVhNvRc" target="_blank" class="exercise-link">Crush-Grip Push-Up</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">triceps, chest, shoulders</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <img src="config/pictures/119.png" alt="DB Front Raise into rotation" class="exercise-image" onerror="this.style.display='none'">
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">119</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/PEDvm5mrQAM" target="_blank" class="exercise-link">DB Front Raise into rotation</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">shoulders</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card no-image">
+                    
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">35</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/14U61QGxV1M" target="_blank" class="exercise-link">Double See-Saw Press</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">shoulders, triceps, core</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card no-image">
+                    
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">51</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/dfn3l_DW2UA" target="_blank" class="exercise-link">Drag Curl (elbows drift back)</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">biceps, forearms</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card no-image">
+                    
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">59</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/Datv2L6t3-4" target="_blank" class="exercise-link">Dumbbell pullover</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">latissimus dorsi, chest, serratus</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card no-image">
+                    
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">62</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/MjnJWRwbSYE" target="_blank" class="exercise-link">Feet-elevated push-ups</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">chest, triceps, shoulders</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card no-image">
+                    
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">37</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/YzP1rT6deik" target="_blank" class="exercise-link">Figure-8 to Overhead Press</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">shoulders, triceps, core</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card no-image">
+                    
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">2</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/TvPviMnKg6s" target="_blank" class="exercise-link">Floor press</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">chest, triceps, shoulders</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <img src="config/pictures/106.png" alt="Gorilla row" class="exercise-image" onerror="this.style.display='none'">
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">106</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/ZuhSSlKBAcI" target="_blank" class="exercise-link">Gorilla row</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">shoulders, latissimus dorsi, rhomboids</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card no-image">
+                    
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">33</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/4nmVaAZ3bPU" target="_blank" class="exercise-link">Half-Kneeling Press</a><span class="unilateral-badge">U</span>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">shoulders, triceps, core</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card no-image">
+                    
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">70</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/Yr3reUvsmvY" target="_blank" class="exercise-link">Hands-elevated push-up</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">chest, triceps, shoulders</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card no-image">
+                    
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">21</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/JYwkgnohFyQ" target="_blank" class="exercise-link">High pull</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">shoulders, latissimus dorsi, trapezius</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card no-image">
+                    
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">44</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/watch?v=UR1_7Es1qUk" target="_blank" class="exercise-link">Kickback standing</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">triceps, shoulders</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card no-image">
+                    
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">5</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/mejtlcieNvc" target="_blank" class="exercise-link">Lateral / front raise</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">shoulders</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card no-image">
+                    
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">41</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/y9aTIJVfuDM" target="_blank" class="exercise-link">Lying Skull Crusher (floor or bench)</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">triceps, shoulders</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card no-image">
+                    
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">40</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/2g6IrtUqXRg" target="_blank" class="exercise-link">Overhead Triceps Extension (standing or kneeling)</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">triceps, shoulders</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card no-image">
+                    
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">4</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/b132W5N8Jrg" target="_blank" class="exercise-link">Overhead press</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">shoulders, triceps, core</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card no-image">
+                    
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">50</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/mPiTdI_FcOY" target="_blank" class="exercise-link">Preacher Curl (arm braced on bench)</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">biceps, forearms</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card no-image">
+                    
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">26</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/iO6JMIW1lYQ" target="_blank" class="exercise-link">Push-press</a><span class="unilateral-badge">U</span>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">shoulders, triceps, quadriceps, core</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card no-image">
+                    
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">6</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/apcNuGp97sY" target="_blank" class="exercise-link">Rear-delt fly</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">shoulders, rhomboids</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card no-image">
+                    
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">87</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/yETYYimA7yI" target="_blank" class="exercise-link">Scapula Push Ups</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">shoulders, chest, stabilizers</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card no-image">
+                    
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">27</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/rYVPIP9KMLQ" target="_blank" class="exercise-link">Single-arm floor press</a><span class="unilateral-badge">U</span>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">chest, triceps, shoulders, core</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card no-image">
+                    
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">47</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/1naOMuRpNqA" target="_blank" class="exercise-link">Standard Supinated Curl</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">biceps, forearms</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card no-image">
+                    
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">63</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/cbW_T2cbS9E" target="_blank" class="exercise-link">Standard body-weight dip</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">triceps, chest, shoulders</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <img src="config/pictures/120.png" alt="Static Lateral Raises W/2X" class="exercise-image" onerror="this.style.display='none'">
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">120</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/cllTB9D2Bz8" target="_blank" class="exercise-link">Static Lateral Raises W/2X</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">shoulders</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card no-image">
+                    
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">25</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/6SDJvE7uHAo" target="_blank" class="exercise-link">Strict press</a><span class="unilateral-badge">U</span>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">shoulders, triceps, core</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card no-image">
+                    
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">46</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/3s_dRicgY5U" target="_blank" class="exercise-link">Tall-Kneeling Overhead Extension</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">triceps, shoulders, core</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card no-image">
+                    
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">43</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/IoHMhgn8jDI" target="_blank" class="exercise-link">Tate Press</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">triceps, chest</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card no-image">
+                    
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">52</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/c_fczYLIt2U" target="_blank" class="exercise-link">Waiter Curl (bell held upside-down like a tray)</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">biceps, forearms, stabilizers</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card no-image">
+                    
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">86</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/zPZR0bGL8vA" target="_blank" class="exercise-link">Yoga Push Ups</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">chest, triceps, shoulders, core</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card no-image">
+                    
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">34</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/_2j5Fvzp41I" target="_blank" class="exercise-link">Z-Press (seated on floor)</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">shoulders, triceps, core</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card no-image">
+                    
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">12</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/oIn50xSx_8s" target="_blank" class="exercise-link">Zottman Curl (supinate up, pronate down)</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">biceps, forearms</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <img src="config/pictures/118.png" alt="rainbow press" class="exercise-image" onerror="this.style.display='none'">
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">118</div>
+                                <div class="exercise-name">
+                                    rainbow press
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">shoulders</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card no-image">
+                    
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">32</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/55aZ3C8xYtI" target="_blank" class="exercise-link">reverse flies k</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">shoulders, rhomboids</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="exercise-card">
+                    <img src="config/pictures/121.png" alt="supinated alternating DB front Raises" class="exercise-image" onerror="this.style.display='none'">
+                    <div class="exercise-content">
+                        <div class="exercise-details">
+                            <div class="exercise-header">
+                                <div class="exercise-id">121</div>
+                                <div class="exercise-name">
+                                    <a href="https://www.youtube.com/shorts/oYrZmUmQOXQ" target="_blank" class="exercise-link">supinated alternating DB front Raises</a>
+                                </div>
+                            </div>
+                            <div class="exercise-muscles">shoulders</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <p><strong>Legend:</strong> <span class="unilateral-badge">U</span> = Unilateral exercise (requires left/right execution)</p>
+            <p>Click exercise names with links to view demonstration videos</p>
+            <p>Generated by Workout CLI • 2025-10-17 12:11:19</p>
+        </div>
+    </div>
+    
+    <script>
+        // Video popup functionality
+        function openVideo(videoId) {
+            document.getElementById(videoId).style.display = 'block';
+        }
+        
+        function closeVideo(videoId) {
+            document.getElementById(videoId).style.display = 'none';
+            // Stop any playing videos
+            const iframe = document.querySelector('#' + videoId + ' iframe');
+            if (iframe) {
+                iframe.src = iframe.src;
+            }
+            const video = document.querySelector('#' + videoId + ' video');
+            if (video) {
+                video.pause();
+            }
+        }
+        
+        // Close video when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('video-popup')) {
+                event.target.style.display = 'none';
+                // Stop any playing videos
+                const iframe = event.target.querySelector('iframe');
+                if (iframe) {
+                    iframe.src = iframe.src;
+                }
+                const video = event.target.querySelector('video');
+                if (video) {
+                    video.pause();
+                }
+            }
+        }
+    </script>
+</body>
+</html>

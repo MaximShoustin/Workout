@@ -124,6 +124,70 @@ def format_exercise_id_badge(exercise_id: int) -> str:
     return ''
 
 
+def get_exercise_background_images(exercise_id: int, exercise_name: str, pictures_path: str = "config/pictures") -> tuple:
+    """Get background images for an exercise, returns (image_html, has_images)."""
+    from pathlib import Path
+    
+    if exercise_id is None or exercise_id == -1:
+        return "", False
+    
+    # Check if this is a right-side unilateral exercise
+    is_right_unilateral = exercise_name and "(Right)" in exercise_name
+    flip_class = " flipped" if is_right_unilateral else ""
+    
+    # First check for single image (original format)
+    single_image_path = Path("config/pictures") / f"{exercise_id}.png"
+    
+    # Then check for multiple images (new format: id_1.png, id_2.png, etc.)
+    multiple_images = []
+    for i in range(1, 4):  # Check for up to 3 images (_1, _2, _3)
+        multi_image_path = Path("config/pictures") / f"{exercise_id}_{i}.png"
+        if multi_image_path.exists():
+            multiple_images.append(f"{pictures_path}/{exercise_id}_{i}.png")
+    
+    if multiple_images:
+        # Use multiple images - exactly like view-all mode
+        images_html = ""
+        for img_src in multiple_images:
+            images_html += f'<img src="{img_src}" alt="{exercise_name}" />'
+        return f'<div class="exercise-images{flip_class}">{images_html}</div>', True
+    elif single_image_path.exists():
+        # Use single image (backward compatibility) - exactly like view-all mode
+        return f'<img src="{pictures_path}/{exercise_id}.png" alt="{exercise_name}" class="exercise-image{flip_class}" />', True
+    else:
+        return "", False
+
+def get_exercise_background_style(exercise_id: int, exercise_name: str, pictures_path: str = "config/pictures") -> tuple:
+    """Get CSS background style for mobile view, returns (style_attr, has_images, is_flipped)."""
+    from pathlib import Path
+    
+    if exercise_id is None or exercise_id == -1:
+        return "", False, False
+    
+    # Check if this is a right-side unilateral exercise
+    is_right_unilateral = exercise_name and "(Right)" in exercise_name
+    
+    # First check for single image (original format)
+    single_image_path = Path("config/pictures") / f"{exercise_id}.png"
+    
+    # Check for multiple images (use first one for mobile background)
+    first_image = None
+    for i in range(1, 4):  # Check for up to 3 images (_1, _2, _3)
+        multi_image_path = Path("config/pictures") / f"{exercise_id}_{i}.png"
+        if multi_image_path.exists():
+            first_image = f"{pictures_path}/{exercise_id}_{i}.png"
+            break
+    
+    if first_image:
+        # Use first image from multiple images for mobile background
+        return f'style="background-image: url(\'{first_image}\');"', True, is_right_unilateral
+    elif single_image_path.exists():
+        # Use single image as background
+        return f'style="background-image: url(\'{pictures_path}/{exercise_id}.png\');"', True, is_right_unilateral
+    else:
+        return "", False, False
+
+
 def get_equipment_icon(equipment_name: str) -> str:
     """Get appropriate icon for equipment type - SVG icon or emoji fallback."""
     from image_utils.icon_manager import get_equipment_icon_html
@@ -380,6 +444,7 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            table-layout: fixed;
         }
         th { 
             background: linear-gradient(135deg, #3498db, #2980b9);
@@ -391,11 +456,29 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
             text-transform: uppercase;
             letter-spacing: 1px;
             white-space: nowrap;
+            width: auto;
+        }
+        /* Station column should be narrower */
+        th:first-child {
+            width: 120px;
+        }
+        /* All step columns should have equal width */
+        th:not(:first-child) {
+            width: calc((100% - 120px) / """ + str(steps_per_station) + """);
         }
         td { 
             padding: 15px; 
             border-bottom: 1px solid #ecf0f1;
             vertical-align: top;
+            width: auto;
+        }
+        /* Station column should be narrower */
+        td:first-child {
+            width: 120px;
+        }
+        /* All step columns should have equal width */
+        td:not(:first-child) {
+            width: calc((100% - 120px) / """ + str(steps_per_station) + """);
         }
         tr:nth-child(even) { 
             background: #f8f9fa; 
@@ -431,6 +514,91 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
             font-weight: 500;
             margin-bottom: 3px;
             position: relative;
+            min-height: 120px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .exercise.has-background {
+            background-color: rgba(0,0,0,0.1);
+        }
+        .exercise-image {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            right: 8px;
+            bottom: 8px;
+            width: calc(100% - 16px);
+            height: calc(100% - 16px);
+            object-fit: cover;
+            z-index: 1;
+            border-radius: 6px;
+        }
+        .exercise-images {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            right: 8px;
+            bottom: 8px;
+            width: calc(100% - 16px);
+            height: calc(100% - 16px);
+            z-index: 1;
+            display: flex;
+            flex-direction: row;
+            gap: 2px;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .exercise-images img {
+            flex: 1;
+            width: 0;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        /* Flip images horizontally for right-side unilateral exercises */
+        .exercise-images.flipped img,
+        .exercise-image.flipped {
+            transform: scaleX(-1);
+        }
+        .exercise.has-background .exercise-cell-wrapper {
+            position: relative;
+            z-index: 2;
+            background: linear-gradient(transparent 0%, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0.8) 100%);
+            height: 100%;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 12px;
+            border-radius: 8px;
+        }
+        /* Add exercise-content class for consistency with view-all mode */
+        .exercise.has-background .exercise-cell-wrapper {
+            /* This mimics the exercise-content class from view-all mode */
+        }
+        .exercise.has-background .exercise-name {
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+            border-bottom-color: rgba(255,255,255,0.7);
+        }
+        .exercise.has-background .exercise-name:hover {
+            color: #ffd700;
+            text-shadow: 0 0 8px rgba(255,215,0,0.6);
+            border-bottom-color: #ffd700;
+            background: rgba(255,215,0,0.2);
+        }
+        .exercise.has-background .muscle-tag {
+            background: rgba(255,255,255,0.9);
+            color: #333;
+        }
+        .exercise.has-background .equipment-tag {
+            background: rgba(255,255,255,0.9);
+            color: #333;
+        }
+        .exercise.has-background .exercise-id-badge {
+            background: rgba(155, 89, 182, 0.9) !important;
+            color: white !important;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
         }
         .exercise-with-video {
             position: relative;
@@ -530,7 +698,27 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
             align-items: center;
             gap: 4px;
             flex-wrap: wrap;
-            min-height: 28px;
+            min-height: 120px;
+            padding: 12px;
+            position: relative;
+        }
+        /* Ensure consistent cell wrapper height for exercises without background */
+        .exercise:not(.has-background) .exercise-cell-wrapper {
+            align-items: flex-start;
+            background: rgba(248, 249, 250, 0.8);
+            border-radius: 8px;
+            height: 120px;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+        /* Force consistent height for all exercise cells */
+        .exercise {
+            height: 120px !important;
+        }
+        .exercise td {
+            height: 120px !important;
         }
         .picture-popup {
             display: none;
@@ -1129,21 +1317,153 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
                 margin: 10px 0;
                 box-sizing: border-box;
             }
-            table, tr, td { display: block; }
-            th, thead { display: none !important; }
-            thead tr { display: none !important; }
-            tr {
+            table, tbody, tr, td { display: block; }
+            thead { display: none !important; }
+            th { display: none !important; }
+            
+            /* Style single images for mobile - full card size */
+            tbody td:not(:first-child) .exercise-image {
+                position: absolute !important;
+                top: 8px !important;
+                left: 8px !important;
+                right: 8px !important;
+                bottom: 8px !important;
+                width: calc(100% - 16px) !important;
+                height: calc(100% - 16px) !important;
+                object-fit: cover !important;
+                border-radius: 6px !important;
+                z-index: 1 !important;
+                display: block !important;
+            }
+            
+            /* Style multiple images for mobile - full card size */
+            tbody td:not(:first-child) .exercise-images {
+                position: absolute !important;
+                top: 8px !important;
+                left: 8px !important;
+                right: 8px !important;
+                bottom: 8px !important;
+                width: calc(100% - 16px) !important;
+                height: calc(100% - 16px) !important;
+                display: flex !important;
+                flex-direction: row !important;
+                gap: 2px !important;
+                z-index: 1 !important;
+            }
+            
+            tbody td:not(:first-child) .exercise-images img {
+                flex: 1 !important;
+                width: 0 !important;
+                height: 100% !important;
+                object-fit: cover !important;
+                border-radius: 6px !important;
+                display: block !important;
+            }
+            
+            
+            /* Station rows */
+            tbody tr {
                 width: 100%;
                 margin-bottom: 25px;
                 border: 2px solid #3498db;
                 border-radius: 12px;
                 background: linear-gradient(145deg, #ffffff, #f8f9fa);
-                padding: 20px;
+                padding: 0;
+                box-shadow: 0 8px 20px rgba(52, 152, 219, 0.15);
+                display: flex;
+                flex-wrap: wrap;
+            }
+            
+            /* Station header */
+            tbody td:first-child {
+                width: 100% !important;
+                background: linear-gradient(135deg, #3498db, #2980b9);
+                color: white;
+                text-align: center;
+                font-weight: 700;
+                font-size: 1.1em;
+                padding: 15px;
+                margin: 0;
+                border-radius: 10px 10px 0 0;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
+            
+            /* Exercise cards - 2 per row with background images */
+            tbody td:not(:first-child) {
+                width: calc(50% - 8px) !important;
+                margin: 4px !important;
+                padding: 16px !important;
+                min-height: 350px !important;
+                border-radius: 8px !important;
+                position: relative !important;
+                overflow: hidden !important;
+            }
+            
+            /* Ensure text content is visible over full-size images */
+            tbody td:not(:first-child) .mobile-step-label,
+            tbody td:not(:first-child) .muscle-tags,
+            tbody td:not(:first-child) .equipment-tags {
+                position: relative !important;
+                z-index: 2 !important;
+                background: rgba(255, 255, 255, 0.9) !important;
+                padding: 4px 8px !important;
+                border-radius: 4px !important;
+                margin-bottom: 8px !important;
+                backdrop-filter: blur(2px) !important;
+            }
+            
+            /* Exercise cell wrapper without background blur */
+            tbody td:not(:first-child) .exercise-cell-wrapper {
+                position: relative !important;
+                z-index: 2 !important;
+            }
+            
+            /* Add text overlay for single images to ensure readability */
+            tbody td:not(:first-child).has-background .exercise-cell-wrapper {
+                background: rgba(255, 255, 255, 0.9) !important;
+                padding: 8px !important;
+                border-radius: 6px !important;
+                margin-bottom: 8px !important;
+                backdrop-filter: blur(2px) !important;
+            }
+            
+            /* Content wrapper */
+            tbody td:not(:first-child) .exercise-cell-wrapper {
+                position: relative;
+                z-index: 2;
+                color: white;
+                text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+            }
+            
+            /* Mobile step labels */
+            .mobile-step-label {
+                display: block !important;
+                background: rgba(41, 128, 185, 0.9);
+                color: white;
+                padding: 6px 12px;
+                margin: -16px -16px 12px -16px;
+                font-weight: 600;
+                font-size: 0.8em;
+                text-align: center;
+                border-radius: 6px 6px 0 0;
+            }
+            
+            tbody tr {
+                width: 100%;
+                margin-bottom: 25px;
+                border: 2px solid #3498db;
+                border-radius: 12px;
+                background: linear-gradient(145deg, #ffffff, #f8f9fa);
+                padding: 0;
                 box-sizing: border-box;
                 box-shadow: 0 8px 20px rgba(52, 152, 219, 0.15);
                 position: relative;
+                overflow: hidden;
+                display: flex;
+                flex-wrap: wrap;
             }
-            tr:before {
+            tbody tr:before {
                 content: "";
                 position: absolute;
                 top: 0;
@@ -1157,7 +1477,6 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
                 border: none;
                 position: relative;
                 padding: 15px;
-                width: 100%;
                 box-sizing: border-box;
                 margin-bottom: 8px;
                 border-radius: 6px;
@@ -1166,9 +1485,133 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
                 overflow: visible;
                 text-align: center;
             }
-            td.exercise {
+            /* Exercise cells - 2 per row */
+            tbody td:not(:first-child) {
+                display: flex !important;
+                text-align: left !important;
+                width: calc(50% - 8px) !important;
+                margin: 4px;
+                flex-direction: column;
+            }
+            /* Station header - full width */
+            tbody td:first-child {
+                width: 100% !important;
+                margin: 0 0 8px 0;
+            }
+            /* Station column - make it a header */
+            tbody td:first-child {
+                background: #3498db !important;
+                color: white !important;
+                font-weight: 600 !important;
+                font-size: 1.2em !important;
+                text-align: center !important;
+                padding: 15px !important;
+                margin: 0 !important;
+                border: none !important;
+                border-radius: 12px 12px 0 0 !important;
+                box-shadow: none !important;
+                z-index: 10 !important;
+                position: relative !important;
+                width: 100% !important;
+                display: block !important;
+            }
+            /* Exercise columns */
+            tbody td:not(:first-child) {
                 background: rgba(52, 152, 219, 0.05);
                 border-left: 4px solid #3498db;
+                margin: 0;
+                padding: 15px;
+                border-radius: 0;
+                position: relative;
+                overflow: hidden;
+            }
+            /* Last exercise gets bottom border radius */
+            tbody td:last-child {
+                border-radius: 0 0 12px 12px !important;
+            }
+            /* Mobile layout: step info on top, image on bottom for 2-column layout */
+            tbody td:not(:first-child) {
+                align-items: flex-start;
+                justify-content: space-between;
+                min-height: 300px;
+                gap: 12px;
+                padding: 16px;
+                flex-direction: column;
+            }
+            /* Step content - organized layout */
+            tbody td:not(:first-child) .exercise-cell-wrapper {
+                width: 100%;
+                position: relative;
+                z-index: 2;
+                background: none !important;
+                min-height: auto !important;
+                order: 1;
+                text-align: center;
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                gap: 8px !important;
+                flex: 1;
+            }
+            /* Single images - positioned at bottom */
+            .exercise-image {
+                position: relative !important;
+                top: auto !important;
+                left: auto !important;
+                right: auto !important;
+                bottom: auto !important;
+                width: 100px !important;
+                height: 100px !important;
+                margin: 0 auto !important;
+                display: block !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+                z-index: 10 !important;
+                object-fit: cover !important;
+                border-radius: 8px !important;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
+                order: 3 !important;
+                flex-shrink: 0 !important;
+            }
+            /* Mobile step labels for 2-column layout */
+            tbody td:not(:first-child) .mobile-step-label {
+                display: block !important;
+                background: #2980b9;
+                color: white;
+                padding: 6px 12px;
+                margin: -16px -16px 12px -16px;
+                font-weight: 600;
+                font-size: 0.8em;
+                text-align: center;
+                border-radius: 0;
+                order: 0 !important;
+            }
+            /* Muscle and equipment tags - positioned between content and image */
+            tbody td:not(:first-child) .muscle-tags,
+            tbody td:not(:first-child) .equipment-tags {
+                order: 2 !important;
+                margin: 6px 0;
+                font-size: 0.7em;
+                text-align: center;
+                flex-shrink: 0;
+            }
+            tbody td:not(:first-child) .muscle-tag,
+            tbody td:not(:first-child) .equipment-tag {
+                font-size: 0.65em !important;
+                padding: 2px 4px !important;
+                margin: 1px !important;
+            }
+            /* Show mobile step labels */
+            .mobile-step-label {
+                display: block !important;
+                background: #2980b9;
+                color: white;
+                padding: 8px 12px;
+                margin: -15px -15px 15px -15px;
+                font-weight: 600;
+                font-size: 0.9em;
+                text-align: center;
+                border-radius: 6px 6px 0 0;
             }
             td.rest-activity {
                 background: rgba(46, 204, 113, 0.05);
@@ -1260,8 +1703,8 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
             flex-direction: column;
             align-items: center;
             gap: 8px;
-            min-height: 28px;
-            padding-top: 5px;
+            min-height: 120px;
+            padding: 12px;
         }
         
         /* Mobile-specific layout for exercise content */
@@ -1271,8 +1714,9 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
                 flex-direction: column;
                 align-items: center;
                 gap: 8px;
-                padding: 10px 5px;
+                padding: 12px;
                 position: relative;
+                min-height: 120px;
             }
             
             .exercise-id-badge {
@@ -1730,15 +2174,23 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
                 step_id_key = f'step{step_num}_id'
                 step_video_type_key = f'step{step_num}_video_type'
                 
+                # Get background image for this exercise
+                exercise_id = st.get(step_id_key, None)
+                exercise_name = st.get(step_key, '')
+                pictures_path = "../config/pictures" if is_workout_store else "config/pictures"
+                bg_image_html, has_bg = get_exercise_background_images(exercise_id, exercise_name, pictures_path)
+                exercise_class = "exercise has-background" if has_bg else "exercise"
+                
                 html += f"""
-                     <td data-label="Step {step_num}" class="exercise">
+                     <td data-label="Step {step_num}" class="{exercise_class}">
                          <span class="mobile-step-label">Step {step_num}:</span>
                          <div class="exercise-cell-wrapper">
-                             {format_exercise_link(st.get(step_key, ''), st.get(step_link_key, ''), st.get(step_id_key, None), "../config/pictures" if is_workout_store else "config/pictures", st.get(step_video_type_key, None))}
+                             {format_exercise_link(st.get(step_key, ''), st.get(step_link_key, ''), st.get(step_id_key, None), pictures_path, st.get(step_video_type_key, None))}
                              {format_exercise_id_badge(st.get(step_id_key, None))}
                          </div>
                          {format_muscle_tags(st.get(step_muscles_key, ''))}
                          {format_equipment_tags(st.get(step_equipment_key, {}))}
+                         {bg_image_html}
                      </td>"""
             
             html += """
