@@ -23,10 +23,10 @@
     "lower"
   ],
   "balance_order": [
-    "upper",
-    "core",
     "lower",
+    "core",
     "upper",
+    "lower",
     "core"
   ],
   "must_use_old": [

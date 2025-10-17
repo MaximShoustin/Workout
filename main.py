@@ -396,10 +396,18 @@ def main():
     global edit_ids, include_ids
     
     # Initialize global variables if not already set
-    if 'edit_ids' not in globals():
+    if 'edit_ids' not in globals() or edit_ids is None:
         edit_ids = None
-    if 'include_ids' not in globals():
+    if 'include_ids' not in globals() or include_ids is None:
         include_ids = None
+    
+    # Parse CLI args if globals are not set (when called from workout script)
+    if edit_ids is None and include_ids is None:
+        parsed_edit_ids, parsed_include_ids, add_exercise = parse_cli_args()
+        if parsed_edit_ids is not None:
+            edit_ids = parsed_edit_ids
+        if parsed_include_ids is not None:
+            include_ids = parsed_include_ids
         
     plan = load_plan()
     if edit_ids is not None:
@@ -738,6 +746,7 @@ def main():
         # Load all exercises to validate IDs
         equipment_data = parse_equipment()
         station_pool = build_station_pool(equipment_data)
+        print(f"   📊 Built station pool with {len(station_pool)} exercises")
         
         # Build a map of all valid exercise IDs
         valid_ids = set()
@@ -746,6 +755,9 @@ def main():
             exercise_id = exercise_tuple[7]
             if exercise_id != -1:  # Only add valid IDs (not -1 which means no ID)
                 valid_ids.add(exercise_id)
+        
+        print(f"   📊 Found {len(valid_ids)} valid exercise IDs")
+        print(f"   🔍 Sample valid IDs: {sorted(list(valid_ids))[:10]}")
         
         # Validate each include ID
         for include_id in include_ids:

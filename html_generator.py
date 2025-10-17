@@ -79,43 +79,13 @@ def format_exercise_link(exercise_name: str, exercise_link: str, exercise_id: in
                 <button class="close-video" onclick="toggleVideo('{html_id}')">&times;</button>
             </div>'''
         
-        # Add picture button if picture exists
-        if has_picture:
-            video_html += f'''
-            <button class="picture-button" onclick="togglePicture('{html_id}')" title="View exercise image">
-                👁
-            </button>
-            <div id="picture_{html_id}" class="picture-popup">
-                <img src="{picture_path}" alt="{exercise_name}" onerror="handleImageError(this)" />
-                <button class="close-picture" onclick="togglePicture('{html_id}')">&times;</button>
-            </div>'''
+        # Picture button functionality removed - images now integrated directly into cards
         
         video_html += '</span>'
         return video_html
     else:
-        # No video, but check if there's a picture
-        if has_picture:
-            # Create unique ID for this exercise - sanitize all special characters
-            import re
-            html_id = exercise_name.lower()
-            html_id = html_id.replace(" ", "_").replace("-", "_").replace("+", "plus").replace("→", "to")
-            html_id = html_id.replace("'", "").replace("(", "").replace(")", "").replace("/", "_")
-            html_id = html_id.replace(",", "").replace(".", "").replace(":", "").replace(";", "")
-            html_id = html_id.replace("&", "and").replace("#", "").replace("%", "").replace("@", "")
-            # Remove any remaining non-alphanumeric characters except underscores
-            html_id = re.sub(r'[^a-z0-9_]', '', html_id)
-            return f'''<span class="exercise-with-picture">
-                {display_name}
-                <button class="picture-button" onclick="togglePicture('{html_id}')" title="View exercise image">
-                    👁
-                </button>
-                <div id="picture_{html_id}" class="picture-popup">
-                    <img src="{picture_path}" alt="{exercise_name}" onerror="handleImageError(this)" />
-                    <button class="close-picture" onclick="togglePicture('{html_id}')">&times;</button>
-                </div>
-            </span>'''
-        else:
-            return display_name
+        # No video - picture button functionality removed, images now integrated directly into cards
+        return display_name
 
 
 def format_exercise_id_badge(exercise_id: int) -> str:
@@ -668,28 +638,7 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
             background: #c0392b;
         }
         
-        /* Picture button and popup styles */
-        .picture-button {
-            margin-left: 8px;
-            background: #2ecc71;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            width: 24px;
-            height: 24px;
-            font-size: 14px;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            vertical-align: middle;
-            position: relative;
-            z-index: 10;
-            flex-shrink: 0;
-        }
-        .picture-button:hover {
-            background: #27ae60;
-        }
+        /* Picture button styles removed - images now integrated directly into cards */
 
         
         /* Exercise cell wrapper for better layout */
@@ -720,61 +669,7 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
         .exercise td {
             height: 120px !important;
         }
-        .picture-popup {
-            display: none;
-            position: absolute;
-            top: 0;
-            left: 100%;
-            margin-left: 20px;
-            width: 400px;
-            height: 300px;
-            max-width: 400px;
-            max-height: 500px;
-            min-width: 200px;
-            min-height: 150px;
-            background: white;
-            border: 2px solid #2ecc71;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            z-index: 1000;
-            overflow: hidden;
-        }
-        .picture-popup img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            display: block;
-        }
-        .close-picture {
-            position: absolute;
-            top: 5px;
-            right: 10px;
-            background: #e74c3c;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 25px;
-            height: 25px;
-            font-size: 16px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-        }
-        .close-picture:hover {
-            background: #c0392b;
-        }
-        
-        /* Fix picture positioning in Global Active Rest section */
-        .active-rest-section .picture-popup {
-            position: fixed !important;
-            top: 50% !important;
-            left: 50% !important;
-            transform: translate(-50%, -50%) !important;
-            margin: 0 !important;
-            z-index: 10000 !important;
-        }
+        /* Picture popup styles removed - images now integrated directly into cards */
         .rest-activity {
             font-style: italic;
             color: #7f8c8d;
@@ -1401,9 +1296,7 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
             }
             
             /* Ensure text content is visible over full-size images */
-            tbody td:not(:first-child) .mobile-step-label,
-            tbody td:not(:first-child) .muscle-tags,
-            tbody td:not(:first-child) .equipment-tags {
+            tbody td:not(:first-child) .mobile-step-label {
                 position: relative !important;
                 z-index: 2 !important;
                 background: rgba(255, 255, 255, 0.9) !important;
@@ -1413,19 +1306,31 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
                 backdrop-filter: blur(2px) !important;
             }
             
+            /* Remove background and blur from muscle and equipment tags in mobile */
+            tbody td:not(:first-child) .muscle-tags,
+            tbody td:not(:first-child) .equipment-tags {
+                position: relative !important;
+                z-index: 2 !important;
+                background: none !important;
+                padding: 0 !important;
+                border-radius: 0 !important;
+                margin-bottom: 0 !important;
+                backdrop-filter: none !important;
+            }
+            
             /* Exercise cell wrapper without background blur */
             tbody td:not(:first-child) .exercise-cell-wrapper {
                 position: relative !important;
                 z-index: 2 !important;
             }
             
-            /* Add text overlay for single images to ensure readability */
+            /* Remove background and blur from exercise-cell-wrapper in mobile */
             tbody td:not(:first-child).has-background .exercise-cell-wrapper {
-                background: rgba(255, 255, 255, 0.9) !important;
+                background: none !important;
                 padding: 8px !important;
-                border-radius: 6px !important;
+                border-radius: 0 !important;
                 margin-bottom: 8px !important;
-                backdrop-filter: blur(2px) !important;
+                backdrop-filter: none !important;
             }
             
             /* Content wrapper */
@@ -1586,14 +1491,33 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
                 border-radius: 0;
                 order: 0 !important;
             }
-            /* Muscle and equipment tags - positioned between content and image */
-            tbody td:not(:first-child) .muscle-tags,
+            /* Muscle and equipment tags - positioned at bottom in one line */
+            tbody td:not(:first-child) .muscle-tags {
+                position: absolute !important;
+                bottom: 8px !important;
+                left: 8px !important;
+                right: 50% !important;
+                display: flex !important;
+                flex-wrap: wrap !important;
+                gap: 2px !important;
+                justify-content: flex-start !important;
+                font-size: 0.65em !important;
+                z-index: 2 !important;
+                margin: 0 !important;
+            }
+            
             tbody td:not(:first-child) .equipment-tags {
-                order: 2 !important;
-                margin: 6px 0;
-                font-size: 0.7em;
-                text-align: center;
-                flex-shrink: 0;
+                position: absolute !important;
+                bottom: 8px !important;
+                left: 50% !important;
+                right: 8px !important;
+                display: flex !important;
+                flex-wrap: wrap !important;
+                gap: 2px !important;
+                justify-content: flex-end !important;
+                font-size: 0.65em !important;
+                z-index: 2 !important;
+                margin: 0 !important;
             }
             tbody td:not(:first-child) .muscle-tag,
             tbody td:not(:first-child) .equipment-tag {
@@ -1676,20 +1600,7 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
                 max-height: 400px !important;
                 z-index: 9999 !important;
             }
-            .picture-popup {
-                position: fixed !important;
-                top: 50% !important;
-                left: 50% !important;
-                transform: translate(-50%, -50%) !important;
-                margin: 0 !important;
-                width: 90vw !important;
-                height: 60vh !important;
-                max-width: 350px !important;
-                max-height: 70vh !important;
-                min-width: 200px !important;
-                min-height: 200px !important;
-                z-index: 9999 !important;
-            }
+            /* Picture popup mobile styles removed - images now integrated directly into cards */
             .exercise-with-video {
                 position: static !important;
             }
@@ -1720,7 +1631,9 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
             }
             
             .exercise-id-badge {
-                position: static !important;
+                position: absolute !important;
+                top: 8px !important;
+                left: 8px !important;
                 display: inline-block !important;
                 background: #9b59b6 !important;
                 color: white !important;
@@ -1728,16 +1641,12 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
                 padding: 3px 8px !important;
                 border-radius: 12px !important;
                 font-weight: 600 !important;
-                margin-top: 5px !important;
-                box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
-                z-index: 1 !important;
+                margin: 0 !important;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.3) !important;
+                z-index: 3 !important;
             }
             
-            .picture-button {
-                position: static !important;
-                margin: 5px 0 !important;
-                display: inline-block !important;
-            }
+            /* Picture button mobile styles removed - images now integrated directly into cards */
             
             .exercise-with-video,
             .exercise-with-picture {
@@ -2001,26 +1910,7 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
             video.style.display = 'none';
         }
         
-        function togglePicture(exerciseId) {
-            const picture = document.getElementById('picture_' + exerciseId);
-            const allPictures = document.querySelectorAll('.picture-popup');
-            
-            // Hide all other pictures first
-            allPictures.forEach(p => {
-                if (p.id !== 'picture_' + exerciseId) {
-                    p.style.display = 'none';
-                }
-            });
-            
-            if (picture.style.display === 'none' || picture.style.display === '') {
-                // Position picture relative to the exercise
-                const exerciseElement = picture.parentElement;
-                positionPicture(picture, exerciseElement);
-                picture.style.display = 'block';
-            } else {
-                picture.style.display = 'none';
-            }
-        }
+        // togglePicture function removed - images now integrated directly into cards
         
         function positionVideo(videoElement, exerciseElement) {
             const rect = exerciseElement.getBoundingClientRect();
@@ -2125,11 +2015,7 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
                     stopVideo(video);
                 });
             }
-            if (!e.target.closest('.exercise-with-picture') && !e.target.closest('.picture-popup') && !e.target.closest('.picture-button')) {
-                document.querySelectorAll('.picture-popup').forEach(picture => {
-                    picture.style.display = 'none';
-                });
-            }
+            // Picture popup event handlers removed - images now integrated directly into cards
         });
     </script>
 </body>
@@ -2749,48 +2635,9 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
             }}
         }}
         
-        // Picture popup functions
-        function togglePicture(exerciseId) {{
-            console.log('togglePicture called with:', exerciseId);
-            const picture = document.getElementById('picture_' + exerciseId);
-            console.log('Picture element found:', picture);
-            
-            if (!picture) {{
-                console.error('Picture element not found for ID:', 'picture_' + exerciseId);
-                return;
-            }}
-            
-            const allPictures = document.querySelectorAll('.picture-popup');
-            
-            // Hide all other pictures first
-            allPictures.forEach(p => {{
-                if (p.id !== 'picture_' + exerciseId) {{
-                    p.style.display = 'none';
-                }}
-            }});
-            
-            // Toggle the selected picture
-            if (picture.style.display === 'none' || picture.style.display === '') {{
-                console.log('Showing picture');
-                picture.style.display = 'block';
-                positionPictureSmart(picture);
-            }} else {{
-                console.log('Hiding picture');
-                picture.style.display = 'none';
-            }}
-        }}
+        // Picture popup functions removed - images now integrated directly into cards
         
-        // Handle missing images
-        function handleImageError(img) {{
-            // Replace broken image with a message
-            const errorDiv = document.createElement('div');
-            errorDiv.className = 'image-error';
-            errorDiv.innerHTML = '📷 Image not available<br><small>Exercise ID: ' + img.src.split('/').pop().split('.')[0] + '</small>';
-            errorDiv.style.cssText = 'text-align: center; padding: 20px; color: #666; font-size: 14px; border: 2px dashed #ccc; border-radius: 8px; background: #f9f9f9;';
-            
-            // Replace the image with the error message
-            img.parentNode.replaceChild(errorDiv, img);
-        }}
+        // Image error handling removed - images now integrated directly into cards
         
         function positionPictureSmart(pictureElement) {{
             // Check if picture is in active rest section
@@ -2868,11 +2715,7 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
                     stopVideo(video);
                 }});
             }}
-            if (!e.target.closest('.exercise-with-picture') && !e.target.closest('.picture-popup') && !e.target.closest('.picture-button')) {{
-                document.querySelectorAll('.picture-popup').forEach(picture => {{
-                    picture.style.display = 'none';
-                }});
-            }}
+            // Picture popup event handlers removed - images now integrated directly into cards
         }});
     </script>
 </body>

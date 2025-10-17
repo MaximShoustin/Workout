@@ -65,7 +65,7 @@ def get_station_equipment_requirements(step_equipments: list, people_per_station
     return station_requirements
 
 
-def can_add_station_to_workout(step_equipments: list, cumulative_station_usage: dict, available_inventory: dict, people_per_station: int = 1) -> bool:
+def can_add_station_to_workout(step_equipments: list, cumulative_station_usage: dict, available_inventory: dict, people_per_station: int = 1, skip_equipment_check: bool = False) -> bool:
     """
     Check if adding a station with given step exercises would exceed equipment limits.
     
@@ -74,12 +74,13 @@ def can_add_station_to_workout(step_equipments: list, cumulative_station_usage: 
         cumulative_station_usage: Current total equipment usage across all stations
         available_inventory: Available equipment from plan.json
         people_per_station: Number of people assigned to each station
+        skip_equipment_check: If True, bypass all equipment validation (for -include mode)
         
     Returns:
         True if station can be added without exceeding limits
     """
-    if not available_inventory:
-        return True  # No validation if no inventory defined
+    if skip_equipment_check or not available_inventory:
+        return True  # No validation if skipped or no inventory defined
     
     # Get equipment requirements for this station (considering simultaneous vs sequential execution)
     station_requirements = get_station_equipment_requirements(step_equipments, people_per_station)
@@ -281,7 +282,8 @@ def check_must_use_equipment(plan: dict, stations: List[dict], available_invento
 def filter_exercises_by_remaining_equipment(station_pool: List[Tuple[str, str, str, str, dict]], 
                                           cumulative_station_usage: dict, 
                                           available_inventory: dict, 
-                                          people_per_station: int = 1) -> List[Tuple[str, str, str, str, dict]]:
+                                          people_per_station: int = 1,
+                                          skip_equipment_check: bool = False) -> List[Tuple[str, str, str, str, dict]]:
     """
     Filter exercise pool to only include exercises that can be performed with remaining equipment.
     
@@ -290,11 +292,12 @@ def filter_exercises_by_remaining_equipment(station_pool: List[Tuple[str, str, s
         cumulative_station_usage: Equipment already used by completed stations
         available_inventory: Total equipment inventory
         people_per_station: Number of people per station (affects equipment calculation)
+        skip_equipment_check: If True, bypass equipment filtering (for -include mode)
         
     Returns:
         Filtered list of exercises that can still be performed
     """
-    if not available_inventory:
+    if skip_equipment_check or not available_inventory:
         return station_pool
     
     filtered_pool = []
@@ -419,7 +422,8 @@ def find_compatible_exercises_for_station(station_pool: List[Tuple[str, str, str
                                         people_per_station: int = 1,
                                         used_names: set = None,
                                         must_use_equipment: List[str] = None,
-                                        use_workout_history: bool = True) -> List[Tuple]:
+                                        use_workout_history: bool = True,
+                                        skip_equipment_check: bool = False) -> List[Tuple]:
     """
     Find N compatible exercises for a station that can be performed with remaining equipment.
     
@@ -497,7 +501,7 @@ def find_compatible_exercises_for_station(station_pool: List[Tuple[str, str, str
                 else:
                     step_equipments.append(selected_equipment)
             
-            if can_add_station_to_workout(step_equipments, cumulative_station_usage, available_inventory, people_per_station):
+            if can_add_station_to_workout(step_equipments, cumulative_station_usage, available_inventory, people_per_station, skip_equipment_check):
                 # If we're prioritizing must-use equipment, ensure at least one exercise actually uses it
                 if must_use_equipment:
                     uses_must_use = False
@@ -847,13 +851,29 @@ def build_plan(plan: dict, station_pool: List[Tuple[str, str, str, str, dict]], 
         
         print(f"🎯 Building Station {len(stations)+1} (targeting {area_target})...")
         
-        # Check if we have any include exercises that match this area
-        matching_include_exercises = [ex for ex in reserved_include_slots if ex[0] == area_target]
+        # Check if we have any include exercises remaining (distribute evenly across stations)
+        if reserved_include_slots:
+            # Calculate how many include exercises to place in this station
+            remaining_stations = stations_needed - len(stations)
+            remaining_includes = len(reserved_include_slots)
+            
+            # Distribute evenly: at least 1 per remaining station, with extras in earlier stations
+            includes_for_this_station = min(
+                steps_per_station,  # Don't exceed station capacity
+                (remaining_includes + remaining_stations - 1) // remaining_stations  # Ceiling division for even distribution
+            )
+            
+            matching_include_exercises = reserved_include_slots[:includes_for_this_station]
+            reserved_include_slots = reserved_include_slots[includes_for_this_station:]
+            
+            print(f"   📊 Distributing {includes_for_this_station} include exercises to this station ({remaining_includes} total remaining across {remaining_stations} stations)")
+        else:
+            matching_include_exercises = []
         
         # Create a modified station pool that prioritizes ALL include exercises for this area
         modified_station_pool = station_pool.copy()
         if matching_include_exercises:
-            print(f"   🎯 Prioritizing {len(matching_include_exercises)} include exercises for area {area_target}")
+            print(f"   🎯 Prioritizing {len(matching_include_exercises)} include exercises (ignoring area restrictions for -include mode)")
             # Remove include exercises from their current position and add them ALL to the front
             for include_ex in matching_include_exercises:
                 if include_ex in modified_station_pool:
@@ -886,11 +906,11 @@ def build_plan(plan: dict, station_pool: List[Tuple[str, str, str, str, dict]], 
                 # Remove include exercises from the pool to avoid duplicates
                 remaining_pool = [ex for ex in modified_station_pool if ex not in station_exercises]
                 
-                # Find compatible exercises for remaining slots
+                # Find compatible exercises for remaining slots (skip equipment check for include mode)
                 additional_exercises = find_compatible_exercises_for_station(
                     remaining_pool, area_target, remaining_steps, cumulative_station_usage, 
                     available_inventory, plan["people_per_station"], used_names, [],
-                    plan.get("use_workout_history", True)
+                    plan.get("use_workout_history", True), skip_equipment_check=True
                 )
                 
                 if additional_exercises:
@@ -904,35 +924,67 @@ def build_plan(plan: dict, station_pool: List[Tuple[str, str, str, str, dict]], 
                 print(f"   ❌ Failed to build station with include exercises, falling back to normal logic")
                 station_exercises = None
         else:
-            # No include exercises for this area, use normal must-use equipment logic
-            # Get must-use equipment that hasn't been used yet
-            must_use_equipment = plan.get("must_use", [])
-            unused_must_use = prioritize_must_use_exercises(modified_station_pool, must_use_equipment, cumulative_station_usage, available_inventory)
-            
-            # Try each unused must-use equipment type until one works
-            for priority_equipment in unused_must_use:
-                print(f"   🎯 Trying to prioritize must-use equipment: {priority_equipment}")
+            # If we have include_ids but no more include exercises, fall back to normal logic
+            if include_ids:
+                print(f"   ✅ All include exercises have been placed - using normal logic for remaining stations")
+                # Fall back to normal must-use equipment logic for remaining stations
+                must_use_equipment = plan.get("must_use", [])
+                unused_must_use = prioritize_must_use_exercises(modified_station_pool, must_use_equipment, cumulative_station_usage, available_inventory)
                 
-                station_exercises = find_compatible_exercises_for_station(
-                    modified_station_pool, area_target, steps_per_station, cumulative_station_usage, 
-                    available_inventory, plan["people_per_station"], used_names, [priority_equipment],
-                    plan.get("use_workout_history", True)
-                )
+                # Try each unused must-use equipment type until one works
+                for priority_equipment in unused_must_use:
+                    print(f"   🎯 Trying to prioritize must-use equipment: {priority_equipment}")
+                    
+                    station_exercises = find_compatible_exercises_for_station(
+                        modified_station_pool, area_target, steps_per_station, cumulative_station_usage, 
+                        available_inventory, plan["people_per_station"], used_names, [priority_equipment],
+                        plan.get("use_workout_history", True), skip_equipment_check=False
+                    )
+                    
+                    if station_exercises:
+                        print(f"   ✅ Successfully prioritized must-use equipment: {priority_equipment}")
+                        break
+                    else:
+                        print(f"   ⚠️ Could not build complete station with {priority_equipment}, trying next...")
                 
-                if station_exercises:
-                    print(f"   ✅ Successfully prioritized must-use equipment: {priority_equipment}")
-                    break
-                else:
-                    print(f"   ⚠️ Could not build complete station with {priority_equipment}, trying next...")
-            
-            # If no must-use equipment worked, try without prioritization
-            if not station_exercises:
-                print(f"   🔄 No must-use equipment could build complete station, trying without prioritization...")
-                station_exercises = find_compatible_exercises_for_station(
-                    modified_station_pool, area_target, steps_per_station, cumulative_station_usage, 
-                    available_inventory, plan["people_per_station"], used_names, [],
-                    plan.get("use_workout_history", True)
-                )
+                # If no must-use equipment worked, try without prioritization
+                if not station_exercises:
+                    print(f"   🔄 No must-use equipment could build complete station, trying without prioritization...")
+                    station_exercises = find_compatible_exercises_for_station(
+                        modified_station_pool, area_target, steps_per_station, cumulative_station_usage, 
+                        available_inventory, plan["people_per_station"], used_names, [],
+                        plan.get("use_workout_history", True), skip_equipment_check=False
+                    )
+            else:
+                # No include exercises specified, use normal must-use equipment logic
+                # Get must-use equipment that hasn't been used yet
+                must_use_equipment = plan.get("must_use", [])
+                unused_must_use = prioritize_must_use_exercises(modified_station_pool, must_use_equipment, cumulative_station_usage, available_inventory)
+                
+                # Try each unused must-use equipment type until one works
+                for priority_equipment in unused_must_use:
+                    print(f"   🎯 Trying to prioritize must-use equipment: {priority_equipment}")
+                    
+                    station_exercises = find_compatible_exercises_for_station(
+                        modified_station_pool, area_target, steps_per_station, cumulative_station_usage, 
+                        available_inventory, plan["people_per_station"], used_names, [priority_equipment],
+                        plan.get("use_workout_history", True)
+                    )
+                    
+                    if station_exercises:
+                        print(f"   ✅ Successfully prioritized must-use equipment: {priority_equipment}")
+                        break
+                    else:
+                        print(f"   ⚠️ Could not build complete station with {priority_equipment}, trying next...")
+                
+                # If no must-use equipment worked, try without prioritization
+                if not station_exercises:
+                    print(f"   🔄 No must-use equipment could build complete station, trying without prioritization...")
+                    station_exercises = find_compatible_exercises_for_station(
+                        modified_station_pool, area_target, steps_per_station, cumulative_station_usage, 
+                        available_inventory, plan["people_per_station"], used_names, [],
+                        plan.get("use_workout_history", True)
+                    )
             
         if not station_exercises:
             from config import die
@@ -1049,7 +1101,8 @@ def build_plan(plan: dict, station_pool: List[Tuple[str, str, str, str, dict]], 
             original_pool_size = len(station_pool)
             
             station_pool = filter_exercises_by_remaining_equipment(
-                station_pool, cumulative_station_usage, available_inventory, plan["people_per_station"]
+                station_pool, cumulative_station_usage, available_inventory, plan["people_per_station"],
+                skip_equipment_check=bool(include_ids)
             )
             filtered_count = original_pool_size - len(station_pool)
             
