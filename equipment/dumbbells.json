@@ -383,6 +383,44 @@
         "skip": false,
         "unilateral": false,
         "id": 102
+      },
+      {
+        "name": "DB Slide to Push ups",
+        "link": "",
+        "video_type": "none",
+        "area": "core",
+        "muscles": [
+          "chest",
+          "shoulders"
+        ],
+        "unilateral": false,
+        "equipment": {
+          "dumbbells_10kg": {
+            "count": 1
+          }
+        },
+        "skip": false,
+        "id": 126
+      },
+      {
+        "name": "Squat Up-Down /w Parallel DB Hold",
+        "link": "",
+        "video_type": "none",
+        "area": "core",
+        "muscles": [
+          "shoulders",
+          "quadriceps",
+          "hamstrings",
+          "full body"
+        ],
+        "unilateral": false,
+        "equipment": {
+          "dumbbells_5kg": {
+            "count": 1
+          }
+        },
+        "skip": false,
+        "id": 127
       }
     ]
   }

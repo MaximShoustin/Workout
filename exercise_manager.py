@@ -82,6 +82,41 @@ class ExerciseManager:
         
         return url_pattern.match(url) is not None
     
+    def _print_available_muscles(self) -> None:
+        """Print all available muscle groups from the classification file."""
+        muscle_file = Path('muscle_groups_classification.json')
+        if muscle_file.exists():
+            try:
+                with open(muscle_file, 'r', encoding='utf-8') as f:
+                    muscle_data = json.load(f)
+                
+                print("📋 Available Muscle Groups:")
+                print("=" * 50)
+                
+                # Print by category for better organization
+                for category, groups in muscle_data.get('muscle_groups', {}).items():
+                    print(f"\n🏷️  {category.upper().replace('_', ' ')}:")
+                    for group_name, info in groups.items():
+                        muscles = info.get('muscles', [])
+                        function = info.get('primary_function', '')
+                        print(f"   • {', '.join(muscles)}")
+                        if function:
+                            print(f"     └─ {function}")
+                
+                # Also show the standardized list
+                standardized = muscle_data.get('standardized_muscle_names', [])
+                if standardized:
+                    print(f"\n📝 Quick Reference (Standardized Names):")
+                    print("   " + ", ".join(standardized))
+                
+                print("=" * 50)
+                print()
+            except Exception as e:
+                print(f"⚠️  Could not load muscle groups: {e}")
+                print("💡 Using basic validation instead.")
+        else:
+            print("⚠️  Muscle groups classification file not found.")
+    
     def _validate_muscles(self, muscles_list: List[str]) -> bool:
         """Validate muscle groups against known muscle groups."""
         if not muscles_list:
@@ -183,7 +218,7 @@ class ExerciseManager:
         
         # Muscles
         print("💪 Muscle groups (enter one at a time, type 'done' when finished)")
-        print("   Examples: chest, triceps, shoulders, biceps, quadriceps, etc.")
+        self._print_available_muscles()
         muscles_list = []
         while True:
             muscle = input(f"💪 Muscle {len(muscles_list) + 1} (or 'done'): ").strip()
