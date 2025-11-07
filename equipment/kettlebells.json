@@ -244,6 +244,26 @@
         },
         "skip": false,
         "id": 123
+      },
+      {
+        "name": "Quadricips sit press unfolding",
+        "link": "",
+        "video_type": "none",
+        "area": "lower",
+        "muscles": [
+          "hip flexors",
+          "quadriceps",
+          "glutes",
+          "adductors"
+        ],
+        "unilateral": true,
+        "equipment": {
+          "kettlebells_16kg": {
+            "count": 1
+          }
+        },
+        "skip": false,
+        "id": 128
       }
     ],
     "upper_body": [

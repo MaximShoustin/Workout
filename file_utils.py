@@ -6,6 +6,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional
 import json
+import webbrowser
 
 from config import WORKOUT_STORE_DIR
 from html_generator import generate_html_workout
@@ -68,6 +69,9 @@ def save_workout_html(plan: Dict, stations: List[Dict], equipment_requirements: 
         index_path = Path("index.html")
         with index_path.open('w', encoding='utf-8') as f:
             f.write(index_html_content)
+    
+    # Automatically open the generated HTML file in the default browser
+    webbrowser.open(f'file://{filepath.absolute()}')
     
     return filepath
 

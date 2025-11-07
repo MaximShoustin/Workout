@@ -120,6 +120,7 @@ def generate_exercises_html():
     """Generate HTML file with table of all available exercises."""
     from datetime import datetime
     from pathlib import Path
+    import webbrowser
     
     print("🏋️  GENERATING EXERCISES HTML TABLE")
     print("=" * 50)
@@ -131,8 +132,8 @@ def generate_exercises_html():
         print("❌ No exercises found in database.")
         return
     
-    # Sort exercises by area and then by name
-    exercises.sort(key=lambda x: (x['area'], x['name']))
+    # Sort exercises by ID (smallest to greatest), with -1 IDs at the end
+    exercises.sort(key=lambda x: (x['id'] if x['id'] != -1 else 99999, x['name']))
     
     # Group exercises by area
     by_area = {}
@@ -168,6 +169,11 @@ def generate_exercises_html():
     print(f"📊 Total exercises: {len(exercises)}")
     print(f"🎯 Areas covered: {', '.join(sorted(by_area.keys()))}")
     print()
+    
+    # Open the HTML file in the default browser
+    print("🌐 Opening exercises.html in browser...")
+    webbrowser.open(f"file://{exercises_path.absolute()}")
+    print("✅ Browser opened!")
 
 
 def generate_exercises_html_content(by_area: dict, all_exercises: list, pictures_path: str = "config/pictures") -> str:
