@@ -152,14 +152,23 @@ def generate_exercises_html():
     Path("workout_store").mkdir(exist_ok=True)
     
     # Generate HTML content
-    html_content_root = generate_exercises_html_content(by_area, exercises, "config/pictures")
-    html_content_store = generate_exercises_html_content(by_area, exercises, "../config/pictures")
+    # For root: use relative paths to config/pictures
+    html_content_root = generate_exercises_html_content(
+        by_area, exercises, 
+        pictures_path="config/pictures"
+    )
     
-    # Save to file in workout_store (with relative path to ../config/pictures)
+    # For workout_store: use relative paths going up one level to config/pictures
+    html_content_store = generate_exercises_html_content(
+        by_area, exercises,
+        pictures_path="../config/pictures"
+    )
+    
+    # Save to file in workout_store (with relative paths to ../...)
     with filepath.open('w', encoding='utf-8') as f:
         f.write(html_content_store)
     
-    # Also save to exercises.html in project root (with path to config/pictures)
+    # Also save to exercises.html in project root (with paths to config/pictures)
     exercises_path = Path("exercises.html")
     with exercises_path.open('w', encoding='utf-8') as f:
         f.write(html_content_root)
@@ -176,9 +185,10 @@ def generate_exercises_html():
     print("✅ Browser opened!")
 
 
-def generate_exercises_html_content(by_area: dict, all_exercises: list, pictures_path: str = "config/pictures") -> str:
-    """Generate the HTML content for exercises table."""
+def generate_exercises_html_content(by_area: dict, all_exercises: list, pictures_path: str = "config/pictures", css_path: str = "static/css/exercises.css", js_path: str = "static/js/exercises.js") -> str:
+    """Generate the HTML content for exercises table using static templates."""
     from datetime import datetime
+    from pathlib import Path as PathLib
     
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     total_exercises = len(all_exercises)
@@ -186,359 +196,22 @@ def generate_exercises_html_content(by_area: dict, all_exercises: list, pictures
     # Count exercises by area
     area_counts = {area: len(exercises) for area, exercises in by_area.items()}
     
-    html = f"""<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All Exercises - Workout Database</title>
-    <style>
-        body {{ 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            line-height: 1.6; 
-            color: #333; 
-            margin: 0;
-            padding: 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-        }}
-        
-        .container {{
-            max-width: 1400px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-        }}
-        
-        .header {{
-            text-align: center;
-            margin-bottom: 30px;
-            border-bottom: 3px solid #667eea;
-            padding-bottom: 20px;
-        }}
-        
-        .header h1 {{
-            color: #2c3e50;
-            margin: 0;
-            font-size: 2.5em;
-            font-weight: 300;
-        }}
-        
-        .stats {{
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin: 20px 0;
-            flex-wrap: wrap;
-        }}
-        
-        .stat {{
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 15px 25px;
-            border-radius: 8px;
-            text-align: center;
-            min-width: 120px;
-        }}
-        
-        .stat-number {{
-            font-size: 2em;
-            font-weight: bold;
-            display: block;
-        }}
-        
-        .stat-label {{
-            font-size: 0.9em;
-            opacity: 0.9;
-        }}
-        
-        .area-section {{
-            margin: 40px 0;
-        }}
-        
-        .area-title {{
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 15px 25px;
-            border-radius: 8px 8px 0 0;
-            margin: 0;
-            font-size: 1.5em;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }}
-        
-        .exercises-grid {{
-            display: grid;
-            gap: 20px;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 0 0 8px 8px;
-        }}
-        
-        /* Mobile: 2 columns for better spacing */
-        @media (max-width: 480px) {{
-            .exercises-grid {{
-                grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
-                padding: 15px;
-            }}
-        }}
-        
-        /* Small tablets: 3 columns */
-        @media (min-width: 481px) and (max-width: 768px) {{
-            .exercises-grid {{
-                grid-template-columns: repeat(3, 1fr);
-                gap: 18px;
-                padding: 18px;
-            }}
-        }}
-        
-        /* Large tablets and Desktop: 4 columns for better balance */
-        @media (min-width: 769px) and (max-width: 1200px) {{
-            .exercises-grid {{
-                grid-template-columns: repeat(4, 1fr);
-                gap: 20px;
-            }}
-        }}
-        
-        /* Large Desktop: 6 columns */
-        @media (min-width: 1201px) {{
-            .exercises-grid {{
-                grid-template-columns: repeat(6, 1fr);
-                gap: 20px;
-            }}
-        }}
-        
-        .exercise-card {{
-            background: white;
-            border-radius: 12px;
-            padding: 0;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            border-left: 4px solid #667eea;
-            display: flex;
-            flex-direction: column;
-            min-height: 270px;
-            max-height: 270px;
-            overflow: hidden;
-            position: relative;
-        }}
-        
-        .exercise-card:hover {{
-            transform: translateY(-4px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-            border-left-color: #764ba2;
-        }}
-        
-        .exercise-image {{
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 1;
-        }}
-        
-        .exercise-images {{
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            display: flex;
-            flex-direction: row;
-            gap: 2px;
-        }}
-        
-        .exercise-images img {{
-            flex: 1;
-            width: 0;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }}
-        
-        .exercise-content {{
-            position: relative;
-            z-index: 2;
-            background: linear-gradient(transparent 0%, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0.8) 100%);
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 16px;
-        }}
-        
-        .exercise-details {{
-            color: white;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
-        }}
-        
-        .exercise-header {{
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 6px;
-            flex-wrap: wrap;
-        }}
-        
-        .exercise-id {{
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-size: 0.75em;
-            font-weight: bold;
-            display: inline-block;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-            flex-shrink: 0;
-        }}
-        
-        .exercise-name {{
-            font-weight: 600;
-            color: white;
-            font-size: 0.85em;
-            line-height: 1.2;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
-            flex: 1;
-            min-width: 0;
-        }}
-        
-        .exercise-link {{
-            color: white;
-            text-decoration: none;
-            transition: all 0.2s ease;
-        }}
-        
-        .exercise-link:hover {{
-            color: #ffd700;
-            text-shadow: 0 0 8px rgba(255,215,0,0.6);
-        }}
-        
-        .exercise-card.no-image .exercise-link {{
-            color: #667eea;
-        }}
-        
-        .exercise-card.no-image .exercise-link:hover {{
-            color: #764ba2;
-            text-shadow: none;
-            text-decoration: underline;
-        }}
-        
-        .exercise-equipment {{
-            background: rgba(255,255,255,0.9);
-            color: #2c5aa0;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 0.7em;
-            margin-bottom: 3px;
-            display: inline-block;
-            font-weight: 500;
-        }}
-        
-        .exercise-muscles {{
-            color: rgba(255,255,255,0.9);
-            font-size: 0.65em;
-            font-style: italic;
-            line-height: 1.2;
-            display: -webkit-box;
-            -webkit-line-clamp: 1;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
-        }}
-        
-        .exercise-card.no-image {{
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-        }}
-        
-        .exercise-card.no-image .exercise-content {{
-            background: none;
-        }}
-        
-        .exercise-card.no-image .exercise-details {{
-            color: #333;
-            text-shadow: none;
-        }}
-        
-        .exercise-card.no-image .exercise-name {{
-            color: #2c3e50;
-            text-shadow: none;
-        }}
-        
-        .exercise-card.no-image .exercise-muscles {{
-            color: #666;
-            text-shadow: none;
-        }}
-        
-        .unilateral-badge {{
-            background: #ff6b6b;
-            color: white;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 0.7em;
-            font-weight: bold;
-            margin-left: 5px;
-        }}
-        
-        .footer {{
-            text-align: center;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 2px solid #e9ecef;
-            color: #666;
-            font-size: 0.9em;
-        }}
-        
-        /* Video popup styles */
-        .video-popup {{
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.8);
-        }}
-        
-        .video-content {{
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 90%;
-            max-width: 800px;
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-        }}
-        
-        .close-video {{
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }}
-        
-        .close-video:hover {{
-            color: #000;
-        }}
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>🏋️ Exercise Database</h1>
-            <p>Complete collection of available exercises</p>
-            <div class="stats">
+    # Load the HTML template
+    template_path = PathLib("static/templates/exercises_template.html")
+    with template_path.open('r', encoding='utf-8') as f:
+        html_template = f.read()
+    
+    # Load CSS and JS content to inline them
+    css_file_path = PathLib(css_path)
+    with css_file_path.open('r', encoding='utf-8') as f:
+        css_content = f.read()
+    
+    js_file_path = PathLib(js_path)
+    with js_file_path.open('r', encoding='utf-8') as f:
+        js_content = f.read()
+    
+    # Build stats content
+    stats_html = f"""
                 <div class="stat">
                     <span class="stat-number">{total_exercises}</span>
                     <span class="stat-label">Total Exercises</span>
@@ -547,26 +220,21 @@ def generate_exercises_html_content(by_area: dict, all_exercises: list, pictures
     # Add area stats
     for area, count in sorted(area_counts.items()):
         area_emoji = {"upper": "💪", "lower": "🦵", "core": "🔥"}.get(area, "🏋️")
-        html += f"""
+        stats_html += f"""
                 <div class="stat">
                     <span class="stat-number">{count}</span>
                     <span class="stat-label">{area_emoji} {area.title()}</span>
                 </div>"""
     
-    html += f"""
-            </div>
-            <p style="color: #666; margin-top: 15px;">Generated on {timestamp}</p>
-        </div>
-"""
-    
     # Generate sections for each area
     area_emojis = {"upper": "💪", "lower": "🦵", "core": "🔥"}
+    exercises_html = ""
     
     for area in sorted(by_area.keys()):
         exercises = by_area[area]
         area_emoji = area_emojis.get(area, "🏋️")
         
-        html += f"""
+        exercises_html += f"""
         <div class="area-section">
             <h2 class="area-title">{area_emoji} {area.upper()} ({len(exercises)} exercises)</h2>
             <div class="exercises-grid">"""
@@ -584,15 +252,13 @@ def generate_exercises_html_content(by_area: dict, all_exercises: list, pictures
             image_html = ""
             card_class = "exercise-card"
             if exercise['id'] != -1:
-                from pathlib import Path
-                
                 # First check for single image (original format)
-                single_image_path = Path("config/pictures") / f"{exercise['id']}.png"
+                single_image_path = PathLib("config/pictures") / f"{exercise['id']}.png"
                 
                 # Then check for multiple images (new format: id_1.png, id_2.png, etc.)
                 multiple_images = []
                 for i in range(1, 4):  # Check for up to 3 images (_1, _2, _3)
-                    multi_image_path = Path("config/pictures") / f"{exercise['id']}_{i}.png"
+                    multi_image_path = PathLib("config/pictures") / f"{exercise['id']}_{i}.png"
                     if multi_image_path.exists():
                         multiple_images.append(f"{pictures_path}/{exercise['id']}_{i}.png")
                 
@@ -626,7 +292,7 @@ def generate_exercises_html_content(by_area: dict, all_exercises: list, pictures
             
             unilateral_badge = '<span class="unilateral-badge">U</span>' if exercise['unilateral'] else ''
             
-            html += f"""
+            exercises_html += f"""
                 <div class="{card_class}">
                     {image_html}
                     <div class="exercise-content">
@@ -642,55 +308,16 @@ def generate_exercises_html_content(by_area: dict, all_exercises: list, pictures
                     </div>
                 </div>"""
         
-        html += """
+        exercises_html += """
             </div>
         </div>"""
     
-    html += f"""
-        <div class="footer">
-            <p><strong>Legend:</strong> <span class="unilateral-badge">U</span> = Unilateral exercise (requires left/right execution)</p>
-            <p>Click exercise names with links to view demonstration videos</p>
-            <p>Generated by Workout CLI • {timestamp}</p>
-        </div>
-    </div>
-    
-    <script>
-        // Video popup functionality
-        function openVideo(videoId) {{
-            document.getElementById(videoId).style.display = 'block';
-        }}
-        
-        function closeVideo(videoId) {{
-            document.getElementById(videoId).style.display = 'none';
-            // Stop any playing videos
-            const iframe = document.querySelector('#' + videoId + ' iframe');
-            if (iframe) {{
-                iframe.src = iframe.src;
-            }}
-            const video = document.querySelector('#' + videoId + ' video');
-            if (video) {{
-                video.pause();
-            }}
-        }}
-        
-        // Close video when clicking outside
-        window.onclick = function(event) {{
-            if (event.target.classList.contains('video-popup')) {{
-                event.target.style.display = 'none';
-                // Stop any playing videos
-                const iframe = event.target.querySelector('iframe');
-                if (iframe) {{
-                    iframe.src = iframe.src;
-                }}
-                const video = event.target.querySelector('video');
-                if (video) {{
-                    video.pause();
-                }}
-            }}
-        }}
-    </script>
-</body>
-</html>"""
+    # Replace placeholders in template with actual content
+    html = html_template.replace("{{CSS_CONTENT}}", css_content)
+    html = html.replace("{{JS_CONTENT}}", js_content)
+    html = html.replace("{{TIMESTAMP}}", timestamp)
+    html = html.replace("{{STATS_CONTENT}}", stats_html)
+    html = html.replace("{{EXERCISES_CONTENT}}", exercises_html)
     
     return html
 
