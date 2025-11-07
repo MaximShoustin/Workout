@@ -47,6 +47,7 @@ COMMANDS:
     (no command)        Generate a new workout with current settings
     -status            List all existing exercises in the database
     -view-all          Generate HTML table of all exercises
+    -manual            Manually create a workout by selecting exercises (interactive)
     -help              Show this help message
     -add               Add a new exercise to the database (interactive)
     -edit <ids>        Edit specific exercises in current workout by ID
@@ -59,6 +60,7 @@ EXAMPLES:
     ./workout                     # Generate new workout
     ./workout -status             # List all exercises
     ./workout -view-all           # Generate HTML table of all exercises
+    ./workout -manual             # Manually select exercises for each station
     ./workout -help               # Show this help
     ./workout -add                # Add new exercise (interactive)
     ./workout -edit 101,102       # Replace exercises 101,102 in current workout
@@ -413,6 +415,275 @@ def show_status():
     print()
 
 
+def create_manual_workout():
+    """Interactively create a manual workout by specifying exercises for each station."""
+    from config import load_json
+    import webbrowser
+    
+    print("🏋️  MANUAL WORKOUT CREATION")
+    print("=" * 50)
+    print()
+    
+    # Get all exercises for reference
+    all_exercises_list = get_all_exercises()
+    exercises_by_id = {ex['id']: ex for ex in all_exercises_list if ex['id'] != -1}
+    
+    if not exercises_by_id:
+        print("❌ No exercises with valid IDs found in database.")
+        return
+    
+    print(f"📊 Total exercises available: {len(exercises_by_id)}")
+    print("💡 Tip: Use './workout -view-all' to see all exercises with their IDs")
+    print()
+    
+    # Ask for number of stations
+    while True:
+        try:
+            num_stations = input("How many stations do you want? ")
+            num_stations = int(num_stations.strip())
+            if num_stations <= 0:
+                print("❌ Please enter a positive number.")
+                continue
+            break
+        except ValueError:
+            print("❌ Please enter a valid number.")
+        except (KeyboardInterrupt, EOFError):
+            print("\n⚠️ Manual workout creation cancelled.")
+            sys.exit(0)
+    
+    print()
+    print(f"✅ Creating workout with {num_stations} stations")
+    print()
+    
+    # Collect exercises for each station
+    stations = []
+    station_letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    
+    for i in range(num_stations):
+        station_letter = station_letters[i] if i < len(station_letters) else f"Station {i+1}"
+        print(f"📍 Station {station_letter}")
+        print("-" * 40)
+        
+        while True:
+            try:
+                ids_input = input(f"   Enter exercise IDs for station {station_letter} (comma-separated): ")
+                ids_input = ids_input.strip()
+                
+                if not ids_input:
+                    print("   ❌ Please enter at least one exercise ID.")
+                    continue
+                
+                # Parse IDs
+                station_exercise_ids = parse_id_list(ids_input)
+                
+                # Validate IDs
+                invalid_ids = [ex_id for ex_id in station_exercise_ids if ex_id not in exercises_by_id]
+                if invalid_ids:
+                    print(f"   ❌ Invalid exercise IDs: {invalid_ids}")
+                    print(f"   💡 Use './workout -status' to see valid IDs")
+                    continue
+                
+                # Build exercise list, expanding unilateral exercises into left/right
+                station_exercises = []
+                print(f"   ✅ Selected exercises:")
+                
+                for ex_id in station_exercise_ids:
+                    ex = exercises_by_id[ex_id]
+                    
+                    if ex.get('unilateral', False):
+                        # Unilateral exercise - add both left and right
+                        print(f"      • ID {ex_id}: {ex['name']} ({ex['area']}) [Unilateral - will create Left+Right]")
+                        
+                        # Create left side version
+                        ex_left = ex.copy()
+                        ex_left['name'] = f"{ex['name']} (Left)"
+                        station_exercises.append(ex_left)
+                        
+                        # Create right side version
+                        ex_right = ex.copy()
+                        ex_right['name'] = f"{ex['name']} (Right)"
+                        station_exercises.append(ex_right)
+                    else:
+                        # Regular exercise - add as is
+                        print(f"      • ID {ex_id}: {ex['name']} ({ex['area']})")
+                        station_exercises.append(ex)
+                
+                # Build station
+                station = {
+                    'station_letter': station_letter,
+                    'exercises': station_exercises
+                }
+                stations.append(station)
+                print()
+                break
+                
+            except (KeyboardInterrupt, EOFError):
+                print("\n⚠️ Manual workout creation cancelled.")
+                sys.exit(0)
+            except Exception as e:
+                print(f"   ❌ Error: {e}")
+                continue
+    
+    # Generate workout HTML
+    print("🔨 Generating workout HTML...")
+    print()
+    
+    # Load plan for timing settings
+    try:
+        plan = load_json(Path("config/plan.json"))
+        title = plan.get("title", "Manual Workout")
+        
+        # Generate HTML using our manual stations
+        html_content = generate_manual_workout_html(plan, stations)
+    except Exception as e:
+        import traceback
+        print(f"❌ Error during HTML generation: {e}")
+        print("\n📋 Full traceback:")
+        traceback.print_exc()
+        sys.exit(1)
+    
+    # Save to file
+    from datetime import datetime
+    
+    timestamp = datetime.now().strftime("%d-%m-%Y-%H-%M-%S")
+    filename = f"WORKOUT_MANUAL_{timestamp}.html"
+    filepath = Path("workout_store") / filename
+    
+    # Ensure workout_store directory exists
+    Path("workout_store").mkdir(exist_ok=True)
+    
+    with open(filepath, 'w', encoding='utf-8') as f:
+        f.write(html_content)
+    
+    # Also save to index.html in project root
+    index_path = Path("index.html")
+    with open(index_path, 'w', encoding='utf-8') as f:
+        f.write(html_content)
+    
+    print(f"✅ Manual workout saved to: {filepath}")
+    print(f"🌐 Also saved to: index.html")
+    print(f"📊 Total stations: {num_stations}")
+    print()
+    
+    # Open in browser
+    print("🌐 Opening workout in browser...")
+    webbrowser.open(f"file://{index_path.absolute()}")
+    print("✅ Browser opened!")
+
+
+def generate_manual_workout_html(plan: Dict, stations: List[Dict]) -> str:
+    """Generate HTML for manually created workout."""
+    from datetime import datetime
+    from file_utils import save_workout_html
+    from html_generator import generate_html_workout
+    
+    # Convert our manual stations format to the format expected by HTML generator
+    formatted_stations = []
+    
+    for station in stations:
+        # Determine the dominant area for this station (use first exercise's area)
+        station_area = station['exercises'][0]['area'] if station['exercises'] else 'core'
+        
+        formatted_station = {
+            'station_letter': station['station_letter'],
+            'area': station_area  # Add station-level area field
+        }
+        
+        # Add each exercise as a step (using EXACT same keys as regular workout)
+        for step_num, exercise in enumerate(station['exercises'], 1):
+            formatted_station[f'step{step_num}'] = exercise['name']  # Use step1, step2, not step1_exercise
+            formatted_station[f'step{step_num}_link'] = exercise.get('link', '')
+            formatted_station[f'step{step_num}_id'] = exercise['id']
+            formatted_station[f'step{step_num}_equipment'] = exercise['equipment_requirements']
+            formatted_station[f'step{step_num}_muscles'] = exercise['muscles']
+            # Use None instead of '' for video_type so auto-detection works
+            video_type = exercise.get('video_type', '')
+            formatted_station[f'step{step_num}_video_type'] = video_type if video_type else None
+        
+        formatted_stations.append(formatted_station)
+    
+    # Update plan with actual number of steps
+    max_steps = max(len(station['exercises']) for station in stations) if stations else 1
+    plan['steps_per_station'] = max_steps
+    
+    # Calculate equipment requirements from all exercises
+    equipment_requirements = {}
+    people_per_station = plan.get('people_per_station', 1)
+    
+    for station in formatted_stations:
+        step_num = 1
+        while True:
+            equipment_key = f'step{step_num}_equipment'
+            if equipment_key not in station:
+                break
+            
+            step_equipment = station[equipment_key]
+            if step_equipment:
+                # Aggregate equipment counts
+                for equip_type, equip_info in step_equipment.items():
+                    count_needed = equip_info.get('count', 0) * people_per_station
+                    if equip_type in equipment_requirements:
+                        equipment_requirements[equip_type]['count'] += count_needed
+                    else:
+                        equipment_requirements[equip_type] = {
+                            'count': count_needed,
+                            'icon': equip_info.get('icon', '')
+                        }
+            
+            step_num += 1
+    
+    # Load available inventory from plan.json
+    available_inventory = {}
+    equipment_config = plan.get('equipment', {})
+    for eq_type, eq_data in equipment_config.items():
+        if isinstance(eq_data, dict) and 'count' in eq_data:
+            available_inventory[eq_type] = eq_data['count']
+        elif isinstance(eq_data, int):
+            available_inventory[eq_type] = eq_data
+    
+    # Create equipment validation summary
+    validation_summary = {
+        'is_valid': True,
+        'issues': [],
+        'utilization_by_type': {}
+    }
+    
+    for equip_type, equip_info in equipment_requirements.items():
+        required = equip_info['count']
+        available = available_inventory.get(equip_type, 0)
+        
+        if available > 0:
+            utilization_pct = (required / available) * 100
+        else:
+            utilization_pct = 0.0
+            
+        validation_summary['utilization_by_type'][equip_type] = {
+            'required': required,
+            'available': available,
+            'utilization_pct': utilization_pct,
+            'sufficient': required <= available
+        }
+        
+        if required > available:
+            validation_summary['is_valid'] = False
+            validation_summary['issues'].append(
+                f"Insufficient {equip_type}: need {required}, have {available}"
+            )
+    
+    # Generate HTML with all parameters
+    html = generate_html_workout(
+        plan, 
+        formatted_stations, 
+        equipment_requirements=equipment_requirements,
+        validation_summary=validation_summary,
+        global_active_rest_schedule=None,
+        selected_active_rest_exercises=None,
+        selected_crossfit_path_exercises=None,
+        is_workout_store=False
+    )
+    return html
+
+
 def parse_id_list(id_string: str) -> List[int]:
     """Parse comma-separated list of exercise IDs."""
     try:
@@ -474,6 +745,9 @@ def main():
     
     elif command in ['-v', '--view-all', '-view-all', 'view-all']:
         generate_exercises_html()
+    
+    elif command in ['-m', '--manual', '-manual', 'manual']:
+        create_manual_workout()
     
     elif command in ['-a', '--add', '-add', 'add']:
         # Import and run exercise addition
