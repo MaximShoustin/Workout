@@ -6,7 +6,7 @@
         "link": "https://www.youtube.com/shorts/VgGVBcdS7TE",
         "area": "core",
         "muscles": "core, quadriceps, glutes",
-        "skip": false,
+        "skip": true,
         "unilateral": false,
         "id": 88
       },
@@ -133,7 +133,7 @@
         "link": "https://www.youtube.com/shorts/VgGVBcdS7TE",
         "area": "lower",
         "muscles": "core, glutes, hamstrings",
-        "skip": false,
+        "skip": true,
         "unilateral": false,
         "id": 116
       },
@@ -150,6 +150,85 @@
         "skip": false,
         "unilateral": false,
         "id": 113
+      },
+      {
+        "name": "butterfly squat",
+        "link": "",
+        "area": "lower",
+        "muscles": "quadriceps",
+        "equipment": {
+          "dumbbells_3kg": {
+            "count": 2
+          }
+        },
+        "skip": false,
+        "unilateral": false,
+        "id": 130
+      },
+      {
+        "name": "Burpees jumps with stick",
+        "link": "",
+        "area": "core",
+        "muscles": "core",
+        "skip": false,
+        "unilateral": false,
+        "id": 131
+      },
+      {
+        "name": "jumps + steps backward + bicepts press",
+        "link": "",
+        "area": "lower",
+        "muscles": "quadriceps, biceps",
+        "equipment": {
+          "kettlebells_2kg": {
+            "count": 2
+          }
+        },
+        "skip": false,
+        "unilateral": false,
+        "id": 132
+      },
+      {
+        "name": "Around the World + Rotation lift",
+        "link": "",
+        "area": "core",
+        "muscles": "core,quadriceps, glutes, shoulders, biceps",
+        "equipment": {
+          "kettlebells_6kg": {
+            "count": 1
+          }
+        },
+        "skip": false,
+        "unilateral": false,
+        "id": 133
+      },
+      {
+        "name": "Kossak steps with biceps press",
+        "link": "",
+        "area": "lower",
+        "muscles": "core,quadriceps,shoulders,biceps",
+        "equipment": {
+          "kettlebells_6kg": {
+            "count": 1
+          }
+        },
+        "skip": false,
+        "unilateral": false,
+        "id": 134
+      },
+      {
+        "name": "Side Steps with KB biceps active",
+        "link": "",
+        "area": "lower",
+        "muscles": "quadriceps, biceps",
+        "equipment": {
+          "kettlebells_6kg": {
+            "count": 1
+          }
+        },
+        "skip": false,
+        "unilateral": false,
+        "id": 135
       }
     ]
   }

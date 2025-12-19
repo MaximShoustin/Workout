@@ -45,6 +45,8 @@ USAGE:
 
 COMMANDS:
     (no command)        Generate a new workout with current settings
+    -igyg              Create an I-Go-You-Go workout (choose exercise IDs)
+    -igyg-add          Add a new exercise to I-Go-You-Go database (interactive)
     -status            List all existing exercises in the database
     -view-all          Generate HTML table of all exercises
     -manual            Manually create a workout by selecting exercises (interactive)
@@ -58,6 +60,8 @@ OPTIONS for -edit and -include:
 
 EXAMPLES:
     ./workout                     # Generate new workout
+    ./workout -igyg               # Create I-Go-You-Go workout (select exercise IDs)
+    ./workout -igyg-add           # Add new exercise to I-Go-You-Go database
     ./workout -status             # List all exercises
     ./workout -view-all           # Generate HTML table of all exercises
     ./workout -manual             # Manually select exercises for each station
@@ -77,6 +81,7 @@ CONFIGURATION:
 FILES:
     config/plan.json             Main configuration file
     equipment/*.json             Exercise databases by equipment type
+    equipment/crossfit_path.json I-Go-You-Go exercise database
     index.html                   Generated workout display
     workout_store/               Workout history and data
 
@@ -698,6 +703,325 @@ def parse_id_list(id_string: str) -> List[int]:
         sys.exit(1)
 
 
+def add_igyg_exercise():
+    """Add a new exercise to the I-Go-You-Go (crossfit_path.json) database."""
+    import re
+    from config import load_plan, load_json, CROSSFIT_PATH_FILE
+    
+    print("🔥 ADD I-GO-YOU-GO EXERCISE")
+    print("=" * 50)
+    print()
+    
+    # Check if crossfit_path.json exists
+    if not CROSSFIT_PATH_FILE.exists():
+        print("⚠️ crossfit_path.json not found. Creating new file...")
+        initial_data = {"lifts": {"power": []}}
+        with open(CROSSFIT_PATH_FILE, 'w', encoding='utf-8') as f:
+            json.dump(initial_data, f, indent=2)
+    
+    # Load current data
+    crossfit_data = load_json(CROSSFIT_PATH_FILE)
+    
+    # Get next available ID from plan.json
+    plan = load_plan()
+    next_id = plan.get('max_id', 117) + 1
+    
+    exercise_data = {}
+    
+    # Exercise Name
+    while True:
+        name = input("📝 Exercise name: ").strip()
+        if name:
+            exercise_data['name'] = name
+            break
+        print("   ❌ Exercise name is required.")
+    
+    # Video link (optional)
+    print("🎥 Video link (press Enter to skip):")
+    link = input("🔗 YouTube/video link: ").strip()
+    exercise_data['link'] = link
+    
+    # Exercise Area
+    valid_areas = ['upper', 'lower', 'core']
+    print(f"📍 Available areas: {', '.join(valid_areas)}")
+    while True:
+        area = input("📍 Exercise area: ").strip().lower()
+        if area in valid_areas:
+            exercise_data['area'] = area
+            break
+        print(f"   ❌ Please choose from: {', '.join(valid_areas)}")
+    
+    # Muscles (comma-separated)
+    print("💪 Enter muscle groups (comma-separated)")
+    print("   Examples: core, quadriceps, glutes, shoulders, chest, triceps, biceps, hamstrings")
+    while True:
+        muscles_input = input("💪 Muscles: ").strip()
+        if muscles_input:
+            exercise_data['muscles'] = muscles_input
+            break
+        print("   ❌ Please enter at least one muscle group.")
+    
+    # Equipment requirements (optional)
+    print("\n🛠️  Equipment Requirements (optional)")
+    print("   Enter equipment name and count, or press Enter to skip.")
+    print("   Example: kettlebells_6kg, dumbbells_5kg, slam_balls_5kg")
+    
+    # Show available equipment from plan.json
+    available_equipment = plan.get('equipment', {})
+    if available_equipment:
+        print("\n   📋 Available equipment:")
+        for eq_name in sorted(available_equipment.keys()):
+            count = available_equipment[eq_name].get('count', 0) if isinstance(available_equipment[eq_name], dict) else available_equipment[eq_name]
+            print(f"      • {eq_name} ({count}x)")
+    
+    equipment = {}
+    while True:
+        eq_name = input("\n🛠️  Equipment name (or 'done'/'none'): ").strip()
+        
+        if eq_name.lower() in ['done', 'none', '']:
+            break
+        elif eq_name:
+            while True:
+                try:
+                    count = int(input(f"   📊 Count needed for {eq_name}: ").strip())
+                    if count > 0:
+                        equipment[eq_name] = {"count": count}
+                        print(f"   ✅ Added: {eq_name} × {count}")
+                        break
+                    else:
+                        print("   ❌ Count must be greater than 0.")
+                except ValueError:
+                    print("   ❌ Please enter a valid number.")
+    
+    if equipment:
+        exercise_data['equipment'] = equipment
+    
+    # Set defaults
+    exercise_data['skip'] = False
+    exercise_data['unilateral'] = False
+    exercise_data['id'] = next_id
+    
+    # Preview
+    print("\n" + "=" * 60)
+    print("📋 EXERCISE PREVIEW")
+    print("=" * 60)
+    print(f"Name:       {exercise_data['name']}")
+    print(f"Link:       {exercise_data.get('link') or '(none)'}")
+    print(f"Area:       {exercise_data['area']}")
+    print(f"Muscles:    {exercise_data['muscles']}")
+    print(f"Equipment:  {json.dumps(exercise_data.get('equipment', {}), indent=12) if exercise_data.get('equipment') else '(none)'}")
+    print(f"ID:         {exercise_data['id']}")
+    print(f"File:       crossfit_path.json")
+    print("=" * 60)
+    
+    # Confirm
+    while True:
+        confirm = input("💾 Save this exercise? (y/n): ").strip().lower()
+        if confirm in ['y', 'yes']:
+            break
+        elif confirm in ['n', 'no']:
+            print("\n🚫 Exercise addition cancelled.")
+            return
+        print("   ❌ Please enter 'y' to save or 'n' to cancel.")
+    
+    # Save to crossfit_path.json
+    try:
+        # Add to power category
+        if 'lifts' not in crossfit_data:
+            crossfit_data['lifts'] = {}
+        if 'power' not in crossfit_data['lifts']:
+            crossfit_data['lifts']['power'] = []
+        
+        crossfit_data['lifts']['power'].append(exercise_data)
+        
+        with open(CROSSFIT_PATH_FILE, 'w', encoding='utf-8') as f:
+            json.dump(crossfit_data, f, indent=2, ensure_ascii=False)
+        
+        print(f"\n✅ Exercise '{exercise_data['name']}' saved to crossfit_path.json")
+        print(f"🆔 Assigned ID: {exercise_data['id']}")
+        
+        # Update max_id in plan.json
+        plan['max_id'] = next_id
+        plan_path = Path("config/plan.json")
+        with open(plan_path, 'w', encoding='utf-8') as f:
+            json.dump(plan, f, indent=2, ensure_ascii=False)
+        
+        print(f"📝 Updated max_id in plan.json to {next_id}")
+        print("\n🎉 Exercise successfully added to I-Go-You-Go database!")
+        
+    except Exception as e:
+        print(f"\n❌ Error saving exercise: {e}")
+        sys.exit(1)
+
+
+def create_igyg_workout():
+    """Create an I-Go-You-Go (CrossFit path) workout interactively."""
+    import webbrowser
+    from config import load_plan, load_json, CROSSFIT_PATH_FILE
+    
+    print("🔥 I-GO-YOU-GO WORKOUT CREATION")
+    print("=" * 50)
+    print()
+    
+    # Check if crossfit_path.json exists
+    if not CROSSFIT_PATH_FILE.exists():
+        print("❌ Error: crossfit_path.json not found.")
+        print("   Please create config/crossfit_path.json with your exercises.")
+        sys.exit(1)
+    
+    # Load and display available exercises
+    crossfit_data = load_json(CROSSFIT_PATH_FILE)
+    crossfit_exercises = crossfit_data.get("lifts", {}).get("power", [])
+    
+    # Filter out skipped exercises
+    available_exercises = []
+    skipped_count = 0
+    for ex in crossfit_exercises:
+        if isinstance(ex, dict):
+            if ex.get("skip", False):
+                skipped_count += 1
+                continue
+            available_exercises.append({
+                "name": ex["name"],
+                "link": ex.get("link", ""),
+                "id": ex.get("id", -1)
+            })
+        else:
+            available_exercises.append({"name": ex, "link": "", "id": -1})
+    
+    if not available_exercises:
+        print("❌ Error: No available exercises in crossfit_path.json")
+        sys.exit(1)
+    
+    print(f"📋 Available I-Go-You-Go exercises: {len(available_exercises)}")
+    if skipped_count > 0:
+        print(f"   ({skipped_count} exercises skipped due to skip=true)")
+    print()
+    
+    # Build ID lookup for validation
+    exercises_by_id = {ex['id']: ex for ex in available_exercises if ex['id'] != -1}
+    valid_ids = set(exercises_by_id.keys())
+    
+    # Display available exercises with IDs
+    print("🏋️  Exercise List:")
+    print("-" * 50)
+    for ex in available_exercises:
+        if ex['id'] != -1:
+            print(f"   ID {ex['id']:3d}: {ex['name']}")
+        else:
+            print(f"   ID  -- : {ex['name']} (no ID)")
+    print()
+    
+    # Ask for exercise IDs
+    print("📝 Enter the exercise IDs you want to use (comma-separated)")
+    print("   Example: 88,106,96,90")
+    print("   Or type 'all' to include all exercises")
+    print()
+    
+    while True:
+        try:
+            ids_input = input("🎯 Exercise IDs (or 'all'): ").strip()
+            
+            if not ids_input:
+                print("   ❌ Please enter at least one exercise ID or 'all'.")
+                continue
+            
+            # Handle "all" option
+            if ids_input.lower() == 'all':
+                selected_ids = [ex['id'] for ex in available_exercises]
+                print(f"   ✅ Selected all {len(selected_ids)} exercises")
+                break
+            
+            # Parse IDs
+            try:
+                selected_ids = [int(x.strip()) for x in ids_input.split(',') if x.strip()]
+            except ValueError:
+                print("   ❌ Invalid format. Use comma-separated numbers (e.g., 88,106,96) or 'all'")
+                continue
+            
+            if not selected_ids:
+                print("   ❌ Please enter at least one exercise ID or 'all'.")
+                continue
+            
+            # Validate IDs
+            invalid_ids = [eid for eid in selected_ids if eid not in valid_ids]
+            if invalid_ids:
+                print(f"   ❌ Invalid exercise IDs: {invalid_ids}")
+                print(f"   💡 Valid IDs: {sorted(valid_ids)}")
+                continue
+            
+            break
+        except (KeyboardInterrupt, EOFError):
+            print("\n⚠️ I-Go-You-Go workout creation cancelled.")
+            sys.exit(0)
+    
+    # Get selected exercises in the order specified
+    selected_exercises = [exercises_by_id[eid] for eid in selected_ids]
+    
+    print()
+    print(f"✅ Creating I-Go-You-Go workout with {len(selected_exercises)} exercises")
+    print()
+    
+    print("📋 Selected exercises (in your order):")
+    for i, ex in enumerate(selected_exercises, 1):
+        print(f"   {i}. {ex['name']} [ID:{ex['id']}]")
+    print()
+    
+    # Load plan and override crossfit settings
+    plan = load_plan()
+    plan["crossfit_path"] = True
+    plan["crossfit_path_count"] = len(selected_exercises)
+    
+    # Generate workout using existing logic
+    print("🔨 Generating workout...")
+    
+    # Import and call the workout generation
+    from main import generate_crossfit_path_workout, setup_active_rest
+    from file_utils import save_workout_html
+    from equipment import get_equipment_validation_summary
+    import time
+    import random
+    
+    # Set random seed
+    seed = int(time.time() * 1000) % 2147483647
+    random.seed(seed)
+    
+    # Setup active rest (even though IGYG doesn't typically use it)
+    rest_pool, plan = setup_active_rest(plan)
+    
+    # Generate the workout
+    plan_result = generate_crossfit_path_workout(plan, selected_exercises)
+    
+    # Get validation summary (minimal for IGYG)
+    validation_summary = get_equipment_validation_summary(
+        plan_result["equipment_requirements"],
+        plan.get("equipment", {})
+    )
+    
+    # Save the HTML file
+    used_exercise_ids = plan_result.get("used_exercise_ids", [])
+    filename = save_workout_html(
+        plan,
+        plan_result["stations"],
+        plan_result["equipment_requirements"],
+        validation_summary,
+        plan_result["global_active_rest_schedule"],
+        plan_result["selected_active_rest_exercises"],
+        plan_result["selected_crossfit_path_exercises"],
+        update_index_html=True,
+        used_exercise_ids=used_exercise_ids,
+        seed=seed
+    )
+    
+    print(f"✅ I-Go-You-Go workout saved to: {filename}")
+    print(f"🌐 Opening in browser...")
+    print(f"🎲 Seed used: {seed}")
+    print()
+    
+    # Open in browser
+    webbrowser.open(f"file://{filename.absolute()}")
+
+
 def validate_exercise_ids(ids: List[int]) -> List[int]:
     """Validate that exercise IDs exist in the database."""
     exercises = get_all_exercises()
@@ -748,6 +1072,12 @@ def main():
     
     elif command in ['-m', '--manual', '-manual', 'manual']:
         create_manual_workout()
+    
+    elif command in ['-igyg', '--igyg', 'igyg', '-igo-yougo', '--igo-yougo']:
+        create_igyg_workout()
+    
+    elif command in ['-igyg-add', '--igyg-add', 'igyg-add']:
+        add_igyg_exercise()
     
     elif command in ['-a', '--add', '-add', 'add']:
         # Import and run exercise addition

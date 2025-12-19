@@ -1144,6 +1144,20 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
             margin-left: auto;
             margin-right: auto;
         }
+        .crossfit-path-multi-images {
+            display: flex;
+            flex-direction: row;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        .crossfit-path-multi-images img {
+            max-width: 150px;
+            max-height: 120px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            object-fit: cover;
+        }
         .crossfit-path-section table {
             width: 100%;
             border-collapse: collapse;
@@ -1752,14 +1766,31 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
                 else:
                     exercise_html = f'<span class="exercise-name">{exercise_name}</span>'
                 
-                # Check if picture exists and add inline image
+                # Check if picture exists and add inline image (support multi-images)
                 picture_html = ""
                 if exercise_id is not None and exercise_id != -1:
                     from pathlib import Path
-                    absolute_picture_path = Path("config/pictures") / f"{exercise_id}.png"
-                    if absolute_picture_path.exists():
-                        picture_path = f"../config/pictures/{exercise_id}.png" if is_workout_store else f"config/pictures/{exercise_id}.png"
-                        picture_html = f'<br><img src="{picture_path}" alt="{exercise_name}" class="crossfit-path-inline-image" onerror="this.style.display=\'none\'" />'
+                    pictures_path = "../config/pictures" if is_workout_store else "config/pictures"
+                    
+                    # Check for multiple images first (id_1.png, id_2.png, id_3.png)
+                    multiple_images = []
+                    for i in range(1, 4):  # Check for up to 3 images
+                        multi_image_path = Path("config/pictures") / f"{exercise_id}_{i}.png"
+                        if multi_image_path.exists():
+                            multiple_images.append(f"{pictures_path}/{exercise_id}_{i}.png")
+                    
+                    if multiple_images:
+                        # Display multiple images side by side
+                        images_html = ""
+                        for img_src in multiple_images:
+                            images_html += f'<img src="{img_src}" alt="{exercise_name}" onerror="this.style.display=\'none\'" />'
+                        picture_html = f'<br><div class="crossfit-path-multi-images">{images_html}</div>'
+                    else:
+                        # Fallback to single image
+                        absolute_picture_path = Path("config/pictures") / f"{exercise_id}.png"
+                        if absolute_picture_path.exists():
+                            picture_path = f"{pictures_path}/{exercise_id}.png"
+                            picture_html = f'<br><img src="{picture_path}" alt="{exercise_name}" class="crossfit-path-inline-image" onerror="this.style.display=\'none\'" />'
                 
                 html += f"""
                         <tr>
@@ -1823,8 +1854,8 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
             const currentPath = window.location.pathname;
             const isInWorkoutStore = currentPath.includes('/workout_store/') || currentPath.includes('\\\\workout_store\\\\');
             
-            // Find all crossfit-path-inline-image elements
-            const images = document.querySelectorAll('.crossfit-path-inline-image');
+            // Find all crossfit-path-inline-image and multi-image elements
+            const images = document.querySelectorAll('.crossfit-path-inline-image, .crossfit-path-multi-images img');
             
             images.forEach(img => {
                 let src = img.getAttribute('src');
@@ -2424,8 +2455,8 @@ def generate_html_workout(plan: Dict, stations: List[Dict], equipment_requiremen
             const currentPath = window.location.pathname;
             const isInWorkoutStore = currentPath.includes('/workout_store/') || currentPath.includes('\\\\workout_store\\\\');
             
-            // Find all crossfit-path-inline-image elements
-            const images = document.querySelectorAll('.crossfit-path-inline-image');
+            // Find all crossfit-path-inline-image and multi-image elements
+            const images = document.querySelectorAll('.crossfit-path-inline-image, .crossfit-path-multi-images img');
             
             images.forEach(img => {{
                 let src = img.getAttribute('src');

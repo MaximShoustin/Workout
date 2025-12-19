@@ -192,6 +192,24 @@
         "skip": false,
         "unilateral": false,
         "id": 117
+      },
+      {
+        "name": "Dumbbell Loaded Seated Vertical Jump",
+        "link": "",
+        "video_type": "none",
+        "area": "lower",
+        "muscles": [
+          "hamstrings",
+          "quadriceps"
+        ],
+        "unilateral": false,
+        "equipment": {
+          "dumbbells_5kg": {
+            "count": 2
+          }
+        },
+        "skip": false,
+        "id": 129
       }
     ],
     "full_core": [

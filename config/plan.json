@@ -1,34 +1,34 @@
 {
-  "crossfit_path": false,
-  "repo":"https://github.com/MaximShoustin/Workout",
-  "title": "Strength Block – Week 5",
-  "max_id": 128,
-  "notes": "Shoulders Training",
-  "active_rest": false,
-  "active_rest_count": 4,
-  "crossfit_path_count": 11,
-  "use_workout_history": false,
-  "steps_per_station": 4,
   "stations": 5,
-  "people": 10,
   "rounds": 2,
   "timing": {
     "work": 30,
     "rest": 30
   },
-  "balance_order_old": [
-    "upper",
-    "core",
-    "lower",
-    "upper",
-    "lower"
-  ],
   "balance_order": [
     "lower",
     "core",
     "upper",
     "lower",
     "core"
+  ],
+  "title": "Strength Block – Week 5",
+  "notes": "Shoulders Training",
+  "active_rest": false,
+  "crossfit_path": false,
+  "crossfit_path_count": 11,
+  "repo": "https://github.com/MaximShoustin/Workout",
+  "max_id": 135,
+  "active_rest_count": 4,
+  "use_workout_history": false,
+  "steps_per_station": 4,
+  "people": 10,
+  "balance_order_old": [
+    "upper",
+    "core",
+    "lower",
+    "upper",
+    "lower"
   ],
   "must_use_old": [
     "plyo_box",
